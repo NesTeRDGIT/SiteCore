@@ -1,0 +1,48 @@
+﻿.ToolBarMenu {
+    display: flex;
+    justify-content: flex-start;
+    border: 1px solid green;
+    border-collapse: collapse;
+  
+}
+.ToolBarMenu div {
+    width: 30px;
+    height: 30px;
+    background-color: ghostwhite;
+    border-right: 1px solid black;
+    border-collapse: collapse;
+    overflow: hidden;
+    padding: 3px;
+}
+
+
+.ToolBarMenu input {
+    background-color: ghostwhite;
+    width: 30px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+}
+.ToolBarMenu div:hover {
+    background-color: gray;
+}
+
+.ToolBarMenu input:hover {
+    background-color: gray;
+}
+
+.NewItem {
+    background-image: url(../Image/add.png)
+}
+
+.DelItem {
+    background-image: url(../Image/delete.png)
+}
+
+.RefreshItems {
+    background-image: url(../Image/RedIndicator.png)
+}
+
+.SendItem {
+    background-image: url(../Image/add.png)
+}

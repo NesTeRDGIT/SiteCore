@@ -1,0 +1,48 @@
+﻿@model IndexViewModel
+@{
+    ViewBag.Title = "Управление";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="GreenText"><b>@ViewBag.StatusMessage</b></p>
+<div>
+    <h4>Изменение параметров учетной записи</h4>
+    <table class="customers">
+        <tr>
+            <td style="width:20%">Пароль</td><td style="width:80%"><a asp-action="ChangePassword" class="TFOMS_A">Смена пароля</a></td>
+        </tr>
+    </table>
+    <br />
+    <br />
+    
+    <span style="text-align:center; font-style:italic; color:red;">Данная информация предназначена для связи с Вами в случае проблем при приеме реестров</span>
+    <div asp-validation-summary="ModelOnly" class="ErrorLi"></div>
+  
+    <form method="post" asp-action="InfoPersAccount" asp-antiforgery="true">
+        <table class="customers">
+            <tr >
+                <td style="width:20%">Фамилия</td>
+                <td style="width:80%"><input asp-for="FAM" value="@Model.FAM" class="TextInput"/></td>
+                <span asp-validation-for="FAM"></span>
+            </tr>
+            <tr>
+                <td style="width:20%">Имя</td>
+                <td style="width:80%"><input asp-for="IM" value="@Model.IM" class="TextInput"/></td>
+                <span asp-validation-for="IM"></span>
+            </tr>
+            <tr>
+                <td style="width:20%">Имя</td>
+                <td style="width:80%"><input asp-for="OT" value="@Model.OT" class="TextInput" /></td>
+                <span asp-validation-for="OT"></span>
+            </tr>
+            <tr>
+                <td style="width:20%">Телефон</td>
+                <td style="width:80%"><input asp-for="PhoneNumber" value="@Model.PhoneNumber" type="tel" class="TextInput" /></td>
+                <span asp-validation-for="PhoneNumber"></span>
+               
+            </tr>
+        </table>
+        <input type="submit" value="Сохранить" class="ActionButton" />
+    </form>
+</div>

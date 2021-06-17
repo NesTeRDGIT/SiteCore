@@ -1,0 +1,43 @@
+﻿
+@using SiteCore.Data
+@model MassRegisterViewModel
+@{
+    ViewBag.Title = "Массовая регистрация";
+}
+
+<h3>Имя пользователя будет [ПРЕФИКС]_[КОД_МО] и пароль 6 знаков</h3>
+<div asp-validation-summary="ModelOnly" class="ErrorLi"></div>
+<form method="post" asp-action="MassRegister" asp-antiforgery="true">
+    <div>
+        <label asp-for="FirstValue"></label>
+        <input asp-for="FirstValue" value="@Model.FirstValue"/>
+    </div>
+    <div>
+        <label asp-for="LastValue"></label>
+        <input asp-for="LastValue" value="@Model.LastValue" />
+    </div>
+    <div>
+        <label asp-for="UserNamePrefix"></label>
+        <input asp-for="UserNamePrefix" value="@Model.FirstValue"/>
+    </div>
+    <h4>Роли пользователя</h4>
+    <div class="btn-group" data-toggle="buttons">
+        @foreach (ApplicationRole Role in ViewBag.Roles)
+        {
+            if (Model.Roles.Contains(Role.Id))
+            {
+                <label>
+                    <input name="Roles" value=@Role.Id type="checkbox" checked> @Role.Name
+                </label>
+            }
+            else
+            {
+                <label>
+                    <input name="Roles" value=@Role.Id type="checkbox"> @Role.Name
+                </label>
+            }
+        }
+    </div>
+    <h4></h4>
+    <input class="ActionButton" type="submit" value="Зарегистрировать" /> 
+</form>

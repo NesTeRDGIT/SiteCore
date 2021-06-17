@@ -1,0 +1,70 @@
+﻿#FileLoader section {
+    position: relative;
+    width: 380px;
+    margin: 40px auto;
+    color: #40444f;
+    border: .2rem dashed #616778;
+    border-radius: 1.5rem;
+    cursor: pointer;
+    -webkit-transition: color 0.2s ease-out, border-color 0.2s ease-out;
+    -moz-transition: color 0.2s ease-out, border-color 0.2s ease-out;
+    transition: color 0.2s ease-out, border-color 0.2s ease-out;
+    overflow: hidden;
+    padding-top: 90px;
+    box-sizing: border-box;
+}
+
+#FileLoader section:hover, section.dd {
+    border-color: #4d90ff;
+    color: #4d90ff;
+    background-color: #e7f0fe;
+}
+
+#FileLoader figure {
+    position: absolute;
+    width: 100%;
+    height: 160px;
+    left: 0;
+    top: 0;
+    display: block;
+}
+
+#FileLoader figure:after {
+    position: absolute;
+    display: block;
+    content: '';
+    height: 80px;
+    width: 80px;
+    margin-left: -40px;
+    left: 40%;
+    background-repeat: no-repeat;
+    background-size: 80px 80px;
+    background-image: url('../Image/upload_icon.png');
+    -webkit-transition: opacity 0.2s ease-out, border-color 0.2s ease-out;
+    -moz-transition: opacity 0.2s ease-out, border-color 0.2s ease-out;
+    transition: opacity 0.2s ease-out, border-color 0.2s ease-out;
+}
+
+#FileLoader section:hover figure:after, section.dd figure:after {
+    opacity: .65;
+}
+
+#FileLoader p {
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+#FileLoader p small {
+    text-align: center;
+    font-weight: normal;
+    font-size: 12px;
+    opacity: .7;
+}
+
+#FileLoader [type="file"] {
+    position: absolute;
+    top: -16rem;
+    opacity: 0;
+}

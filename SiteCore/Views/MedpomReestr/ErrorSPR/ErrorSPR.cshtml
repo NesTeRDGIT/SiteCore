@@ -1,0 +1,77 @@
+﻿@model EditErrorSPRViewModel
+@{
+    ViewBag.Title = "Справочник по ошибкам при подаче реестров";
+}
+
+@{
+    var isAdmin = User.IsInRole("Admin");
+
+}
+
+@section Lib
+{
+    <script src="~/lib/Select2/select2.min.js"></script>
+    <script src="~/lib/ckeditor5/ckeditor.js"></script>
+
+}
+@section Style
+{
+    <link href="~/lib/Select2/select2.min.css" rel="stylesheet" />
+    <link href="~/css/ModalWindow.css" rel="stylesheet" />
+}
+
+@if (isAdmin)
+{
+    <div style="margin-right: 5px;">
+        <form method="get" data-ajax="true" data-ajax-url="@Url.Action("EditErrorSPR")" data-ajax-update="#ModalAjaxContent" data-ajax-success="showModal">
+            <input type="submit" class="ActionButton" value="Добавить ошибку" />
+        </form>
+    </div>
+}
+
+
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div id="ModalAjaxContent"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        var modal = document.getElementById("myModal");
+        var span = document.getElementsByClassName("close")[0];
+        var ModalAjaxContent = document.getElementById("ModalAjaxContent");
+        span.onclick = closeMyModal;
+        function closeMyModal(result) {
+            modal.style.display = "none";
+            ModalAjaxContent.innerHTML = '';
+        }
+
+        function showModal() {
+            modal.style.display = "block";
+        }
+
+        function OnFailureEditError(XMLHttpRequest, textStatus, errorThrown) {
+            alert(textStatus + ":" + errorThrown);
+        }
+
+        function OnSuccessEditError(XMLHttpRequest, textStatus, errorThrown) {
+            closeMyModal(true);
+            $('#ErrorListArea').html(XMLHttpRequest);
+            closeMyModal(true);
+        }
+    </script>
+}
+
+<div id="ErrorListArea">
+    @{await Html.RenderPartialAsync("ErrorSPR/ErrorList", Model); }
+</div>
+
+
+

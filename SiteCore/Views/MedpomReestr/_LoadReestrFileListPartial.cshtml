@@ -1,0 +1,133 @@
+﻿@using SiteCore.Data
+@using SiteCore.Class
+@model LoadReestViewModel
+
+<div>
+    @if (Model.ListError.Count != 0)
+    {
+        <ul class="ErrorLi">
+            @foreach (var str in Model.ListError)
+            {
+                switch (str.ErrorT)
+                {
+                    case ErrorT.TextGreen: <li class="LiTrue">@str.Error</li>break;
+                    case ErrorT.TextRed: <li class="ErrorLi">@str.Error</li> break;
+                }
+            }
+        </ul>
+    }
+</div>
+
+<div style="text-align: right">
+    <form data-ajax="true" data-ajax-method="post" data-ajax-url="@Url.Action("Clear")" data-ajax-update="#container" >
+        <input type="submit" value="Очистка" class="ActionButton" onclick="@("return confirm('Вы уверены?')")"/>
+    </form>
+</div>
+
+<div>
+    <table id="fileList" class="customers">
+        <tbody>
+        <tr>
+            <th width="2%"></th>
+            <th>Имя файла</th>
+            <th>Тип файла</th>
+            <th>Статус</th>
+            <th>Комментарий</th>
+            <th>Действия</th>
+            @if (Model.TypePriem)
+            {
+                <th width="10%">Подпись</th>
+            }
+        </tr>
+        @if (Model.PACKET != null)
+        {
+            foreach (var f in Model.PACKET.FILES.Where(x => x.PARENT == null).OrderByDescending(x => x.ID))
+            {
+
+                <tr>
+                    <td>
+                        @if (f.STATUS == STATUS_FILE.INVITE)
+                        {
+                            <img src="~/Image/IconOK.png" width="16" height="16" alt="Ok"/>
+                        }
+                        else
+                        {
+                            <img src="~/Image/IconERROR.png" width="16" height="16" alt="Error"/>
+                        }
+                    </td>
+                    <td filename>@f.FILENAME</td>
+                    <td>
+                        @f.TYPE_FILE - @if (f.TYPE_FILE.HasValue)
+                                       {@f.TYPE_FILE.Value.RusName()}
+                    </td>
+                    <td>
+                        @if (f.STATUS.HasValue)
+                        {@f.STATUS.Value.RusName()}
+                    </td>
+                    <td>@f.COMENT</td>
+                    <td>
+                        <form data-ajax="true" data-ajax-method="post" data-ajax-url="@Url.Action("DeleteFile")" data-ajax-update="#container" >
+                            <input name="ID" hidden="hidden" value="@f.ID">
+                            <input type="submit" value="Удалить файл" class="delButton" onclick="@("return confirm('Вы уверены?')")"/>
+                        </form>
+                    </td>
+                    <td hidden hash="true">@f.HASH</td>
+                    @if (Model.TypePriem)
+                    {
+                        <td>
+                            @{await Html.RenderPartialAsync("_SignFileINFO", f);}
+                            <div class="INFO_FILE">
+                                <input type="checkbox" id="@f.FILENAME" />
+                                <label title="Информация о файле" for="@f.FILENAME"></label>
+                                <div>
+                                    <p><b>HASH:</b>@f.HASH</p>
+                                </div>
+                            </div>
+                        </td>
+                    }
+                </tr>
+
+                if (f.FILE_L != null)
+                {
+                    var f2 = f.FILE_L;
+                    <tr>
+                        <td>
+                            @if (f2.STATUS == STATUS_FILE.INVITE)
+                            {<img src="~/Image/IconOK.png" width="16" height="16" />}
+                            else
+                            { <img src="~/Image/IconERROR.png" width="16" height="16" />}
+                        </td>
+                        <td filename class="LFile">@f2.FILENAME</td>
+                        <td class="LFile">
+                            @f2.TYPE_FILE - @if (f2.TYPE_FILE.HasValue)
+                                            {@f2.TYPE_FILE.Value.RusName()}
+                        </td>
+                        <td class="LFile">
+                            @if (f2.STATUS.HasValue)
+                            {@f2.STATUS.Value.RusName()}
+                        </td>
+                        <td class="LFile">@f2.COMENT</td>
+                        <td class="LFile"></td>
+                        <td hidden hash="true">@f2.HASH</td>
+                        @if (Model.TypePriem)
+                        {
+                            <td>
+                                @{await Html.RenderPartialAsync("_SignFileINFO", f2);}
+                                <div class="INFO_FILE">
+                                    <input type="checkbox" id="@f2.FILENAME" />
+                                    <label title="Информация о файле" for="@f2.FILENAME"></label>
+                                    <div>
+                                        <p><b>HASH:</b>@f2.HASH</p>
+                                    </div>
+                                </div>
+                            </td>
+                        }
+                    </tr>
+                }
+
+            }
+        }
+        </tbody>
+    </table>
+</div>
+

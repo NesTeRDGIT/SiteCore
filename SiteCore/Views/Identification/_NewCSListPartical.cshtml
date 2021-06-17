@@ -1,0 +1,36 @@
+﻿@model NewCSListViewModel
+<h1>Создание списка</h1>
+<div id="ErrorNewCSList" class="ErrorLi"></div>
+
+
+<form method="POST" data-ajax="true" data-ajax-url="@Url.Action("NewCSList")" data-ajax-update="#ModalAjaxContent" data-ajax-success="NewCSListOnSuccess" data-ajax-Failure="NewCSListOnFailure">
+    <div class="TextCursiv">*Если оставить поле пустым, то автоматически будет назначено наименование вида: Запрос {Код МО} от {Дата} {Время} </div>
+    <p />
+    <label>Наименование списка  <input type="text" asp-for="Caption" placeholder="Наименование" id="InputCaptionList" value="@Model.Caption" /></label>
+    <input type="submit" class="ActionButton" value="Добавить" />
+</form>
+
+<script>
+    function NewCSListOnSuccess(Data, textStatus, jqXHR) {
+        debugger;
+        const data = Data.Value;
+        const Result = Data.Result;
+        if (Result === true) {
+            closeMyModal();
+            refreshListCS();
+        } else
+        {
+            $('#ErrorNewCSItem').html(data);
+        }
+    }
+    function NewCSListOnFailure(xhr) {
+        alert(`Status: ${xhr.status}, Status Text: ${xhr.statusText}`);
+    }
+
+</script>
+
+<script>
+        var element = document.getElementById('InputCaptionList');
+        element.focus();
+        setTimeout(function () { element.focus(); }, 1);
+</script>

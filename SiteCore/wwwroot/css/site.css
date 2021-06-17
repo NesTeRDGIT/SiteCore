@@ -1,0 +1,847 @@
+﻿
+
+.snos {
+    vertical-align: super; /* поместить на линию верхнего индекса */
+    font-size: 60%; /* уменьшить шрифт цифры */
+    margin-left: .1em;
+    color: forestgreen;
+}
+
+
+.TextInput {
+    width: 200px;
+}
+
+
+
+.ActionButton {
+    background-color: #4CAF50;
+    font-family: 'Times New Roman';
+    font-weight: 800;
+    color: white;
+    padding: 5px 16px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    transition: box-shadow .2s, background-color 0.2s;
+    outline: none;
+    box-shadow: 0 0 0 60px #000000 inset, .1em .1em .2em #000000;
+    box-shadow: 0 0 0 60px rgba(0,0,0,0) inset, .1em .1em .2em #000000;
+    background: linear-gradient(#4CAF50, #3ed457 48%, #3ed457 52%, #4CAF50);
+}
+
+    .ActionButton:hover:enabled {
+        box-shadow: inset 0 -1px 1px #000000, inset 0 1px 2px #000000, inset 0 0 0 60px #00ff1f, 0 0 0 60px #000000 inset, .1em .1em .2em #000000;
+        box-shadow: inset 0 -1px 1px rgba(0,0,0,0), inset 0 1px 2px rgba(0,0,0,0), inset 0 0 0 60px rgba(0, 255, 31, 0.25), 0 0 0 60px rgba(0,0,0,0) inset, .1em .1em .2em #000000;
+    }
+
+
+    .ActionButton:active:enabled {
+        box-shadow: inset 0 -1px 1px #000000, inset 0 1px 2px #000000, inset 0 0 0 60px #00ff1f, 0 0 0 60px #000000 inset, .1em .1em .2em #000000, inset -1px 1px 5px 0px #000000;
+        box-shadow: inset 0 -1px 1px rgba(0, 0, 0, 0), inset 0 1px 2px rgba(0, 0, 0, 0), inset 0 0 0 60px rgba(0, 255, 31, 0.25), 0 0 0 60px rgba(0, 0, 0, 0) inset, .1em .1em .2em #000000, inset -1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+    }
+
+    .ActionButton:disabled {
+        background-color: #c4c4c4;
+        background: #c4c4c4;
+        cursor: default;
+    }
+
+.delButton {
+    font-family: 'Times New Roman';
+    font-weight: 800;
+    font-size: 14px;
+    background-color: lightcoral;
+    color: white;
+    padding: 5px 16px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    transition: box-shadow .2s, background-color 0.2s;
+    outline: none;
+    box-shadow: 0 0 0 60px #000000 inset, .1em .1em .2em #000000;
+    box-shadow: 0 0 0 60px rgba(0,0,0,0) inset, .1em .1em .2em #000000;
+    background: linear-gradient(lightcoral, rgb(241, 173, 173) 48%, rgb(241, 173, 173) 52%, lightcoral);
+}
+
+    .delButton:hover:enabled {
+        box-shadow: inset 0 -1px 1px #000000, inset 0 1px 2px #000000, inset 0 0 0 60px #ff0000, 0 0 0 60px #000000 inset, .1em .1em .2em #000000;
+        box-shadow: inset 0 -1px 1px rgba(0,0,0,0), inset 0 1px 2px rgba(0,0,0,0), inset 0 0 0 60px rgba(255, 0, 0, 0.25), 0 0 0 60px rgba(0,0,0,0) inset, .1em .1em .2em #000000;
+    }
+
+    .delButton:active:enabled {
+        box-shadow: inset 0 -1px 1px #000000, inset 0 1px 2px #000000, inset 0 0 0 60px #ff0000, 0 0 0 60px #000000 inset, .1em .1em .2em #000000, inset -1px 1px 5px 0px #000000;
+        box-shadow: inset 0 -1px 1px rgba(0, 0, 0, .1), inset 0 1px 2px rgba(0, 0, 0, .3), inset 0 0 0 60px rgba(255, 0, 0, 0.25), 0 0 0 60px rgba(0, 0, 0, 0) inset, .1em .1em .2em #000000, inset -1px 1px 5px 0px rgba(0,0,0,0.75);
+        
+    }
+
+    .delButton:disabled {
+        background-color: #c4c4c4;
+        background: #c4c4c4;
+        cursor: default;
+    }
+
+
+
+.TFOMS_A {
+    color: forestgreen;
+}
+
+.delButtonICO {
+    background: url(../Image/icondelete.PNG) no-repeat;
+    background-size: 100%;
+    background-position: center;
+    cursor: pointer;
+    width: 45px;
+    height: 45px;
+    border: none;
+    outline: none;
+}
+
+    .delButtonICO:active { background-size: 90%; }
+
+.editButtonICO {
+    background: url(../Image/iconedit.PNG) no-repeat;
+    background-size: 100%;
+    background-position: center;
+    cursor: pointer;
+    width: 45px;
+    height: 45px;
+    border: none;
+    outline: none;
+}
+
+    .editButtonICO:active {
+        background-size: 90%;
+    }
+
+
+
+
+.INFO_FILE {
+    display: inline-block;
+    float: left;
+}
+
+    .INFO_FILE input[type=checkbox] {
+        display: none;
+    }
+
+
+        .INFO_FILE input[type=checkbox] + label {
+            display: inline-block;
+            background: url('../Image/question.png') no-repeat;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            background-size: 93%;
+        }
+
+
+
+    .INFO_FILE div {
+        display: none;
+        position: absolute;
+        align-self: center;
+        height: 200px;
+        width: 200px;
+        word-break: break-all;
+        z-index: 3;
+        border: 1px solid;
+        border-radius: 3px;
+    }
+
+    .INFO_FILE > input:checked ~ div {
+        display: inline-block;
+        background-color: aquamarine;
+        text-align: left;
+    }
+
+
+.ErrorLi {
+    color: orangered;
+    font-weight: 800;
+}
+
+.LiTrue {
+    color: forestgreen;
+    font-weight: 800;
+}
+
+#progress-bar {
+    background-color: dodgerblue;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.progress {
+    background-color: lightgray
+}
+
+.DIVERR {
+    color: red;
+}
+
+.DIVTrue {
+    color: green;
+    font-weight: 700;
+}
+
+.DIVfalse {
+    color: red;
+    font-weight: 700;
+}
+
+
+@keyframes example {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+
+
+body {
+    background: url(../Image/body.png);
+    background-color: #c7b39b;
+}
+
+
+
+
+
+#MainDivAp {
+    top: -30px;
+    position: relative;
+    overflow: hidden;
+    padding: 30px;
+    min-width: 1200px;
+    min-height: 90vh;
+}
+
+.MAIN {
+    background-color: white;
+    max-width: 1450px;
+    min-width: 1000px;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px 10px #000000;
+    box-shadow: 0 5px 10px 10px rgba(0,0,0,.4);
+    margin: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.SiteContent {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    padding-bottom: 20px;
+}
+
+.HEADER {
+    height: 165px;
+    width: 100%;
+    display: inline-block;
+    background: linear-gradient(to top, white, #44a61c);
+    position: relative;
+    border-radius: 10px 10px;
+}
+
+
+.Logo_text {
+    margin-top: 0;
+    font-size: 30px;
+    text-shadow: -1px -1px #FFF, -2px -2px #FFF, -1px 1px #FFF, -2px 2px #FFF, 1px 1px #FFF, 2px 2px #FFF, 1px -1px #FFF, 2px -2px #FFF, -3px -3px 2px #BBB, -3px 3px 2px #BBB, 3px 3px 2px #BBB, 3px -3px 2px #BBB;
+    color: #4CAF50;
+    transition: all 1s;
+}
+
+    .Logo_text:hover {
+        color: steelblue;
+    }
+
+.LOGO {
+    display: inline-block;
+    position: absolute;
+    text-align: center;
+    height: 100%;
+    width: 500px;
+}
+
+    .LOGO img {
+        width: 120px;
+    }
+
+.LOGO1 {
+    display: inline-block;
+    position: relative;
+    float: right;
+    width: 40%;
+    text-align: center;
+    height: 100%;
+}
+
+.LOGO2 {
+    display: inline-block;
+    position: relative;
+    margin-right: 0;
+    float: right;
+    text-align: center;
+    width: 20%;
+    height: 100%;
+}
+
+
+.RememberBox {
+    text-align: center;
+    float: right;
+    font-size: 18px;
+    outline-width: 200px;
+    top: -30px;
+    animation-name: example;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+    .RememberBox a {
+        top: 100%;
+        text-decoration: none;
+        width: 100%;
+        font-weight: 800;
+        color: #fb5151;
+        text-shadow: black 1px 1px 0;
+    }
+
+.LOGO img {
+    margin: 0;
+}
+
+.LOGO h3 {
+    color: #44a61c;
+    margin-top: 10px;
+    margin-left: 10px;
+    text-shadow: black 1px 1px 0;
+}
+
+
+
+
+.table_report {
+    font-family: "Times New Roman";
+    border-collapse: collapse;
+    word-break: normal;
+    width: 100%;
+}
+
+    .table_report td {
+        text-align: center;
+        vertical-align: central;
+        border: solid 1px #000000;
+        border: solid 1px rgba(0, 0, 0, 0.5);
+    }
+
+    .table_report tr:hover {
+        background-color: #99ffc1;
+    }
+
+    .table_report th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: center;
+        background-color: #4CAF50;
+        color: white;
+        border: solid 1px #000000;
+        border: solid 1px rgba(0, 0, 0, 0.5);
+    }
+
+
+.table_input {
+    font-family: "Times New Roman";
+    border-collapse: collapse;
+    word-break: normal;
+    margin-bottom: 30px;
+    margin-top: 20px;
+    width: 100%;
+    border-right: 0;
+    border: 0;
+}
+
+    .table_input td {
+        text-align: left;
+        padding-top: 10px;
+        vertical-align: central;
+        border-bottom: solid 1px rgba(0, 0, 0, 0.5);
+    }
+
+    .table_input tr:hover {
+        background-color: #99ffc1;
+    }
+
+
+
+/*#region Table */
+
+.customers {
+    font-family: "Times New Roman";
+    border-collapse: collapse;
+    width: 100%;
+    word-break: normal;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+    .customers tr:hover {
+        background-color: #99ffc1;
+    }
+
+    .customers th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: center;
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .customers tr:first-child th:first-child {
+        border-radius: 7px 0 0 0;
+    }
+
+    .customers tr:first-child th:last-child {
+        border-radius: 0 7px 0 0;
+        /*#endregion  */
+    }
+
+.LFile {
+    text-align: left;
+    font-size: 10px;
+}
+
+/*#endregion */
+
+
+
+
+.GreenText {
+    color: forestgreen;
+    text-shadow: black 0.8px 0.8px 0;
+}
+
+.RedText {
+    color: tomato;
+    text-shadow: black 0.5px 0.5px 0;
+}
+
+.YellowText {
+    color: goldenrod;
+    text-shadow: black 0.8px 0.8px 0;
+}
+
+.BoldText {
+    font-weight: 800;
+}
+
+.TextCursiv {
+    font-style: italic;
+}
+
+.ImageCenter {
+    border: ridge;
+    margin: 10px;
+    width: 90%;
+}
+
+
+
+
+
+
+@-webkit-keyframes scroll {
+    0% {
+        -webkit-transform: translateX(170px);
+        transform: translateY(170px);
+    }
+
+    100% {
+        -webkit-transform: translateX(-105%);
+        transform: translateY(-105%)
+    }
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateY(170px);
+    }
+
+    100% {
+        transform: translateY(-105%)
+    }
+}
+
+.marquee {
+    width: 98%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.marqueeContener {
+    height: 85%;
+    width: 85%;
+    border-radius: 5px;
+    display: block;
+}
+
+
+.marquee-item {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+    .marquee-item div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+
+/*.marquee *:hover {
+-webkit-animation-play-state: paused;
+animation-play-state: paused;
+}*/
+
+
+.Notify_element {
+    position: relative;
+    background-color: #92ef71;
+    padding: 10px;
+    border-radius: 6px;
+    align-items: center;
+    margin-top: 10px;
+    transition: 0.5s;
+    opacity: 0.8;
+}
+
+    .Notify_element button {
+        position: absolute;
+        top: 0px;
+        right: 10px;
+        padding: 0;
+        border: 0;
+        background: 0,0;
+        color: gray;
+        cursor: pointer;
+        transition: 0.5s;
+    }
+
+        .Notify_element button:hover {
+            color: black;
+        }
+
+    .Notify_element p {
+        color: red;
+        font-size: 15px;
+        word-wrap: break-word;
+    }
+
+
+#CertInfo {
+    height: 260px;
+}
+
+    #CertInfo select {
+        display: inline-block;
+        position: relative;
+        height: 100%;
+        float: left;
+        width: 20%;
+        overflow: auto;
+    }
+
+    #CertInfo .HiddenToolTip {
+        display: none;
+    }
+
+#sertInfoData {
+    display: inline-block;
+    float: left;
+    width: 78%;
+}
+
+#CertInfo .VisibleToolTip {
+    display: block;
+    border-radius: 3px;
+    background-color: #e7ffc4;
+    float: left;
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+
+.SignButtonArea {
+    height: 60px;
+    display: flex;
+    justify-content: flex-start;
+    float: left;
+}
+
+.SignButtonArea div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+a.ShowHREF {
+    cursor: pointer;
+}
+
+.DISPLAY_NONE {
+    display: none;
+}
+
+
+
+.table_sign input[edittable]:read-write {
+    border: 1px solid black;
+    background-color: white;
+    width: 99%;
+}
+
+.table_sign input[type=text] {
+    border: none;
+    background-color: transparent;
+    width: 100%;
+    color: gray;
+}
+
+.table_sign input[edittable]:read-only {
+    border: none;
+    background-color: transparent;
+    width: 100%;
+    color: gray;
+}
+
+.table_sign .SignCancelButton {
+    background-image: url(../Image/edit_undo.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    content: '';
+    height: 30px;
+    width: 30px;
+    background-size: cover;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.table_sign .SignConfirmButton {
+    background-image: url(../Image/Confirm.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    content: '';
+    height: 30px;
+    width: 30px;
+    background-size: cover;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.table_sign .SignEditButton {
+    background-image: url(../Image/documentedit.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    content: '';
+    height: 30px;
+    width: 30px;
+    background-size: cover;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.table_sign .SignDelButton {
+    background-image: url(../Image/DeleteData.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    content: '';
+    height: 30px;
+    width: 30px;
+    background-size: cover;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.table_sign .SignDownButton {
+    background-image: url(../Image/upload_icon.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    content: '';
+    height: 30px;
+    width: 30px;
+    background-size: cover;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.BlockForm {
+    display: inline-block;
+    vertical-align: top;
+    content: '';
+}
+
+.TMKForm {
+}
+
+    .TMKForm > div {
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    .TMKForm label {
+        margin-right: 10px;
+    }
+
+input[type=checkbox] {
+    /* Double-sized Checkboxes */
+    -ms-transform: scale(1.5); /* IE */
+    -moz-transform: scale(1.5); /* FF */
+    -webkit-transform: scale(1.5); /* Safari and Chrome */
+    -o-transform: scale(1.5); /* Opera */
+    transform: scale(1.5);
+    padding: 10px;
+}
+
+.radio {
+    cursor: pointer;
+}
+
+
+
+
+.OnAjaxDIV {
+    opacity: 0;
+    transition: 1s;
+    text-align: center;
+    border-radius: 3px;
+}
+
+.OnFailureDIV {
+    opacity: 100;
+    background-color: tomato;
+    transition: 1s;
+}
+
+.OnSuccessDIV {
+    opacity: 100;
+    background-color: rgb(129, 255, 162);
+    transition: 1s;
+}
+
+
+.div-space-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.label-sup {
+    display: inline-block;
+    font-size: 10pt;
+    float: left;
+    margin-right: 5px;
+}
+
+    .label-sup input {
+        display: block;
+    }
+
+    .label-sup select {
+        display: block;
+    }
+
+    .label-sup span {
+        display: block;
+        cursor: text;
+        min-width: 100px;
+        height: 16px;
+        border: gray 1px solid;
+        padding: 3px;
+    }
+
+.NewBlock {
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 5px;
+    border: solid 1px black;
+}
+
+.NewBlock-H {
+    font-size: 16pt;
+}
+
+.NewBlock-D {
+    font-size: 10pt;
+    color: gray;
+}
+
+.NewBlock-C {
+    font-size: 14px;
+}
+
+.ButtonLock {
+    background-image: url(../Image/LOCK128.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    content: '';
+    height: 30px;
+    width: 30px;
+    background-size: cover;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+    .ButtonLock:active {
+        background-size: 90%;
+    }
+
+.ButtonUnLock {
+    background-image: url(../Image/UnLOCK128.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    content: '';
+    height: 30px;
+    width: 30px;
+    background-size: cover;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+    .ButtonUnLock:active {
+        background-size: 90%;
+    }

@@ -1,0 +1,76 @@
+﻿@using SiteCore.Data
+@model RegisterNewViewModel
+@{
+    ViewBag.Title = "Регистрация";
+}
+<h2>@ViewBag.Title.</h2>
+<h4>Создайте новую учетную запись.</h4>
+<hr />
+<div asp-validation-summary="ModelOnly" class="ErrorLi"></div>
+
+<form method="post" asp-action="RegisterUser" asp-controller="Account" asp-route-ReturnUrl="@ViewBag.ReturnUrl" class="form-horizontal" asp-antiforgery="true" role="form" >
+    <input hidden asp-for="UserId" value="@Model.UserId"/>
+    <div class="form-group">
+        <label asp-for="CODE_MO"></label>
+        <div class="col-md-10">
+            <input asp-for="CODE_MO" class="form-control" />
+            <span asp-validation-for="CODE_MO"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="CODE_SMO"></label>
+        <div class="col-md-10">
+            <input asp-for="CODE_SMO" class="form-control"/>
+            <span asp-validation-for="CODE_SMO"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="UserName"></label>
+        <div class="col-md-10">
+            <input asp-for="UserName" class="form-control"  type="text" autocomplete="off"/>
+            <span asp-validation-for="UserName"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password"></label>
+        <div class="col-md-10">
+            <input asp-for="Password" class="form-control" autocomplete="new-password" />
+            <span asp-validation-for="Password"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="ConfirmPassword"></label>
+        <div class="col-md-10">
+            <input asp-for="ConfirmPassword" type="password" class="form-control"/>
+            <span asp-validation-for="ConfirmPassword"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="WithSing"></label>
+        <div class="col-md-10">
+            <input asp-for="WithSing" class="form-control"/>
+            <span asp-validation-for="WithSing"></span>
+        </div>
+    </div>
+
+    <div class="btn-group" data-toggle="buttons">
+        <ul>
+            @foreach (ApplicationRole Role in ViewBag.Roles)
+            {
+                <li>
+                    <label class="btn btn-primary active">
+                        <input name="Roles" value=@Role.Id type="checkbox" @(Model.Roles.Contains(Role.Id)? "checked" : "")><span class="BoldText">@Role.Name</span> - @Role.COMENT
+                    </label>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div class="form-group">
+
+        <div class="col-md-offset-2 col-md-10">
+            <a href=@ViewBag.returnUrl><input type="button" class="ActionButton" value="Отмена" /></a>
+            <input type="submit" class="ActionButton" value="Регистрация" />
+        </div>
+    </div>
+</form>

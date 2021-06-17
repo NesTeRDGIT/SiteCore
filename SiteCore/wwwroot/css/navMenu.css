@@ -1,0 +1,144 @@
+﻿
+
+
+nav {
+    font-weight: bold;
+    text-align: center;
+    background: #44a61c;
+    -webkit-box-shadow: 0 0 5px #000000;
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 0 5px #000000;
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 5px #000000;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    z-index: 100;
+}
+
+nav a {
+    text-decoration: none;
+    display: block;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+
+nav a:link { text-decoration:none;color:inherit; }
+nav a:visited { text-decoration:none; color:inherit;}
+nav a:hover {text-decoration:none;color:inherit;}
+nav a:active {text-decoration:none;color:inherit;}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
+nav .topmenu {
+    margin-left: 30px;
+}
+nav .topmenu > li,.topmenu > span  {
+    display: inline-block;
+    position: relative;
+    margin-right: -4px;
+ 
+
+  
+}
+
+nav .topmenu .liRight {
+    float: right;
+    margin: 0;
+}
+nav .topmenu > li > a {
+    font-weight: bold;
+    padding: 15px 30px;
+    color: white;
+    font-weight: bold;
+}
+
+nav .userlink:after {
+    content: "\f007";
+    font-weight: normal;
+    font-family: "FontAwesome";
+    color: inherit;
+
+}
+
+.nav active:after, nav .submenu-link:after {
+    content: "\f107";
+    font-family: "FontAwesome";
+    color: inherit;
+    margin-left: 10px;
+    display: inline-block;
+    transition: transform  300ms 0s ease-in-out;
+    src: local('Open Sans Light'), local('OpenSans-Light'), url(http://themes.googleusercontent.com/static/fonts/opensans/v6/DXI1ORHCpsQm3Vp6mXoaTaRDOzjiPcYnFooOUGCOsRk.woff) format('woff');
+   
+   
+  
+}
+
+nav .topmenu li:hover .submenu-link:after { 
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+nav .submenu li:hover a {color: blue; }
+
+nav .topmenu > li:hover>a {
+    color: blue;
+    -webkit-box-shadow: 0 0 5px #000000;
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 0 5px #000000;
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 5px #000000;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+
+nav .submenu li:hover a {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    -webkit-box-shadow: 0 0 5px #000000;
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 0 5px #000000;
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 5px #000000;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+nav .submenu {
+    position: absolute;
+    left: -1px;
+    z-index: 5;
+    width: 240px;
+    visibility: hidden;
+    opacity: 0;  
+    transform: translateY(10px);
+    transition: 0.2s ease-in;
+}
+nav .submenu li {position: relative;}
+nav .submenu a {
+  
+    background: #8bff6a;
+    color: #1c1c1c;
+    text-align: left;
+    font-size: 14px;
+    letter-spacing: 1px;
+    padding: 10px 20px;
+}
+nav .submenu .submenu {
+    position: absolute;
+    top: 0;
+    left: calc(100% - 1px);
+    left: -webkit-calc(100% - 1px);
+}
+nav li:hover > .submenu {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0px);
+}

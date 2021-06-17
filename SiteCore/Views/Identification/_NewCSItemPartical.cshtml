@@ -1,0 +1,217 @@
+﻿@using SiteCore.Data;
+@using SiteCore.Class
+@model SiteCore.Models.NewCSItemViewModel
+
+@{
+    var W_SPR = new List<SelectListItem>
+{
+        new("Мужской", "1", Model.ITEM?.W == 1),
+        new("Женский", "2", Model.ITEM?.W == 2)
+    };
+    var DOCTYPE_SPR = new List<SelectListItem> { new("Без документа", "", string.IsNullOrEmpty(Model.ITEM?.DOC_TYPE)) };
+    DOCTYPE_SPR.AddRange(Model.F011.Select(x => new SelectListItem(x.DOCNAME, x.IDDOC, x.IDDOC == Model.ITEM?.DOC_TYPE)));
+    var POLIS_SPR = new List<SelectListItem> { new("Без полиса", "", Model.ITEM?.VPOLIS == null) };
+    POLIS_SPR.AddRange(((VPOLIS_VALUES[])Enum.GetValues(typeof(VPOLIS_VALUES))).Select(x => new SelectListItem(x.ToRusStr(), x.ToString(), x == Model.ITEM?.VPOLIS)));
+}
+
+<style>
+    .InForm input {
+        font-size: 14px;
+        font-family: Times New Roman;
+        height: 22px;
+    }
+
+    .InForm {
+        display: flex;
+    }
+
+        .InForm td input {
+            width: 98.5%;
+            text-transform: uppercase;
+        }
+
+        .InForm fieldset {
+            width: 100%;
+        }
+
+            .InForm fieldset table {
+                width: 100%;
+            }
+</style>
+
+<span style="font-style: italic">
+    Для поиска обязательно указать: один из компонентов ФИО, пол, дату рождения и минимум 1 из идентификаторов(документ,СНИЛС, полис)<br />
+    Однако чем больше идентификаторов Вы укажете тем больше шансов найти человека в ЦС ЕРЗ
+</span>
+<p />
+<div id="ErrorNewCSItem" class="ErrorLi" asp-validation-summary="All"></div>
+<form method="POST" data-ajax="true" data-ajax-url="@Url.Action("NewCSItem")" data-ajax-success="NewCSItemOnSuccess" data-ajax-Failure="NewCSItemOnFailure">
+    <div class="InForm">
+        <input type="hidden" asp-for="CS_LIST_ID" name="ITEM.CS_LIST_ID" />
+        <input type="hidden" asp-for="ITEM.CS_LIST_IN_ID" />
+        <fieldset>
+            <legend>Данные пациента</legend>
+            <table>
+                <tr>
+                    <td>Фамилия</td>
+                    <td>
+                        <input type="text" asp-for="ITEM.FAM" autocomplete="off" id="inputFamCS" />
+                        <span asp-validation-for="ITEM.FAM"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Имя</td>
+                    <td>
+                        <input type="text" asp-for="ITEM.IM" autocomplete="off" />
+                        <span asp-validation-for="ITEM.IM"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Отчество</td>
+                    <td>
+                        <input type="text" asp-for="ITEM.OT" autocomplete="off" />
+                        <span asp-validation-for="ITEM.OT"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Дата рождения</td>
+                    <td>
+                        <input type="date" datePaste="true" asp-for="ITEM.DR" autocomplete="off" />
+                        <span asp-validation-for="ITEM.DR"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Пол</td>
+                    <td>
+                        <select class="select-select2" asp-for="ITEM.W" asp-items="@W_SPR" style="width: 100%"></select>
+                        <span asp-validation-for="ITEM.W"></span>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+
+        <fieldset>
+            <legend>Документ удостоверения личности</legend>
+            <table>
+                <tr>
+                    <td>Тип документа</td>
+                    <td>
+                        <select class="select-select2" asp-for="ITEM.DOC_TYPE" asp-items="DOCTYPE_SPR" id="DOC_TYPESelect" style="width: 100%">
+                        </select>
+                        <span asp-validation-for="ITEM.DOC_TYPE"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Серия</td>
+                    <td>
+                        <input type="text" asp-for="ITEM.DOC_SER" autocomplete="off" />
+                        <span asp-validation-for="ITEM.DOC_SER"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Номер</td>
+                    <td>
+                        <input type="text" asp-for="ITEM.DOC_NUM" autocomplete="off" />
+                        <span asp-validation-for="ITEM.DOC_NUM"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>СНИЛС</td>
+                    <td>
+                        <input type="text" asp-for="ITEM.SNILS" id="SNILS" placeholder="999-999-999 99" autocomplete="off" />
+                        <span asp-validation-for="ITEM.SNILS"></span>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+
+        <fieldset>
+            <legend>Документ подтверждающий факт страхования</legend>
+            <table>
+                <tr>
+                    <td>Тип документа</td>
+                    <td>
+                        <select class="select-select2" asp-for="ITEM.VPOLIS" style="width: 100%" id="VPOLISSelect" onselect="VPOLISSelectChange" autocomplete="off" asp-items="POLIS_SPR">
+                        </select>
+                        <span asp-validation-for="ITEM.VPOLIS"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Серия</td>
+                    <td>
+                        <input type="text" asp-for="ITEM.SPOLIS" autocomplete="off" />
+                        <span asp-validation-for="ITEM.SPOLIS"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Номер</td>
+                    <td>
+                        <input type="text" asp-for="ITEM.NPOLIS" id="NPOLIS" autocomplete="off" />
+                        <span asp-validation-for="ITEM.NPOLIS"></span>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+
+    </div>
+    <p />
+    <input type="submit" class="ActionButton" value="Сохранить" />
+</form>
+
+
+<script>
+    $("#SNILS").mask("999-999-999 99");
+    $('.select-select2').select2();
+    function NewCSItemOnSuccess(Data, textStatus, jqXHR) {
+        debugger;
+        const data = Data.Value;
+        const Result = Data.Result;
+        if (Result === true) {
+            closeMyModal();
+            refreshListCS_IN();
+        } else {
+            $('#ModalAjaxContent').html(data);
+        }
+    }
+    function NewCSItemOnFailure(xhr) {
+        debugger;
+        alert(`Status: ${xhr.status}, Status Text: ${xhr.statusText}`);
+    }
+    $('#VPOLISSelect').on('select2:select', function (e) {
+        $("#NPOLIS").unmask();
+        $("#NPOLIS").attr("placeholder", "");
+        if (e.params.data.id === 'TEMP') {
+            $("#NPOLIS").mask("999999999");
+            $("#NPOLIS").attr("placeholder", "999999999");
+        }
+
+        if (e.params.data.id === 'bOMS') {
+            $("#NPOLIS").mask("9999999999999999");
+            $("#NPOLIS").attr("placeholder", "9999999999999999");
+        }
+    });
+
+    $('#DOC_TYPESelect').on('select2:select', function (e) {
+        $("#DOC_SER").unmask();
+        $("#DOC_NUM").unmask();
+        $("#DOC_SER").attr("placeholder", "");
+        $("#DOC_NUM").attr("placeholder", "");
+        if (e.params.data.id === '14') {
+            $("#DOC_SER").mask("99 99");
+            $("#DOC_SER").attr("placeholder", "99 99");
+
+            $("#DOC_NUM").mask("999999");
+            $("#DOC_NUM").attr("placeholder", "999999");
+        }
+    });
+
+
+    var element = document.getElementById('inputFamCS');
+    element.focus();
+    setTimeout(function () { element.focus(); }, 1);
+
+</script>
+
+<script src="~/js/datePaste.js"></script>
+
+@{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}

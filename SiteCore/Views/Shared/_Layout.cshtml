@@ -1,0 +1,221 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using SiteCore.Data
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SiteCore</title>
+
+    <link rel="shortcut icon" href="~/Image/favicon.png" type="image/png">
+    <!--[if lte IE 9]>
+        <script >
+            window.location.href = '/MEDPOM/Content/oldies/Index.html';
+        </script>
+    <![endif]-->
+    <script>
+        if (navigator.userAgent.indexOf('MSIE') !== -1
+            || navigator.appVersion.indexOf('Trident/') > -1) {
+            window.location.href = '/MEDPOM/Content/oldies/Index.html';
+        }
+    </script>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+
+    @await RenderSectionAsync("Lib", required: false)
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/css/navMenu.css?1" rel="stylesheet" />
+    <link href="~/css/circularGMain.css" rel="stylesheet" />
+    <link href="~/css/field-validation.css" rel="stylesheet" />
+    @await RenderSectionAsync("Style", required: false)
+</head>
+@{
+    var isMO = User.IsInRole("MO");
+    var isOMS = User.IsInRole("OOMS");
+    var isOZPZ = User.IsInRole("OZPZ");
+    var isSTAT_STAC = User.IsInRole("STAT_STAC");
+    var isTMKAdmin = User.IsInRole("TMKAdmin");
+    var isTMKSMO = User.IsInRole("TMKSMO");
+    var isTMKReader = User.IsInRole("TMKReader");
+    var isTMKUser = User.IsInRole("TMKUser");
+    var isONKReestr = User.IsInRole("ONKReestr");
+    var IsMSEAdmin = User.IsInRole("MSEAdmin");
+    var IsMSESmo = User.IsInRole("MSESmo");
+    var isSignReestrAdmin = User.IsInRole("SignReestrAdmin");
+    var isCS = User.IsInRole("CS");
+    var isAdmin = User.IsInRole("Admin");
+}
+<body>
+
+    <div id="MainDivAp">
+        <div class="MAIN">
+            <div class="HEADER">
+                <div class="LOGO">
+                    <img src="~/Image/logo.png" />
+                    <p class="Logo_text">ТФОМС Забайкальского края</p>
+                </div>
+                <div class="LOGO1">
+                    <script src="~/js/jQueryCycle2.js"></script>
+
+                    <div class="marquee">
+                        @{
+                            /*  var message = LayoutViewModel.GetMessage();
+                              if (message.Length != 0)
+                              {
+                                  <div>
+                                      <div asclass="cycle-slideshow" class="marqueeContener cycle-slideshow" data-cycle-fx="fade" data-cycle-slides="> div" data-cycle-timeout="10000">
+
+                                          @foreach (var mes in message)
+                                          {
+                                              var cls = "";
+                                              switch (mes.LEV)
+                                              {
+                                                  case LEV_MESSAGE.EMPTY:
+                                                      break;
+                                                  case LEV_MESSAGE.ERROR:
+                                                      cls = "RedText";
+                                                      break;
+                                                  case LEV_MESSAGE.WARNING:
+                                                      cls = "YellowText";
+                                                      break;
+                                              }
+                                              <div class="marquee-item">
+                                                  <div>
+                                                      <span class=@cls style="font-size: 18px; font-weight: 800; font-family: 'Times New Roman';"> @mes.TEXT</span>
+                                                  </div>
+                                              </div>
+                                          }
+                                      </div>
+                                  </div>
+                              }*/
+
+                        }
+                    </div>
+                </div>
+                <div class="LOGO2">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        /* if (!User.Identity..ApplicationUser().IsPers && User.IsInRole("MO"))
+                         {
+                             <div class="RememberBox">
+                                 @Html.ActionLink("Пожалуйста заполните данные о владельце учетной записи", "Index", "Manage")
+                             </div>
+
+                         }*/
+                    }
+                </div>
+            </div>
+
+            <div>
+                <nav>
+                    <ul class="topmenu">
+                        <li>@Html.ActionLink("Главная", "Index", "Home")</li>
+                        @if (isMO)
+                        {
+                            <li>
+                                <a class="submenu-link">Прием реестров</a>
+                                <ul class="submenu">
+                                    <li>@Html.ActionLink("Загрузка файлов", "LoadReestr", "MedpomReestr")</li>
+                                    <li>@Html.ActionLink("Статус загрузки", "ViewReestr", "MedpomReestr")</li>
+                                    <li>@Html.ActionLink("Инструкция", "InstructionView", "MedpomReestr")</li>
+                                    <li>@Html.ActionLink("Справочник ошибок", "ErrorSPR", "MedpomReestr")</li>
+                                    @if (isSignReestrAdmin)
+                                    {
+                                        <li>@Html.ActionLink("Подписи", "SIGN_LIST", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                                    }
+                                    @if (isCS)
+                                    {
+                                        <li>@Html.ActionLink("Поиск в ЦС", "CreateCSList", "Identification")</li>
+                                    }
+                                    @if (isAdmin || isMO)
+                                    {
+                                        <li>@Html.ActionLink("Статистика", "VOLUME", "STATS")</li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                        @if (isTMKAdmin || isTMKSMO || isTMKReader || isTMKUser)
+                        {
+                            <li>
+                                <a class="submenu-link">Реестр ТМК</a>
+                                <ul class="submenu">
+                                    <li>@Html.ActionLink("Реестр", "TMKReestr", "TMKReestr")</li>
+                                    @if (isTMKAdmin || isTMKSMO)
+                                    {
+                                        <li>@Html.ActionLink("Отчет", "Report", "TMKReestr")</li>
+                                    }
+                                    @if (isTMKUser || isTMKAdmin)
+                                    {
+                                        <li>@Html.ActionLink("Справочник МО", "ContactInfo", "TMKReestr")</li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                        @if (IsMSEAdmin || IsMSESmo)
+                        {
+                            <li>
+                                <a class="submenu-link">Реестр МСЭ</a>
+                                <ul class="submenu">
+                                    <li>@Html.ActionLink("Реестр", "Index", "MSE")</li>
+                                    <li>@Html.ActionLink("Отчет", "Report", "MSE")</li>
+                                </ul>
+                            </li>
+                        }
+                        @if (isONKReestr)
+                        {
+                            <li>@Html.ActionLink("Реестр ОНК", "Index", "ONKReestr")</li>
+                        }
+
+
+                        @if (isOMS || isOZPZ || isSTAT_STAC)
+                        {
+                            <li>
+                                <a class="submenu-link">Отчеты</a>
+                                <ul class="submenu">
+                                    @if (isOMS)
+                                    {
+                                        <li>@Html.ActionLink("Текущее ВМП", "CURRENT_VMP_VIEW", "OOMS")</li>
+                                        <li>@Html.ActionLink("Аборты", "AbortView", "OOMS")</li>
+                                        <li>@Html.ActionLink("ЭКО", "ECOView", "OOMS")</li>
+                                        <li>@Html.ActionLink("Кохлеарная имплантация", "KOHLView", "OOMS")</li>
+                                        <li>@Html.ActionLink("ОКС\\ОНМК", "OKS_ONMKView", "OOMS")</li>
+                                    }
+                                    @if (isOZPZ)
+                                    {
+                                        <li>@Html.ActionLink("Результативность", "ZPZ_EFFECTIVENESS", "OZPZ")</li>
+                                    }
+                                    @if (isSTAT_STAC)
+                                    {
+                                        <li>@Html.ActionLink("Планирование", "STAC_PLAN", "STAC_PLAN")</li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+
+
+
+                        <li>@Html.ActionLink("О программе", "About", "Home")</li>
+                        @await Html.PartialAsync("_LoginPartial")
+
+                    </ul>
+
+
+                </nav>
+            </div>
+            <div class="SiteContent">
+                @RenderBody()
+            </div>
+        </div>
+
+    </div>
+    <div id="notification" style="width: 17%; position: fixed; right: 10px; bottom: 5px;"></div>
+
+@await RenderSectionAsync("Scripts", required: false)
+    
+
+</body>
+</html>

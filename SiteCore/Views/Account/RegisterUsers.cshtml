@@ -1,0 +1,78 @@
+﻿@using Microsoft.AspNetCore.Http
+@model RegisterUsersViewModel
+@{
+    ViewBag.Title = "Управление пользователями";
+    var URL = @Context.Request.Path;
+}
+
+<h2>@ViewBag.Title</h2>
+<a asp-action="RegisterUser" asp-controller="Account" asp-route-ReturnUrl="@URL" class="ActionButton">Новый пользователь</a>
+<a asp-action="MassRegister" asp-controller="Account" asp-route-ReturnUrl="@URL" class="ActionButton">Массовая регистрация</a>
+<div asp-validation-summary="ModelOnly"></div>
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert-success">@ViewBag.Message</div>
+}
+@foreach (var ROLES in Model.Users.Select(x=>x.Roles).Distinct())
+{
+    <div class="spoiler">
+        <input type="checkbox" />
+        <label class="open">Роль - @ROLES</label>
+        <div class="box">
+            <table class="customers">
+
+                <tr>
+                    <th>Имя</th>
+                    <th>Пароль</th>
+                    <th>МО</th>
+                    <th>Роли</th>
+                    <th>ФИО</th>
+                    <th>Телефон</th>
+                    <th>Действия</th>
+                </tr>
+                @foreach (var us in Model.Users.Where(x => x.Roles == ROLES))
+                {
+                    <tr>
+                        <td>@us.UserName</td>
+                        <td>@us.Password</td>
+                        <td>@us.CODE_MO - @us.NAME_MO</td>
+                        <td>@us.Roles</td>
+                        <td>@us.FIO</td>
+                        <td>@us.NUMBER</td>
+                        <td>
+                            <div>
+                                <a asp-action="RegisterUser" asp-route-ReturnUrl="@URL" asp-route-IDUser="@us.Id" class="ActionButton">Редактировать</a>
+                            </div>
+                            <div>
+                                <form method="post" asp-action="DeleteUser" asp-route-ReturnUrl="@URL" asp-route-IDUser="@us.Id" asp-antiforgery="true">
+                                    <input class="ActionButton" type="submit" value="Удалить" style="margin-top: 5px;"/>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+}
+
+<script>
+    $('.ShowHREF').on("click", funk);
+            function funk() {
+                var el = $(this).next(".customers");
+                if (el.css("display") === "none") {
+
+                    el.fadeIn(100);
+                    $(this).html('скрыть');
+                }
+                else {
+                    el.fadeOut(100);
+                    $(this).html('показать');
+                }
+            }
+</script>
+
+
+
+

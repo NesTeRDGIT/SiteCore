@@ -1,0 +1,130 @@
+﻿@model LoadReestViewModel
+@{
+    var isSign = Model.TypePriem && !Model.WithSing;
+    var isActive = Model.ConnectWCFon && Model.ReestrEnabled;
+}
+
+
+@if (!Model.ConnectWCFon)
+{
+    <div>
+        <p style="text-align:left; color:red">Нет связи с сервисом приема</p>
+    </div>
+}
+else
+{
+    <div>
+        <p style="text-align:left">
+            Прием реестров:
+            @if (!Model.ReestrEnabled)
+            {
+                <span class="BoldText"><span class="RedText">Не активно</span></span>
+            }
+            else
+            {
+                <span class="BoldText"><span class="GreenText">Активно</span></span>
+            }
+        </p>
+    </div>
+
+    <div>
+        <p style="text-align:left">
+            Тип приема:
+            @if (Model.TypePriem)
+            {
+                <span class="BoldText">
+                    <span class="GreenText">Основной</span>
+                </span>
+            }
+            else
+            {
+                <span class="BoldText">
+                    <span class="YellowText">Предварительный</span>
+                </span>
+            }
+        </p>
+    </div>
+}
+
+<p class="TextCursiv">Ваш Реестровый номер:<span class="BoldText">@Model.CODE_MO</span></p>
+<p class="TextCursiv">Ваша медицинская организация: <span class="BoldText">@Model.NAME_OK</span></p>
+
+<div id="FileLoader">
+    <section>
+        <figure></figure>
+        <p>Загрузка файлов</p>
+        <p><small>Перетащите ваши файлы в эту область!</small></p>
+        <input id="fileControl" type="file" multiple="multiple" accept=".ZIP,.XML">
+    </section>
+    <div id="div-progress-bar" hidden="hidden">
+        <div>Процесс загрузки</div>
+        <div class="meter">
+            <span id="progress-bar" style="width: 0%"></span>
+            <div id="progress-bar-text">0%</div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="container" style="padding-top:10px">
+    @{await Html.RenderPartialAsync("_LoadReestrFileListPartial", Model);}
+</div>
+
+
+@if (isSign)
+{
+    <img src="~/lib/Cades/img/red_dot.png" width="10" height="10" alt="Плагин не загружен" />
+    <div class="spoiler">
+        <input type="checkbox" checked />
+        <label class="open">Подпись</label>
+        <div class="box">
+            <div id="info_msg" style="text-align:center;">
+                <span id="PlugInEnabledTxt">Плагин не загружен</span>
+                <img src="~/lib/Cades/img/red_dot.png" width="10" height="10" alt="Плагин не загружен" id="PluginEnabledImg" />
+                <br>
+                <span id="PlugInVersionTxt" lang="ru"> </span>
+                <span id="CSPVersionTxt" lang="ru"> </span>
+                <br>
+                <span id="CSPNameTxt" lang="ru"> </span>
+            </div>
+            <div id="CertInfo">
+                <select id="SelectCert" multiple onchange="change(this)"></select>
+                <div id="sertInfoData"></div>
+            </div>
+            <div class="SignButtonArea">
+                <div class="div-space-between">
+                    <button class="ActionButton" style="float: left;" onclick="GetSertificat()"> Обновить список сертификатов</button>
+                    <button class="ActionButton" style="float: left; margin-left: 10px;" onclick="SignFiles()"> Подписать</button>
+                </div>
+                <div id="certProgress" style="display:none">
+                    <div class="SignButtonArea">
+                        <div class="lds-hourglass"></div>
+                        <div id="certProgressText">Статус</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/Cades/es6-promise.min.js"></script>
+    <script src="~/lib/Cades/ie_eventlistner_polyfill.js"></script>
+    <script language="javascript">window.allow_firefox_cadesplugin_async = 1</script>
+    <script src="~/lib/Cades/cadesplugin_api.js"></script>
+    <script src="~/lib/Cades/Code.js"></script>
+    <script src="~/js/Sign.js"></script>
+}
+
+<form method="get" asp-action="Send">
+    <input id="button" clickCount="0" @(isActive ? "" : "disabled") class="ActionButton" type="submit" value="Отправить на обработку" onclick="@("return confirm('Вы уверены?')")" />
+</form>
+
+
+<script src="~/js/SEND_FILE_MEDPOM.js"></script>
+<script>
+    $("#button").on("click", function () {
+        if ($(this).attr("clickCount") === 0) {
+            $(this).attr("download", "1");
+        }
+    });
+</script>

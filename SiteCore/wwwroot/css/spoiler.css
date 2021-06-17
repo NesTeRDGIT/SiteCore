@@ -1,0 +1,68 @@
+﻿.spoiler {
+    overflow-x: hidden;
+    box-shadow: 0 3px 8px #808080;
+    border: #E5E5E5 solid 2px;
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    z-index: 0;
+}
+
+.spoiler input[type="checkbox"] {
+    cursor: pointer;
+    width: 100%;
+    position: relative;
+    left: 0;
+    z-index: 0;
+    opacity: 0;
+}
+
+.spoiler label {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 20px;
+    z-index: -1;
+}
+
+.spoiler .box {
+    display: none;
+    opacity: 0;
+}
+
+
+.spoiler > input:checked ~ .box {
+    display: block;
+    opacity: 1;
+    animation: spoiler_box_show 0.5s;
+}
+
+@keyframes spoiler_box_show {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    1% {
+        display: block;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+
+.spoiler > input:checked + .open {
+    background: url('../Image/minus.png') 4px 60% no-repeat;
+}
+
+
+
+.spoiler > .open {
+    padding-left: 22px;
+    color: #00f !important;
+    text-decoration: underline;
+    background: url('../Image/plus.png') 4px 60% no-repeat;
+    display: inline;
+}

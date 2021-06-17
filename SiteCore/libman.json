@@ -1,0 +1,46 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "jquery-ajax-unobtrusive@3.2.6",
+      "destination": "wwwroot/lib/jquery-ajax-unobtrusive/"
+    },
+    {
+      "library": "signalr.js@2.4.2",
+      "destination": "wwwroot/lib/signalr.js/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "@microsoft/signalr@5.0.7",
+      "destination": "wwwroot/lib/signalr/",
+      "files": [
+        "dist/browser/signalr.min.js"
+      ]
+    },
+    {
+      "library": "angular-ui-grid@4.10.1",
+      "destination": "wwwroot/angular-ui-grid/"
+    },
+    {
+      "library": "jquery.maskedinput@1.4.1",
+      "destination": "wwwroot/lib/jquery.maskedinput/"
+    },
+    {
+      "library": "angular-touch@1.8.2",
+      "destination": "wwwroot/lib/angularJS/"
+    },
+    {
+      "library": "angular-animate@1.8.2",
+      "destination": "wwwroot/lib/angularJS"
+    },
+    {
+      "library": "angular-aria@1.8.2",
+      "destination": "wwwroot/lib/angularJS/"
+    },
+    {
+      "library": "angular.js@1.8.2",
+      "destination": "wwwroot/lib/angularJS"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using SiteCore.Data
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <li class="liRight">
+        <a class="userlink"></a>
+        <ul class="submenu">
+            @if (User.IsInRole("Admin"))
+            {
+                <li>@Html.ActionLink("Управление", "InfoPersAccount", "Manage")</li>
+                <li>@Html.ActionLink("Пользователи", "RegisterUsers", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                <li>@Html.ActionLink("Объявления", "Ads", "Home")</li>
+            }
+            <li>
+                <form asp-action="Logout" asp-controller="Account" id="logoutForm" method="post">
+                    <a href="javascript:document.getElementById('logoutForm').submit()">Выйти</a>
+                </form>
+            </li>
+        </ul>
+    </li>
+}
+else
+{
+    <li class="liRight">@Html.ActionLink("Выполнить вход", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+}

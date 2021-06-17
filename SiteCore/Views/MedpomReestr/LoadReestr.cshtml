@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Загрузка реестров";
+
+}
+
+
+@section Lib
+{
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/css/ProgressBar.css" rel="stylesheet" />
+    <link href="~/css/lds-hourglass-loader.css" rel="stylesheet" />
+    <script src="~/js/updateBtn.js"></script>
+    <link href="~/css/FileLoader.css" rel="stylesheet" />
+    <link href="~/css/spoiler.css" rel="stylesheet" />
+}
+
+<form data-ajax="true" data-ajax-method="get" data-ajax-url="@Url.Action("LoadReestrData")" data-ajax-update="#Result" data-ajax-begin="ShowLoader()" data-ajax-success="HideLoader()" data-ajax-failure="Err()">
+    <input id="UpdateBtn" type="submit" value="Обновить" class="ActionButton" />
+</form>
+<div id="Result">
+
+</div>
+
+<div id="LoadingBar" class="lds-hourglass" style="display:none">
+
+</div>
+@section Scripts
+{
+    <script>
+        HiddenBtnClick();
+    </script>
+}
