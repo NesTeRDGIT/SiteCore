@@ -47,11 +47,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ExcelManager\ExcelManager.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="CRZ_IDENTITIFI">
       <HintPath>..\..\..\Site\MedpomSite\IndentiModel\bin\Debug\CRZ_IDENTITIFI.dll</HintPath>
     </Reference>
+    <Reference Include="DocumentFormat.OpenXml">
+      <HintPath>..\..\..\ServiceVersion\ExcelManager\bin\Debug\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
     <Reference Include="IdentiModel">
       <HintPath>..\..\..\Site\MedpomSite\IndentiModel\bin\Debug\IdentiModel.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore">
+      <HintPath>..\..\..\ServiceVersion\ExcelManager\bin\Debug\PresentationCore.dll</HintPath>
+      <Private>true</Private>
     </Reference>
     <Reference Include="ServiceLoaderMedpomData">
       <HintPath>..\..\..\ServiceVersion\ServiceLoaderMedpomData\bin\Debug\ServiceLoaderMedpomData.dll</HintPath>

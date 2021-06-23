@@ -13,12 +13,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DocumentFormat.OpenXml.Drawing;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ServiceLoaderMedpomData;
 using SiteCore.Class;
 using SiteCore.Controllers;
 using SiteCore.Hubs;
+using Path = System.IO.Path;
 
 namespace SiteCore
 {
@@ -36,7 +38,6 @@ namespace SiteCore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseOracle(Configuration.GetConnectionString("DefaultConnection"), b=>b.UseOracleSQLCompatibility("11")));
-            services.AddDbContext<MyOracleSet>(options => options.UseOracle(Configuration.GetConnectionString("DefaultConnection"), b => b.UseOracleSQLCompatibility("11")));
             services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
@@ -54,10 +55,13 @@ namespace SiteCore
             services.AddRazorPages();
             services.Replace(new ServiceDescriptor(serviceType: typeof(IPasswordHasher<ApplicationUser>), implementationType: typeof(Mvc5MvcPasswordHasher), ServiceLifetime.Scoped));
             services.AddSignalR();
+            services.AddSession();
 
 
             services.AddMedpom(Configuration);
             services.AddIdentiCS(Configuration);
+            services.AddIdentiTMK(Configuration);
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,17 +80,20 @@ namespace SiteCore
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+          
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
                 endpoints.MapHub<NotificationHub>("/Notification");
             });
+           
         }
 
         
@@ -97,6 +104,7 @@ namespace SiteCore
     {
         public static IServiceCollection AddMedpom(this IServiceCollection services, IConfiguration Configuration)
         {
+            services.AddDbContext<MyOracleSet>(options => options.UseOracle(Configuration.GetConnectionString("DefaultConnection"), b => b.UseOracleSQLCompatibility("11")));
             services.AddTransient<ILogger>(provider => new LoggerEventLog("SiteCore"));
             var host = Configuration.GetSection("WCFParam").GetValue("HOST", "");
             var login = Configuration.GetSection("WCFParam").GetValue("LOGIN", "");
@@ -108,7 +116,6 @@ namespace SiteCore
             services.AddTransient<IHasher>(provider => new GostHasher());
             return services;
         }
-
         public static IServiceCollection AddIdentiCS(this IServiceCollection services, IConfiguration Configuration)
         {
             services.AddDbContext<CSOracleSet>(options => options.UseLazyLoadingProxies().UseOracle(Configuration.GetConnectionString("DefaultConnection"), b => b.UseOracleSQLCompatibility("11")));
@@ -119,8 +126,19 @@ namespace SiteCore
             return services;
         }
 
+        public static IServiceCollection AddIdentiTMK(this IServiceCollection services, IConfiguration Configuration)
+        {
+            services.AddDbContext<TMKOracleSet>(options => options.UseLazyLoadingProxies().UseOracle(Configuration.GetConnectionString("TMKConnection"), b => b.UseOracleSQLCompatibility("11")));
+            services.AddTransient<ITMKExcelCreator>(provider =>
+            {
+                var pathTemplate = Path.Combine(provider.GetService<IWebHostEnvironment>().WebRootPath, "Template", "TMK");
+                return new TMKExcelCreator(Path.Combine(pathTemplate, "Reestr.xlsx"), Path.Combine(pathTemplate, "Report.xlsx"));
 
-        
+            });
+            return services;
+        }
+
+
     }
 
 

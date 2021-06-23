@@ -1,0 +1,42 @@
+﻿@model List<SiteCore.Data.CONTACT_INFO>
+    @{
+        ViewBag.Title = "Справочник контактов с МО";
+    }
+
+
+<div>
+    <a asp-action="EditCONTACT_INFO" class="ActionButton">Новый</a>
+</div>
+    <div style="margin: 10px;">
+
+        <table class="table_report">
+            <thead>
+                <tr>
+                    <th>Медицинская организация</th>
+                    <th>Фамилия</th>
+                    <th>Имя</th>
+                    <th>Отчество</th>
+                    <th>Телефон</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+        {
+                    <tr>
+                        <td>@item.CODE_MO_NAME.NAM_MOK</td>
+                        <td>@item.FAM</td>
+                        <td>@item.IM</td>
+                        <td>@item.OT</td>
+                        <td>@item.TEL</td>
+                        <td>
+                            <div style="margin-top: 10px; margin-bottom: 10px;">
+                                <a asp-action="EditCONTACT_INFO" asp-route-ID_CONTACT_INFO="@item.ID_CONTACT_INFO" class="ActionButton">Редактировать</a>
+                            </div>
+                        </td>
+                    </tr>
+        }
+            </tbody>
+        </table>
+
+    </div>

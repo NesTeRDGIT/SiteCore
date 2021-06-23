@@ -1,6 +1,6 @@
 ﻿
-    var myApp = angular.module('myApp', ['ngTouch', 'ui.grid', 'ui.grid.pagination', 'ui.grid.selection', 'ui.grid.cellNav', 'ui.grid.resizeColumns', 'ui.bootstrap', 'ui.bootstrap.contextMenu', 'ui.grid.autoResize', 'Modal', 'ui.grid.loader']);
-myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', '$templateCache', 'ModalService', '$compile', 
+    var myApp = angular.module("myApp", ["ngTouch", "ui.grid", "ui.grid.pagination", "ui.grid.selection", "ui.grid.cellNav", "ui.grid.resizeColumns", "ui.bootstrap", "ui.bootstrap.contextMenu", "ui.grid.autoResize", "Modal", "ui.grid.loader"]);
+myApp.controller("Grid1", ["$scope", "$http", "uiGridConstants", "i18nService", "$templateCache", "ModalService", "$compile", 
     function ($scope, $http, uiGridConstants, i18nService, $templateCache, ModalService, $compile) {
 
            
@@ -15,7 +15,7 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
         };
 
         $scope.IsTFOMS = function () {
-            return  $scope.CurrentTMK.SMO === '75';
+            return  $scope.CurrentTMK.SMO === "75";
         }
 
         $scope.init = function (IsTMKUser, IsTMKAdmin, IsTMKReader, IsTMKSMO, CODE_MO) {
@@ -46,24 +46,24 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
 
 
             columnDefs: [
-                { displayName: '', name: 'STATUS', enableHiding: false, enableSorting: false, width: '40', cellTemplate: "<div style=\"position: relative; float: left;\"><img height=\"30px\" ng-src=\"{{grid.appScope.GetImageStatus(row, col)}}\" title=\"{{row.entity.STATUS_COM}}\" > <img height=\"30px\" ng-src=\"{{grid.appScope.GetImageStatusEXP(row, col)}}\" ng-hide=\"!row.entity.isEXP\" title=\"{{row.entity.STATUS_COM}}\" style=\"position: absolute; left: 0;\"/> </div> ", enableColumnMenu: false },
-                { displayName: '№', name: 'TMK_ID', enableSorting: false, enableHiding: false, width: '60', enableColumnMenu: false },
-                { displayName: 'ЕНП', name: 'ENP', enableSorting: false, enableHiding: false, width: '140', enableColumnMenu: false },
-                { displayName: 'МО', name: 'NAM_MOK', enableSorting: false, enableHiding: false, width: '180', enableColumnMenu: false, cellTemplate: "<div class=\"ui-grid-cell-contents ng-binding ng-scope tooltip\" title=\"{{row.entity.CONTACT_INFO}}\">{{row.entity.NAM_MOK}}</div>" },
-                { displayName: 'ФИО', name: 'FIO', enableSorting: false, enableHiding: false, width: '150', enableColumnMenu: false },
-                { name: 'DATE_B', displayName: 'Дата начала лечения', type: 'date', enableSorting: false, cellFilter: 'date:\'dd.MM.yyyy\'', enableHiding: false, width: '100', enableColumnMenu: false },
-                { name: 'DATE_QUERY', displayName: 'Дата оформления запроса на ТМК', type: 'date', enableSorting: false, cellFilter: 'date:\'dd.MM.yyyy\'', enableHiding: false, width: '100', enableColumnMenu: false },
-                { name: 'DATE_PROTOKOL', displayName: 'Дата получения протокола', type: 'date', enableSorting: false, cellFilter: 'date:\'dd.MM.yyyy\'', enableHiding: false, width: '100', enableColumnMenu: false },
-                { name: 'DATE_TMK', displayName: ' Дата проведения очной консультации \\ консилиума', type: 'date', enableSorting: false, cellFilter: 'date:\'dd.MM.yyyy\'', enableHiding: false, width: '120', enableColumnMenu: false },
-                { displayName: 'Страхование', name: 'SMO', enableSorting: false, enableHiding: false, width: '110', enableColumnMenu: false },
-                { displayName: 'Вид медицинской документации', name: 'VID_NHISTORY', enableSorting: false, enableHiding: false, width: '150', enableColumnMenu: false },
-                { displayName: 'Признак оплаты', name: 'OPLATA', enableSorting: false, enableHiding: false, width: '150', enableColumnMenu: false },
-                { displayName: 'Дата МЭК', name: 'DATE_MEK', enableSorting: false, enableHiding: false, width: '90', enableColumnMenu: false },
-                { displayName: 'Дефекты МЭК', name: 'DEF_MEK', enableSorting: false, enableHiding: false, width: '200', enableColumnMenu: false },
-                { displayName: 'Дата МЭЭ', name: 'DATE_MEE', enableSorting: false, enableHiding: false, width: '90', enableColumnMenu: false },
-                { displayName: 'Дефекты МЭЭ', name: 'DEF_MEE', enableSorting: false, enableHiding: false, width: '200', enableColumnMenu: false },
-                { displayName: 'Дата ЭКМП', name: 'DATE_EKMP', enableSorting: false, enableHiding: false, width: '90', enableColumnMenu: false },
-                { displayName: 'Дефекты ЭКМП', name: 'DEF_EKMP', enableSorting: false, enableHiding: false, width: '200', enableColumnMenu: false }
+                { displayName: "", name: "STATUS", enableHiding: false, enableSorting: false, width: "40", cellTemplate: "<div style=\"position: relative; float: left;\"><img height=\"30px\" ng-src=\"{{grid.appScope.GetImageStatus(row, col)}}\" title=\"{{row.entity.STATUS_COM}}\" > <img height=\"30px\" ng-src=\"{{grid.appScope.GetImageStatusEXP(row, col)}}\" ng-hide=\"!row.entity.isEXP\" title=\"{{row.entity.STATUS_COM}}\" style=\"position: absolute; left: 0;\"/> </div> ", enableColumnMenu: false },
+                { displayName: "№", name: "TMK_ID", enableSorting: false, enableHiding: false, width: "60", enableColumnMenu: false },
+                { displayName: "ЕНП", name: "ENP", enableSorting: false, enableHiding: false, width: "140", enableColumnMenu: false },
+                { displayName: "МО", name: "NAM_MOK", enableSorting: false, enableHiding: false, width: "180", enableColumnMenu: false, cellTemplate: "<div class=\"ui-grid-cell-contents ng-binding ng-scope tooltip\" title=\"{{row.entity.CONTACT_INFO}}\">{{row.entity.NAM_MOK}}</div>" },
+                { displayName: "ФИО", name: "FIO", enableSorting: false, enableHiding: false, width: "150", enableColumnMenu: false },
+                { name: "DATE_B", displayName: "Дата начала лечения", type: "date", enableSorting: false, cellFilter: "date:'dd.MM.yyyy'", enableHiding: false, width: "100", enableColumnMenu: false },
+                { name: "DATE_QUERY", displayName: "Дата оформления запроса на ТМК", type: "date", enableSorting: false, cellFilter: "date:'dd.MM.yyyy'", enableHiding: false, width: "100", enableColumnMenu: false },
+                { name: "DATE_PROTOKOL", displayName: "Дата получения протокола", type: "date", enableSorting: false, cellFilter: "date:'dd.MM.yyyy'", enableHiding: false, width: "100", enableColumnMenu: false },
+                { name: "DATE_TMK", displayName: " Дата проведения очной консультации \\ консилиума", type: "date", enableSorting: false, cellFilter: "date:'dd.MM.yyyy'", enableHiding: false, width: "120", enableColumnMenu: false },
+                { displayName: "Страхование", name: "SMO", enableSorting: false, enableHiding: false, width: "110", enableColumnMenu: false },
+                { displayName: "Вид медицинской документации", name: "VID_NHISTORY", enableSorting: false, enableHiding: false, width: "150", enableColumnMenu: false },
+                { displayName: "Признак оплаты", name: "OPLATA", enableSorting: false, enableHiding: false, width: "150", enableColumnMenu: false },
+                { displayName: "Дата МЭК", name: "DATE_MEK", enableSorting: false, enableHiding: false, width: "90", enableColumnMenu: false },
+                { displayName: "Дефекты МЭК", name: "DEF_MEK", enableSorting: false, enableHiding: false, width: "200", enableColumnMenu: false },
+                { displayName: "Дата МЭЭ", name: "DATE_MEE", enableSorting: false, enableHiding: false, width: "90", enableColumnMenu: false },
+                { displayName: "Дефекты МЭЭ", name: "DEF_MEE", enableSorting: false, enableHiding: false, width: "200", enableColumnMenu: false },
+                { displayName: "Дата ЭКМП", name: "DATE_EKMP", enableSorting: false, enableHiding: false, width: "90", enableColumnMenu: false },
+                { displayName: "Дефекты ЭКМП", name: "DEF_EKMP", enableSorting: false, enableHiding: false, width: "200", enableColumnMenu: false }
             ],
             onRegisterApi: function (gridApi) {
                 $scope.gridApi = gridApi;
@@ -108,9 +108,9 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
                     var isErrorALL = false;
                     var IsMyALL = false;
                     if (rows.length !== 0) {
-                        isOpen = rows[0].STATUS === 'Open';
-                        isClosed = rows[0].STATUS === 'Closed';
-                        isError = rows[0].STATUS === 'Error';
+                        isOpen = rows[0].STATUS === "Open";
+                        isClosed = rows[0].STATUS === "Closed";
+                        isError = rows[0].STATUS === "Error";
                         IsMy = rows[0].CODE_MO === $scope.CODE_MO;
 
                         isOpenALL = true;
@@ -119,15 +119,15 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
                         IsMyALL = true;
                         for (let i = 0; i < rows.length; i++) {
                             const x = rows[i];
-                            if (x.STATUS === 'Open') {
+                            if (x.STATUS === "Open") {
                                 isClosedALL = false;
                                 isErrorALL = false;
                             }
-                            if (x.STATUS === 'Closed') {
+                            if (x.STATUS === "Closed") {
                                 isOpenALL = false;
                                 isErrorALL = false;
                             }
-                            if (x.STATUS === 'Error') {
+                            if (x.STATUS === "Error") {
                                 isClosedALL = false;
                                 isOpenALL = false;
                             }
@@ -153,7 +153,7 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
                     if ($scope.IsTMKUser) {
                         contextMenuData.push(
                             {
-                                text: 'Новая запись',
+                                text: "Новая запись",
                                 enabled: function () { return isOpen && IsMy; },
                                 click: function ($itemScope, $event, modelValue, text, $li) {
                                     AddTMK();
@@ -162,7 +162,7 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
 
                         contextMenuData.push(
                             {
-                                text: 'Редактировать',
+                                text: "Редактировать",
                                 enabled: function () { return isOpen && IsMy; },
                                 click: function ($itemScope, $event, modelValue, text, $li) {
                                     const TMK_ID = $scope.gridApi.selection.getSelectedRows().map(function (x) { return x.TMK_ID })[0];
@@ -171,16 +171,18 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
                             });
                         contextMenuData.push(
                             {
-                                text: 'Удалить',
+                                text: "Удалить",
                                 enabled: function () { return isOpenALL && IsMyALL; },
                                 click: function ($itemScope, $event, modelValue, text, $li) {
                                     const TMK_ID = rows.map(function (x) { return x.TMK_ID });
                                     if (TMK_ID && TMK_ID.length !== 0) {
                                         if (!confirm(`Вы уверены что ходите удалить ${TMK_ID.length} записей`)) return;
-                                        $http.post('DeleteTmkReestr', TMK_ID).then(function (response) {
-                                            if (response.data.OK) {
-                                            } else {
-                                                alert(`Ошибка:${response.data.Data}`);
+                                        $http.post("DeleteTmkReestr", TMK_ID).then(function (response) {
+                                                const data = response.data;
+                                                const Result = data.Result;
+                                                const Value = data.Value;
+                                            if (Result !== true) {
+                                                alert(`Ошибка:${Value}`);
                                             }
                                         },
                                             function (response) {
@@ -196,16 +198,18 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
                     if ($scope.IsTMKAdmin) {
                         contextMenuData.push(
                             {
-                                text: 'Изменить статус',
+                                text: "Изменить статус",
                                 click: function ($itemScope, $event, modelValue, text, $li) {
                                     const TMK_ID = rows.map(function (x) { return x.TMK_ID });
                                     if (TMK_ID && TMK_ID.length !== 0) {
                                         if (!confirm(`Вы уверены что ходите изменить статус ${TMK_ID.length} записей`)) return;
-                                        $http.post('ChangeTmkReestrStatus', TMK_ID).then(function (response) {
-                                            if (response.data.OK) {
-                                            } else {
-                                                alert(`Ошибка:${response.data.Data}`);
-                                            }
+                                        $http.post("ChangeTmkReestrStatus", TMK_ID).then(function (response) {
+                                                const data = response.data;
+                                                const Result = data.Result;
+                                                const Value = data.Value;
+                                            if (Result !== true) {
+                                                alert(`Ошибка:${Value}`);
+                                            } 
                                         },
                                             function (response) {
                                                 alert(`Ошибка запроса:${response.status}:${response.statusText}`);
@@ -219,7 +223,7 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
 
                     contextMenuData.push(
                         {
-                            text: 'Обновить',
+                            text: "Обновить",
                             click: function($itemScope, $event, modelValue, text, $li) {
                                 $scope.getPage();
                             }
@@ -231,19 +235,19 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
 
 
                 GetImageStatus(row, col) {
-                    if (row.entity.STATUS === 'Closed')
-                        return '/Medpom/Image/GreenIndicator.png';
-                    if (row.entity.STATUS === 'Open')
-                        return '/Medpom/Image/YelowIndicator.png';
-                    if (row.entity.STATUS === 'Error')
-                        return '/Medpom/Image/RedIndicator.png';
-                    return '';
+                    if (row.entity.STATUS === "Closed")
+                        return "/Image/GreenIndicator.png";
+                    if (row.entity.STATUS === "Open")
+                        return "/Image/YelowIndicator.png";
+                    if (row.entity.STATUS === "Error")
+                        return "/Image/RedIndicator.png";
+                    return "";
                 },
                 GetImageStatusEXP(row, col) {
                     if (row.entity.isEXP === true) {
-                        return '/Medpom/Image/InExpertIcon.png';
+                        return "/Image/InExpertIcon.png";
                     }
-                    return '';
+                    return "";
                 }
 
 
@@ -251,9 +255,9 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
         };
 
         Date.prototype.yyyymmdd = function () {
-            var mm = this.getMonth() + 1; // getMonth() is zero-based
-            var dd = this.getDate();
-            return [this.getFullYear(),(mm > 9 ? '' : '0') + mm,(dd > 9 ? '' : '0') + dd].join('-');
+            const mm = this.getMonth() + 1; // getMonth() is zero-based
+            const dd = this.getDate();
+            return [this.getFullYear(),(mm > 9 ? "" : "0") + mm,(dd > 9 ? "" : "0") + dd].join("-");
         };
         function serialize(obj, prefix) {
                
@@ -265,11 +269,11 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
                         v = obj[p] instanceof Date ? obj[p].yyyymmdd() : obj[p];
 
                     if (typeof v === "string")
-                        v = v.replace(' ', '%20');
+                        v = v.replace(" ", "%20");
                      
-                    if (v !== null && v !== '' && !(isNaN(v) && typeof v === "number")) {
+                    if (v !== null && v !== "" && !(isNaN(v) && typeof v === "number")) {
                         var s = (typeof v === "object") ? serialize(v, k) : encodeURIComponent(k) + "=" + v;
-                        if(s!=='')
+                        if(s!=="")
                             str.push(s);
                     }
                 }
@@ -320,10 +324,10 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
                 
             $scope.Find();
             setTimeout((function(){
-                $('#FilterCODE_MO').trigger('change');
-                $('#FilterSMO').val($scope.Filter.SMO ).trigger('change');
-                $('#FilterVID_NHISTORY').trigger('change');
-                $('#FilterOPLATA').trigger('change');
+                $("#FilterCODE_MO").trigger("change");
+                $("#FilterSMO").val($scope.Filter.SMO ).trigger("change");
+                $("#FilterVID_NHISTORY").trigger("change");
+                $("#FilterOPLATA").trigger("change");
 
             }),100);
             
@@ -333,14 +337,11 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
         $scope.getXLS= function () {
             var url;
             url = `GetTMKReestrFile?Page=${paginationOptions.pageNumber}&CountOnPage=${paginationOptions.pageSize}`;
-              
-            var Fillter = serialize($scope.Filter);
-               
+            const Fillter = serialize($scope.Filter);
             if (Fillter)
-                url += '&' + Fillter;
-               
-            var downloadLink = window.document.createElement('a');
-            downloadLink.setAttribute('download', 'true');
+                url += `&${Fillter}`;
+            const downloadLink = window.document.createElement("a");
+            downloadLink.setAttribute("download", "true");
             downloadLink.href = url;
             document.body.appendChild(downloadLink);
             downloadLink.click();
@@ -375,14 +376,20 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
          
             var Fillter = serialize($scope.Filter);
             if (Fillter)
-                url += '&'+Fillter;
+                url += "&"+Fillter;
             $scope.gridOptions.data = [];
 
             $http.get(url)
                 .then(function (response) {
                     const data = response.data;
-                    $scope.gridOptions.totalItems = data.count;
-                    $scope.gridOptions.data = data.items;
+                    const Result = data.Result;
+                    const Value = data.Value;
+                    if (Result === true) {
+                        $scope.gridOptions.totalItems = Value.count;
+                        $scope.gridOptions.data = Value.items;
+                    } else {
+                        alert(Value);
+                    }
                 }, function (response) {
                     alert(`Ошибка запроса:${response.status}:${response.statusText}`);
                 })
@@ -392,11 +399,10 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
         };
           
         function GetDetail(row) {
-           
             $scope.currentRow = row;
             const TMK_ID = row.entity.TMK_ID;
-            var win = 'custom-modal-1';
-            ModalService.Content(win, 'Загрузка...');
+            var win = "custom-modal-1";
+            ModalService.Content(win, "Загрузка...");
             ModalService.Caption(win, `Просмотр записи = ${TMK_ID}`);
             ModalService.Open(win);
             const url = `View?TMK_ID=${TMK_ID}`;
@@ -421,11 +427,11 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
         }
 
         function AddTMK() {
-            var win = 'custom-modal-1';
-            ModalService.Content(win, 'Загрузка...');
-            ModalService.Caption(win, 'Создание записи');
+            var win = "custom-modal-1";
+            ModalService.Content(win, "Загрузка...");
+            ModalService.Caption(win, "Создание записи");
             ModalService.Open(win);
-            var url = 'EditTMKReestr';
+            const url = "EditTMKReestr";
             $http.get(url)
                 .then(function (response) {
                     const data = $compile(response.data)($scope);
@@ -439,11 +445,11 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
         }
 
         function EditTMK(TMK_ID) {
-            var win = 'custom-modal-1';
-            ModalService.Content(win, 'Загрузка...');
-            ModalService.Caption(win, 'Редактирование записи №' + TMK_ID);
+            var win = "custom-modal-1";
+            ModalService.Content(win, "Загрузка...");
+            ModalService.Caption(win, "Редактирование записи №" + TMK_ID);
             ModalService.Open(win);
-            var url = 'EditTMKReestr';
+            const url = "EditTMKReestr";
             $http.get(url)
                 .then(function (response) {
                     const data = $compile(response.data)($scope);
@@ -459,11 +465,11 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
 
         $scope.AddExpertizeDialog = function (type) {
             var row = $scope.currentRow.entity;
-            var win = 'custom-modal-2';
+            var win = "custom-modal-2";
             ModalService.Caption(win, `Добавление экспертизы для записи №${row.TMK_ID}`);
-            ModalService.Content(win, 'Загрузка...');
+            ModalService.Content(win, "Загрузка...");
             ModalService.Open(win);
-            var url = `EditExpertize?TMK_ID=${row.TMK_ID}&&ExpertTip=${type}`;
+            const url = `EditExpertize?TMK_ID=${row.TMK_ID}&&ExpertTip=${type}`;
             $http.get(url)
                 .then(function (response) {
                     const data = $compile(response.data)($scope);
@@ -477,16 +483,17 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
         }
 
         $scope.SaveExpertize = function () {
-
-            var win = 'custom-modal-2';
-            $http.post('EditExpertize', $scope.CurrentExpertize)
+            var win = "custom-modal-2";
+            $http.post("EditExpertize", $scope.CurrentExpertize)
                 .then(function (response) {
-                
-                    if (response.data.OK === true) {
+                    const data = response.data;
+                    const Result = data.Result;
+                    const Value = data.Value;
+                    if (Result === true) {
                         ModalService.Close(win);
                         UpdateListExpertize();
                     } else {
-                        $scope.ErrExpertise = response.data.Data;
+                        $scope.ErrExpertise = Value;
                     }
                 }, function (response) {
                     alert(`Ошибка запроса:${response.status}:${response.statusText}`);
@@ -495,16 +502,17 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
                 });;
         }
         $scope.SaveTMK = function () {
-            var win = 'custom-modal-1';
-            $http.post('EditTmkReestr', $scope.CurrentTMK)
+            var win = "custom-modal-1";
+            $http.post("EditTmkReestr", $scope.CurrentTMK)
                 .then(function (response) {
-                    if (response.data.OK === true) {
-                    
+                    const data = response.data;
+                    const Result = data.Result;
+                    const Value = data.Value;
+                    if (Result === true) {
                         ModalService.Close(win);
                         $scope.getPage();
                     } else {
-                    
-                        $scope.ErrTMK = response.data.Data;
+                        $scope.ErrTMK = Value;
                     }
                 }, function (response) {
                     alert(`Ошибка запроса:${response.status}:${response.statusText}`);
@@ -514,14 +522,17 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
         }
 
         $scope.DeleteTMK = function () {
-            var win = 'custom-modal-1';
-            $http.post('DeleteTmkReestr', [$scope.CurrentTMK.TMK_ID])
+            var win = "custom-modal-1";
+            $http.post("DeleteTmkReestr", [$scope.CurrentTMK.TMK_ID])
                 .then(function (response) {
-                    if (response.data.OK === true) {
+                    const data = response.data;
+                    const Result = data.Result;
+                    const Value = data.Value;
+                    if (Result === true) {
                         ModalService.Close(win);
                         $scope.getPage();
                     } else {
-                        $scope.ErrTMK = response.data.Data;
+                        $scope.ErrTMK = Value;
                     }
                 }, function (response) {
                     alert(`Ошибка запроса:${response.status}:${response.statusText}`);
@@ -532,11 +543,11 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
 
 
         $scope.EditExpertizeDialog = function (EXPERTIZE_ID) {
-            var win = 'custom-modal-2';
+            var win = "custom-modal-2";
             ModalService.Caption(win, `Редактирование экспертизы №${EXPERTIZE_ID}`);
-            ModalService.Content(win, 'Загрузка...');
+            ModalService.Content(win, "Загрузка...");
             ModalService.Open(win);
-            var url = `EditExpertize?EXPERTIZE_ID=${EXPERTIZE_ID}`;
+            const url = `EditExpertize?EXPERTIZE_ID=${EXPERTIZE_ID}`;
             $http.get(url)
                 .then(function (response) {
                     const data = $compile(response.data)($scope);
@@ -549,60 +560,84 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
                 });;
         }
 
-        $scope.DeleteExpertize = function (EXPERTIZE_ID) {
+        $scope.DeleteExpertize = function(EXPERTIZE_ID) {
             if (confirm("Вы уверены что хотите удалить экспертизу?")) {
-                var url = `DeleteExpertize?EXPERTIZE_ID=${EXPERTIZE_ID}`;
+                const url = `DeleteExpertize?EXPERTIZE_ID=${EXPERTIZE_ID}`;
                 $http.post(url)
-                    .then(function () {
-                        UpdateListExpertize();
-                    }, function (response) {
-                        alert(`Ошибка запроса:${response.status}:${response.statusText}`);
-                    })
-                    .finally(function () {
+                    .then(function (response) {
+                            const data = response.data;
+                            const Result = data.Result;
+                            const Value = data.Value;
+                            if (Result === true) {
+                                UpdateListExpertize();
+                            } else {
+                                alert(Value);
+                            }
+
+                        },
+                        function(response) {
+                            alert(`Ошибка запроса:${response.status}:${response.statusText}`);
+                        })
+                    .finally(function() {
                     });;
             }
         }
 
         $scope.SMODataOK = null;
         $scope.SMODataStatus = null;
-        $scope.SaveSMOData = function () {
-            var url = `SetOPLATAandVID_NHISTORY`;
-            $http.post(url,$scope.CurrentTMK)
-                    .then(function (response) {
-                        if (response.data.OK === true) {
+        $scope.SaveSMOData = function() {
+            const url = `SetOPLATAandVID_NHISTORY`;
+            debugger;
+            const json = JSON.stringify({
+                TMK_ID: $scope.CurrentTMK.TMK_ID,
+                VID_NHISTORY: $scope.CurrentTMK.VID_NHISTORY,
+                OPLATA: $scope.CurrentTMK.OPLATA,
+                SMO_COM: $scope.CurrentTMK.SMO_COM
+            });
+          
+            $http.post(url, json)
+                .then(function(response) {
+                        const data = response.data;
+                        const Result = data.Result;
+                        const Value = data.Value;
+                        if (Result === true) {
                             $scope.SMODataStatus = "Изменения приняты";
                             $scope.SMODataOK = true;
-
                         } else {
                             $scope.SMODataOK = false;
-                            $scope.SMODataStatus = "Ошибка: " + response.data.Data;
+                            $scope.SMODataStatus = `Ошибка: ${Value}`;
                         }
-                    }, function (response) {
+                    },
+                    function(response) {
                         alert(`Ошибка запроса:${response.status}:${response.statusText}`);
                     })
-                    .finally(function () {
-                    });;
+                .finally(function() {
+                });;
         }
 
 
-        $scope.SetAsMTR = function () {
-            var url = `SetAsMTR?TMK_ID=${$scope.CurrentTMK.TMK_ID}`;
+        $scope.SetAsMTR = function() {
+            const url = `SetAsMTR?TMK_ID=${$scope.CurrentTMK.TMK_ID}`;
             $http.post(url)
-                .then(function (response) {
-                    if (response.data.OK === true) {
-                        GetDetail($scope.currentRow);
-                    } else {
-                        alert(response.data.Data);
-                    }
-                }, function (response) {
-                    alert(`Ошибка запроса:${response.status}:${response.statusText}`);
-                })
-                .finally(function () {
+                .then(function(response) {
+                        const data = response.data;
+                        const Result = data.Result;
+                        const Value = data.Value;
+                        if (Result === true) {
+                            GetDetail($scope.currentRow);
+                        } else {
+                            alert(Value);
+                        }
+                    },
+                    function(response) {
+                        alert(`Ошибка запроса:${response.status}:${response.statusText}`);
+                    })
+                .finally(function() {
                 });;
         }
 
         function GetTMK(TMK_ID) {
-            var url = `GetTmkReestr?TMK_ID=${TMK_ID}`;
+            const url = `GetTmkReestr?TMK_ID=${TMK_ID}`;
             $scope.ErrTMK = {};
             $scope.CurrentTMK = {}
             $scope.IsLoadTMK = true;
@@ -610,8 +645,12 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
             $scope.SMODataStatus = null;
             $http.get(url)
                 .then(function (response) {
-                    if (response.data.OK) {
-                        const item = response.data.Data;
+                    const data = response.data;
+                    const Result = data.Result;
+                    const Value = data.Value;
+
+                    if (Result===true) {
+                        const item = Value;
                         item.DATE_TMK = item.DATE_TMK!==null ? new Date(item.DATE_TMK) :null;
                         item.DATE_PROTOKOL = item.DATE_PROTOKOL!==null ? new Date(item.DATE_PROTOKOL):null;
                         item.DATE_QUERY = item.DATE_QUERY!==null ? new Date(item.DATE_QUERY):null;
@@ -619,9 +658,8 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
                         item.DR = item.DR!==null ? new Date(item.DR):null;
                         item.DR_P = item.DR_P !== null ? new Date(item.DR_P) : null;
                         $scope.CurrentTMK = item;
-                     
                     } else {
-                        alert(response.data.Data);
+                        alert(Value);
                     }
 
                 }, function (response) {
@@ -641,24 +679,27 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
 
 
         function UpdateListExpertize() {
-            var url = `GetExpertize?TMK_ID=${$scope.currentRow.entity.TMK_ID}`;
+            const url = `GetExpertize?TMK_ID=${$scope.currentRow.entity.TMK_ID}`;
             $scope.IsLoadExpertize = true;
             $http.get(url)
-                .then(function (response) {
-                    if (response.data.OK) {
-                        const data = response.data.Data.map(function(item) {
-                            item.DATEACT = item.DATEACT !== null ? new Date(item.DATEACT): null;
-                            return item;
-                        });
-                        $scope.Expertizes = data;
-                    } else {
-                        alert(response.data.Data);
-                    }
-
-                }, function (response) {
-                    alert(`Ошибка запроса:${response.status}:${response.statusText}`);
-                })
-                .finally(function () {
+                .then(function(response) {
+                        const data = response.data;
+                        const Result = data.Result;
+                        const Value = data.Value;
+                        if (Result === true) {
+                            const exp = Value.map(function(item) {
+                                item.DATEACT = item.DATEACT !== null ? new Date(item.DATEACT) : null;
+                                return item;
+                            });
+                            $scope.Expertizes = exp;
+                        } else {
+                            alert(Value);
+                        }
+                    },
+                    function(response) {
+                        alert(`Ошибка запроса:${response.status}:${response.statusText}`);
+                    })
+                .finally(function() {
                     $scope.IsLoadExpertize = false;
                 });;
         }
@@ -682,12 +723,15 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
             $scope.IsLoadExpertize = true;
             $http.get(`GetExpertize?EXPERTIZE_ID=${EXPERTIZE_ID}`)
                 .then(function (response) {
-                    if (response.data.OK) {
-                        const data = response.data.Data.map(function(item) {
+                    const data = response.data;
+                    const Result = data.Result;
+                    const Value = data.Value;
+                    if (Result===true) {
+                        const exps = Value.map(function(item) {
                             item.DATEACT = item.DATEACT !== null ? new Date(item.DATEACT) : null;
                             return item;
                         });
-                        const exp = data[0];
+                        const exp = exps[0];
                         CurrentExpertize.NUMACT = exp.NUMACT;
                         CurrentExpertize.DATEACT = exp.DATEACT;
                         CurrentExpertize.FIO = exp.FIO;
@@ -744,51 +788,50 @@ myApp.controller('Grid1', ['$scope', '$http', 'uiGridConstants', 'i18nService', 
             return "<div ng-dblclick=\"grid.appScope.onDblClick(row)\" ng-repeat=\"(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name\" class=\"ui-grid-cell\" ng-class=\"{ 'ui-grid-row-header-cell': col.isRowHeader }\" ui-grid-cell context-menu=\"grid.appScope.contextmenuOptions(row)\"  ></div>";
         }
         //Шаблон панели строк + контекстное меню
-        $templateCache.put('ui-grid/uiGridViewport',
+        $templateCache.put("ui-grid/uiGridViewport",
             "<div role=\"rowgroup\" class=\"ui-grid-viewport\" ng-style=\"colContainer.getViewportStyle()\" context-menu=\"grid.appScope.contextmenuOptions(row)\"><!-- tbody --><div class=\"ui-grid-canvas\"><div ng-repeat=\"(rowRenderIndex, row) in rowContainer.renderedRows track by $index\" class=\"ui-grid-row\" ng-style=\"Viewport.rowStyle(rowRenderIndex)\"><div role=\"row\" ui-grid-row=\"row\" row-render-index=\"rowRenderIndex\"></div></div></div></div>"
         );
     }]);
 
-myApp.filter('S_OSN_NAME', function () {
+myApp.filter("S_OSN_NAME", function () {
     return function (S_OSN) {
         switch (S_OSN) {
             case 1:
-                return 'МЭК';
+                return "МЭК";
             case 2:
-                return 'МЭЭ';
+                return "МЭЭ";
             case 3:
-                return 'ЭКМП';
-
+                return "ЭКМП";
             default:
                 return S_OSN;
         }
     };
 });
-myApp.filter('YesNo', function () {
+myApp.filter("YesNo", function () {
     return function (input) {
         switch (input) {
             case true:
-                return 'Да';
+                return "Да";
             case false:
-                return 'Нет';
+                return "Нет";
             default:
                 return input;
         }
     };
 });
-myApp.filter('ToOSN', function () {
+myApp.filter("ToOSN", function () {
     return function (input) {
         switch (input) {
             case true:
-                return 'Обоснованно';
+                return "Обоснованно";
             case false:
-                return 'Необоснованно';
+                return "Необоснованно";
             default:
                 return input;
         }
     };
 });
-myApp.filter('ToCDate', function () {
+myApp.filter("ToCDate", function () {
     return function (input) {
         if (input != null) {
             return new Date(parseInt(input.substr(6)));
@@ -797,17 +840,17 @@ myApp.filter('ToCDate', function () {
     };
 });
 
-myApp.directive('convertToNumber', function () {
+myApp.directive("convertToNumber", function () {
     return {
-        require: 'ngModel',
+        require: "ngModel",
         link: function (scope, element, attrs, ngModel) {
             ngModel.$parsers.push(function (val) {
                 return parseInt(val, 10);
             });
             ngModel.$formatters.push(function (val) {
                 if (val!==null && val!==undefined)
-                    return '' + val;
-                return '';
+                    return "" + val;
+                return "";
 
             });
         }
@@ -815,7 +858,7 @@ myApp.directive('convertToNumber', function () {
 });
 
 
-myApp.directive('select2', function ($timeout, $parse) {
+myApp.directive("select2", function ($timeout, $parse) {
     return {
         link: function (scope, element, attrs) {
             $timeout(function () {

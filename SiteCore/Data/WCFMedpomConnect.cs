@@ -118,7 +118,7 @@ namespace SiteCore.Data
         {
             try
             {
-                return MyWcfConnection?.Ping() == true;
+                return MyWcfConnection != null && MyWcfConnection.Ping();
             }
             catch (Exception ex)
             {

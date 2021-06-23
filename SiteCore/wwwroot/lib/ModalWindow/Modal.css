@@ -1,0 +1,71 @@
+﻿modal {
+    /* modals are hidden by default */
+    display: none;
+}
+.modal {
+    /* modal container fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* z-index must be higher than .modal-background */
+  
+    /* enables scrolling for tall modals */
+    overflow: auto;
+}
+.modal-body {
+    padding: 20px;
+    background: #fff;
+    /* margin exposes part of the modal background */
+    margin: 40px;
+    border-radius: 5px;
+        
+}
+
+.modal-head {
+    position: relative;
+}
+
+
+.modal-head .close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #808080;
+    font-size: 28px;
+    font-weight: bold;
+ 
+}
+
+
+.modal-head .close:hover,
+.modal-head .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.modal-conter {
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
+}
+    
+.modal-background {
+    /* modal background fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* semi-transparent black  */
+    background-color: #000;
+    opacity: 0.75;
+    /* z-index must be below .modal and above everything else  */
+}
+
+body.modal-open {
+    /* body overflow is hidden to hide main scrollbar when modal window is open */
+    overflow: hidden;
+}

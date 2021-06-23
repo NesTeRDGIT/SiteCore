@@ -23,6 +23,8 @@ namespace SiteCore.Controllers
         private WCFIdentiScaner wcfIdentiScaner { get; }
         private ILogger logger { get; }
 
+      
+
         private string _CODE_MO;
         private string CODE_MO
         {
@@ -39,6 +41,7 @@ namespace SiteCore.Controllers
             this.csOracleSet = csOracleSet;
             this.wcfIdentiScaner = wcfIdentiScaner;
             this.logger = logger;
+           
         }
 
 

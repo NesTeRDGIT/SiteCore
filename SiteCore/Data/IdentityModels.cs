@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using DocumentFormat.OpenXml.Office2016.Drawing.Charts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -66,6 +67,8 @@ namespace SiteCore.Data
         public string MCOD { get; set; }
         public string NAM_MOP { get; set; }
         public string NAM_MOK { get; set; }
+        public DateTime? D_END { get; set; }
+
     }
 
   
@@ -174,6 +177,10 @@ namespace SiteCore.Data
             return user.Claims.FirstOrDefault(x => x.Type == "CODE_SMO")?.Value;
         }
 
+        public static string ID(this ClaimsPrincipal user)
+        {
+            return user.Claims.FirstOrDefault(x => x.Type == "ID")?.Value;
+        }
     }
 
 
@@ -206,6 +213,7 @@ namespace SiteCore.Data
             {
                 ci.AddClaim(new Claim("CODE_MO", user.CODE_MO));
                 ci.AddClaim(new Claim("CODE_SMO", user.CODE_SMO));
+                ci.AddClaim(new Claim("ID", user.Id));
             }
             return principal;
         }

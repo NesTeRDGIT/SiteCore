@@ -1,0 +1,110 @@
+﻿@model EditTMKReestrModel
+
+<div ng-if="IsLoadTMK===true">Загрузка...</div>
+
+<div class="TMKForm" ng-if="IsLoadTMK===false">
+    <h3>{{CurrentTMK.NAM_MOK}}</h3>
+    <hr />
+
+    <ul ng-repeat="ERR in ErrTMK">
+        <li class="ErrorLi">{{ERR}}</li>
+    </ul>
+
+
+    <div>
+        <input type="checkbox" ng-model="CurrentTMK.ISNOTSMO" value="True"><span> Нет страхования</span>
+        <div ng-show="!CurrentTMK.ISNOTSMO">
+            <label class="BoldText">ЕНП</label><input ng-model="CurrentTMK.ENP" placeholder="Номер ЕНП"/>
+        </div>
+    </div>
+    <hr>
+    <div>
+        <label class="BoldText">Фамилия</label><input type="text" placeholder="Фамилия пациента" ng-model="CurrentTMK.FAM"/>
+        <label class="BoldText">Имя</label><input type="text" placeholder="Имя пациента" ng-model="CurrentTMK.IM"/>
+        <label class="BoldText">Отчество</label><input type="text" placeholder="Отчество пациента" ng-model="CurrentTMK.OT"/>
+        <label class="BoldText">Дата рождения</label><input type="date" ng-model="CurrentTMK.DR"/>
+    </div>
+    <div>
+        <input type="checkbox" ng-model="CurrentTMK.NOVOR"/><span> Данные представителя</span>
+        <div ng-show="CurrentTMK.NOVOR">
+            <label class="BoldText">Фамилия</label><input type="text" placeholder="Фамилия представителя" ng-model="CurrentTMK.FAM_P"/>
+            <label class="BoldText">Имя</label><input type="text" placeholder="Имя представителя" ng-model="CurrentTMK.IM_P"/>
+            <label class="BoldText">Отчество</label><input type="text" placeholder="Отчество представителя" ng-model="CurrentTMK.OT_P"/>
+            <label class="BoldText">Дата рождения</label><input type="date" ng-model="CurrentTMK.DR_P"/>
+        </div>
+    </div>
+    <hr>
+    <div>
+        <table>
+            <tr>
+                <td>Вид медицинской документации</td>
+                <td style="min-width: 290px;">
+                    <select style="width: 100%;" class="select-select2" select-2 ng-model="CurrentTMK.VID_NHISTORY" convert-to-number>
+                        <option disabled selected value="">------</option>
+                        @foreach (var item in Model.NMIC_VID_NHISTORY)
+                        {
+                            <option value="@item.ID_VID_NHISTORY">@item.VID_NHISTORY</option>
+                        }
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="BoldText">№ истории болезни / амбулаторной карты</td>
+                <td><input style="width: 100%;" ng-model="CurrentTMK.NHISTORY"/></td>
+            </tr>
+            <tr>
+                <td class="BoldText">Дата начала лечения</td><td><input style="width: 100%;" type="date" ng-model="CurrentTMK.DATE_B"/></td>
+            </tr>
+            <tr>
+                <td class="BoldText">Дата оформления запроса на ТМК</td><td><input style="width: 100%;" type="date" ng-model="CurrentTMK.DATE_QUERY"/></td>
+            </tr>
+            <tr>
+                <td class="BoldText">Дата получения протокола</td><td><input style="width: 100%;" type="date" ng-model="CurrentTMK.DATE_PROTOKOL"/></td>
+            </tr>
+            <tr>
+                <td>Дата проведения очной консультации\консилиума</td><td><input style="width: 100%;" type="date" ng-model="CurrentTMK.DATE_TMK"/></td>
+            </tr>
+        </table>
+    </div>
+    <hr>
+    <div>
+        <label class="BoldText">Профиль</label>
+        <select style="width: 100%;" class="select-select2" select-2 ng-model="CurrentTMK.PROFIL" convert-to-number>
+            <option disabled value="">------</option>
+            @foreach (var item in Model.V002)
+            {
+                <option value="@item.IDPR">@item.PRNAME</option>
+            }
+        </select>
+
+        <label class="BoldText">Наименование НМИЦ</label>
+        <select style="width: 100%;" class="select-select2" select-2 ng-model="CurrentTMK.NMIC" convert-to-number>
+            <option disabled value="">------</option>
+            @foreach (var item in Model.NMIC)
+            {
+                <option value="@item.NMIC_ID">@item.NMIC_NAME</option>
+            }
+        </select>
+
+        <label class="BoldText">Телемедицинская система</label>
+        <select style="width: 100%;" class="select-select2" select-2 ng-model="CurrentTMK.TMIS" convert-to-number>
+            <option disabled value="">------</option>
+            @foreach (var item in Model.TMIS)
+            {
+                <option value="@item.TMIS_ID">@item.TMS_NAME</option>
+            }
+        </select>
+    </div>
+    <hr>
+
+    <div style="position: relative; height: 50px;">
+        <div style="position: absolute; top: 0; left: 0;">
+            <input type="button" value="Сохранить" class="ActionButton" ng-click="SaveTMK()"/>
+        </div>
+        <div style="position: absolute; top: 0; right: 0;" ng-click="DeleteTMK()" ng-if="CurrentTMK.TMK_ID !==0">
+            <input type="button" class="delButton" value="Удалить" />
+        </div>
+    </div>
+
+</div>
+

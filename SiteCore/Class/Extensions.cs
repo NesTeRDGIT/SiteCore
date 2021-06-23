@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -148,6 +151,12 @@ namespace SiteCore.Class
             }
             return writer.GetStringBuilder().ToString();
         }
+
+
+        public static List<string> GetErrors(this ModelStateDictionary model)
+        {
+            return (from modelState in model.Values from error in modelState.Errors select $"{error.ErrorMessage}{error.Exception?.Message}").ToList();
+        }
     }
 
     public static class Ext
@@ -223,6 +232,20 @@ namespace SiteCore.Class
 
     }
 
+
+    public static class SessionExtensions
+    {
+        public static void Set<T>(this ISession session, string key, T value)
+        {
+            session.SetString(key, JsonSerializer.Serialize(value));
+        }
+
+        public static T Get<T>(this ISession session, string key)
+        {
+            var value = session.GetString(key);
+            return value == null ? default : JsonSerializer.Deserialize<T>(value);
+        }
+    }
 
 
 }
