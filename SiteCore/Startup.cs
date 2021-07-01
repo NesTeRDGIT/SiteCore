@@ -60,8 +60,8 @@ namespace SiteCore
 
             services.AddMedpom(Configuration);
             services.AddIdentiCS(Configuration);
-            services.AddIdentiTMK(Configuration);
-           
+            services.AddTMK(Configuration);
+            services.AddMSE(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -126,7 +126,7 @@ namespace SiteCore
             return services;
         }
 
-        public static IServiceCollection AddIdentiTMK(this IServiceCollection services, IConfiguration Configuration)
+        public static IServiceCollection AddTMK(this IServiceCollection services, IConfiguration Configuration)
         {
             services.AddDbContext<TMKOracleSet>(options => options.UseLazyLoadingProxies().UseOracle(Configuration.GetConnectionString("TMKConnection"), b => b.UseOracleSQLCompatibility("11")));
             services.AddTransient<ITMKExcelCreator>(provider =>
@@ -138,6 +138,20 @@ namespace SiteCore
             return services;
         }
 
+        public static IServiceCollection AddMSE(this IServiceCollection services, IConfiguration Configuration)
+        {
+            services.AddDbContext<MSEOracleSet>(options => options.UseLazyLoadingProxies().UseOracle(Configuration.GetConnectionString("MSEConnection"), b => b.UseOracleSQLCompatibility("11")));
+            services.AddTransient<IMSEExcelCreator>(provider =>
+            {
+                var pathTemplate = Path.Combine(provider.GetService<IWebHostEnvironment>().WebRootPath, "Template", "MSE");
+                return new MSEExcelCreator(Path.Combine(pathTemplate, "Report.xlsx"), Path.Combine(pathTemplate, "MSE.xlsx"));
+
+            });
+
+            return services;
+        }
+
+        
 
     }
 

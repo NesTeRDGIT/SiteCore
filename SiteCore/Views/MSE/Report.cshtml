@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Отчет МСЭ";
+    var date_2 = DateTime.Now.ToString("yyyy-MM-dd");
+    var date_1 = (new DateTime(DateTime.Now.Year, 1, 1)).ToString("yyyy-MM-dd");
+}
+
+<form data-ajax="true" data-ajax-update="#Result" method="get" data-ajax-url="GetReportData" >
+    <span>с </span>
+    <input type="date" name="Date1" value="@date_1" required />
+    <span> по </span>
+    <input type="date" name="Date2" value="@date_2" required />
+    <input type="checkbox" name="IsSMO" value="true" /><span> Группировать по СМО</span>
+    <input type="hidden" name="IsSMO" value="false" />
+    <br/>
+    <br/>
+    <input type="submit" class="ActionButton" value="Запрос" />
+</form>
+<br /><br />
+<div id="Result"></div>
+

@@ -1,4 +1,11 @@
 ﻿
+.FakeTable {
+    border-collapse: collapse
+}
+
+.FakeTable tr:hover {
+    background-color: #e6e6fa;
+}
 
 .snos {
     vertical-align: super; /* поместить на линию верхнего индекса */

@@ -123,8 +123,9 @@ namespace SiteCore.Controllers
         {
             try
             {
+                var Nodes = GetNodes(filter);
                 var listq = GetNodesPage(GetNodes(filter), Page, CountOnPage);
-                var count = listq.Count();
+                var count = Nodes.Count();
                 var list = await GetTMKListModel(listq);
                 return CustomJsonResult.Create(new { count, items = list });
             }

@@ -1,0 +1,42 @@
+﻿@model AddSLUCH_MSEModel
+
+
+<form method="post" data-ajax="true" data-ajax-url="EditSluch" data-ajax-success="onSuccess" asp-antiforgery="true" id="EditSluchForm" >
+    <input type="hidden" asp-for="MSE_ID"/>
+    <input  type="hidden" asp-for="MSE_SLUCH_ID"/>
+    <div asp-validation-summary="ModelOnly" class="ErrorLi"></div>
+    <div>
+        <label class="BoldText" style="margin-right: 5px;">Дата начала</label> <br/>
+        <input type="date" asp-for="SLUCH.DATE_1"/><br />
+        <span asp-validation-for="SLUCH.DATE_1"></span>
+    </div>
+    <div>
+        <label class="BoldText" style="margin-right: 5px;">Дата окончания</label><br/>
+        <input type="date" asp-for="SLUCH.DATE_2"/><br/>
+        <span asp-validation-for="SLUCH.DATE_2"></span>
+    </div>
+    <div>
+        <label class="BoldText" style="margin-right: 5px;">№ истории</label><br/>
+        <input type="text" asp-for="SLUCH.N_HISTORY"/><br/>
+        <span asp-validation-for="SLUCH.N_HISTORY"></span>
+    </div>
+    <hr/>
+    <input type="submit" value="Сохранить" class="ActionButton"/>
+</form>
+
+
+<script>
+    $.validator.unobtrusive.parse($('#EditSluchForm'));
+    function onSuccess(data, status, xhr) {
+        const Result = data.Result;
+        const Value = data.Value;
+        const scope = angular.element(document.getElementById('GRID1')).scope();
+        if (Result) {
+            scope.CloseModal2();
+            scope.RefreshMSE();
+        } else {
+            scope.UpdateModal2(Value);
+        }
+    }
+
+</script>

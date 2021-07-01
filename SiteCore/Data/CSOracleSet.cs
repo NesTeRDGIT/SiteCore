@@ -91,7 +91,7 @@ namespace SiteCore.Data
     }
     public class CSOracleSet : DbContext
     {
-        public CSOracleSet(DbContextOptions options) : base(options)
+        public CSOracleSet(DbContextOptions<CSOracleSet> options) : base(options)
         {
 
         }

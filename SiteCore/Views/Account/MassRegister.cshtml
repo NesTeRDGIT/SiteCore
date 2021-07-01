@@ -22,21 +22,16 @@
     </div>
     <h4>Роли пользователя</h4>
     <div class="btn-group" data-toggle="buttons">
-        @foreach (ApplicationRole Role in ViewBag.Roles)
-        {
-            if (Model.Roles.Contains(Role.Id))
+        <ul>
+            @foreach (ApplicationRole Role in ViewBag.Roles)
             {
-                <label>
-                    <input name="Roles" value=@Role.Id type="checkbox" checked> @Role.Name
-                </label>
+                <li>
+                    <label>
+                        <input name="Roles" value=@Role.Id type="checkbox" @(Model.Roles.Contains(Role.Id) ? "checked" : "")> @Role.Name
+                    </label>
+                </li>
             }
-            else
-            {
-                <label>
-                    <input name="Roles" value=@Role.Id type="checkbox"> @Role.Name
-                </label>
-            }
-        }
+        </ul>
     </div>
     <h4></h4>
     <input class="ActionButton" type="submit" value="Зарегистрировать" /> 

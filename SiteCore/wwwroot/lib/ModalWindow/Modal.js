@@ -134,6 +134,7 @@ function Directive(ModalService) {
                 element.hide();
                 element.removeClass('modal-open');
                 $('body').css('overflow', 'scroll');
+                Content('');
             }
 
             function Content(content) {

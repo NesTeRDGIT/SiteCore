@@ -1,0 +1,73 @@
+﻿<h1>{{CurrentExpertize.isNEW==1? "Добавить" : "Редактировать"}} акт {{CurrentExpertize.S_TIP|S_TIP_NAME}}</h1>
+
+
+<div class="ErrorLi">
+    <ul>
+        <li ng-repeat="err in expERR">{{err}}</li>
+    </ul>
+</div>
+<form name="formAct">
+    <div>
+        <div>
+            <label class="BoldText">№ акта</label><br />
+            <input ng-model="CurrentExpertize.NUMACT" name="NUMACT" type="text" required  autocomplete="off"/><br/>
+            <span ng-show="formAct.NUMACT.$error.required && formAct.NUMACT.$touched" class="field-validation-error">№ акта обязателен к заполнению</span>
+        </div>
+        <div>
+            <label class="BoldText">Дата акта</label><br />
+            <input name="DATEACT" ng-model="CurrentExpertize.DATEACT" type="date" required/><br/>
+            <span ng-show="formAct.DATEACT.$error.required && formAct.DATEACT.$touched" class="field-validation-error">Дата акта обязательна к заполнению</span>
+        </div>
+        <div ng-if="CurrentExpertize.S_TIP==2">
+            <label>ФИО специалиста-эксперта</label><br />
+            <input name="FIO" ng-model="CurrentExpertize.FIO" type="text" required/>
+            <span ng-show="formAct.FIO.$error.required && formAct.FIO.$touched" class="field-validation-error">ФИО обязательно к заполнению</span>
+        </div>
+        <div ng-if="CurrentExpertize.S_TIP==3">
+            <label class="BoldText">Врач ЭКМП</label><br />
+           
+            <select name="N_EXP" class="select-select2" ng-model="CurrentExpertize.N_EXP" required="" select-2 >
+                <option disabled selected>------</option>
+                <option ng-repeat="item in SPR.EXPERTS" value="{{item.N_EXPERT}}"> {{item.FIO}}</option>
+            </select><br />
+            <span ng-show="formAct.N_EXP.$error.required && formAct.N_EXP.$touched" class="field-validation-error">Врач ЭКМП обязателен к заполнению</span>
+        </div>
+        <hr />
+    </div>
+    <div style="max-width: 100%;">
+        <label class="BoldText">Список дефектов</label>
+        <table class="table_report">
+            <tr>
+                <th>Дефект</th>
+                <th>Комментарий</th>
+                <th>Сумма</th>
+                <th>Штраф</th>
+                <th></th>
+            </tr>
+            <tr ng-repeat="OSN in CurrentExpertize.OSN">
+                <td>
+                    <select style="width: 100%;" class="select-select2" ng-model="OSN.S_OSN" name="S_OSN{{$index}}" required="" select-2 convert-to-number>
+                        <option disabled selected>------</option>
+                        <option ng-repeat="item in SPR.F014|F014Actual:CurrentExpertize.DATEACT" value="{{item.KOD}}"> {{item.FullName}}</option>
+                    </select>
+                    <span ng-show="formAct.S_OSN{{$index}}.$error.required && formAct.S_OSN{{$index}}.$touched" class="field-validation-error">Дефект обязателен к заполнению</span>
+                </td>
+                <td><textarea type="text" ng-model="OSN.S_COM" style="width: 100%; box-sizing: border-box;" maxlength="1500"> </textarea></td>
+                <td>
+                    <input  type="number" step="0.01" ng-pattern="numberPattert"  placeholder="0,00" ng-model="OSN.S_SUM" name="S_SUM{{$index}}" style="width: 100%; box-sizing: border-box;" required="" /><br />
+                    <span ng-show="formAct.S_SUM{{$index}}.$error.required && formAct.S_SUM{{$index}}.$touched" class="field-validation-error">Сумма обязательна к заполнению</span>
+                    <span ng-show="formAct.S_SUM{{$index}}.$error.pattern && !formAct.S_SUM{{$index}}.$error.required && formAct.S_SUM{{$index}}.$touched" class="field-validation-error">Не верный формат числа</span>
+                </td>
+                <td>
+                    <input type="number" step="0.01" ng-pattern="numberPattert" placeholder="0,00" name="S_FINE{{$index}}" ng-model="OSN.S_FINE" style="width: 100%; box-sizing: border-box;"  />
+                    <span ng-show="formAct.S_FINE{{$index}}.$error.pattern" class="field-validation-error">Не верный формат числа</span>
+                </td>
+
+                <td><input type="button" class="delButtonICO" value="" ng-click="DelOSN(OSN)" style="width: 30px; height: 30px;" /></td>
+             
+            </tr>
+        </table>
+        <input type="button" value="Добавить дефект" class="ActionButton" style="display: block; margin-top: 10px; margin-right: 0; margin-left: auto;" ng-click="AddOSN()" />
+        <input type="submit" value="Сохранить" class="ActionButton" ng-disabled="!formAct.$valid" ng-click="SaveExpertize(formAct)" />
+    </div>
+</form>

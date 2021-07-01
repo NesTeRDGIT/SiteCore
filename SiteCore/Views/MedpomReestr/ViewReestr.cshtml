@@ -14,7 +14,7 @@
     <input id="UpdateBtn" type="submit" value="Обновить" class="ActionButton" />
 </form>
 <div id="Result" style="display:unset"></div>
-<div id="LoadingBar" class="lds-hourglass" style="display:none"></div>
+<div id="LoadingBar" class="lds-hourglass" ></div>
 
 
 @section Scripts
@@ -25,6 +25,6 @@
         Notification.on("NewPackState", function() { HiddenBtnClick(); });
         Notification.start().catch(err =>
             console.error(err.toString())).then(() => { Notification.invoke('Register').catch(err => console.error(err.toString())); });
-        HiddenBtnClick();
+       HiddenBtnClick();
     </script>
 }

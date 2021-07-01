@@ -1,0 +1,233 @@
+﻿@model List<SiteCore.Data.ReportMSERow> 
+@{
+    var IsSMO = Model.Any(x => !string.IsNullOrEmpty(x.SMO));  
+}
+<div style="width: 100%; overflow-y: scroll;">
+    <table class="table_report">
+        <tr>
+            <th rowspan="3">Субъект Российской федерации</th>
+            @if (IsSMO)
+            {
+                <th rowspan="3" >Код СМО</th>
+                <th rowspan="3">Наименование СМО</th>
+            }
+            <th colspan="5">Взрослое население</th>
+            <th colspan="5">Несовершеннолетние застрахованные лица</th>
+            <th colspan="31" rowspan="2">Количество выявленных оснований для неоплаты (уменьшения оплаты) медицинской помощи за счет средств ОМС, штрафов за отчетный период</th>
+        </tr>
+    <tr>
+        <th rowspan="2">Количество застрахованных лиц, получивших отказ в освидетельствовании по причине неполного обследования (человек)</th>
+        <th colspan="2">Нарушения (дефекты), выявленные при проведении контрольно-экспертных мероприятий (в соответствии с Перечнем оснований для отказа в оплате мед. помощи):</th>
+        <th colspan="2">Размер примененных финансовых санкций (руб.)</th>
+        <th rowspan="2">Количество застрахованных лиц, получивших отказ в освидетельствовании по причине неполного обследования (человек)</th>
+        <th colspan="2">Нарушения (дефекты), выявленные при проведении контрольно-экспертных мероприятий (в соответствии с Перечнем оснований для отказа в оплате мед. помощи):</th>
+        <th colspan="2">Размер примененных финансовых санкций (руб.)</th>
+    </tr>
+        <tr>
+            <th>выявленные ТФОМС</th>
+            <th>выявленные СМО</th>
+            <th>неоплата (уменьшение оплаты)</th>
+            <th>штраф</th>
+            <th>выявленные ТФОМС</th>
+            <th>выявленные СМО</th>
+            <th>неоплата (уменьшение оплаты)</th>
+            <th>штраф</th>
+            
+            <th>Всего</th>
+            <th>1.1.3.</th>
+            <th>1.1.4.</th>
+            <th>1.2.2.</th>
+            <th>1.3.2.</th>
+            <th>1.4.</th>
+            <th>2.2.1.</th>
+            <th>2.2.2.</th>
+            <th>2.4.1.</th>
+            <th>2.4.2.</th>
+            <th>3.1.</th>
+            <th>3.2.2.</th>
+            <th>3.2.3.</th>
+            <th>3.2.4.</th>
+            <th>3.2.5.</th>
+            <th>3.3.1.</th>
+            <th>3.5.</th>
+            <th>3.6.</th>
+            <th>3.9.</th>
+            <th>4.1.</th>
+            <th>4.2.</th>
+            <th>4.4.</th>
+            <th>4.5.</th>
+            <th>4.6.1.</th>
+            <th>4.6.2.</th>
+            <th>5.3.1.</th>
+            <th>5.4.1.</th>
+            <th>5.4.2.</th>
+            <th>5.5.</th>
+            <th>5.6.</th>
+            <th>5.7.</th>
+        </tr>
+        <tr>
+            <th>A</th>
+            @if (IsSMO)
+            { 
+                <th>B</th>
+                <th>C</th>
+            }
+            <th>8</th>
+            <th>9</th>
+            <th>10</th>
+            <th>11</th>
+            <th>12</th>
+            <th>16</th>
+            <th>17</th>
+            <th>18</th>
+            <th>19</th>
+            <th>20</th>
+            <th>21</th>
+            <th>22</th>
+            <th>23</th>
+            <th>24</th>
+            <th>25</th>
+            <th>26</th>
+            <th>27</th>
+            <th>28</th>
+            <th>29</th>
+            <th>30</th>
+            <th>31</th>
+            <th>32</th>
+            <th>33</th>
+            <th>34</th>
+            <th>35</th>
+            <th>36</th>
+            <th>37</th>
+            <th>38</th>
+            <th>39</th>
+            <th>40</th>
+            <th>41</th>
+            <th>42</th>
+            <th>43</th>
+            <th>44</th>
+            <th>45</th>
+            <th>46</th>
+            <th>47</th>
+            <th>48</th>
+            <th>49</th>
+            <th>50</th>
+            <th>51</th>
+        </tr>
+        
+        @foreach (var rep in Model)
+        {
+            <tr>
+                <td>@rep.SUB</td>
+                @if (IsSMO)
+                { 
+                    <td>@rep.SMO</td>
+                    <td>@rep.NAM_SMOK</td>
+                }
+             
+                <td>@rep.ST8</td>
+                <td>@rep.ST9</td>
+                <td>@rep.ST10</td>
+                <td>@rep.ST11</td>
+                <td>@rep.ST12</td>
+                <td>@rep.ST16</td>
+                <td>@rep.ST17</td>
+                <td>@rep.ST18</td>
+                <td>@rep.ST19</td>
+                <td>@rep.ST20</td>
+                <td>@rep.S_ALL</td>
+                <td>@rep.S_1_1_3</td>
+                <td>@rep.S_1_1_4</td>
+                <td>@rep.S_1_2_2</td>
+                <td>@rep.S_1_3_2</td>
+                <td>@rep.S_1_4</td>
+                <td>@rep.S_2_2_1</td>
+                <td>@rep.S_2_2_2</td>
+                <td>@rep.S_2_4_1</td>
+                <td>@rep.S_2_4_2</td>
+                <td>@rep.S_3_1</td>
+                <td>@rep.S_3_2_2</td>
+                <td>@rep.S_3_2_3</td>
+                <td>@rep.S_3_2_4</td>
+                <td>@rep.S_3_2_5</td>
+                <td>@rep.S_3_3_1</td>
+                <td>@rep.S_3_5</td>
+                <td>@rep.S_3_6</td>
+                <td>@rep.S_3_9</td>
+                <td>@rep.S_4_1</td>
+                <td>@rep.S_4_2</td>
+                <td>@rep.S_4_4</td>
+                <td>@rep.S_4_5</td>
+                <td>@rep.S_4_6_1</td>
+                <td>@rep.S_4_6_2</td>
+                <td>@rep.S_5_3_1</td>
+                <td>@rep.S_5_4_1</td>
+                <td>@rep.S_5_4_2</td>
+                <td>@rep.S_5_5</td>
+                <td>@rep.S_5_6</td>
+                <td>@rep.S_5_7</td>
+                
+                
+               
+            </tr>
+        }
+    @if (Model.Count > 1)
+    {
+        <tr class="BoldText">
+            <td>Всего</td>
+            @if (IsSMO)
+            { 
+                <td></td>
+                <td></td>
+            }
+            <td>@Model.Sum(x => x.ST8)</td>
+            <td>@Model.Sum(x => x.ST9)</td>
+            <td>@Model.Sum(x => x.ST10)</td>
+            <td>@Model.Sum(x => x.ST11)</td>
+            <td>@Model.Sum(x => x.ST12)</td>
+            <td>@Model.Sum(x => x.ST16)</td>
+            <td>@Model.Sum(x => x.ST17)</td>
+            <td>@Model.Sum(x => x.ST18)</td>
+            <td>@Model.Sum(x => x.ST19)</td>
+            <td>@Model.Sum(x => x.ST20)</td>
+            <td>@Model.Sum(x => x.S_ALL)</td>
+            <td>@Model.Sum(x => x.S_1_1_3)</td>
+            <td>@Model.Sum(x => x.S_1_1_4)</td>
+            <td>@Model.Sum(x => x.S_1_2_2)</td>
+            <td>@Model.Sum(x => x.S_1_3_2)</td>
+            <td>@Model.Sum(x => x.S_1_4)</td>
+            <td>@Model.Sum(x => x.S_2_2_1)</td>
+            <td>@Model.Sum(x => x.S_2_2_2)</td>
+            <td>@Model.Sum(x => x.S_2_4_1)</td>
+            <td>@Model.Sum(x => x.S_2_4_2)</td>
+            <td>@Model.Sum(x => x.S_3_1)</td>
+            <td>@Model.Sum(x => x.S_3_2_2)</td>
+            <td>@Model.Sum(x => x.S_3_2_3)</td>
+            <td>@Model.Sum(x => x.S_3_2_4)</td>
+            <td>@Model.Sum(x => x.S_3_2_5)</td>
+            <td>@Model.Sum(x => x.S_3_3_1)</td>
+            <td>@Model.Sum(x => x.S_3_5)</td>
+            <td>@Model.Sum(x => x.S_3_6)</td>
+            <td>@Model.Sum(x => x.S_3_9)</td>
+            <td>@Model.Sum(x => x.S_4_1)</td>
+            <td>@Model.Sum(x => x.S_4_2)</td>
+            <td>@Model.Sum(x => x.S_4_4)</td>
+            <td>@Model.Sum(x => x.S_4_5)</td>
+            <td>@Model.Sum(x => x.S_4_6_1)</td>
+            <td>@Model.Sum(x => x.S_4_6_2)</td>
+            <td>@Model.Sum(x => x.S_5_3_1)</td>
+            <td>@Model.Sum(x => x.S_5_4_1)</td>
+            <td>@Model.Sum(x => x.S_5_4_2)</td>
+            <td>@Model.Sum(x => x.S_5_5)</td>
+            <td>@Model.Sum(x => x.S_5_6)</td>
+            <td>@Model.Sum(x => x.S_5_7)</td>
+        </tr>
+    }
+
+</table>   
+<p></p>
+<div>
+    <a asp-action="GetReportXLSXFile" class="ActionButton">Скачать Excel</a>
+</div>
+</div>
+  

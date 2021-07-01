@@ -1,0 +1,228 @@
+﻿
+
+@{
+    ViewBag.Title = "Просмотр записи МСЭ";
+    var IsMSEAdmin = User.IsInRole("MSEAdmin");
+    var IsMSESmo = User.IsInRole("MSESmo");
+    //bool IsTFOMS = Model.SMO_IDENT == "75";
+}
+
+<div>
+    {{ErrMSE}}
+</div>
+<div ng-if="IsLoadMSE">
+    Получение записи...
+</div>
+<div ng-if="!IsLoadMSE">
+<div>
+    <table>
+        <tr>
+            <td class="BoldText">Дата внесения</td>
+            <td>{{CurrentMSE.DATE_LOAD|date:'dd-MM-yyyy HH:mm'}}</td>
+        </tr>
+        <tr>
+            <td class="BoldText">Страховая компания</td>
+            <td>{{CurrentMSE.SMO_NAME}}</td>
+            @if (IsMSEAdmin)
+            {
+                <td>
+                    <input type="button" class="ActionButton" value="Пометить как МТР" ng-click="SetAsMTR()" />
+                </td>
+            }
+        </tr>
+    </table>
+
+</div>
+<hr />
+<div class="TMKForm">
+    <div>
+        <label class="BoldText">ЕНП</label><input name="ENP" readonly value="{{CurrentMSE.ENP}}" />
+        <label class="BoldText">СНИЛС</label><input type="text" readonly value="{{CurrentMSE.SNILS}}" />
+    </div>
+    <hr />
+    <div>
+        <label class="BoldText">Фамилия</label><input type="text" readonly value="{{CurrentMSE.FAM}}" />
+        <label class="BoldText">Имя</label><input type="text" readonly value="{{CurrentMSE.IM}}" />
+        <label class="BoldText">Отчество</label><input type="text" readonly value="{{CurrentMSE.OT}}" />
+        <label class="BoldText">Дата рождения</label><input type="date" readonly ng-model="CurrentMSE.DR" />
+    </div>
+    <hr />
+    <div>
+        <p class="BoldText">Причина возврата направления в МО</p>
+        <textarea style="width: 100%; height: 200px; max-width: 100%;" readonly>{{CurrentMSE.REASON_R}}</textarea>
+    </div>
+    <div>
+        <table style="width: 100%;">
+            <tr>
+                <td class="BoldText" style="width: 30%;">Наименование МО выдавшей направление на МСЭ</td>
+                <td><input style="width: 100%;" readonly value="{{CurrentMSE.NAM_MO}}" /></td>
+            </tr>
+            <tr>
+                <td class="BoldText">Номер протокола</td>
+                <td><input style="width: 100%;" readonly ng-model="CurrentMSE.N_PROT" /></td>
+            </tr>
+            <tr>
+                <td class="BoldText">Дата принятия решения о направлении на МСЭ</td>
+                <td><input style="width: 100%;" type="date" readonly ng-model="CurrentMSE.D_PROT" /></td>
+            </tr>
+            <tr>
+                <td class="BoldText">Дата направления информации в ТФОМС</td>
+                <td><input style="width: 100%;" type="date" readonly ng-model="CurrentMSE.D_FORM" /></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<hr />
+<div>
+    <h4>Данные СМО</h4>
+    <div ng-switch="OwnerRow">
+        <div ng-switch-when="true">
+            <div ng-class="{'OnSuccessDIV' : SMODataOK===true,  'OnFailureDIV' :SMODataOK==false,  'OnAjaxDIV':SMODataOK==null}">{{SMODataStatus}}</div>
+            <table style="width: 100%; overflow-wrap: break-word;">
+                <tr><th style="width: 33%;">Профиль МП</th><th style="width: 33%;">Диагноз</th><th style="width: 33%;">Комментарий</th></tr>
+                <tr>
+                    <td>
+                        <select style="width: 100%;" class="select-select2" select-2 ng-model="CurrentMSE.SMO_DATA.PROFIL" convert-to-number>
+                            <option disabled value="">------</option>
+                            <option ng-repeat="option in SPR.PROFIL | V002Actual:CurrentMSE.DATE_LOAD" value="{{option.IDPR}}">{{option.PRNAME}}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select style="width: 100%;" class="select-select2" select-2 ng-model="CurrentMSE.SMO_DATA.DS">
+                            <option disabled value="">------</option>
+                            <option ng-repeat="option in SPR.MKB | MKBActual:CurrentMSE.DATE_LOAD" value="{{option.MKB}}">{{option.MKB}}-{{option.NAME}}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <textarea id="SMO_COM_text_area" style="width: 100%;" name="SMO_COM" oninput="auto_grow(this)">{{CurrentMSE.SMO_DATA.SMO_COM}}</textarea>
+                        <script>
+                            auto_grow(document.getElementById('SMO_COM_text_area'));
+                        </script>
+                    </td>
+                </tr>
+            </table>
+            <p></p>
+            <input type="button" value="Сохранить" class="ActionButton" ng-click="SaveSMO_DATA()" />
+        </div>
+        <div ng-switch-when="false">
+            <table style="text-align:  left">
+                <tr>
+                    <th>Диагноз</th>
+                    <td>{{CurrentMSE.SMO_DATA.DS_NAME}}</td>
+                </tr>
+                <tr>
+                    <th>Профиль</th>
+                    <td>{{CurrentMSE.SMO_DATA.PROFIL_NAME}}</td>
+                </tr>
+                <tr>
+                    <th>Комментарий СМО</th>
+                    <td>{{CurrentMSE.SMO_DATA.SMO_COM}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<hr />
+<div ng-if="OwnerRow" style="display: flex; justify-content: flex-start;">
+    <div style="margin-right: 5px;">
+        <input type="submit" class="ActionButton" value="Добавить случай" ng-click="ShowEditSluch(null)" />
+    </div>
+</div>
+  
+<style>
+    .SluchDiv {
+        border: solid 1px gray;
+        margin-top: 10px;
+    }
+</style>
+
+<div style="margin-top: 10px;">
+    <div class="SluchDiv" ng-repeat="sl in CurrentMSE.SLUCH">
+        <h3>Случай №{{sl.MSE_SLUCH_ID}}</h3>
+        <div>
+            <div style="display: flex; justify-content: space-between;">
+                <table class="FakeTable">
+                    <tr><th style="text-align: left">Дата начала случая</th><td>{{sl.DATE_1|date:'dd-MM-yyyy'}}</td></tr>
+                    <tr><th style="text-align: left">Дата окончания случая</th><td>{{sl.DATE_2|date:'dd-MM-yyyy'}}</td></tr>
+                    <tr><th style="text-align: left">№ истории</th><td>{{sl.N_HISTORY}}</td></tr>
+                </table>
+
+                <div ng-if="OwnerRow" style="display: flex; justify-content: flex-start">
+                    <div class="tooltip">
+                        <input type="button" class="editButtonICO" value="" ng-click="ShowEditSluch(sl.MSE_SLUCH_ID)" />
+                        <span class="tooltiptext">Редактировать</span>
+                    </div>
+                    <div class="tooltip">
+                        <input type="button" class="delButtonICO" ng-confirm-click="Вы уверены что хотите удалить случай?" confirmed-click="DeleteSLUCH(sl.MSE_SLUCH_ID)" />
+                        <span class="tooltiptext">Удалить случай</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div ng-if="OwnerRow" style="display: flex; justify-content: flex-start;">
+            <div style="margin-right: 5px;">
+                <input type="button" class="ActionButton" value="Добавить акт МЭК" ng-click="NewACT(1,sl.MSE_SLUCH_ID)" />
+            </div>
+            <div style="margin-right: 5px;">
+                <input type="button" class="ActionButton" value="Добавить акт МЭЭ" ng-click="NewACT(2,sl.MSE_SLUCH_ID)" />
+            </div>
+            <div style="margin-right: 5px;">
+                <input type="button" class="ActionButton" value="Добавить акт ЭКМП" ng-click="NewACT(3,sl.MSE_SLUCH_ID)" />
+            </div>
+        </div>
+
+
+
+        <div ng-repeat="exp in sl.Expertizes">
+            <hr style="border-top: 2px solid black;" />
+            <div style="display: flex; justify-content: space-between;">
+                <div>
+                    <h1>Акт {{exp.S_TIP|S_TIP_NAME}} №{{exp.NUMACT}} от {{exp.DATEACT|date:'dd-MM-yyyy'}}</h1>
+                </div>
+
+                <div ng-if="OwnerRow" style="display: flex; justify-content: flex-start">
+
+                    <div class="tooltip">
+                        <input type="button" class="editButtonICO"  ng-click="EditACT(exp.EXPERTIZE_ID)"/>
+                        <span class="tooltiptext">Редактировать</span>
+                    </div>
+                    <div class="tooltip">
+                        <input class="delButtonICO"  type="button"  ng-confirm-click="Вы уверены что хотите удалить экспертизу?" confirmed-click="DeleteExpertize(exp.EXPERTIZE_ID)" />
+                        <span class="tooltiptext">Удалить экспертизу</span>
+                    </div>
+                </div>
+             
+            </div>
+            <div>
+                <div ng-if="exp.S_TIP == 2 || exp.S_TIP == 3">
+                    <label class="BoldText">{{exp.S_TIP == 2? "Специалист" : "Врач ЭКМП"}}: </label>{{exp.FIO}}
+                </div>
+                <br/>
+                <div ng-if="exp.OSN.length == 0">
+                    <h3>Без дефектов</h3>
+                </div>
+                <div ng-if="exp.OSN.length != 0">
+                    <table class="table_report">
+                        <tr>
+                            <th>Дефект</th>
+                            <th>Комментарий</th>
+                            <th>Сумма</th>
+                            <th>Штраф</th>
+                        </tr>
+                        <tr ng-repeat="osn in exp.OSN">
+                            <td style="text-align: left;">{{osn.OSN_NAME}}</td>
+                            <td style="text-align: left;">{{osn.S_COM}}</td>
+                            <td style="text-align: right;">{{osn.S_SUM}}</td>
+                            <td style="text-align: right;">{{osn.S_FINE}}</td>
+
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <hr style="border-top: 2px solid black;" />
+        </div>
+    </div>
+</div>
+</div>
+    

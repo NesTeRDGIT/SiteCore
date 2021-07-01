@@ -21,8 +21,13 @@
             window.location.href = '/MEDPOM/Content/oldies/Index.html';
         }
     </script>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <environment names="Development">
+        <script src="~/lib/jquery/dist/jquery.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    </environment>
+   
     <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
 
     @await RenderSectionAsync("Lib", required: false)
@@ -160,7 +165,7 @@
                             <li>
                                 <a class="submenu-link">Реестр МСЭ</a>
                                 <ul class="submenu">
-                                    <li>@Html.ActionLink("Реестр", "Index", "MSE")</li>
+                                    <li>@Html.ActionLink("Реестр", "MSE_REESTR", "MSE")</li>
                                     <li>@Html.ActionLink("Отчет", "Report", "MSE")</li>
                                 </ul>
                             </li>

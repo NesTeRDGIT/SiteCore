@@ -4,7 +4,10 @@
     ViewBag.Title = "Управление пользователями";
     var URL = @Context.Request.Path;
 }
-
+@section Lib
+{
+    <link href="~/css/spoiler.css" rel="stylesheet" />
+}
 <h2>@ViewBag.Title</h2>
 <a asp-action="RegisterUser" asp-controller="Account" asp-route-ReturnUrl="@URL" class="ActionButton">Новый пользователь</a>
 <a asp-action="MassRegister" asp-controller="Account" asp-route-ReturnUrl="@URL" class="ActionButton">Массовая регистрация</a>
@@ -13,7 +16,7 @@
 {
     <div class="alert-success">@ViewBag.Message</div>
 }
-@foreach (var ROLES in Model.Users.Select(x=>x.Roles).Distinct())
+@foreach (var ROLES in Model.Users.Select(x => x.Roles).Distinct())
 {
     <div class="spoiler">
         <input type="checkbox" />
@@ -45,7 +48,7 @@
                             </div>
                             <div>
                                 <form method="post" asp-action="DeleteUser" asp-route-ReturnUrl="@URL" asp-route-IDUser="@us.Id" asp-antiforgery="true">
-                                    <input class="ActionButton" type="submit" value="Удалить" style="margin-top: 5px;"/>
+                                    <input class="delButton" type="submit" value="Удалить" style="margin-top: 5px;" />
                                 </form>
                             </div>
                         </td>
@@ -59,18 +62,18 @@
 
 <script>
     $('.ShowHREF').on("click", funk);
-            function funk() {
-                var el = $(this).next(".customers");
-                if (el.css("display") === "none") {
+    function funk() {
+        var el = $(this).next(".customers");
+        if (el.css("display") === "none") {
 
-                    el.fadeIn(100);
-                    $(this).html('скрыть');
-                }
-                else {
-                    el.fadeOut(100);
-                    $(this).html('показать');
-                }
-            }
+            el.fadeIn(100);
+            $(this).html('скрыть');
+        }
+        else {
+            el.fadeOut(100);
+            $(this).html('показать');
+        }
+    }
 </script>
 
 
