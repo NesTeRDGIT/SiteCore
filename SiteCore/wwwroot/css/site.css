@@ -795,6 +795,7 @@ input[type=checkbox] {
         height: 16px;
         border: gray 1px solid;
         padding: 3px;
+        box-sizing: content-box !important;
     }
 
 .NewBlock {
@@ -852,3 +853,42 @@ input[type=checkbox] {
     .ButtonUnLock:active {
         background-size: 90%;
     }
+
+
+
+.p-datatable {
+    font-family: Times New Roman !important;
+}
+
+.p-datatable .p-datatable-tfoot > tr > td, .p-datatable .p-datatable-thead > tr > th {
+    border: 1px solid #c8c8c8;
+    color: white !important;
+    background: #449d48 !important;
+}
+
+    .p-datatable .p-datatable-tbody > tr.p-highlight {
+        background: #C9DDE1 !important;
+        color: #000000 !important;
+    }
+
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+    background: #449d48 !important;
+    border-color: #449d48 !important;
+    color: white !important;
+}
+
+.p-tabview {
+    font-family: Times New Roman !important;
+}
+
+
+.p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+    background: #449d48 !important;
+    border-color: #449d48 !important;
+    color: #fff !important;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+    color: #fff !important;
+    background: #449d48 !important;
+}

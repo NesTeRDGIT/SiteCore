@@ -1,0 +1,1 @@
+{"version":3,"sources":["src\\JS\\JS.js"],"names":["Alert","value","alert"],"mappings":"AAAC,SAASA,MAAMC,GACZC,MAAMD","file":"scripts.js","sourcesContent":["﻿function Alert(value) {\r\n    alert(value);\r\n}"],"sourceRoot":"webpack:///"}

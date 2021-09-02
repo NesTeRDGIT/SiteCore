@@ -1,0 +1,88 @@
+﻿@using SiteCore.Data;
+@model List<ZPZ_EFFECTIVENESS>
+@{
+    ViewBag.Title = "Перечень показателей результативности деятельности медицинских организаций и критерии их оценки";
+}
+<h2>Перечень показателей результативности деятельности медицинских организаций и критерии их оценки</h2>
+
+<div>   
+    <form method="get" data-ajax="true" data-ajax-url="@Url.Action("GET_EFFECTIVENESS_VIEW")" data-ajax-update="#Result" data-ajax-begin="Hide(1)" data-ajax-Success="Hide(2)" data-ajax-Failure="Err(xhr, status, error)">
+        <span>с</span>
+        <input type="month" name="dt1" value="@DateTime.Now.ToString("yyyy-MM")" pattern="^[0-9]{4}-(0[1-9]|1[012])$" required title="YYYY-MM" >
+        <span>по</span>
+        <input type="month" name="dt2" value="@DateTime.Now.ToString("yyyy-MM")" pattern="^[0-9]{4}-(0[1-9]|1[012])$" required title="YYYY-MM" >
+        <input type="submit" value="Обновить" class="ActionButton" id="update"  />
+    </form>
+</div>
+
+<h2></h2>
+<div id="Result" >
+    @{await Html.RenderPartialAsync("_ZPZ_EFFECTIVENESSPartical", Model);}
+</div>
+
+<div id="LoadingBar" hidden style="display:none">
+    <div class="fountainGM">
+        <div class="fountainG fountainG_1"></div>
+        <div class="fountainG fountainG_2"></div>
+        <div class="fountainG fountainG_3"></div>
+        <div class="fountainG fountainG_4"></div>
+        <div class="fountainG fountainG_5"></div>
+        <div class="fountainG fountainG_6"></div>
+        <div class="fountainG fountainG_7"></div>
+        <div class="fountainG fountainG_8"></div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script>
+        function mySubmitFunction(e) {
+            // Пройдёмся по всем полям
+            for (var i = 0; i < inputs.length; i++) {
+         
+                var input = inputs[i];
+
+                // Проверим валидность поля, используя встроенную в JavaScript функцию checkValidity()
+                if (input.checkValidity() == false) {
+
+                    var inputCustomValidation = new CustomValidation(); // Создадим объект CustomValidation
+                    inputCustomValidation.checkValidity(input); // Выявим ошибки
+                    var customValidityMessage = inputCustomValidation.getInvalidities(); // Получим все сообщения об ошибках
+                    input.setCustomValidity(customValidityMessage); // Установим специальное сообщение об ошибке
+
+                    // Добавим ошибки в документ
+                    var customValidityMessageForHTML = inputCustomValidation.getInvaliditiesForHTML();
+                    input.insertAdjacentHTML('afterend', '<p class="error-message">' + customValidityMessageForHTML + '</p>')
+                    stopSubmit = true;
+
+                } // закончился if
+            } // закончился цикл
+            if (stopSubmit) {
+                e.preventDefault();
+            }
+        }
+
+        function Hide(value) {
+            if (value === 1)
+            {
+                var Result = document.getElementById('Result');
+                Result.style.display = 'none';
+                var LoadingBar = document.getElementById('LoadingBar');
+                LoadingBar.style.display = 'block';
+                $('#update').prop('disabled', true);
+            }
+            else
+            {
+                var link = document.getElementById('Result');
+                link.style.display = 'block';
+                var link = document.getElementById('LoadingBar');
+                link.style.display = 'none';
+                $('#update').prop('disabled', false);
+            }
+        }
+        function Err(xhr, textStatus, errorThrown){
+            alert('Ошибка при запросе');
+        }
+    </script>
+}

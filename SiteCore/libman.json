@@ -41,6 +41,10 @@
     {
       "library": "angular.js@1.8.2",
       "destination": "wwwroot/lib/angularJS"
+    },
+    {
+      "library": "angular-ui-select@0.19.8",
+      "destination": "wwwroot/lib/angular-ui-select/"
     }
   ]
 }

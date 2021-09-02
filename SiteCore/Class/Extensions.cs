@@ -4,6 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -11,103 +14,106 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using ServiceLoaderMedpomData;
+using SiteCore.Controllers;
 using SiteCore.Data;
-
+using System.Data;
 namespace SiteCore.Class
 {
     public static class ServiceLoaderMedpomDataExtensions
     {
         public static string RusName(this TYPEFILE t)
         {
-            switch (t)
+            return t switch
             {
-                case TYPEFILE.DD: return "Медицинские осмотры несовершеннолетних(предварительные)";
-                case TYPEFILE.DF: return "Медицинские осмотры несовершеннолетних(профилактические)";
-                case TYPEFILE.DO: return "Профилактические осмотры взрослого населения";
-                case TYPEFILE.DP: return "Первый этап диспансеризации";
-                case TYPEFILE.DR: return "Медицинские осмотры несовершеннолетних(периодические)";
-                case TYPEFILE.DS: return "Диспансеризация дитей-сирот";
-                case TYPEFILE.DU: return "Диспансеризация опекаемых";
-                case TYPEFILE.DV: return "Второй этап диспансеризации";
-                case TYPEFILE.H: return "Оказанная медицинская помощь";
-                case TYPEFILE.LD: return "Файл персональных данных для файла DD";
-                case TYPEFILE.LF: return "Файл персональных данных для файла DF";
-                case TYPEFILE.LH: return "Файл персональных данных для файла H";
-                case TYPEFILE.LO: return "Файл персональных данных для файла DO";
-                case TYPEFILE.LP: return "Файл персональных данных для файла DP";
-                case TYPEFILE.LR: return "Файл персональных данных для файла DR";
-                case TYPEFILE.LS: return "Файл персональных данных для файла DS";
-                case TYPEFILE.LT: return "Файл персональных данных для файла T";
-
-                case TYPEFILE.LU: return "Файл персональных данных для файла DU";
-                case TYPEFILE.LV: return "Файл персональных данных для файла DV";
-                case TYPEFILE.T: return "Высокотехнологичная помощь";
-                case TYPEFILE.C: return "Оказанная медицинская помощь при ЗНО";
-                case TYPEFILE.LC: return "Файл персональных данных для файла C";
-                default:
-                    return "";
-            }
+                TYPEFILE.DD => "Медицинские осмотры несовершеннолетних(предварительные)",
+                TYPEFILE.DF => "Медицинские осмотры несовершеннолетних(профилактические)",
+                TYPEFILE.DO => "Профилактические осмотры взрослого населения",
+                TYPEFILE.DP => "Первый этап диспансеризации",
+                TYPEFILE.DR => "Медицинские осмотры несовершеннолетних(периодические)",
+                TYPEFILE.DS => "Диспансеризация детей-сирот",
+                TYPEFILE.DU => "Диспансеризация опекаемых",
+                TYPEFILE.DV => "Второй этап диспансеризации",
+                TYPEFILE.DA => "Первый этап углубленной диспансеризации",
+                TYPEFILE.DB => "Второй этап углубленной диспансеризации",
+                TYPEFILE.H => "Оказанная медицинская помощь",
+                TYPEFILE.LD => "Файл персональных данных для файла DD",
+                TYPEFILE.LF => "Файл персональных данных для файла DF",
+                TYPEFILE.LH => "Файл персональных данных для файла H",
+                TYPEFILE.LO => "Файл персональных данных для файла DO",
+                TYPEFILE.LP => "Файл персональных данных для файла DP",
+                TYPEFILE.LR => "Файл персональных данных для файла DR",
+                TYPEFILE.LS => "Файл персональных данных для файла DS",
+                TYPEFILE.LT => "Файл персональных данных для файла T",
+                TYPEFILE.LU => "Файл персональных данных для файла DU",
+                TYPEFILE.LV => "Файл персональных данных для файла DV",
+                TYPEFILE.T => "Высокотехнологичная помощь",
+                TYPEFILE.C => "Оказанная медицинская помощь при ЗНО",
+                TYPEFILE.LC => "Файл персональных данных для файла C",
+                TYPEFILE.LA => "Файл персональных данных для файла DA",
+                TYPEFILE.LB => "Файл персональных данных для файла DB",
+                _ => ""
+            };
         }
 
-        public static string RusName(this ServiceLoaderMedpomData.FileType t)
+        public static string RusName(this FileType t)
         {
-            switch (t)
+            return t switch
             {
-                case ServiceLoaderMedpomData.FileType.DD: return "Медицинские осмотры несовершеннолетних(предварительные)";
-                case ServiceLoaderMedpomData.FileType.DF: return "Медицинские осмотры несовершеннолетних(профилактические)";
-                case ServiceLoaderMedpomData.FileType.DO: return "Профилактические осмотры взрослого населения";
-                case ServiceLoaderMedpomData.FileType.DP: return "Первый этап диспансеризации";
-                case ServiceLoaderMedpomData.FileType.DR: return "Медицинские осмотры несовершеннолетних(периодические)";
-                case ServiceLoaderMedpomData.FileType.DS: return "Диспансеризация дитей-сирот";
-                case ServiceLoaderMedpomData.FileType.DU: return "Диспансеризация опекаемых";
-                case ServiceLoaderMedpomData.FileType.DV: return "Второй этап диспансеризации";
-                case ServiceLoaderMedpomData.FileType.H: return "Оказанная медицинская помощь";
-                case ServiceLoaderMedpomData.FileType.LD: return "Файл персональных данных для файла DD";
-                case ServiceLoaderMedpomData.FileType.LF: return "Файл персональных данных для файла DF";
-                case ServiceLoaderMedpomData.FileType.LH: return "Файл персональных данных для файла H";
-                case ServiceLoaderMedpomData.FileType.LO: return "Файл персональных данных для файла DO";
-                case ServiceLoaderMedpomData.FileType.LP: return "Файл персональных данных для файла DP";
-                case ServiceLoaderMedpomData.FileType.LR: return "Файл персональных данных для файла DR";
-                case ServiceLoaderMedpomData.FileType.LS: return "Файл персональных данных для файла DS";
-                case ServiceLoaderMedpomData.FileType.LT: return "Файл персональных данных для файла T";
-
-                case ServiceLoaderMedpomData.FileType.LU: return "Файл персональных данных для файла DU";
-                case ServiceLoaderMedpomData.FileType.LV: return "Файл персональных данных для файла DV";
-                case ServiceLoaderMedpomData.FileType.T: return "Высокотехнологичная помощь";
-                case ServiceLoaderMedpomData.FileType.C: return "Оказанная медицинская помощь при ЗНО";
-                case ServiceLoaderMedpomData.FileType.LC: return "Файл персональных данных для файла C";
-                default:
-                    return "";
-            }
+                FileType.DD => "Медицинские осмотры несовершеннолетних(предварительные)",
+                FileType.DF => "Медицинские осмотры несовершеннолетних(профилактические)",
+                FileType.DO => "Профилактические осмотры взрослого населения",
+                FileType.DP => "Первый этап диспансеризации",
+                FileType.DR => "Медицинские осмотры несовершеннолетних(периодические)",
+                FileType.DS => "Диспансеризация детей-сирот",
+                FileType.DU => "Диспансеризация опекаемых",
+                FileType.DV => "Второй этап диспансеризации",
+                FileType.DA => "Первый этап углубленной диспансеризации",
+                FileType.DB => "Второй этап углубленной диспансеризации",
+                FileType.H => "Оказанная медицинская помощь",
+                FileType.LD => "Файл персональных данных для файла DD",
+                FileType.LF => "Файл персональных данных для файла DF",
+                FileType.LH => "Файл персональных данных для файла H",
+                FileType.LO => "Файл персональных данных для файла DO",
+                FileType.LP => "Файл персональных данных для файла DP",
+                FileType.LR => "Файл персональных данных для файла DR",
+                FileType.LS => "Файл персональных данных для файла DS",
+                FileType.LT => "Файл персональных данных для файла T",
+                FileType.LU => "Файл персональных данных для файла DU",
+                FileType.LV => "Файл персональных данных для файла DV",
+                FileType.T => "Высокотехнологичная помощь",
+                FileType.C => "Оказанная медицинская помощь при ЗНО",
+                FileType.LC => "Файл персональных данных для файла C",
+                FileType.LA => "Файл персональных данных для файла DA",
+                FileType.LB => "Файл персональных данных для файла DB",
+                _ => ""
+            };
         }
 
 
-        public static string RusName(this ServiceLoaderMedpomData.StepsProcess t)
+        public static string RusName(this StepsProcess t)
         {
-            switch (t)
+            return t switch
             {
-                case ServiceLoaderMedpomData.StepsProcess.NotInvite: return "Первичная проверка не пройдена";
-                case ServiceLoaderMedpomData.StepsProcess.Invite: return "Первичная проверка пройдена";
-                case ServiceLoaderMedpomData.StepsProcess.XMLxsd: return "Схема верна";
-                case ServiceLoaderMedpomData.StepsProcess.ErrorXMLxsd: return "Ошибка схемы документа";
-                case ServiceLoaderMedpomData.StepsProcess.FlkErr: return "Ошибка при загрузке файла";
-                case ServiceLoaderMedpomData.StepsProcess.FlkOk: return "Проверка завершена";
-                default:
-                    return "";
-            }
+                StepsProcess.NotInvite => "Первичная проверка не пройдена",
+                StepsProcess.Invite => "Первичная проверка пройдена",
+                StepsProcess.XMLxsd => "Схема верна",
+                StepsProcess.ErrorXMLxsd => "Ошибка схемы документа",
+                StepsProcess.FlkErr => "Ошибка при загрузке файла",
+                StepsProcess.FlkOk => "Проверка завершена",
+                _ => ""
+            };
         }
 
         public static string RusName(this STATUS_FILE t)
         {
-            switch (t)
+            return t switch
             {
-                case STATUS_FILE.INVITE: return "Принят к проверке";
-                case STATUS_FILE.NOT_INVITE: return "Не принят к проверке";
-                case STATUS_FILE.XML_NOT_VALID: return "Ошибка схемы документа";
-                case STATUS_FILE.XML_VALID: return "Схема верна";
-                default:
-                    return "";
-            }
+                STATUS_FILE.INVITE => "Принят к проверке",
+                STATUS_FILE.NOT_INVITE => "Не принят к проверке",
+                STATUS_FILE.XML_NOT_VALID => "Ошибка схемы документа",
+                STATUS_FILE.XML_VALID => "Схема верна",
+                _ => ""
+            };
         }
 
         public static string ToString(this DateTime? dt, string format)
@@ -123,8 +129,6 @@ namespace SiteCore.Class
         }
 
     }
-
-
     public static class ControllerContextEx
     {
         public static async Task<string> RenderViewAsync<TModel>(this Controller controller, string viewName, TModel model, bool partial = false)
@@ -158,7 +162,6 @@ namespace SiteCore.Class
             return (from modelState in model.Values from error in modelState.Errors select $"{error.ErrorMessage}{error.Exception?.Message}").ToList();
         }
     }
-
     public static class Ext
     {
         public static string ToHTMLStr(this DateTime? value)
@@ -231,8 +234,6 @@ namespace SiteCore.Class
 
 
     }
-
-
     public static class SessionExtensions
     {
         public static void Set<T>(this ISession session, string key, T value)
@@ -244,6 +245,29 @@ namespace SiteCore.Class
         {
             var value = session.GetString(key);
             return value == null ? default : JsonSerializer.Deserialize<T>(value);
+        }
+    }
+
+    public static  class SerializationExtensions
+    {
+        public static string ObjectToXml(this object obj)
+        {
+            if (obj is DataTable TBL)
+            {
+                if (string.IsNullOrEmpty(TBL.TableName))
+                    TBL.TableName = "serilization";
+            }
+            var ser = new XmlSerializer(obj.GetType());
+            using var ms = new MemoryStream();
+            ser.Serialize(ms, obj);
+            return ms.ReadToEnd();
+        }
+
+        public static T XmlToObject<T>(this string val)
+        {
+            var ser = new XmlSerializer(typeof(T));
+            using var xmlreader = XmlReader.Create(new StringReader(val));
+            return (T) ser.Deserialize(xmlreader);
         }
     }
 

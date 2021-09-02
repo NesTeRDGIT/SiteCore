@@ -1,0 +1,106 @@
+﻿
+@using System.Data;
+@model DataTable
+
+@if (Model != null)
+{
+    if(Model.Columns.Contains("COMM") && Model.Rows.Count>0)
+    {
+        <h3>@Model.Rows[0]["comm"].ToString()</h3>
+    }
+    <table class="table_report">
+        <tr>
+            <th rowspan="4">Профиль медицинской помощи</th>
+            <th colspan="3">Методические рекомендации мз</th>
+            <th colspan="3">По забайкальскому краю с учетом коэффициента</th>
+            <th colspan="3" rowspan="2">Рекомендованные мз рф число работы профильной койки в году</th>
+            <th colspan="3">Методические рекомендации мз</th>
+            <th colspan="3">По забайкальскому краю с учетом коэффициента</th>
+            <th rowspan="2">Фактическое количество койко-дней стационара</th>
+            <th rowspan="2">Рас<span style="font-size: 1em;">четное количество коек на фактической число койко-дней</span></th>
+            <th colspan="3">Доля профильных коек в объеме</th>
+        </tr>
+        <tr>
+            
+            <th colspan="3">Рекомендуемое число койко-дней круглосуточного стационара</th>
+            <th colspan="3">Расчетное число койко-дней круглосуточного стационара</th>
+            <th colspan="3">Расчетное число коек</th>
+            <th colspan="3">Расчетное число коек</th>
+            <th rowspan="2">По рекомендациям мз</th>
+            <th rowspan="2">По расчету для Забайкальского края</th>
+            <th rowspan="2">По фактически сложившимся показателям</th>
+        </tr>
+        <tr>
+            
+            <th>всего</th>
+            <th>взрослые</th>
+            <th>дети</th>
+            <th>всего</th>
+            <th>взрослые</th>
+            <th>дети</th>
+            <th>всего</th>
+            <th>взрослые</th>
+            <th>дети</th>
+            <th>всего</th>
+            <th>взрослые</th>
+            <th>дети</th>
+            <th>всего</th>
+            <th>взрослые</th>
+            <th>дети</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>            
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+            <th>5</th>
+            <th>6</th>
+            <th>7</th>
+            <th>8</th>
+            <th>9</th>
+            <th>10</th>
+            <th>11</th>
+            <th>12</th>
+            <th>13</th>
+            <th>14</th>
+            <th>15</th>
+            <th>16</th>
+            <th>17</th>
+            <th>18</th>
+            <th>19</th>
+            <th>20</th>
+        </tr>
+
+        @foreach(DataRow row in Model.Rows)
+        {
+            <tr>
+                <td style="text-align:left;">@row["PROFIL"]</td>
+                <td style="text-align:right;">@row["ST1"]</td>
+                <td style="text-align:right;">@row["ST2"]</td>
+                <td style="text-align:right;">@row["ST3"]</td>
+                <td style="text-align:right;">@row["ST4"]</td>
+                <td style="text-align:right;">@row["ST5"]</td>
+                <td style="text-align:right;">@row["ST6"]</td>
+                <td style="text-align:right;">@row["ST7"]</td>
+                <td style="text-align:right;">@row["ST8"]</td>
+                <td style="text-align:right;">@row["ST9"]</td>
+                <td style="text-align:right;">@row["ST10"]</td>
+                <td style="text-align:right;">@row["ST11"]</td>
+                <td style="text-align:right;">@row["ST12"]</td>
+                <td style="text-align:right;">@row["ST13"]</td>
+                <td style="text-align:right;">@row["ST14"]</td>
+                <td style="text-align:right;">@row["ST15"]</td>
+                <td style="text-align:right;">@row["ST16"]</td>
+                <td style="text-align:right;">@row["ST17"]</td>
+                <td style="text-align:right;">@row["ST18"]</td>
+                <td style="text-align:right;">@row["ST19"]</td>
+                <td style="text-align:right;">@row["ST20"]</td>
+            </tr>
+        }
+    </table>
+    <form asp-action="GET_TABLE_3_XLS" method="get">
+        <input type="submit" value="Скачать Excel" class="ActionButton" />
+    </form>
+}

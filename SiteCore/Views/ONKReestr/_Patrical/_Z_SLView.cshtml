@@ -1,0 +1,100 @@
+﻿@using SiteCore.Class
+@model SiteCore.Data.Z_SL
+
+
+
+<div>
+    <div class="horizontalBlock">
+        <div>
+            <h4>Информация о пациенте</h4>
+            <table class="FakeTable">
+                <tr><td>ЕНП</td><td>@Model.PAC.ENP</td></tr>
+                <tr><td>СМО</td><td>@Model.PAC.N_SMO (@Model.PAC.SMO)</td></tr>
+                <tr><td>Фамилия</td><td>@Model.PAC.FAM</td></tr>
+                <tr><td>Имя</td><td>@Model.PAC.IM</td></tr>
+                <tr><td>Отчество</td><td>@Model.PAC.OT</td></tr>
+                <tr><td>Дата рождения</td><td>@Model.PAC.DR.ToString("dd.MM.yyyy")</td></tr>
+                <tr><td>Пол</td><td>@Model.PAC.W (@Model.PAC.W)</td></tr>
+                <tr><td>Телефон</td><td>@Model.PAC.TEL</td></tr>
+                <tr><td>Дата смерти</td><td>@Model.PAC.DDEATH.ToString("dd.MM.yyyy")</td></tr>
+            </table>
+        </div>
+        <hr />
+        <div>
+            <h4>Информация о представителе пациента</h4>
+            <table class="FakeTable">
+                <tr><td>Фамилия</td><td>@Model.PAC.FAM_P</td></tr>
+                <tr><td>Имя</td><td>@Model.PAC.IM_P</td></tr>
+                <tr><td>Отчество</td><td>@Model.PAC.OT_P</td></tr>
+                <tr><td>Дата рождения</td><td>@Model.PAC.DR_P.ToString("dd.MM.yyyy")</td></tr>
+                <tr><td>Пол</td><td>@Model.PAC.W_P (@Model.PAC.W_P)</td></tr>
+            </table>
+        </div>
+    </div>
+    <hr />
+    <div class="horizontalBlock">
+        <div>
+            <h4>Информация о законченном случае</h4>
+            <table class="FakeTable">
+                <tr><td>Условие оказания</td><td>@Model.N_USL_OK (@Model.USL_OK)</td></tr>
+                <tr><td>Вид помощи</td><td>@Model.N_VIDPOM (@Model.VIDPOM)</td></tr>
+                <tr><td>Дата начала</td><td>@Model.DATE_Z_1.ToString("dd.MM.yyyy")</td></tr>
+                <tr><td>Дата окончания</td><td>@Model.DATE_Z_2.ToString("dd.MM.yyyy")</td></tr>
+                <tr><td>Форма помощи</td><td>@Model.N_FOR_POM (@Model.FOR_POM)</td></tr>
+                <tr><td>Исход</td><td>@Model.N_ISHOD (@Model.ISHOD)</td></tr>
+                <tr>
+                    <td>Результат</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(Model.N_RSLT))
+                        {<span>@Model.N_RSLT (@Model.RSLT)</span>}
+                    else
+                    {<span>@Model.N_RSLT_D (@Model.RSLT_D)</span>}
+                    </td>
+                </tr>
+                <tr><td>Направившая МО</td><td>@Model.N_NPR_MO (@Model.NPR_MO)</td></tr>
+                <tr><td>Дата направления</td><td>@Model.NPR_DATE</td></tr>
+            </table>
+        </div>
+        <hr />
+        <div>
+            <h4>Информация об оплате</h4>
+            <table class="FakeTable">
+                <tr><td>Сумма</td><td>@Model.SUMV</td></tr>
+                <tr><td>Оплата</td><td>@Model.N_OPLATA (@Model.OPLATA)</td></tr>
+                <tr><td>Сумма принятая</td><td>@Model.SUMP</td></tr>
+                <tr><td>Способ оплаты</td><td>@Model.N_IDSP (@Model.IDSP)</td></tr>
+            </table>
+        </div>
+    </div>
+
+
+
+
+
+    <hr />
+    <h4>Информация о случаях</h4>
+    <div class="TabControl">
+        <div class="Title">
+            @for (var i = 0; i < Model.SL.Count; i++)
+            {
+                var cl = i == 0 ? "tabHeader selected" : "tabHeader";
+                var key = $"Tab{i}";
+                <div key="@key" class="@cl" onclick="SelectTab(this)">@Model.SL[i].SLUCH_ID</div>
+            }
+        </div>
+        <div class="tabcontent">
+            @for (var i = 0; i < Model.SL.Count; i++)
+            {
+                var cl = i == 0 ? "tab selected" : "tab";
+                var key = $"Tab{i}";
+                <div key="@key" class="@cl">
+                    @{await Html.RenderPartialAsync("_Patrical/_SL_View", Model.SL[i]);}
+                </div>
+            }
+        </div>
+    </div>
+
+
+
+
+</div>

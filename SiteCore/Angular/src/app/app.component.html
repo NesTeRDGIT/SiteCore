@@ -1,0 +1,134 @@
+﻿<p-table [value]="Items" [paginator]="true" [rows]="PageINFO.CountOnPage" [totalRecords]="PageINFO.totalRecords"
+         [lazy]="true" (onLazyLoad)="loadCustomers($event)" [scrollable]="true" scrollHeight="40vh" scrollDirection="both" [rowsPerPageOptions]="[20,50,100,300]" pageLinks="4" [loading]="loading" selectionMode="multiple"
+         [(selection)]="SelectItems" [metaKeySelection]="true" dataKey="ONK_REESTR_ID" (onRowSelect)="handleRowSelect($event)"
+         [resizableColumns]="true" responsiveLayout="scroll">
+    <ng-template pTemplate="colgroup">
+        <colgroup>
+            <col style="width:20%">
+            <col style="width:20%">
+            <col style="width:20%">
+            <col style="width:10%">
+            <col style="width:10%">
+            <col style="width:11%">
+            <col style="width:9%">
+        </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th pResizableColumn>Фамилия</th>
+            <th pResizableColumn>Имя</th>
+            <th pResizableColumn>Отчество</th>
+            <th pResizableColumn>Дата рождения</th>
+            <th pResizableColumn>Дата смерти</th>
+            <th pResizableColumn>Дата подозрения</th>
+            <th pResizableColumn>Дата лечения</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+        <tr [pSelectableRow]="item" [pSelectableRowIndex]="rowIndex">
+            <td>{{item.FAM}}</td>
+            <td>{{item.IM}}</td>
+            <td>{{item.OT}}</td>
+            <td>{{item.DR | date: 'MM.dd.yyyy'}}</td>
+            <td>{{item.DDEATH | date: 'MM.dd.yyyy'}}</td>
+            <td>{{item.DATE_DS_ONK | date: 'MM.dd.yyyy'}}</td>
+            <td>{{item.DS1_DATE | date: 'MM.dd.yyyy'}}</td>
+        </tr>
+    </ng-template>
+</p-table>
+<div style="width: 100%; height: 40vh; min-height: 40vh; overflow-x: auto; overflow-y: auto; padding: 0">
+    <p-tabView (onChange)="OnChangeSelectTab($event)" [(activeIndex)]="index">
+        <p-tabPanel header="Данные реестра">
+            <div>
+                <fieldset>
+                    <legend>Персональные данные</legend>
+
+                    <label class="label-sup">ЕНП <span>{{SelectItem.ENP}}</span></label>
+                    <label class="label-sup">Фамилия <span>{{SelectItem.FAM}}</span></label>
+                    <label class="label-sup">Имя <span>{{SelectItem.IM}}</span></label>
+                    <label class="label-sup">Отчество <span>{{SelectItem.OT}}</span></label>
+                    <label class="label-sup">ДР <span>{{SelectItem.DR| date: 'MM.dd.yyyy'}}</span></label>
+                    <label class="label-sup">Дата смерти <span class="RedText">{{SelectItem.DDEATH| date: 'MM.dd.yyyy'}}</span></label>
+                </fieldset>
+            </div>
+            <div>
+                <fieldset>
+                    <legend>Подозрение на ЗНО</legend>
+                    <label class="label-sup">МО подозрения <span>{{SelectItem.DS_ONK_MO_FULLNAME}}</span></label>
+                    <label class="label-sup">Дата подозрения <span>{{SelectItem.DATE_DS_ONK| date: 'MM.dd.yyyy'}}</span></label>
+                    <label class="label-sup">Подозрение при диспансеризации <span>{{SelectItem.DS_ONK_DISP| yesNo }}</span></label>
+                    <label class="label-sup">Дата подозрения у онколога <span>{{SelectItem.DATE_DS_ONK_ONK| date: 'MM.dd.yyyy'}}</span></label>
+                    <label class="label-sup">МО подозрения у онколога <span>{{SelectItem.DS_ONK_MO_ONK_FULLNAME}}</span></label>
+                </fieldset>
+            </div>
+            <div>
+                <fieldset>
+                    <legend>Лечение ЗНО</legend>
+                    <label class="label-sup">Дата первого лечения <span>{{SelectItem.DS1_DATE| date: 'MM.dd.yyyy'}}</span></label>
+                    <label class="label-sup">Диагноз первого лечения <span>{{SelectItem.DS1_FULLNAME}}</span></label>
+                </fieldset>
+            </div>
+            <div>
+                <fieldset>
+                    <label class="label-sup">Дата дисп. наблюдения <span>{{SelectItem.DATE_DN| date: 'MM.dd.yyyy'}}</span></label>
+                </fieldset>
+            </div>
+            <div>
+                <fieldset>
+                    <legend>Прочее</legend>
+                    <label class="label-sup">Дата биопсии <span>{{SelectItem.DATE_BIO| date: 'MM.dd.yyyy'}}</span></label>
+                    <label class="label-sup">МО биопсии <span>{{SelectItem.MO_BIO_FULLNAME}}</span></label>
+                    <label class="label-sup">Дата КТ <span>{{SelectItem.DATE_KT| date: 'MM.dd.yyyy'}}</span></label>
+                    <label class="label-sup">МО КТ <span>{{SelectItem.MO_KT_FULLNAME}}</span></label>
+                    <label class="label-sup">Дата химиотерапии <span>{{SelectItem.DATE_HIM| date: 'MM.dd.yyyy'}}</span></label>
+                </fieldset>
+            </div>
+        </p-tabPanel>
+        <p-tabPanel header="Случаи оказания МП">
+            <p-table [value]="SluchList" [loading]="loadingSluchList" [autoLayout]="true">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th></th>
+                        <th>Медицинская организация</th>
+                        <th>Условие оказания</th>
+                        <th>Дата начала</th>
+                        <th>Дата окончания</th>
+                        <th>МКБ</th>
+                        <th>Результат</th>
+                        <th>Подозрение</th>
+                        <th>СМО</th>
+                        <th>Отчетный год</th>
+                        <th>Отчетный месяц</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item>
+                    <tr>
+                        <td><a target="_blank" href="ViewZ_SL?SLUCH_Z_ID={{item.SLUCH_Z_ID}}">{{item.SLUCH_Z_ID}}</a></td>
+                        <td>{{item.LPU_NAME}}</td>
+                        <td>{{item.N_USL_OK}}</td>
+                        <td>{{item.DATE_1 | date: 'MM.dd.yyyy'}}</td>
+                        <td>{{item.DATE_2 | date: 'MM.dd.yyyy'}}</td>
+                        <td>{{item.N_DS1}}</td>
+                        <td>{{item.N_RSLT}}</td>
+                        <td>{{item.DS_ONK| yesNo}}</td>
+                        <td>{{item.N_SMO}}</td>
+                        <td>{{item.YEAR}}</td>
+                        <td>{{item.MONTH}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+    </p-tabView>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

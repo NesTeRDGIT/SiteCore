@@ -194,17 +194,17 @@ myApp.controller("Grid1", ["$scope", "$http", "uiGridConstants", "i18nService", 
                 },
                 GetImageStatus(row, col) {
                     if (row.entity.STATUS === "New")
-                        return "/Image/documentedit.png";
+                        return "../Image/documentedit.png";
                     if (row.entity.STATUS === "OnSend")
-                        return "/Image/Onsend.png";
+                        return "../Image/Onsend.png";
                     if (row.entity.STATUS === "Send")
-                        return "/Image/Send.png";
+                        return "../Image/Send.png";
                     if (row.entity.STATUS === "FLK")
-                        return "/Image/sendandOK.png";
+                        return "../Image/sendandOK.png";
                     if (row.entity.STATUS === "Answer")
-                        return "/Image/IconOK.png";
+                        return "../Image/IconOK.png";
                     if (row.entity.STATUS === "Error")
-                        return "/Image/IconERROR.png";
+                        return "../Image/IconERROR.png";
                     return "";
                 }
 
@@ -554,10 +554,10 @@ myApp.controller("Grid2", ["$scope", "$http", "uiGridConstants", "i18nService","
                 GetImageStatus(row, col) {
                       
                     if (row.entity.STATUS === true)
-                        return "/Image/IconOK.png";
+                        return "../Image/IconOK.png";
                     if (row.entity.STATUS === false)
-                        return "/Image/IconERROR.png"; 
-                    return "/Image/question.png";
+                        return "../Image/IconERROR.png"; 
+                    return "../Image/question.png";
                 }
 
             }

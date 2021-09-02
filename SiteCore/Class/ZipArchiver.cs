@@ -13,7 +13,7 @@ namespace SiteCore.Class
 
     public interface IZipArchiver
     {
-         List<ZipArchiverItem> UnZip(string filepath);
+         Task<List<ZipArchiverItem>> UnZip(string filepath);
          byte[] Zip(params ZipArchiverEntry[] files);
     }
     public class ZipArchiverItem
@@ -38,7 +38,7 @@ namespace SiteCore.Class
     }
     public class ZipArchiver: IZipArchiver
     {
-        public List<ZipArchiverItem> UnZip(string filepath)
+        public async Task<List<ZipArchiverItem>> UnZip(string filepath)
         {
             var DirFile = Path.GetDirectoryName(filepath);
             if (string.IsNullOrEmpty(DirFile) || string.IsNullOrEmpty(filepath))
@@ -52,7 +52,7 @@ namespace SiteCore.Class
                 Directory.CreateDirectory(tmp);
             }
             // 
-            var RES = FilesHelper.FilesExtract(filepath, tmp);
+            var RES = await FilesHelper.FilesExtract(filepath, tmp);
             if (RES.Result == false)
             {
                 Directory.Delete(tmp, true);

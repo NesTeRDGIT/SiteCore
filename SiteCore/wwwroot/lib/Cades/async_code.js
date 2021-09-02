@@ -257,7 +257,7 @@ function CheckForPlugIn_Async() {
             if(!isActualVersion)
             {
 
-                document.getElementById('PluginEnabledImg').setAttribute("src", "/Lib/Cades/Img/yellow_dot.png");
+                document.getElementById('PluginEnabledImg').setAttribute("src", "../Lib/Cades/Img/yellow_dot.png");
                 document.getElementById('PlugInEnabledTxt').innerHTML = "Плагин загружен, но есть более свежая версия.";
             }
             document.getElementById('PlugInVersionTxt').innerHTML = "Версия плагина: " + (yield CurrentPluginVersion.toString());
@@ -278,7 +278,7 @@ function CheckForPlugIn_Async() {
 
     function GetLatestVersion_Async(CurrentPluginVersion) {
         var xmlhttp = getXmlHttp();
-        xmlhttp.open("GET", "/Lib/Cades/latest_2_0.txt", true);
+        xmlhttp.open("GET", "../Lib/Cades/latest_2_0.txt", true);
         xmlhttp.onreadystatechange = function() {
         var PluginBaseVersion;
             if (xmlhttp.readyState == 4) {
@@ -291,7 +291,7 @@ function CheckForPlugIn_Async() {
         xmlhttp.send(null);
     }
 
-    document.getElementById('PluginEnabledImg').setAttribute("src", "/Lib/Cades/Img/green_dot.png");
+    document.getElementById('PluginEnabledImg').setAttribute("src", "../Lib/Cades/Img/green_dot.png");
     document.getElementById('PlugInEnabledTxt').innerHTML = "Плагин загружен.";
   
     var CurrentPluginVersion;
@@ -1245,12 +1245,12 @@ function CheckForPlugInUEC_Async()
 
         if(!isActualVersion)
         {
-            document.getElementById('PluginEnabledImg').setAttribute("src", "/Lib/Cades/Img/yellow_dot.png");
+            document.getElementById('PluginEnabledImg').setAttribute("src", "../Lib/Cades/Img/yellow_dot.png");
             document.getElementById('PlugInEnabledTxt').innerHTML = "Плагин загружен, но он не поддерживает УЭК.";
         }
         else
         {
-            document.getElementById('PluginEnabledImg').setAttribute("src", "/Lib/Cades/Img/green_dot.png");
+            document.getElementById('PluginEnabledImg').setAttribute("src", "../Lib/Cades/Img/green_dot.png");
             document.getElementById('PlugInEnabledTxt').innerHTML = "Плагин загружен.";
 
             try
@@ -1266,7 +1266,7 @@ function CheckForPlugInUEC_Async()
 
             if(!isUECCSPInstalled)
             {
-                document.getElementById('PluginEnabledImg').setAttribute("src", "/Lib/Cades/Img/yellow_dot.png");
+                document.getElementById('PluginEnabledImg').setAttribute("src", "../Lib/Cades/Img/yellow_dot.png");
                 document.getElementById('PlugInEnabledTxt').innerHTML = "Плагин загружен. Не установлен УЭК CSP.";
             }
         }

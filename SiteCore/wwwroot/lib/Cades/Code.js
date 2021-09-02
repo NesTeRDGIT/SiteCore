@@ -237,7 +237,7 @@ function include_async_code()
     }
     var fileref = document.createElement('script');
     fileref.setAttribute("type", "text/javascript");
-    fileref.setAttribute("src", "/Lib/Cades/async_code.js?1034");
+    fileref.setAttribute("src", "../Lib/Cades/async_code.js?1034");
     document.getElementsByTagName("head")[0].appendChild(fileref);
     async_Promise = new Promise(function(resolve, reject){
         async_resolve = resolve;
@@ -535,7 +535,7 @@ function CheckForPlugIn_NPAPI() {
     }
     function GetLatestVersion_NPAPI(CurrentPluginVersion) {
              var xmlhttp = getXmlHttp();
-        xmlhttp.open("GET", "/Lib/Cades/latest_2_0.txt", true);
+        xmlhttp.open("GET", "../Lib/Cades/latest_2_0.txt", true);
         xmlhttp.onreadystatechange = function() {
             var PluginBaseVersion;
             if (xmlhttp.readyState == 4) {
@@ -543,23 +543,23 @@ function CheckForPlugIn_NPAPI() {
                     PluginBaseVersion = xmlhttp.responseText;
                     if (isPluginWorked) { // плагин работает, объекты создаются
                         if (VersionCompare_NPAPI(PluginBaseVersion, CurrentPluginVersion)<0) {
-                            document.getElementById('PluginEnabledImg').setAttribute("src", "/Lib/Cades/Img/yellow_dot.png");
+                            document.getElementById('PluginEnabledImg').setAttribute("src", "../Lib/Cades/Img/yellow_dot.png");
                             document.getElementById('PlugInEnabledTxt').innerHTML = "Плагин загружен, но есть более свежая версия.";
                         }
                     }
                     else { // плагин не работает, объекты не создаются
                         if (isPluginLoaded) { // плагин загружен
                             if (!isPluginEnabled) { // плагин загружен, но отключен
-                                document.getElementById('PluginEnabledImg').setAttribute("src", "/Lib/Cades/Img/red_dot.png");
+                                document.getElementById('PluginEnabledImg').setAttribute("src", "../Lib/Cades/Img/red_dot.png");
                                 document.getElementById('PlugInEnabledTxt').innerHTML = "Плагин загружен, но отключен в настройках браузера.";
                             }
                             else { // плагин загружен и включен, но объекты не создаются
-                                document.getElementById('PluginEnabledImg').setAttribute("src", "/Lib/Cades/Img/red_dot.png");
+                                document.getElementById('PluginEnabledImg').setAttribute("src", "../Lib/Cades/Img/red_dot.png");
                                 document.getElementById('PlugInEnabledTxt').innerHTML = "Плагин загружен, но не удается создать объекты. Проверьте настройки браузера.";
                             }
                         }
                         else { // плагин не загружен
-                            document.getElementById('PluginEnabledImg').setAttribute("src", "/Lib/Cades/Img/red_dot.png");
+                            document.getElementById('PluginEnabledImg').setAttribute("src", "../Lib/Cades/Img/red_dot.png");
                             document.getElementById('PlugInEnabledTxt').innerHTML = "Плагин не загружен.";
                         }
                     }
@@ -583,7 +583,7 @@ function CheckForPlugIn_NPAPI() {
         if( typeof(CurrentPluginVersion) == "undefined")
             CurrentPluginVersion = oAbout.Version;
         
-        document.getElementById('PluginEnabledImg').setAttribute("src", "/Lib/Cades/Img/green_dot.png");
+        document.getElementById('PluginEnabledImg').setAttribute("src", "../Lib/Cades/Img/green_dot.png");
         document.getElementById('PlugInEnabledTxt').innerHTML = "Плагин загружен.";
         document.getElementById('PlugInVersionTxt').innerHTML = "Версия плагина: " + MakeVersionString(CurrentPluginVersion);
         ShowCSPVersion_NPAPI(CurrentPluginVersion);

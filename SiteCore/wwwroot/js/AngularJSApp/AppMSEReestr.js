@@ -1,5 +1,5 @@
 ﻿
-var myApp = angular.module("myApp", ["ngTouch", "ui.grid", "ui.grid.pagination", "ui.grid.selection", "ui.grid.cellNav", "ui.grid.resizeColumns", "ui.bootstrap", "ui.bootstrap.contextMenu", "ui.grid.autoResize", "Modal", "ui.grid.loader"]);
+var myApp = angular.module("myApp", ["ngTouch", "ui.grid", "ui.grid.pagination", "ui.grid.selection", "ui.grid.cellNav", "ui.grid.resizeColumns", "ui.bootstrap", "ui.bootstrap.contextMenu", "ui.grid.autoResize", "Modal", "ui.grid.loader", "ui.select", "ngSanitize"]);
 myApp.controller("Grid1", ["$scope", "$http","$q", "uiGridConstants", "i18nService", "$templateCache", "ModalService", "$compile", 
     function ($scope, $http, $q, uiGridConstants, i18nService, $templateCache, ModalService, $compile) {
         $scope.numberPattert = /^[0-9]+(\.[0-9]{1,2})?$/;
@@ -8,14 +8,12 @@ myApp.controller("Grid1", ["$scope", "$http","$q", "uiGridConstants", "i18nServi
         $scope.IsMSESmo = false;
         $scope.OwnerRow = false;
         $scope.CurrentExpertize = {}
-
-
-     
+      
 
         $scope.init = function(IsMSEAdmin, IsMSESmo) {
             $scope.IsMSEAdmin = IsMSEAdmin;
             $scope.IsMSESmo = IsMSESmo;
-        }
+        };
 
         function CheckOwner() {
             $scope.OwnerRow = $scope.CurrentMSE.SMO === "75" && $scope.IsMSEAdmin || $scope.IsMSESmo;
@@ -480,6 +478,7 @@ myApp.controller("Grid1", ["$scope", "$http","$q", "uiGridConstants", "i18nServi
                                 });
                             });
                         });
+                      
                         $scope.CurrentMSE = item;
                     } else {
                         $scope.ErrMSE = Value;
@@ -577,7 +576,10 @@ myApp.controller("Grid1", ["$scope", "$http","$q", "uiGridConstants", "i18nServi
         $scope.SMODataStatus = null;
 
         $scope.SaveSMO_DATA = function () {
+          
             const url = `SetSMO_DATA`;
+           
+
             $http.post(url, $scope.CurrentMSE.SMO_DATA)
                 .then(function (response) {
                         const data = response.data;
@@ -844,6 +846,30 @@ myApp.filter("MKBActual", function () {
     };
 });
 
+myApp.filter("MKBActual2", function () {
+    return function (input, DT, term, currMKB) {
+        var find ;
+        if (term === undefined || term === null || term === "") {
+
+            find = null;
+        } else {
+            find = term.toLowerCase();
+        }
+        if (Array.isArray(input)) {
+            return input.filter(val => {
+                var isActive = val.DATE_B <= DT && (val.DATE_E >= DT || val.DATE_E === null);
+                var isFind = false;
+                if (find != null) {
+                    isFind = (val.MKB.toLowerCase().indexOf(find) > -1 || val.NAME.toLowerCase().indexOf(find) > -1);
+                }
+                var isCurr = val.MKB === currMKB;
+                return isActive && (isFind || isCurr);
+            });
+
+        }
+        return null;
+    };
+});
 
 
 myApp.directive("convertToNumber", function () {

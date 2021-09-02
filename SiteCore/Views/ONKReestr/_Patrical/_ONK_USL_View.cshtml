@@ -1,0 +1,31 @@
+﻿@using SiteCore.Data;
+@model ONK_USL
+<div  class="horizontalBlock">
+    <div>
+        <table class="BaseTable">
+            <tr><td>Тип услуги</td><td>@Model.N_USL_TIP (@Model.USL_TIP)</td></tr>
+            <tr><td>Тип хирургического лечения</td><td>@Model.N_HIR_TIP (@Model.HIR_TIP)</td></tr>
+            <tr><td>Линия лекарственной терапии</td><td>@Model.N_LEK_TIP_L (@Model.LEK_TIP_L)</td></tr>
+            <tr><td>Цикл лекарственной терапии</td><td>@Model.N_LEK_TIP_V (@Model.LEK_TIP_V)</td></tr>
+            <tr><td>Проведение профилактики тошноты и рвотного рефлекса</td><td>@Model.PPTR.ToYesNo()</td></tr>
+            <tr><td>Тип лучевой терапии</td><td>@Model.N_LUCH_TIP (@Model.LUCH_TIP)</td></tr>
+        </table>
+    </div>
+  
+  
+</div>
+
+@if (Model.LEK_PR.Any())
+{
+    <hr/>
+    <h4>Сведение о введенных препаратах</h4>
+    <div>
+        <table class="BaseTable">
+            <tr><th>Препарат</th><th>Код схемы</th><th>Даты введения</th></tr>
+            @foreach (var p in Model.LEK_PR)
+            {
+                <tr><td>@p.N_REGNUM (@p.REGNUM)</td><td>@p.N_CODE_SH (@p.CODE_SH)</td><td>@string.Join(";",p.DATE_INJ.Select(x=>x.VALUE.ToString("dd.MM.yyyy")))</td></tr>
+            }
+        </table>
+    </div>
+}

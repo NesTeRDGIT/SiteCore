@@ -251,7 +251,7 @@ namespace SiteCore.Data
         public virtual MSEExpertize Expertize { get; set; }
     }
 
-    [Table("MKB10",Schema = "NSI")]
+    [Table("V_MKB10",Schema = "NSI")]
     public class MKB_SPR
     {
         [Key]

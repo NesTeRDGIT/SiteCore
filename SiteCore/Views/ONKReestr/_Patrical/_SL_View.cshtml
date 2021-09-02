@@ -1,0 +1,230 @@
+﻿@using SiteCore.Class
+@model SiteCore.Data.SL
+<div>
+    <div style="display: flex; justify-content: space-between ; width: 100%">
+        <div>
+            <h4>Информация о случае</h4>
+            <table class="FakeTable">
+                <tr><td>№ истории</td><td>@Model.NHISTORY</td></tr>
+                <tr><td>Дата начала</td><td>@Model.DATE_1.ToString("dd.MM.yyyy")</td></tr>
+                <tr><td>Дата окончания</td><td>@Model.DATE_2.ToString("dd.MM.yyyy")</td></tr>
+                <tr><td>Диагноз предварительный</td><td>@Model.DS0str</td></tr>
+                <tr><td>Диагноз основной</td><td>@Model.DS1str @if (Model.DS1_PR)
+                {<span>Диагноз установлен впервые</span>}</td></tr>
+                <tr><td>Диагноз сопутствующий</td><td>@Model.DS2str</td></tr>
+                <tr><td>Диагноз осложнения</td><td>@Model.DS3str</td></tr>
+                <tr><td>Характер заболевания</td><td>@Model.N_C_ZAB (@Model.C_ZAB)</td></tr>
+                <tr><td>Цель посещения</td><td>@Model.N_P_CEL</td></tr>
+
+                <tr><td>Признак диспансерного наблюдения</td><td>@Model.N_DN (@Model.DN)</td></tr>
+                <tr><td>Профиль</td><td>@Model.N_PROFIL (@Model.PROFIL)</td></tr>
+                <tr><td>Профиль койки</td><td>@Model.N_PROFIL_K (@Model.PROFIL_K)</td></tr>
+                <tr><td>Признак подозрения на ЗНО</td><td>@Model.DS_ONK.ToYesNo()</td></tr>
+
+                <tr><td>Подразделение МО</td><td>@Model.N_LPU_1 (@Model.LPU_1)</td></tr>
+                <tr><td>Отделение</td><td>@Model.PODR</td></tr>
+                <tr><td>Код врача</td><td>@Model.IDDOKT</td></tr>
+                <tr><td>Специальность врача</td><td>@Model.N_PRVS (@Model.PRVS)</td></tr>
+
+                <tr><td>Сумма</td><td>@Model.SUM_M</td></tr>
+                <tr><td>Сумма принятая</td><td>@Model.SUM_MP</td></tr>
+
+            </table>
+        </div>
+        <hr />
+        @if (Model.METOD_HMP.HasValue)
+        {
+            <div>
+                <h4>Информация о ВМП</h4>
+                <table class="FakeTable">
+                    <tr><td>Вид ВМП</td><td>@Model.N_VID_HMP (@Model.VID_HMP)</td></tr>
+                    <tr><td>Метод ВМП</td><td>@Model.N_METOD_HMP (@Model.METOD_HMP)</td></tr>
+                    <tr><td>Дата талона ВМП</td><td>@Model.TAL_D.ToString("dd.MM.yyyy")</td></tr>
+                    <tr><td>Номер талона ВМП</td><td>@Model.TAL_NUM</td></tr>
+                    <tr><td>Дата планируемой госпитализации</td><td>@Model.TAL_P.ToString("dd.MM.yyyy")</td></tr>
+                </table>
+            </div>
+        }
+
+        @if (Model.KSG_KPG != null)
+        {
+            <div>
+                <h4>Информация о КСГ</h4>
+                <table class="FakeTable">
+                    <tr><td>КСГ</td><td>@Model.KSG_KPG.N_N_KSG (@Model.KSG_KPG.N_KSG)</td></tr>
+                    <tr><td>Коэффициент затратоемкости</td><td>@Model.KSG_KPG.KOEF_Z</td></tr>
+                    <tr><td>Коэффициент дифференциации</td><td>@Model.KSG_KPG.KOEF_D</td></tr>
+                    <tr><td>Коэффициент уровня</td><td>@Model.KSG_KPG.KOEF_U</td></tr>
+                    <tr><td>Коэффициент управленческий</td><td>@Model.KSG_KPG.KOEF_UP</td></tr>
+                    <tr><td>Классификационные критерии</td><td>@string.Join(Environment.NewLine, Model.KSG_KPG.CRIT.Select(x => $"{x.N_CRIT_VALUE}({x.CRIT_VALUE})"))</td></tr>
+                    <tr><td>Коэффициент КСЛП</td><td>@Model.KSG_KPG.IT_SL</td></tr>
+
+                </table>
+                @if (Model.KSG_KPG.SL_KOEF.Any())
+                {
+                    <h4>КСЛП</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Наименование</th>
+                                <th>Коэффициент</th>
+                            </tr>
+                        </thead>
+                        @foreach (var KSLP in Model.KSG_KPG.SL_KOEF)
+                        {
+                            <tr><td>@KSLP.N_IDSL (@KSLP.IDSL)</td><td>@KSLP.Z_SL</td></tr>
+                        }
+                    </table>
+                }
+
+            </div>
+        }
+
+    </div>
+    <hr />
+    @if (Model.NAPR.Any())
+    {
+        <h4>Сведения об оформлении направления</h4>
+        <div>
+            <table class="BaseTable">
+                <tr>
+                    <th>Дата направления</th>
+                    <th>МО(куда)</th>
+                    <th>Вид направления</th>
+                    <th>Метод диагностического исследования</th>
+                    <th>Услуга</th>
+                </tr>
+                @foreach (var nap in Model.NAPR)
+                {
+                    <tr>
+                        <td>@nap.NAPR_DATE.ToString("dd.MM.yyyy")</td>
+                        <td>@nap.N_NAPR_MO (@nap.NAPR_MO)</td>
+                        <td>@nap.N_NAPR_V (@nap.NAPR_V)</td>
+                        <td>@nap.N_MET_ISSL (@nap.MET_ISSL)</td>
+                        <td>@nap.N_NAPR_USL (@nap.NAPR_USL)</td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <hr />
+    }
+    @if (Model.CONS.Any())
+    {
+        <h4>Сведения о проведении консилиума</h4>
+        <div>
+            <table class="BaseTable">
+                <tr>
+                    <th>Цель</th>
+                    <th>Дата</th>
+                </tr>
+                @foreach (var con in Model.CONS)
+                {
+                    <tr>
+                        <td>@con.N_PR_CONS (@con.PR_CONS)</td>
+                        <td>@con.DT_CONS.ToString("dd.MM.yyyy")</td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <hr />
+    }
+
+    <h4>Услуги</h4>
+    <div>
+        @{Html.RenderPartial("_Patrical/_USL_View", Model.USL);}
+    </div>
+
+    <hr />
+    @if (Model.ONK_SL != null)
+    {
+        var ONK_SL = Model.ONK_SL;
+        <div class="horizontalBlock">
+            <div>
+                <h4>Информация об онкологическом лечении</h4>
+                <table class="FakeTable">
+                    <tr><td>Повод обращения</td><td>@ONK_SL.N_DS1_T (@ONK_SL.DS1_T)</td></tr>
+                    <tr><td>Стадия</td><td>@ONK_SL.N_STAD (@ONK_SL.STAD)</td></tr>
+                    <tr><td>Tumor</td><td>@ONK_SL.N_ONK_T (@ONK_SL.ONK_T)</td></tr>
+                    <tr><td>Nodus</td><td>@ONK_SL.N_ONK_N (@ONK_SL.ONK_N)</td></tr>
+                    <tr><td>Metastasis</td><td>@ONK_SL.ONK_M (@ONK_SL.ONK_M)</td></tr>
+                    <tr><td>Признак выявления отдаленных метастазов</td><td>@ONK_SL.MTSTZ.ToYesNo()</td></tr>
+                    <tr><td>Суммарная очаговая доза</td><td>@ONK_SL.SOD</td></tr>
+                    <tr><td>Кол-во фракций</td><td>@ONK_SL.K_FR</td></tr>
+                    <tr><td>Вес(кг)</td><td>@ONK_SL.WEI</td></tr>
+                    <tr><td>Рост(см)</td><td>@ONK_SL.HEI</td></tr>
+                    <tr><td>Площадь поверхности тела(м2)</td><td>@ONK_SL.BSA</td></tr>
+                </table>
+            </div>
+            <hr />
+            <div>
+                @if (ONK_SL.B_PROT.Any())
+                {
+                    <div>
+                        <h4>Информация об имеющихся противопоказаниях</h4>
+                        <table class="BaseTable">
+                            <tr><th>Противопоказание</th><th>Дата регистрации</th></tr>
+                            @foreach (var prot in ONK_SL.B_PROT)
+                            {
+                                <tr><td>@prot.N_PROT (@prot.PROT)</td><td>@prot.D_PROT.ToString("dd.MM.yyyy")</td></tr>
+                            }
+                        </table>
+                    </div>
+                }
+
+                @if (ONK_SL.B_DIAG.Any())
+                {
+                    <hr />
+                    <div>
+                        <h4>Диагностический блок</h4>
+                        <table class="BaseTable">
+                            <tr>
+                                <th>Дата взятие материала</th>
+                                <th>Тип</th>
+                                <th>Код</th>
+                                <th>Результат</th>
+                            </tr>
+                            @foreach (var diag in ONK_SL.B_DIAG)
+                            {
+                                <tr>
+                                    <td>@diag.DIAG_DATE.ToString("dd.MM.yyyy")</td>
+                                    <td>@diag.N_DIAG_TIP (@diag.DIAG_TIP)</td>
+                                    <td>@diag.N_DIAG_CODE (@diag.DIAG_CODE)</td>
+                                    <td>@diag.N_DIAG_RSLT (@diag.DIAG_RSLT)</td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                }
+                <hr />
+            </div>
+
+        </div>
+        if (ONK_SL.ONK_USL.Any())
+        {
+            <div>
+                <h4>Онкологические услуги</h4>
+                <div class="TabControl">
+                    <div class="Title">
+
+                        @for (var i = 0; i < ONK_SL.ONK_USL.Count; i++)
+                        {
+                            var cl = i == 0 ? "tabHeader selected" : "tabHeader";
+                            var key = $"Tab{i}";
+                            <div key="@key" class="@cl" onclick="SelectTab(this)">@ONK_SL.ONK_USL[i].ONK_USL_ID</div>
+                        }
+                    </div>
+                    <div class="tabcontent">
+                        @for (var i = 0; i < ONK_SL.ONK_USL.Count; i++)
+                        {
+                            var cl = i == 0 ? "tab selected" : "tab";
+                            var key = $"Tab{i}";
+                            <div key="@key" class="@cl">
+                                @{Html.RenderPartial("_Patrical/_ONK_USL_View", ONK_SL.ONK_USL[i]);}
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>

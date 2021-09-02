@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Drawing;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ServiceLoaderMedpomData;
 using SiteCore.Class;
@@ -46,22 +47,27 @@ namespace SiteCore
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequiredLength = 6;
                 options.Password.RequireUppercase = false;
-               
+                
+
             }).AddEntityFrameworkStores<ApplicationDbContext>().AddUserManager<ApplicationUserManager>().AddDefaultTokenProviders();
 
             services.AddTransient<AccountHelper>();
             services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, ApplicationClaimsIdentityFactory>();
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddSessionStateTempDataProvider();
             services.AddRazorPages();
             services.Replace(new ServiceDescriptor(serviceType: typeof(IPasswordHasher<ApplicationUser>), implementationType: typeof(Mvc5MvcPasswordHasher), ServiceLifetime.Scoped));
             services.AddSignalR();
             services.AddSession();
 
-
+           
             services.AddMedpom(Configuration);
             services.AddIdentiCS(Configuration);
             services.AddTMK(Configuration);
             services.AddMSE(Configuration);
+            services.AddONK(Configuration);
+            services.AddZPZ(Configuration);
+            services.AddSTAC(Configuration);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -93,10 +99,9 @@ namespace SiteCore
                 endpoints.MapRazorPages();
                 endpoints.MapHub<NotificationHub>("/Notification");
             });
-           
-        }
 
-        
+
+        }
     }
 
 
@@ -150,8 +155,31 @@ namespace SiteCore
 
             return services;
         }
+        public static IServiceCollection AddONK(this IServiceCollection services, IConfiguration Configuration)
+        {
+            services.AddDbContext<ONKOracleSet>(options => options.UseOracle(Configuration.GetConnectionString("ONKConnection"), b => b.UseOracleSQLCompatibility("11")));
+            return services;
+        }
+        public static IServiceCollection AddZPZ(this IServiceCollection services, IConfiguration Configuration)
+        {
+            services.AddTransient<IZPZExcelCreator>(provider =>
+            {
+                var pathTemplate = Path.Combine(provider.GetService<IWebHostEnvironment>().WebRootPath, "Template", "ZPZ");
+                return new ZPZExcelCreator(Path.Combine(pathTemplate, "Template1.xlsx"));
+            });
+            return services;
+        }
+        public static IServiceCollection AddSTAC(this IServiceCollection services, IConfiguration Configuration)
+        {
+            services.AddTransient<ISTAC_PLANExcelCreator>(provider =>
+            {
+                var pathTemplate = Path.Combine(provider.GetService<IWebHostEnvironment>().WebRootPath, "Template", "STAC");
+                return new STAC_PLANExcelCreator(Path.Combine(pathTemplate, "TAB1.xlsx"), Path.Combine(pathTemplate, "TAB3.xlsx"), Path.Combine(pathTemplate, "TAB4.xlsx"));
+            });
+            return services;
+        }
 
-        
+
 
     }
 

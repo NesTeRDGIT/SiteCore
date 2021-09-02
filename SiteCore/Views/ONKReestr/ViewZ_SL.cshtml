@@ -1,0 +1,17 @@
+﻿@model SiteCore.Data.Z_SL
+@{
+    ViewBag.Title = "Просмотр случаев";
+}
+
+@section Style
+{
+    <link href="~/lib/TabControl/style.css" rel="stylesheet" />
+    <link href="~/css/ONKReestr.css" rel="stylesheet" />
+}
+
+@section Scripts
+{
+    <script src="~/lib/TabControl/script.js"></script>
+}
+
+@{ await Html.RenderPartialAsync("_Patrical/_Z_SLView", Model);}

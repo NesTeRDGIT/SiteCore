@@ -1,0 +1,53 @@
+﻿@model NewsEditModelView
+<h1>Добавить новость</h1>
+<div>от @DateTime.Now</div>
+@{
+
+}
+
+<form data-ajax="true" method="post" data-ajax-url="@Url.Action("EditNews")" data-ajax-success="OnSaveEditNews" data-ajax-failure="OnFailureAjax" asp-antiforgery="true">
+    <div asp-validation-summary="ModelOnly" class="ErrorLi"></div>
+    <input type="hidden" asp-for="ID_NEW" />
+    <div>
+        <div>Для ролей</div>
+        <div>
+            <ul>
+                @foreach (var Role in Model.Roles)
+                {
+                    <li>
+                        <label>
+                            <input name="NEWS_ROLE" value="@Role.Id" type="checkbox" @(Model.NEWS_ROLE?.Any(x => x == Role.Id) == true ? "checked" : "")> <span class="BoldText">@Role.Name</span> - @Role.COMENT
+                        </label>
+                    </li>
+                }
+            </ul>
+            <br /><span asp-validation-for="Roles"></span>
+        </div>
+    </div>
+    <div>
+        <label>Заголовок</label> <input type="text" asp-for="HEADER" style="width: 90%;" /><br />
+        <span asp-validation-for="HEADER"></span>
+    </div>
+    <p></p>
+    <div>
+        <textarea id="editorNews" asp-for="TEXT"></textarea><br />
+        <span asp-validation-for="TEXT"></span>
+    </div>
+    <p></p>
+    <div>
+        <input type="submit" value="Сохранить" class="ActionButton" />
+    </div>
+</form>
+
+<script>
+    ClassicEditor.create(document.querySelector('#editorNews'))
+        .then(editor => {
+            console.log('Editor was initialized', editor);
+        })
+        .catch(error => {
+            console.error(error.stack);
+        });
+
+
+</script>
+

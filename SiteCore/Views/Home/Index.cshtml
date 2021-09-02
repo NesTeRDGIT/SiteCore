@@ -1,15 +1,15 @@
-﻿@{
+﻿@model List<SiteCore.Data.NEWS>;
+
+@{
     ViewBag.Title = "Главная страница";
     var IsAdmin = User.IsInRole("Admin");
 }
 
-
-<script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
 <link href="~/css/ModalWindow.css" rel="stylesheet" />
 <div>
     <h3>Для использования функций сайта необходимо выполнить вход</h3>
     <h3>Логин и пароль был разослан Вам через почту "VipNet"</h3>
-  
+
     @Html.ActionLink("Инструкция по подаче реестров", "InstructionView", "MedpomReestr", null, new { @class = "TFOMS_A" })
 </div>
 <p></p>
@@ -19,7 +19,7 @@
     {
         <div>
             <div style="margin-right: 5px;">
-                <form asp-action="EditNews" data-ajax="true" data-ajax-method="GET" data-ajax-update="#ModalAjaxContent" data-ajax-Success="showModal">
+                <form asp-action="EditNews" method="get" data-ajax="true" data-ajax-update="#ModalAjaxContent" data-ajax-success="showModal" asp-antiforgery="true">
                     <input type="submit" class="ActionButton" value="Добавить новость" />
                 </form>
             </div>
@@ -50,23 +50,45 @@
                     modal.style.display = "block";
                 }
 
-                function OnFailureEditNews(XMLHttpRequest, textStatus, errorThrown) {
-                    $('#ModalAjaxContent').html(XMLHttpRequest.View);
+                function OnFailureAjax(response) {
+                    alert(`Ошибка запроса: ${response.status}-${response.statusText}`);
                 }
 
-                function OnSuccessEditNews(XMLHttpRequest, textStatus, errorThrown) {
-                    if (XMLHttpRequest.Succeed === true) {
-                        $('#NEWSArea').html(XMLHttpRequest.View);
-                        closeMyModal(true);
+                function EditNewSuccess(response) {
+                    $('#ModalAjaxContent').html(response);
+                    showModal();
+                }
+                function OnSaveEditNews(response) {
+                    const Result = response.Result;
+                    const Value = response.Value;
+                    if (Result) {
+                        ReloadPage();
                     } else {
-                        OnFailureEditNews(XMLHttpRequest, textStatus, errorThrown);
+                        $('#ModalAjaxContent').html(Value);
                     }
                 }
+
+                function ReloadPage() {
+                    document.location.reload();
+                };
+
+                function DeleteNewsSuccess(response) {
+                    const Result = response.Result;
+                    const Value = response.Value;
+                    if (Result) {
+                        ReloadPage();
+                    } else {
+                        alert(Value);
+                    }
+                }
+
             </script>
 
         </div>
     }
     <div id="NEWSArea">
-        @Url.Action("GetNews")
+        @{ await Html.RenderPartialAsync("NewsList", Model);}
     </div>
+
+  
 </div>

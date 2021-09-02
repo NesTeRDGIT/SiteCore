@@ -1,0 +1,156 @@
+﻿@using SiteCore.Class
+@model SiteCore.Models.ECOViewModel
+
+<p />
+
+
+
+
+<div class="TabControl">
+    <div class="Title">
+        <div key="tab1" class="tabHeader selected" onclick="SelectTab(this)">На территории Забайкальского края</div>
+        <div key="tab2" class="tabHeader" onclick="SelectTab(this)">На другой территории</div>
+
+    </div>
+    <div class="tabcontent">
+        <div key="tab1" class="tab selected">
+            <table class="table_report">
+                <tr>
+                    <th>Случай</th>
+                    <th>СМО</th>
+                    <th>Год</th>
+                    <th>Месяц</th>
+                    <th>Код МО</th>
+                    <th>Наименование МО</th>
+                    <th>Фамилия</th>
+                    <th>Имя</th>
+                    <th>Отчество</th>
+                    <th style="min-width: 80px;">Дата рождения</th>
+                    <th style="min-width: 80px;">Дата начала</th>
+                    <th style="min-width: 80px;">Дата окончания</th>
+                    <th>КСГ</th>
+                    <th>Наименование</th>
+                    <th>Сумма</th>
+                    <th>Принято</th>
+                    <th>КСЛП</th>
+                    <th style="min-width: 150px;">Наименование</th>
+                </tr>
+                @foreach (var row in Model.ECO_MP)
+                {
+                    <tr>
+                        <td>@row.SLUCH_ID</td>
+                        <td>@row.SMO</td>
+                        <td>@row.YEAR</td>
+                        <td>@row.MONTH</td>
+                        <td>@row.CODE_MO</td>
+                        <td>@row.NAM_MOK МО</td>
+                        <td>@row.FAM</td>
+                        <td>@row.IM</td>
+                        <td>@row.OT</td>
+                        <td>@row.DR.ToString("dd-MM-yyyy")</td>
+                        <td>@row.DATE_1.ToString("dd-MM-yyyy")</td>
+                        <td>@row.DATE_2.ToString("dd-MM-yyyy")</td>
+                        <td>@row.N_KSG</td>
+                        <td>@row.NAME_KSG</td>
+                        <td>@row.SUMV</td>
+                        <td>@row.SUMP</td>
+                        <td>@row.KSLP</td>
+                        <td>@row.KSLP_NAME</td>
+                    </tr>
+                }
+            </table>
+
+            <h3>Сводная таблица</h3>
+
+            <table class="table_report">
+                <tr>
+                    <th>СМО</th>
+                    <th>КСЛП</th>
+                    <th>Наименование</th>
+                    <th>Кол-во</th>
+                    <th>Сумма</th>
+                    <th>Принято</th>
+                </tr>
+                @foreach (var row in Model.SVOD_ECO_MO)
+                {
+                    <tr>
+
+                        <td>@row.SMO</td>
+                        <td>@row.KSLP</td>
+                        <td>@row.KSLP_NAME</td>
+                        <td>@row.SLUCH_ID</td>
+                        <td>@row.SUMV</td>
+                        <td>@row.SUMP</td>
+
+                    </tr>
+                }
+            </table>
+
+
+        </div>
+    </div>
+    <div class="tabcontent">
+        <div key="tab2" class="tab">
+
+            <table class="table_report">
+                <tr>
+                    <th>Случай</th>
+                    <th>Фамилия</th>
+                    <th>Имя</th>
+                    <th>Отчество</th>
+                    <th style="min-width: 80px;">Дата рождения</th>
+                    <th style="min-width: 80px;">Дата начала</th>
+                    <th style="min-width: 80px;">Дата окончания</th>
+                    <th>Сумма</th>
+                    <th>Принято</th>
+                    <th>МКБ</th>
+                    <th>Диагноз</th>
+                    <th>Дата платежа</th>
+                    <th>№ платежа</th>
+                    <th>Код МО</th>
+                    <th>Наименование МО</th>
+                    <th>OKATO</th>
+                    <th>Территория</th>
+                    <th>Комментарий</th>
+                    <th>Услуги</th>
+                </tr>
+                @foreach (var row in Model.ECO_MTR)
+                {
+                    <tr>
+                        <td>@row.SLUCH_ID</td>
+                        <td>@row.FAM</td>
+                        <td>@row.IM</td>
+                        <td>@row.OT</td>
+                        <td>@row.DR.ToString("dd-MM-yyyy")</td>
+                        <td>@row.DATE_1.ToString("dd-MM-yyyy")</td>
+                        <td>@row.DATE_2.ToString("dd-MM-yyyy")</td>
+                        <td>@row.SUMV</td>
+                        <td>@row.SUMP</td>
+                        <td>@row.DS1</td>
+                        <td>@row.DS_NAME</td>
+                        <td>@row.DPLAT.ToStr("dd-MM-yyyy")</td>
+                        <td>@row.NPLAT</td>
+                        <td>@row.LPU</td>
+                        <td>@row.NAM_MOK МО</td>
+                        <td>@row.C_OKATO</td>
+                        <td>@row.NAME_TFK</td>
+                        <td>@row.COMENTSL</td>
+                        <td>@row.USL</td>
+                    </tr>
+                }
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
+<p />
+
+@using (Html.BeginForm("GET_EKO_VIEWXLS", "OOMS", FormMethod.Get))
+{
+    <input type="submit"  value="Скачать Excel" class="ActionButton" @(Model.ECO_MP.Count == 0 && Model.ECO_MTR.Count == 0?"disabled":"") />
+}

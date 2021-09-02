@@ -1,0 +1,50 @@
+﻿@using System.Data;
+@model DataTable
+
+@if (Model != null)
+{
+    if (Model.Columns.Contains("COMM") && Model.Rows.Count > 0)
+    {
+        <h3>@Model.Rows[0]["comm"].ToString()</h3>
+    }
+    <table class="table_report">
+        <tr>
+            @foreach(DataColumn col in Model.Columns)
+            {
+                if (col.ColumnName == "COMM") { continue; }
+                <th>
+                    @col.Caption
+                </th>
+            }
+        </tr>
+        @foreach (DataRow row in Model.Rows)
+        {
+            <tr>
+                @foreach (DataColumn col in Model.Columns)
+                {
+                    switch (col.ColumnName)
+                    {
+                        case "COMM":
+                            continue;
+                        case "NAME_PROFIL":
+                            <td style="text-align: left;">
+                                <span>@(row[col] == DBNull.Value ? 0 : row[col])</span>
+
+                            </td>
+                            break;
+
+                        default:
+                            <td>
+                                <span>@(row[col] == DBNull.Value ? 0 : row[col])</span>
+                            </td>
+                            break;
+                    }
+                }
+            </tr>
+        }
+    </table>
+    <form asp-action="GET_TABLE_2_XLS" method="get">
+        <input type="submit" value="Скачать Excel" class="ActionButton" />
+    </form>
+}
+

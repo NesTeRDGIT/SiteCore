@@ -33,12 +33,12 @@ namespace SiteCore.Class
             stream.Write(template, 0, template.Length);
 
             xls.OpenFile(stream, 0);
-            var stylecenter = xls.CreateType(new FontOpenXML() { fontname = "Times New Roman", HorizontalAlignment = HorizontalAlignmentV.Center }, new BorderOpenXML(), null);
-            var stylecenterNUM = xls.CreateType(new FontOpenXML() { fontname = "Times New Roman", Format = (uint)DefaultNumFormat.F4, HorizontalAlignment = HorizontalAlignmentV.Center }, new BorderOpenXML(), null);
-            var styleright = xls.CreateType(new FontOpenXML() { fontname = "Times New Roman", HorizontalAlignment = HorizontalAlignmentV.Right }, new BorderOpenXML(), null);
-            var stylecenterBOLD = xls.CreateType(new FontOpenXML() { fontname = "Times New Roman", Bold = true, HorizontalAlignment = HorizontalAlignmentV.Center }, new BorderOpenXML(), null);
-            var stylecenterNUMBOLD = xls.CreateType(new FontOpenXML() { fontname = "Times New Roman", Bold = true, Format = (uint)DefaultNumFormat.F4, HorizontalAlignment = HorizontalAlignmentV.Center }, new BorderOpenXML(), null);
-            var stylerightBOLD = xls.CreateType(new FontOpenXML() { fontname = "Times New Roman", Bold = true, HorizontalAlignment = HorizontalAlignmentV.Right }, new BorderOpenXML(), null);
+            var stylecenter = xls.CreateType(new FontOpenXML { fontname = "Times New Roman", HorizontalAlignment = HorizontalAlignmentV.Center }, new BorderOpenXML(), null);
+            var stylecenterNUM = xls.CreateType(new FontOpenXML { fontname = "Times New Roman", Format = (uint)DefaultNumFormat.F4, HorizontalAlignment = HorizontalAlignmentV.Center }, new BorderOpenXML(), null);
+            var styleright = xls.CreateType(new FontOpenXML { fontname = "Times New Roman", HorizontalAlignment = HorizontalAlignmentV.Right }, new BorderOpenXML(), null);
+            var stylecenterBOLD = xls.CreateType(new FontOpenXML { fontname = "Times New Roman", Bold = true, HorizontalAlignment = HorizontalAlignmentV.Center }, new BorderOpenXML(), null);
+            var stylecenterNUMBOLD = xls.CreateType(new FontOpenXML { fontname = "Times New Roman", Bold = true, Format = (uint)DefaultNumFormat.F4, HorizontalAlignment = HorizontalAlignmentV.Center }, new BorderOpenXML(), null);
+            var stylerightBOLD = xls.CreateType(new FontOpenXML { fontname = "Times New Roman", Bold = true, HorizontalAlignment = HorizontalAlignmentV.Right }, new BorderOpenXML(), null);
 
             uint rowIndex = 8;
             MRow r;
@@ -178,9 +178,9 @@ namespace SiteCore.Class
 
             xls.OpenFile(stream, 0);
             var dtformat = xls.CreateNumFormatCustom("dd.MM.yyyy");
-            var stylecenter = xls.CreateType(new FontOpenXML() { fontname = "Calibri", HorizontalAlignment = HorizontalAlignmentV.Center }, new BorderOpenXML(), null);
-            var stylecenterDT = xls.CreateType(new FontOpenXML() { fontname = "Calibri", HorizontalAlignment = HorizontalAlignmentV.Center, Format = dtformat }, new BorderOpenXML(), null);
-            var styleright = xls.CreateType(new FontOpenXML() { fontname = "Calibri", HorizontalAlignment = HorizontalAlignmentV.Right }, new BorderOpenXML(), null);
+            var stylecenter = xls.CreateType(new FontOpenXML { fontname = "Calibri", HorizontalAlignment = HorizontalAlignmentV.Center }, new BorderOpenXML(), null);
+            var stylecenterDT = xls.CreateType(new FontOpenXML { fontname = "Calibri", HorizontalAlignment = HorizontalAlignmentV.Center, Format = dtformat }, new BorderOpenXML(), null);
+            var styleright = xls.CreateType(new FontOpenXML { fontname = "Calibri", HorizontalAlignment = HorizontalAlignmentV.Right }, new BorderOpenXML(), null);
 
             uint rowIndex = 2;
             var index = 0;

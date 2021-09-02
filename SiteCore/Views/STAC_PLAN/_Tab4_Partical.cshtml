@@ -1,0 +1,52 @@
+﻿
+@using System.Data;
+@model DataTable
+
+@if (Model != null)
+{
+    if (Model.Columns.Contains("COMM") && Model.Rows.Count > 0)
+    {
+        <h3>@Model.Rows[0]["comm"].ToString()</h3>
+    }
+    <table class="table_report">
+        <tr>
+            <th rowspan="3">Наименование МО, обслуживающей прикрепленное население</th>
+            <th colspan="3">Фактическое количество госпитализаций прикрепленного население</th>
+            <th rowspan="2">Количество прикрепленных ЗЛ</th>
+            <th rowspan="2">Уровень госпитализации на 1000 ЗЛ</th>
+            <th rowspan="2">В % к нормативному(172,33)</th>
+        </tr>
+        <tr>
+            <th>В своей МО</th>
+            <th>В других МО</th>
+            <th>Всего</th>
+        </tr>
+        <tr>
+
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+            <th>5</th>
+            <th>6</th>
+        </tr>
+
+
+        @foreach (DataRow row in Model.Rows)
+        {
+            <tr>
+                <td style="text-align:left;">@row["NAME"]</td>
+                <td style="text-align:right;">@row["ST1"]</td>
+                <td style="text-align:right;">@row["ST2"]</td>
+                <td style="text-align:right;">@row["ST3"]</td>
+                <td style="text-align:right;">@row["ST4"]</td>
+                <td style="text-align:right;">@row["ST5"]</td>
+                <td style="text-align:right;">@row["ST6"]</td>
+            </tr>
+        }
+    </table>
+    <form asp-action="GET_TABLE_4_XLS" method="get">
+        <input type="submit" value="Скачать Excel" class="ActionButton" />
+    </form>
+}
+

@@ -1,0 +1,140 @@
+﻿@using SiteCore.Class
+@model List<SiteCore.Data.CURRENT_VMP_OOMS>
+<style>
+    .tableContainer {
+        clear: both;
+        overflow: auto;
+        width:100%;
+    }
+
+    .tableContainer table {
+        float: left;
+        overflow:auto;
+        width:1330px;   
+    }
+    .fixedHeader tr {
+        position: relative;
+    }
+    .fixedHeader tr {
+        display: block
+    }
+    .scrollContent {
+        display:block;
+        height: 300px;
+        overflow: auto;    
+        word-break:normal;     
+    }
+    s.scrollContent tr
+    {
+        display: block
+    }
+
+</style>
+
+<div class="tableContainer customers ">
+    <table class="scrollTable" >
+        <thead class="fixedHeader">
+            <tr>
+                <th width="70px;">
+                    Код МО
+                </th>
+                <th width="70px;">
+                    Код СМО
+                </th>
+                <th width="250px;">
+                    ФИО
+                </th>
+                <th width="100px;">
+                    Вид ВМП
+                </th>
+                <th width="70px;">
+                    Метод ВМП
+                </th>
+                <th width="70px;">
+                    Группа ВМП
+                </th>
+                <th width="70px;">
+                    Диагноз
+                </th>
+                <th width="100px;">
+                    Дата начала
+                </th>
+                <th width="100px;">
+                    Дата окончания
+                </th>
+                <th width="130px;">
+                    Дата планируемой госпитализации
+                </th>
+                <th width="100px;">
+                    Дата талона
+                </th>
+                <th width="100px;">
+                    Особый случай
+                </th>
+                <th width="100px;">
+                    Сумма
+                </th>
+              
+            </tr>
+        </thead>
+        <tbody class="scrollContent" style="width:100%;">
+
+    @foreach (var item in Model)
+            {
+
+    <tr>
+        <td style="text-align:center;" width="70px;">
+            @Html.DisplayFor(modelItem => item.CODE_MO)
+        </td>
+        <td style="text-align:center;" width="70px;">
+            @Html.DisplayFor(modelItem => item.SMO)
+        </td>
+        <td style="text-align:left;" width="250px;">
+            @Html.DisplayFor(modelItem => item.FIO)
+        </td>
+        <td style="text-align:center;" width="100px;">
+            @Html.DisplayFor(modelItem => item.VID_HMP)
+        </td>
+        <td style="text-align:center;" width="70px;">
+            @Html.DisplayFor(modelItem => item.METOD_HMP)
+        </td>
+        <td style="text-align:center;" width="70px;">
+            @Html.DisplayFor(modelItem => item.GRP)
+        </td>
+        <td style="text-align:center;" width="70px;">
+            @Html.DisplayFor(modelItem => item.DS1)
+        </td>
+        <td style="text-align:center;" width="100px;">
+            @item.DATE_1.ToString("dd.MM.yyyy")
+        </td>
+        <td style="text-align:center;" width="100px;">
+            @item.DATE_2.ToString("dd.MM.yyyy")
+        </td>
+        <td style="text-align:center; " width="130px;">
+            @item.TAL_P.ToString("dd.MM.yyyy")
+        </td>
+        <td style="text-align:center; " width="100px;">
+            @item.TAL_D.ToString("dd.MM.yyyy")
+        </td>
+        <td style="text-align:center;" width="100px;">
+            @Html.DisplayFor(modelItem => item.OS_SLUCH)
+        </td>
+        <td style="text-align:right; " width="100px;">
+          @item.SUMM.Value.ToString("### ### ##0.00")
+        </td>
+    </tr>
+    }
+            <tr>
+                <td class="BoldText" style="text-align:center"  colspan="11">
+                    Итого
+                </td>
+                <td class="BoldText" colspan="2" style="text-align:right;">
+                    @Model.Sum(x=>x.SUMM).Value.ToString("### ### ##0.00")
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<form asp-action="GET_VMP_VIEWXLS" method="get">
+    <input type="submit" value="Скачать Excel" class="ActionButton" @(Model.Count == 0?"disabled":"") />
+</form>

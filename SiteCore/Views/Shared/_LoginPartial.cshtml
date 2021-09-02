@@ -13,7 +13,6 @@
             {
                 <li>@Html.ActionLink("Управление", "InfoPersAccount", "Manage")</li>
                 <li>@Html.ActionLink("Пользователи", "RegisterUsers", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-                <li>@Html.ActionLink("Объявления", "Ads", "Home")</li>
             }
             <li>
                 <form asp-action="Logout" asp-controller="Account" id="logoutForm" method="post">

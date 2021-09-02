@@ -1,0 +1,66 @@
+﻿@model List<SiteCore.Data.CURRENT_VMP_OOMS>
+@{
+    ViewBag.Title = "ВМП по текущему приему";
+}
+<h2>ВМП по текущему приему</h2>
+
+<form data-ajax="true" data-ajax-url="@Url.Action("GET_VMP_VIEW")" data-ajax-update="#Result" data-ajax-begin="Hide(1)" data-ajax-Success="Hide(2)" data-ajax-Failure="Err(xhr, textStatus, errorThrown)">
+    <input type="submit" value="Обновить" class="ActionButton" id="update" />
+</form>
+
+<div id="Result">
+    @{await Html.RenderPartialAsync("_CURRENT_VMP_VIEWPartical", Model);}
+</div>
+
+<div id="LoadingBar" hidden style="display:none">
+    <div class="fountainGM">
+        <div class="fountainG fountainG_1"></div>
+        <div class="fountainG fountainG_2"></div>
+        <div class="fountainG fountainG_3"></div>
+        <div class="fountainG fountainG_4"></div>
+        <div class="fountainG fountainG_5"></div>
+        <div class="fountainG fountainG_6"></div>
+        <div class="fountainG fountainG_7"></div>
+        <div class="fountainG fountainG_8"></div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        window.onload = function () {
+            $('#update').trigger('click');
+        };
+
+        function Hide(value) {
+            if (value == 1)
+            {
+                var Result = document.getElementById('Result');
+                Result.style.display = 'none';
+                var LoadingBar = document.getElementById('LoadingBar');
+                LoadingBar.style.display = 'block';
+                $('#update').prop('disabled', true);
+          
+
+            }
+            else
+            {
+           
+                var link = document.getElementById('Result');
+                link.style.display = 'block';
+                var link = document.getElementById('LoadingBar');
+                link.style.display = 'none';
+                $('#update').prop('disabled', false);
+                ;
+            }
+        }
+
+        function Err(xhr, textStatus, errorThrown){
+            alert('request failed');
+        }
+    </script>
+}
+
+
+
+

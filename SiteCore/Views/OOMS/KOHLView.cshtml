@@ -1,0 +1,49 @@
+﻿@using SiteCore.Class
+@{
+    ViewBag.Title = "Кохлеарная имплантация";
+    var dt1 = new DateTime(DateTime.Now.Year, 1, 1);
+    var kv =Convert.ToInt32(Math.Ceiling(DateTime.Today.Month / 3m));
+    var dt2 = new DateTime(DateTime.Now.Year, kv * 3, DateTime.DaysInMonth(DateTime.Now.Year, kv * 3));
+}
+@section Lib
+{
+    <link href="~/css/lds-hourglass-loader.css" rel="stylesheet" />
+}
+<h2>Кохлеарная имплантация за отчетный период</h2>
+<h5>Выборка по дате оплаты</h5>
+<form data-ajax="true" data-ajax-url="@Url.Action("GET_KOHL_VIEW")" data-ajax-update="#Result" data-ajax-begin="Hide(1)" data-ajax-Success="Hide(2)" data-ajax-Failure="Err()">
+  
+    <label>с </label> <input type="date" name="DT1" value="@dt1.ToHTMLStr()" required />
+    <label>по </label> <input type="date" name="DT2" value="@dt2.ToHTMLStr()" required />
+    <input type="submit" value="Запрос" class="ActionButton" id="update" />
+</form>
+
+<div id="Result"></div>
+<div class="lds-hourglass" id="LoadingBar" style="display: none; "></div>
+
+@section Scripts
+{
+    <script>
+        function Hide(value) {
+            if (value === 1) {
+                const Result = document.getElementById('Result');
+                Result.style.display = 'none';
+                const LoadingBar = document.getElementById('LoadingBar');
+                LoadingBar.style.display = 'block';
+                $('#update').prop('disabled', true);
+            }
+            else {
+                let link = document.getElementById('Result');
+                link.style.display = 'block';
+                link = document.getElementById('LoadingBar');
+                link.style.display = 'none';
+                $('#update').prop('disabled', false);
+            }
+        }
+
+        function Err(xhr, textStatus, errorThrown) {
+            alert('Ошибка запроса');
+            Hide(2);
+        }
+    </script>
+}

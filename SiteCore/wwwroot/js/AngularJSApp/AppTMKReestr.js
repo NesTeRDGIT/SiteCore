@@ -236,16 +236,16 @@ myApp.controller("Grid1", ["$scope", "$http", "uiGridConstants", "i18nService", 
 
                 GetImageStatus(row, col) {
                     if (row.entity.STATUS === "Closed")
-                        return "/Image/GreenIndicator.png";
+                        return "../Image/GreenIndicator.png";
                     if (row.entity.STATUS === "Open")
-                        return "/Image/YelowIndicator.png";
+                        return "../Image/YelowIndicator.png";
                     if (row.entity.STATUS === "Error")
-                        return "/Image/RedIndicator.png";
+                        return "../Image/RedIndicator.png";
                     return "";
                 },
                 GetImageStatusEXP(row, col) {
                     if (row.entity.isEXP === true) {
-                        return "/Image/InExpertIcon.png";
+                        return "../Image/InExpertIcon.png";
                     }
                     return "";
                 }

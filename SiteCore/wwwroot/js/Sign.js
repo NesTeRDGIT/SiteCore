@@ -67,7 +67,7 @@ if (canPromise) {
             CheckForPlugIn_NPAPI("isPlugInEnabled");
 
         } else if (event.data === "cadesplugin_load_error") {
-            document.getElementById("PluginEnabledImg").setAttribute("src", "/Lib/Cades/Img/red_dot.png");
+            document.getElementById("PluginEnabledImg").setAttribute("src", "../Lib/Cades/Img/red_dot.png");
             document.getElementById("PlugInEnabledTxt").innerHTML = "Плагин не загружен";
         }
     },

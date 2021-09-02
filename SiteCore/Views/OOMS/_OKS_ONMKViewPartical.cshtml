@@ -1,0 +1,63 @@
+﻿@model List<SiteCore.Data.OKS_ONMK_Row>
+<p />
+<div style="overflow: auto;">
+    <table class="table_report">
+        <tr>
+            <th>SLUCH_ID</th>
+            <th>СМО</th>
+            <th>Код МО</th>
+            <th>Наименование МО</th>
+            <th>Уровень</th>
+            <th>Профиль</th>
+            <th>Форма</th>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th style="min-width: 80px;">Дата рождения</th>
+            <th>Серия полиса</th>
+            <th>№ полиса</th>
+            <th style="min-width: 80px;">Дата начала</th>
+            <th style="min-width: 80px;">Дата окончания</th>
+            <th>МКБ</th>
+            <th>Диагноз</th>
+            <th>КСГ</th>
+            <th>Наименование КСГ</th>
+            <th>Результат</th>
+            <th>Исход</th>
+            <th>Сумма</th>
+            <th>Принято</th>
+        </tr>
+        @foreach (var row in Model)
+        {
+            <tr>
+                <td>@row.SLUCH_ID</td>
+                <td>@row.SMO</td>
+                <td>@row.CODE_MO</td>
+                <td>@row.NAM_MOK</td>
+                <td>@row.LEV</td>
+                <td>@row.PROFIL</td>
+                <td>@row.FORMA</td>
+                <td>@row.FAM</td>
+                <td>@row.IM</td>
+                <td>@row.OT</td>
+                <td>@row.DR.ToString("dd-MM-yyyy")</td>
+                <td>@row.SPOLIS</td>
+                <td>@row.NPOLIS</td>
+                <td>@row.DATE_1.ToString("dd-MM-yyyy")</td>
+                <td>@row.DATE_2.ToString("dd-MM-yyyy")</td>
+                <td>@row.DS1</td>
+                <td>@row.DS1_NAME</td>
+                <td>@row.N_KSG</td>
+                <td>@row.NAME_KSG</td>
+                <td>@row.RSLT</td>
+                <td>@row.ISHOD</td>
+                <td>@row.SUMV</td>
+                <td>@row.SUMP</td>
+            </tr>
+        }
+    </table>
+</div>
+<p />
+<form asp-action="GET_OKS_ONMK_VIEWXLS" method="get">
+    <input type="submit" value="Скачать Excel" class="ActionButton" @(Model.Count == 0 ? "disabled" : "") />
+</form>

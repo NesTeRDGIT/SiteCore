@@ -1,0 +1,32 @@
+﻿@model IEnumerable<SiteCore.Data.USL>
+
+<div>
+    <table class="BaseTable">
+        <tr>
+            <th>Профиль</th>
+            <th>Вид мед. вмешательства</th>
+            <th>Дата начала</th>
+            <th>Дата окончания</th>
+            <th>МКБ</th>
+            <th>Услуга</th>
+            <th>Специальность</th>
+            <th>Код врача</th>
+            <th>Неполный объем</th>
+        </tr>
+
+        @foreach (var us in Model)
+        {
+            <tr>
+                <td>@us.N_PROFIL (@us.PROFIL)</td>
+                <td>@us.N_VID_VME (@us.VID_VME)</td>
+                <td>@us.DATE_IN.ToString("dd.MM.yyyy") (@us.PROFIL)</td>
+                <td>@us.DATE_OUT.ToString("dd.MM.yyyy")</td>
+                <td>@us.N_DS (@us.DS)</td>
+                <td>@us.N_CODE_USL (@us.CODE_USL)</td>
+                <td>@us.N_PRVS (@us.PROFIL)</td>
+                <td>@us.CODE_MD</td>
+                <td>@us.N_NPL (@us.NPL)</td>
+            </tr>
+        }
+    </table>
+</div>

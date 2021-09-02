@@ -150,7 +150,6 @@ namespace SiteCore.Data
             return 0 == xor;
         }
     }
-
     public static class ApplicationDbContextEx
     {
         
@@ -182,8 +181,6 @@ namespace SiteCore.Data
             return user.Claims.FirstOrDefault(x => x.Type == "ID")?.Value;
         }
     }
-
-
     public class ApplicationUserManager : UserManager<ApplicationUser>
     {
         public ApplicationUserManager(IUserStore<ApplicationUser> store, IOptions<IdentityOptions> optionsAccessor, IPasswordHasher<ApplicationUser> passwordHasher, IEnumerable<IUserValidator<ApplicationUser>> userValidators, IEnumerable<IPasswordValidator<ApplicationUser>> passwordValidators, ILookupNormalizer keyNormalizer, IdentityErrorDescriber errors, IServiceProvider services, ILogger<UserManager<ApplicationUser>> logger) : base(store, optionsAccessor, passwordHasher, userValidators, passwordValidators, keyNormalizer, errors, services, logger) { }
@@ -200,8 +197,6 @@ namespace SiteCore.Data
         
 
     }
-
-
     public class ApplicationClaimsIdentityFactory : UserClaimsPrincipalFactory<ApplicationUser, ApplicationRole>
     {
         public ApplicationClaimsIdentityFactory(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, IOptions<IdentityOptions> optionsAccessor) : base(userManager,roleManager, optionsAccessor)
@@ -214,10 +209,14 @@ namespace SiteCore.Data
                 ci.AddClaim(new Claim("CODE_MO", user.CODE_MO));
                 ci.AddClaim(new Claim("CODE_SMO", user.CODE_SMO));
                 ci.AddClaim(new Claim("ID", user.Id));
+                foreach (var role in user.UserRoles)
+                {
+                    ci.AddClaim(new Claim("ROLE_ID", role.RoleId));
+                }
             }
+            
+
             return principal;
         }
     }
-
-
 }

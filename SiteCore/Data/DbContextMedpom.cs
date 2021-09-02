@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Oracle.ManagedDataAccess.Client;
 using SiteCore.Class;
 
 namespace SiteCore.Data
@@ -15,24 +16,28 @@ namespace SiteCore.Data
     {
         public MyOracleSet(DbContextOptions<MyOracleSet> options) : base(options)
         {
-           
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("SITE");
-           // modelBuilder.Entity<FILES>().HasOne(x=>x.FILE_L).WithOne(x=>x.ID_FILEL).HasForeignKey(x=>x.ID_FILEL);
-            modelBuilder.Entity<FILES>().HasOne(x => x.PARENT).WithOne(x => x.FILE_L).HasForeignKey<FILES>(x=>x.ID_FILEL);
+            // modelBuilder.Entity<FILES>().HasOne(x=>x.FILE_L).WithOne(x=>x.ID_FILEL).HasForeignKey(x=>x.ID_FILEL);
+            modelBuilder.Entity<FILES>().HasOne(x => x.PARENT).WithOne(x => x.FILE_L)
+                .HasForeignKey<FILES>(x => x.ID_FILEL);
 
             modelBuilder.Entity<FILES>().HasOne(x => x.FILEPACK).WithMany(x => x.FILES).HasForeignKey(x => x.ID_PACK);
 
             modelBuilder.Entity<NEWS>().HasMany(x => x.NEWS_ROLE).WithOne(x => x.NEWS).HasForeignKey(x => x.ID_NEW);
-            modelBuilder.Entity<NEWS_ROLE>().HasOne(x => x.NEWS).WithMany(x => x.NEWS_ROLE).HasForeignKey(x => x.ID_NEW);
-            modelBuilder.Entity<NEWS_ROLE>().HasKey(x => new {x.ID_NEW, x.ID_ROLE});
+            modelBuilder.Entity<NEWS_ROLE>().HasOne(x => x.NEWS).WithMany(x => x.NEWS_ROLE)
+                .HasForeignKey(x => x.ID_NEW);
+            modelBuilder.Entity<NEWS_ROLE>().HasKey(x => new { x.ID_NEW, x.ID_ROLE });
 
-            modelBuilder.Entity<ErrorSPRSection>().HasMany(x => x.Error).WithOne(x => x.Section).HasForeignKey(x => x.ID_SECTION);
+            modelBuilder.Entity<ErrorSPRSection>().HasMany(x => x.Error).WithOne(x => x.Section)
+                .HasForeignKey(x => x.ID_SECTION);
 
         }
+
         public virtual DbSet<FILEPACK> FILEPACK { get; set; }
         public virtual DbSet<FILES> FILES { get; set; }
         public virtual DbSet<MESSAGE> MESSAGE { get; set; }
@@ -45,7 +50,7 @@ namespace SiteCore.Data
 
         public List<Abort_Row> GetReportAbort(int YEAR)
         {
-            var oda = new Oracle.ManagedDataAccess.Client.OracleDataAdapter($"select* from table(OOMS_REPORT.GET_ABORT(:YEAR))", this.Database.GetDbConnection().ConnectionString);
+            var oda = new OracleDataAdapter($"select* from table(OOMS_REPORT.GET_ABORT(:YEAR))", Database.GetDbConnection().ConnectionString);
             oda.SelectCommand.Parameters.Add("YEAR", YEAR);
             var tbl = new DataTable();
             oda.Fill(tbl);
@@ -55,7 +60,7 @@ namespace SiteCore.Data
 
         public List<ECO_MP_Row> GetEKO_MP(int YEAR, int MONTH)
         {
-            var oda = new Oracle.ManagedDataAccess.Client.OracleDataAdapter($"select* from table(OOMS_REPORT.GET_ECO_MP(:YEAR,:MONTH))", this.Database.GetDbConnection().ConnectionString);
+            var oda = new OracleDataAdapter($"select* from table(OOMS_REPORT.GET_ECO_MP(:YEAR,:MONTH))", Database.GetDbConnection().ConnectionString);
             oda.SelectCommand.Parameters.Add("YEAR", YEAR);
             oda.SelectCommand.Parameters.Add("MONTH", MONTH);
             var tbl = new DataTable();
@@ -66,7 +71,7 @@ namespace SiteCore.Data
 
         public List<ECO_MTR_Row> GetEKO_MTR(int YEAR, int MONTH)
         {
-            var oda = new Oracle.ManagedDataAccess.Client.OracleDataAdapter($"select* from table(OOMS_REPORT.GET_ECO_MTR(:YEAR,:MONTH))", this.Database.GetDbConnection().ConnectionString);
+            var oda = new OracleDataAdapter($"select* from table(OOMS_REPORT.GET_ECO_MTR(:YEAR,:MONTH))", Database.GetDbConnection().ConnectionString);
             oda.SelectCommand.Parameters.Add("YEAR", YEAR);
             oda.SelectCommand.Parameters.Add("MONTH", MONTH);
             var tbl = new DataTable();
@@ -77,7 +82,7 @@ namespace SiteCore.Data
 
         public List<KOHL_Row> GetKOHL(DateTime dt1, DateTime dt2)
         {
-            var oda = new Oracle.ManagedDataAccess.Client.OracleDataAdapter($"select* from table(OOMS_REPORT.GET_KOHL(:dt1,:dt2))", this.Database.GetDbConnection().ConnectionString);
+            var oda = new OracleDataAdapter($"select* from table(OOMS_REPORT.GET_KOHL(:dt1,:dt2))", Database.GetDbConnection().ConnectionString);
             oda.SelectCommand.Parameters.Add("dt1", dt1);
             oda.SelectCommand.Parameters.Add("dt2", dt2);
             var tbl = new DataTable();
@@ -87,14 +92,102 @@ namespace SiteCore.Data
 
         public List<OKS_ONMK_Row> GetOKS_ONMK(int YEAR)
         {
-            var oda = new Oracle.ManagedDataAccess.Client.OracleDataAdapter($"select* from table(OOMS_REPORT.GET_OKS_ONMK(:YEAR))", this.Database.GetDbConnection().ConnectionString);
+            var oda = new OracleDataAdapter($"select* from table(OOMS_REPORT.GET_OKS_ONMK(:YEAR))", Database.GetDbConnection().ConnectionString);
             oda.SelectCommand.Parameters.Add("YEAR", YEAR);
             var tbl = new DataTable();
             oda.Fill(tbl);
             return OKS_ONMK_Row.Get(tbl.Select());
         }
 
+        public List<ZPZ_EFFECTIVENESS> Get_ZPZ_EFFECTIVENESS(DateTime dt1, DateTime dt2)
+        {
+            var oda = new OracleDataAdapter("select * from table(zpz_otchet.Get_RESULT(:dt1,:dt2))", Database.GetDbConnection().ConnectionString);
+            oda.SelectCommand.Parameters.Add("dt1", dt1);
+            oda.SelectCommand.Parameters.Add("dt2", dt2);
+            var tbl = new DataTable();
+            oda.Fill(tbl);
+            return ZPZ_EFFECTIVENESS.Get(tbl.Select());
+        }
+
+
+        public DataTable STAT_STAC_TBL_3()
+        {
+            var oda = new OracleDataAdapter("select * from TAB_3_PROFIL_KD", Database.GetDbConnection().ConnectionString);
+            var tbl = new DataTable();
+            oda.Fill(tbl);
+            return tbl;
+        }
+
+        public DataTable STAT_STAC_TBL_4()
+        {
+            var oda = new OracleDataAdapter("select * from TAB_4_LEVEL_GOSP", Database.GetDbConnection().ConnectionString);
+            var tbl = new DataTable();
+            oda.Fill(tbl);
+            return tbl;
+        }
+
+        public DataTable STAT_STAC_TBL_2()
+        {
+            var oda = new OracleDataAdapter("select * from TAB_2_REPORT_MO_PROFIL_STAC t", Database.GetDbConnection().ConnectionString);
+            var tbl = new DataTable();
+            oda.Fill(tbl);
+            return tbl;
+        }
+
+        public DataTable STAT_STAC_TBL_1()
+        {
+            var oda = new OracleDataAdapter("select * from TAB_1_REPORT_KOEK_STAC t", Database.GetDbConnection().ConnectionString);
+            var tbl = new DataTable();
+            oda.Fill(tbl);
+            return tbl;
+        }
+
+        public async Task BUILD_STAT_STAC_TBL_1(DateTime dt1, DateTime dt2)
+        {
+            using var con = new OracleConnection(Database.GetDbConnection().ConnectionString);
+            var cmd = new OracleCommand("begin STAT_STAC.GET_TAB1(:dt1,:dt2);  end;", con);
+            cmd.Parameters.Add("dt1", dt1);
+            cmd.Parameters.Add("dt2", dt2);
+            cmd.Connection.Open();
+            await cmd.ExecuteNonQueryAsync();
+            cmd.Connection.Close();
+        }
+
+        public async Task BUILD_STAT_STAC_TBL_2(DateTime dt1, DateTime dt2)
+        {
+            using var con = new OracleConnection(Database.GetDbConnection().ConnectionString);
+            var cmd = new OracleCommand("begin STAT_STAC.GET_TAB2(:dt1,:dt2);  end;", con);
+            cmd.Parameters.Add("dt1", dt1);
+            cmd.Parameters.Add("dt2", dt2);
+            cmd.Connection.Open();
+            await cmd.ExecuteNonQueryAsync();
+            cmd.Connection.Close();
+        }
+
+        public async Task BUILD_STAT_STAC_TBL_3(DateTime dt1, DateTime dt2)
+        {
+            using var con = new OracleConnection(Database.GetDbConnection().ConnectionString);
+            var cmd = new OracleCommand("begin STAT_STAC.GET_TAB3(:dt1,:dt2);  end;", con);
+            cmd.Parameters.Add("dt1", dt1);
+            cmd.Parameters.Add("dt2", dt2);
+            cmd.Connection.Open();
+            await cmd.ExecuteNonQueryAsync();
+            cmd.Connection.Close();
+        }
+
+        public async Task BUILD_STAT_STAC_TBL_4(DateTime dt1, DateTime dt2)
+        {
+            using var con = new OracleConnection(Database.GetDbConnection().ConnectionString);
+            var cmd = new OracleCommand("begin STAT_STAC.GET_TAB4(:dt1,:dt2);  end;", con);
+            cmd.Parameters.Add("dt1", dt1);
+            cmd.Parameters.Add("dt2", dt2);
+            cmd.Connection.Open();
+            await cmd.ExecuteNonQueryAsync();
+            cmd.Connection.Close();
+        }
+
     }
+
     [Table("MESSAGE")]
     public class MESSAGE
     {
@@ -126,8 +219,7 @@ namespace SiteCore.Data
 
 
     }
-
-
+    [Serializable]
     public class Abort_Row
     {
         public static List<Abort_Row> Get(IEnumerable<DataRow> row)
@@ -551,7 +643,11 @@ namespace SiteCore.Data
         LD = 18,
         LR = 19,
         C = 20,
-        LC = 21
+        LC = 21,
+        DA = 22,
+        DB = 23,
+        LA = 24,
+        LB = 25
     }
     public enum LEV_MESSAGE 
     {
@@ -607,7 +703,7 @@ namespace SiteCore.Data
         /// </summary>
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public int? ID_NEW { get; set; }
+        public int ID_NEW { get; set; }
         /// <summary>
         /// Дата новости
         /// </summary>
@@ -690,4 +786,57 @@ namespace SiteCore.Data
         }
         public virtual ErrorSPRSection Section { get; set; }
     }
+
+
+
+
+
+    public class ZPZ_EFFECTIVENESS
+    {
+       
+        public string CODE_MO { get; set; }
+        public string NAM_MOK { get; set; }
+        public decimal COUNT { get; set; }
+        public decimal COUNT_OSN { get; set; }
+        public decimal DOL_OSN { get; set; }
+        public decimal BAL_OSN { get; set; }
+        public decimal C_MEE { get; set; }
+        public decimal C_MEE_ERR { get; set; }
+        public decimal DOL_MEE { get; set; }
+        public decimal BAL_MEE { get; set; }
+        public decimal C_EKMP { get; set; }
+        public decimal C_EKMP_ERR { get; set; }
+        public decimal DOL_EKMP { get; set; }
+        public decimal BAL_EKMP { get; set; }
+
+        public decimal SUM_BAL => BAL_MEE + BAL_EKMP + BAL_OSN;
+        public static List<ZPZ_EFFECTIVENESS> Get(IEnumerable<DataRow> row)
+        {
+            return row.Select(Get).ToList();
+        }
+        public static ZPZ_EFFECTIVENESS Get(DataRow row)
+        {
+            var res = new ZPZ_EFFECTIVENESS
+            {
+                CODE_MO = row["CODE_MO"].ToString(),
+                NAM_MOK = row["NAM_MOK"].ToString(),
+                COUNT = Convert.ToDecimal(row["COUNT"]),
+                COUNT_OSN = Convert.ToDecimal(row["COUNT_OSN"]),
+                DOL_OSN = Convert.ToDecimal(row["DOL_OSN"]),
+                BAL_OSN = Convert.ToDecimal(row["BAL_OSN"]),
+                C_MEE = Convert.ToDecimal(row["C_MEE"]),
+                C_MEE_ERR = Convert.ToDecimal(row["C_MEE_ERR"]),
+                DOL_MEE = Convert.ToDecimal(row["DOL_MEE"]),
+                BAL_MEE = Convert.ToDecimal(row["BAL_MEE"]),
+                C_EKMP = Convert.ToDecimal(row["C_EKMP"]),
+                C_EKMP_ERR = Convert.ToDecimal(row["C_EKMP_ERR"]),
+                DOL_EKMP = Convert.ToDecimal(row["DOL_EKMP"]),
+                BAL_EKMP = Convert.ToDecimal(row["BAL_EKMP"])
+            };
+            return res;
+        }
+
+    }
+
+
 }

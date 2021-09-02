@@ -2117,6 +2117,7 @@ namespace ExcelManager
         /// Получить строки
         /// </summary>
         public IEnumerable<MRow> Rows => rowsDictionary.Values.OrderBy(x => x.RowIndex);
+        /*
         /// <summary>
         /// Просчитать кол-во страниц
         /// </summary>
@@ -2165,10 +2166,7 @@ namespace ExcelManager
             app.Quit();
             app = null;
             GC.Collect();
-
-
-
-        }
+        }*/
     }
 
     /// <summary>

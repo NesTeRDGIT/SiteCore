@@ -1,0 +1,41 @@
+﻿@model List<SiteCore.Data.NEWS>
+@{
+    var IsAdmin = User.IsInRole("Admin");
+}
+@foreach (var n in Model)
+{
+    <div class="NewBlock">   
+        <div class="NewBlock-H">@n.HEADER</div>
+        <div class="NewBlock-D">от @n.DT.ToShortDateString()</div>
+        <div class="NewBlock-C">@Html.Raw(n.TEXT_STR)</div>
+        @if (IsAdmin)
+        {
+            <div style="display: flex;">
+                <form asp-action="EditNews" method="get" data-ajax="true" data-ajax-success="EditNewSuccess"  data-ajax-failure="OnFailureAjax" >
+                    <input type="hidden" name="NEWS_ID" value="@n.ID_NEW"/>
+                    <input type="submit" class="editButtonICO" value=""/>
+                </form>
+                <form data-ajax="true"  data-ajax-failure="OnFailureAjax"   data-ajax-success="DeleteNewsSuccess"  asp-action="DeleteNews" data-ajax-confirm="Вы уверены что хотите удалить новость?" method="post" asp-antiforgery="true">
+                    <input type="hidden" name="ID_NEW" value="@n.ID_NEW"/>
+                    <input type="submit" class="delButtonICO" value=""/>
+                </form>
+            </div>
+        }
+    </div>
+}
+
+<script src="~/lib/ckeditor/ckeditor.js"></script>
+<script>
+
+    document.querySelectorAll('.NewBlock-C').forEach(element => 
+        ClassicEditor.create(element, { toolbar: [] })
+        .then(editor => {
+            editor.isReadOnly = true;
+            console.log('Editor was initialized', editor);
+        })
+        .catch(error => {
+            console.error(error.stack);
+        })
+    
+    );
+</script>

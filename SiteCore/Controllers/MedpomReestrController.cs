@@ -216,7 +216,7 @@ namespace SiteCore.Controllers
                         //Разархивировать
                         if (ext == ".ZIP")
                         {
-                            var files = zipArchiver.UnZip(PathInRepo);
+                            var files = await zipArchiver.UnZip(PathInRepo);
                             foreach (var zipArchiverItem in files)
                             {
                                 if (!string.IsNullOrEmpty(zipArchiverItem.FilePath))
@@ -331,7 +331,7 @@ namespace SiteCore.Controllers
         {
             try
             {
-                foreach (var fs in FP.FILES.Where(x => x.STATUS == STATUS_FILE.INVITE && !x.TYPE_FILE.Contains(TYPEFILE.LD, TYPEFILE.LF, TYPEFILE.LH, TYPEFILE.LO, TYPEFILE.LP, TYPEFILE.LR, TYPEFILE.LS, TYPEFILE.LT, TYPEFILE.LU, TYPEFILE.LV, TYPEFILE.LC)))
+                foreach (var fs in FP.FILES.Where(x => x.STATUS == STATUS_FILE.INVITE && !x.TYPE_FILE.Contains(TYPEFILE.LD, TYPEFILE.LF, TYPEFILE.LH, TYPEFILE.LO, TYPEFILE.LP, TYPEFILE.LR, TYPEFILE.LS, TYPEFILE.LT, TYPEFILE.LU, TYPEFILE.LV, TYPEFILE.LC, TYPEFILE.LA, TYPEFILE.LB)))
                 {
                     var code_mo = SchemaChecking.GetELEMENT(medpomFileManager.GetPath(FP.CODE_MO, fs.FILENAME), "CODE_MO");
                     if (code_mo != CODE_MO)
@@ -590,6 +590,12 @@ namespace SiteCore.Controllers
                 ms.Write(buffer, 0, read);
             }
             return ms.ToArray();
+        }
+        public static string ReadToEnd(this MemoryStream BASE)
+        {
+            BASE.Position = 0;
+            var R = new StreamReader(BASE);
+            return R.ReadToEnd();
         }
 
 

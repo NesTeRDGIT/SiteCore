@@ -1,0 +1,92 @@
+﻿@using System.Data;
+@model DataTable
+
+@if (Model != null)
+{
+    if (Model.Columns.Contains("COMM") && Model.Rows.Count > 0)
+    {
+        <h3>@Model.Rows[0]["comm"].ToString()</h3>
+    }
+    <table class="table_report">
+        <tr>
+            <th rowspan="4">Наименование</th>
+            <th colspan="5">Работа мо(число случаев госпитализации)</th>
+            <th colspan="5">Работа мо(количество койко-дней)</th>
+            <th rowspan="2">Средняя длительность одной госпитализации</th>
+            <th rowspan="3">Доля мо в общем объеме госпитализации(%)</th>
+            <th rowspan="2">Количество коек по омс</th>
+            <th rowspan="3">Среднегодовая занятость койки</th>
+            <th rowspan="3">Оборот койки</th>
+            <th rowspan="3">Время простоя койки</th>
+        </tr>
+        <tr>
+            <th colspan="2">Планового</th>
+            <th colspan="2">Экстренно</th>
+            <th>всего</th>
+            <th colspan="2">Планового</th>
+            <th colspan="2">Экстренно</th>
+            <th>всего</th>
+        </tr>
+        <tr>
+            <th>Кол-во случаев</th>
+            <th>%</th>
+            <th>Кол-во случаев</th>
+            <th>%</th>
+            <th></th>
+            <th>Койко-дней</th>
+            <th>%</th>
+            <th>Койко-дней</th>
+            <th>%</th>
+            <th></th>
+            <th>нормативная 9,2</th>
+            <th>по сведениям ф.14</th>
+        </tr>
+        <tr>
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+            <th>5</th>
+            <th>6</th>
+            <th>7</th>
+            <th>8</th>
+            <th>9</th>
+            <th>10</th>
+            <th>11</th>
+            <th>12</th>
+            <th>13</th>
+            <th>14</th>
+            <th>15</th>
+            <th>16</th>
+        </tr>
+
+        @foreach (DataRow row in Model.Rows)
+        {
+            <tr>
+                <td style="text-align:left;">@row["NAM_MOK"]</td>
+                <td style="text-align:right;">@row["ST1"]</td>
+                <td style="text-align:right;">@row["ST2"]</td>
+                <td style="text-align:right;">@row["ST3"]</td>
+                <td style="text-align:right;">@row["ST4"]</td>
+                <td style="text-align:right;">@row["ST5"]</td>
+                <td style="text-align:right;">@row["ST6"]</td>
+                <td style="text-align:right;">@row["ST7"]</td>
+                <td style="text-align:right;">@row["ST8"]</td>
+                <td style="text-align:right;">@row["ST9"]</td>
+                <td style="text-align:right;">@row["ST10"]</td>
+                <td style="text-align:right;">@row["ST11"]</td>
+                <td style="text-align:right;">@row["ST12"]</td>
+                <td style="text-align:right;">@row["ST13"]</td>
+                <td style="text-align:right;">@row["ST14"]</td>
+                <td style="text-align:right;">@row["ST15"]</td>
+                <td style="text-align:right;">@row["ST16"]</td>
+
+            </tr>
+        }
+       
+    </table>
+    <form asp-action="GET_TABLE_1_XLS" method="get">
+        <input type="submit" value="Скачать Excel" class="ActionButton" />
+    </form>
+}
+

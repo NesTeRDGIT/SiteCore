@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Отчет по ЭКО";
+}
+@section Lib
+{
+    <link href="~/css/lds-hourglass-loader.css" rel="stylesheet" />
+    <script src="~/lib/TabControl/script.js"></script>
+    <link href="~/lib/TabControl/style.css" rel="stylesheet" /> 
+}
+
+<h2>ЭКО за отчетный период</h2>
+<h5>Выборка по отчетному месяцу</h5>
+
+
+<form data-ajax="true" data-ajax-url="@Url.Action("GET_EKO_VIEW")" data-ajax-update="#Result" data-ajax-begin="Hide(1)" data-ajax-Success="Hide(2)" data-ajax-Failure="Err()">
+    <label>Отчетный период </label>
+    <input type="month" name="DT" value="@DateTime.Now.AddMonths(-1).ToString("yyyy-MM")" required />
+    <input type="submit" value="Запрос" class="ActionButton" id="update" />
+</form>
+
+<div id="Result"></div>
+<div class="lds-hourglass" id="LoadingBar" style="display: none; "></div>
+
+@section Scripts
+{
+    <script>
+        function Hide(value) {
+            if (value === 1) {
+                const Result = document.getElementById('Result');
+                Result.style.display = 'none';
+                const LoadingBar = document.getElementById('LoadingBar');
+                LoadingBar.style.display = 'block';
+                $('#update').prop('disabled', true);
+            }
+            else {
+                let link = document.getElementById('Result');
+                link.style.display = 'block';
+                link = document.getElementById('LoadingBar');
+                link.style.display = 'none';
+                $('#update').prop('disabled', false);
+            }
+        }
+
+        function Err(xhr, textStatus, errorThrown) {
+            alert('Ошибка запроса');
+            Hide(2);
+        }
+    </script>
+}

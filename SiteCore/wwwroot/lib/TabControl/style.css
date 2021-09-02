@@ -1,0 +1,36 @@
+﻿.TabControl {
+    border: black solid 1px;
+   
+}
+.TabControl .Title {
+    list-style: none;
+    padding: 5px;
+    background-color: gray;
+}
+
+.TabControl .Title .tabHeader {
+    display: inline;
+    cursor: pointer;
+    padding: 5px;
+    background-color: gray;
+}
+
+.TabControl .Title .tabHeader:hover {
+    background-color: #c0c0c0;
+}
+
+.TabControl .Title .tabHeader.selected {
+    background-color: #c0c0c0;
+}
+.tabcontent {
+    overflow: auto;
+}
+
+.TabControl .tabcontent .tab {
+    padding: 5px;
+    display: none;
+}
+.TabControl .tabcontent .tab.selected {
+   
+    display: block;
+}

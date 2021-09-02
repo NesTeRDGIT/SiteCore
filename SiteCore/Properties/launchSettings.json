@@ -20,7 +20,7 @@
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation"
       },
       "ancmHostingModel": "OutOfProcess",
-      "jsWebView2Debugging": false
+      "jsWebView2Debugging": true
     },
     "SiteCore": {
       "commandName": "IISExpress",

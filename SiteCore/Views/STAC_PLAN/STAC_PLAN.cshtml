@@ -1,0 +1,148 @@
+﻿@{
+    ViewBag.Title = "Планирование стационара";
+}
+
+<link href="~/css/spoiler.css" rel="stylesheet" />
+<link href="~/css/fountainGM.css" rel="stylesheet" />
+
+
+<h2>Планирование стационара</h2>
+<div class="spoiler">
+    <input type="checkbox" />
+    <label class="open">Таблица_1. Показатели работы койки круглосуточного стационара</label>
+    <div class="box">
+        <form method="get" data-ajax="true" data-ajax-url="@Url.Action("GET_TABLE_1")" data-ajax-update="#TABLE_1" data-ajax-failure="Err(xhr, status, error)">
+            <button class="ActionButton">Получить</button>
+        </form>
+        <form method="post" data-ajax="true" data-ajax-url="@Url.Action("BUILD_TABLE_1")" data-ajax-loading="#TABLE_1_LOADER"  data-ajax-failure="Err(xhr, status, error)">
+            <button class="ActionButton">Собрать</button>
+            <span>с</span>
+            <input type="month" name="dt1" value="@DateTime.Now.ToString("yyyy-MM")" pattern="^[0-9]{4}-(0[1-9]|1[012])$" required title="YYYY-MM">
+            <span>по</span>
+            <input type="month" name="dt2" value="@DateTime.Now.ToString("yyyy-MM")" pattern="^[0-9]{4}-(0[1-9]|1[012])$" required title="YYYY-MM">
+            <div id="TABLE_1_LOADER" hidden style="display: none">
+                <div class="fountainGM">
+                    <div class="fountainG fountainG_1"></div>
+                    <div class="fountainG fountainG_2"></div>
+                    <div class="fountainG fountainG_3"></div>
+                    <div class="fountainG fountainG_4"></div>
+                    <div class="fountainG fountainG_5"></div>
+                    <div class="fountainG fountainG_6"></div>
+                    <div class="fountainG fountainG_7"></div>
+                    <div class="fountainG fountainG_8"></div>
+                </div>
+            </div>
+        </form>
+        <div id="TABLE_1" style="overflow: auto;">
+            @{await Html.RenderPartialAsync("_Tab1_Partical", null);}
+        </div>
+    </div>
+</div>
+<div class="spoiler">
+    <input type="checkbox" />
+    <label class="open">Таблица_2. Работа МО по профилям</label>
+    <div class="box">
+        <form method="get" data-ajax="true" data-ajax-url="@Url.Action("GET_TABLE_2")" data-ajax-update="#TABLE_2" data-ajax-failure="Err(xhr, status, error)">
+            <button class="ActionButton">Получить</button>
+        </form>
+        <form method="post" data-ajax="true" data-ajax-url="@Url.Action("BUILD_TABLE_2")" data-ajax-loading="#TABLE_2_LOADER" data-ajax-failure="Err(xhr, status, error)">
+            <button class="ActionButton">Собрать</button>
+            <span>с</span>
+            <input type="month" name="dt1" value="@DateTime.Now.ToString("yyyy-MM")" pattern="^[0-9]{4}-(0[1-9]|1[012])$" required title="YYYY-MM">
+            <span>по</span>
+            <input type="month" name="dt2" value="@DateTime.Now.ToString("yyyy-MM")" pattern="^[0-9]{4}-(0[1-9]|1[012])$" required title="YYYY-MM">
+
+            <div id="TABLE_2_LOADER" hidden style="display: none">
+                <div class="fountainGM">
+                    <div class="fountainG fountainG_1"></div>
+                    <div class="fountainG fountainG_2"></div>
+                    <div class="fountainG fountainG_3"></div>
+                    <div class="fountainG fountainG_4"></div>
+                    <div class="fountainG fountainG_5"></div>
+                    <div class="fountainG fountainG_6"></div>
+                    <div class="fountainG fountainG_7"></div>
+                    <div class="fountainG fountainG_8"></div>
+                </div>
+            </div>
+        </form>
+        <div id="TABLE_2" style="overflow: auto;">
+            @{await Html.RenderPartialAsync("_Tab2_Partical", null);}
+        </div>
+    </div>
+</div>
+
+
+<div class="spoiler">
+    <input type="checkbox" />
+    <label class="open">Таблица_3. Койко дни по профилям</label>
+    <div class="box">
+        <form method="get" data-ajax="true" data-ajax-url="@Url.Action("GET_TABLE_3")" data-ajax-update="#TABLE_3" data-ajax-failure="Err(xhr, status, error)">
+            <button class="ActionButton">Получить</button>
+        </form>
+        <form method="post" data-ajax="true" data-ajax-url="@Url.Action("BUILD_TABLE_3")" data-ajax-loading="#TABLE_3_LOADER" data-ajax-failure="Err(xhr, status, error)">
+            <button class="ActionButton">Собрать</button>
+            <span>с</span>
+            <input type="month" name="dt1" value="@DateTime.Now.ToString("yyyy-MM")" pattern="^[0-9]{4}-(0[1-9]|1[012])$" required title="YYYY-MM">
+            <span>по</span>
+            <input type="month" name="dt2" value="@DateTime.Now.ToString("yyyy-MM")" pattern="^[0-9]{4}-(0[1-9]|1[012])$" required title="YYYY-MM">
+
+            <div id="TABLE_3_LOADER" hidden style="display: none">
+                <div class="fountainGM">
+                    <div class="fountainG fountainG_1"></div>
+                    <div class="fountainG fountainG_2"></div>
+                    <div class="fountainG fountainG_3"></div>
+                    <div class="fountainG fountainG_4"></div>
+                    <div class="fountainG fountainG_5"></div>
+                    <div class="fountainG fountainG_6"></div>
+                    <div class="fountainG fountainG_7"></div>
+                    <div class="fountainG fountainG_8"></div>
+                </div>
+            </div>
+        </form>
+        <div id="TABLE_3" style="overflow: auto;">
+            @{await Html.RenderPartialAsync("_Tab3_Partical", null);}
+        </div>
+    </div>
+</div>
+
+<div class="spoiler">
+    <input type="checkbox" />
+    <label class="open">Таблица_4. Уровень госпитализации населения</label>
+    <div class="box">
+        <form method="get" data-ajax="true" data-ajax-url="@Url.Action("GET_TABLE_4")" data-ajax-update="#TABLE_4" data-ajax-failure="Err(xhr, status, error)">
+            <button class="ActionButton">Получить</button>
+        </form>
+        <form method="post" data-ajax="true" data-ajax-url="@Url.Action("BUILD_TABLE_4")" data-ajax-loading="#TABLE_4_LOADER" data-ajax-failure="Err(xhr, status, error)">
+            <button class="ActionButton">Собрать</button>
+            <span>с</span>
+            <input type="month" name="dt1" value="@DateTime.Now.ToString("yyyy-MM")" pattern="^[0-9]{4}-(0[1-9]|1[012])$" required title="YYYY-MM">
+            <span>по</span>
+            <input type="month" name="dt2" value="@DateTime.Now.ToString("yyyy-MM")" pattern="^[0-9]{4}-(0[1-9]|1[012])$" required title="YYYY-MM">
+
+            <div id="TABLE_4_LOADER" hidden style="display: none">
+                <div class="fountainGM">
+                    <div class="fountainG fountainG_1"></div>
+                    <div class="fountainG fountainG_2"></div>
+                    <div class="fountainG fountainG_3"></div>
+                    <div class="fountainG fountainG_4"></div>
+                    <div class="fountainG fountainG_5"></div>
+                    <div class="fountainG fountainG_6"></div>
+                    <div class="fountainG fountainG_7"></div>
+                    <div class="fountainG fountainG_8"></div>
+                </div>
+            </div>
+        </form>
+        <div id="TABLE_4" style="overflow: auto;">
+            @{await Html.RenderPartialAsync("_Tab4_Partical", null);}
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        function Err(xhr, textStatus, errorThrown) {
+            alert('Ошибка при запросе: ' + errorThrown);
+        }
+    </script>
+}

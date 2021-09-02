@@ -5,6 +5,7 @@
     <UserSecretsId>aspnet-SiteCore-1F627BF6-7F43-418B-9133-2DC9B34534EB</UserSecretsId>
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
     <OutputType>WinExe</OutputType>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
 	
   </PropertyGroup>
 
@@ -13,6 +14,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Angular\src\app\app.component.ts" />
+    <None Remove="Angular\src\app\app.module.ts" />
+    <None Remove="Angular\src\app\YesNoPIPE.ts" />
+    <None Remove="Angular\src\main.ts" />
+    <None Remove="Angular\src\polyfills.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AngularJS.Sanitize" Version="1.8.2" />
     <PackageReference Include="jQuery" Version="3.6.0" />
     <PackageReference Include="jQuery.Ajax.Unobtrusive" Version="2.0.20710" />
     <PackageReference Include="Microsoft.AspNet.SignalR" Version="2.4.2" />
@@ -20,6 +30,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Language" Version="5.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.7" />
@@ -42,6 +53,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Angular\src\app\Новая папка\" />
     <Folder Include="Areas\" />
     <Folder Include="Connected Services\" />
   </ItemGroup>
@@ -68,6 +80,14 @@
       <HintPath>..\..\..\ServiceVersion\ServiceLoaderMedpomData\bin\Debug\ServiceLoaderMedpomData.dll</HintPath>
     </Reference>
     <Reference Include="System.ServiceModel" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="Angular\src\app\app.component.ts" />
+    <TypeScriptCompile Include="Angular\src\app\app.module.ts" />
+    <TypeScriptCompile Include="Angular\src\app\YesNoPIPE.ts" />
+    <TypeScriptCompile Include="Angular\src\main.ts" />
+    <TypeScriptCompile Include="Angular\src\polyfills.ts" />
   </ItemGroup>
 
   <ItemGroup>
