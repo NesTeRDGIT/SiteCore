@@ -819,29 +819,31 @@ namespace SiteCore.Controllers
         [HttpGet]
         public IActionResult GetReport(DateTime Date1, DateTime Date2, bool IsSMO, bool isMO, bool isNMIC, int[] VID_NHISTORY)
         {
-            var report = new List<ReportTMKRow>();
+            var model = new TMKReportTableModel();
             try
             {
                 var smo = "";
-                if (User.IsInRole("TMKAdmin"))
-                {
-                    smo = "%";
-                }
+              
                 if (User.IsInRole("TMKSMO"))
                 {
                     smo = CODE_SMO;
                 }
-                report.AddRange(dbo.GetReport(Date1, Date2, isMO, IsSMO, isNMIC, smo, VID_NHISTORY));
-                HttpContext.Session.Set("GetReportResult", report);
+                if (User.IsInRole("TMKAdmin"))
+                {
+                    smo = "%";
+                }
+                model.Report.AddRange(dbo.GetReport(Date1, Date2, isMO, IsSMO, isNMIC, smo, VID_NHISTORY));
+                model.Report2.AddRange(dbo.GetReport2(Date1, Date2, isMO, IsSMO, isNMIC, smo, VID_NHISTORY));
+                HttpContext.Session.Set("GetReportResult", model);
                 HttpContext.Session.Set("Date1TMK", Date1);
                 HttpContext.Session.Set("Date2TMK", Date2);
-                return PartialView("_ReportTable", report);
+                return PartialView("_ReportTable", model);
             }
             catch (Exception ex)
             {
                 logger?.AddLog($"Ошибка в {nameof(GetReport)}:{ex.Message}:{ex.StackTrace}", LogType.Error);
                 ModelState.AddModelError("", "Внутренняя ошибка сервиса");
-                return PartialView("_ReportTable", report);
+                return PartialView("_ReportTable", model);
             }
         }
         [HttpGet]
@@ -849,10 +851,10 @@ namespace SiteCore.Controllers
         {
             try
             {
-                var Items = HttpContext.Session.Get<List<ReportTMKRow>>("GetReportResult");
+                var Items = HttpContext.Session.Get<TMKReportTableModel>("GetReportResult");
                 var Date1TMK = HttpContext.Session.Get<DateTime>("Date1TMK");
                 var Date2TMK = HttpContext.Session.Get<DateTime>("Date2TMK");
-                var file = File(tmkExcelCreator.GetReportXLS(Items), System.Net.Mime.MediaTypeNames.Application.Octet, $"Отчет НМИЦ c {Date1TMK.Date:dd.MM.yyyy} по {Date2TMK.Date:dd.MM.yyyy}.xlsx");
+                var file = File(tmkExcelCreator.GetReportXLS(Items.Report, Items.Report2), System.Net.Mime.MediaTypeNames.Application.Octet, $"Отчет НМИЦ c {Date1TMK.Date:dd.MM.yyyy} по {Date2TMK.Date:dd.MM.yyyy}.xlsx");
                 return file;
             }
             catch (Exception ex)

@@ -295,7 +295,8 @@ function CheckForPlugIn_Async() {
     document.getElementById('PlugInEnabledTxt').innerHTML = "Плагин загружен.";
   
     var CurrentPluginVersion;
-    cadesplugin.async_spawn(function *() {
+    cadesplugin.async_spawn(function* () {
+       
         var oAbout = yield cadesplugin.CreateObjectAsync("CAdESCOM.About");       
         CurrentPluginVersion = yield oAbout.PluginVersion;
         GetLatestVersion_Async(CurrentPluginVersion);

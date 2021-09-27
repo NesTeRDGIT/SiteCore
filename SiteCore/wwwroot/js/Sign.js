@@ -77,6 +77,9 @@ if (canPromise) {
     window.postMessage("cadesplugin_echo_request", "*");
 }
 
+
+
+
 function change(object) {
 
     const strUser = object.options[object.selectedIndex];
@@ -94,3 +97,5 @@ function change(object) {
     }
 
 }
+
+

@@ -118,6 +118,9 @@ namespace SiteCore.Data
         public bool? DS_ONK { get; set; }
         public string DS1 { get; set; }
         public string N_DS1 { get; set; }
+        public  string NSCHET { get; set; }
+        public DateTime DSCHET { get; set; }
+
     }
 
     [Table("NSI.F003")]

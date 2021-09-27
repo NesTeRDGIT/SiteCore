@@ -21,6 +21,7 @@
     <None Remove="Angular\src\polyfills.ts" />
   </ItemGroup>
 
+
   <ItemGroup>
     <PackageReference Include="AngularJS.Sanitize" Version="1.8.2" />
     <PackageReference Include="jQuery" Version="3.6.0" />
@@ -56,9 +57,12 @@
     <Folder Include="Angular\src\app\Новая папка\" />
     <Folder Include="Areas\" />
     <Folder Include="Connected Services\" />
+    <Folder Include="wwwroot\js\ReactApp\" />
+    <Folder Include="wwwroot\CryptoPROSoft\" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CryptoWCFContract\CryptoWCFContract.csproj" />
     <ProjectReference Include="..\ExcelManager\ExcelManager.csproj" />
   </ItemGroup>
 

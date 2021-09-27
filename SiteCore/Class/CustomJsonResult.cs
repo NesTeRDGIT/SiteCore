@@ -24,7 +24,7 @@ namespace SiteCore.Class
             }
 
             var response = context.HttpContext.Response;
-            response.ContentType = !string.IsNullOrEmpty(ContentType) ? ContentType : "application/json";
+            response.ContentType = !string.IsNullOrEmpty(ContentType) ? ContentType : "application/json;charset=UTF-8";
             var isoConvert = new IsoDateTimeConverter { DateTimeFormat = _dateFormat };
             var bytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new { Result, Value }, isoConvert));
             response.Body.WriteAsync(bytes);

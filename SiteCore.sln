@@ -5,7 +5,13 @@ VisualStudioVersion = 16.0.31313.79
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiteCore", "SiteCore\SiteCore.csproj", "{2C74E9A8-9199-492F-9D36-D1FAB6D6E63E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelManager", "ExcelManager\ExcelManager.csproj", "{927D99B5-22A7-47FB-AD86-ECA3EF651A09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelManager", "ExcelManager\ExcelManager.csproj", "{927D99B5-22A7-47FB-AD86-ECA3EF651A09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoWCFContract", "CryptoWCFContract\CryptoWCFContract.csproj", "{1A240AF0-8AF8-4899-B92B-DE9143F4D0EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoWCFService", "CryptoWCFService\CryptoWCFService.csproj", "{61DA3BAB-E3B5-4A59-91EB-6BC81BA37808}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoWCFServiceTests", "CryptoWCFServiceTests\CryptoWCFServiceTests.csproj", "{A2ADA1E9-00B0-4028-B520-5D6DEF01DED1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +27,18 @@ Global
 		{927D99B5-22A7-47FB-AD86-ECA3EF651A09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{927D99B5-22A7-47FB-AD86-ECA3EF651A09}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{927D99B5-22A7-47FB-AD86-ECA3EF651A09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A240AF0-8AF8-4899-B92B-DE9143F4D0EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A240AF0-8AF8-4899-B92B-DE9143F4D0EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A240AF0-8AF8-4899-B92B-DE9143F4D0EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A240AF0-8AF8-4899-B92B-DE9143F4D0EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61DA3BAB-E3B5-4A59-91EB-6BC81BA37808}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61DA3BAB-E3B5-4A59-91EB-6BC81BA37808}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61DA3BAB-E3B5-4A59-91EB-6BC81BA37808}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61DA3BAB-E3B5-4A59-91EB-6BC81BA37808}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2ADA1E9-00B0-4028-B520-5D6DEF01DED1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2ADA1E9-00B0-4028-B520-5D6DEF01DED1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2ADA1E9-00B0-4028-B520-5D6DEF01DED1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2ADA1E9-00B0-4028-B520-5D6DEF01DED1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

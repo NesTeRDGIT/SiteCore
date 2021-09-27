@@ -1,0 +1,1 @@
+cpverify.exe -mk -alg GR3411_2012_256 "TEST 750001.cer">"HASH.txt"

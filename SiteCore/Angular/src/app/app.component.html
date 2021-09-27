@@ -99,6 +99,8 @@
                         <th>СМО</th>
                         <th>Отчетный год</th>
                         <th>Отчетный месяц</th>
+                        <th>№ счета</th>
+                        <th>Дата счета</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-item>
@@ -114,6 +116,9 @@
                         <td>{{item.N_SMO}}</td>
                         <td>{{item.YEAR}}</td>
                         <td>{{item.MONTH}}</td>
+                        <td>{{item.NSCHET}}</td>
+                        <td>{{item.DSCHET| date: 'MM.dd.yyyy'}}</td>
+
                     </tr>
                 </ng-template>
             </p-table>

@@ -73,19 +73,24 @@
 }
 
 
-<script src="~/lib/angularJS/angular-sanitize.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.19.8/select.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.19.8/select.js"></script>
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
 
 
 @section Lib
 {
+    
+   
+
     <link href="~/lib/Select2/select2.min.css" rel="stylesheet" />
     <script src="~/lib/Select2/select2.min.js"></script>
 
     @{ await Html.RenderPartialAsync("_AngularJSScriptsPartical");}
 
+    <script src="~/lib/angularJS/angular-sanitize.min.js"></script>
+    
+
+    <link href="~/lib/angular-ui-select/select.min.css" rel="stylesheet" />
+    <script src="~/lib/angular-ui-select/select.min.js"></script>
+    
 
     <script src="~/lib/angular-ui-grid/ui-grid.min.js"></script>
     <script src="~/lib/angular-ui-grid/ui-grid.core.My.js"></script>

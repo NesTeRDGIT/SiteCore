@@ -43,8 +43,20 @@
       "destination": "wwwroot/lib/angularJS"
     },
     {
+      "library": "react@17.0.2",
+      "destination": "wwwroot/lib/react/"
+    },
+    {
+      "library": "babel-standalone@6.26.0",
+      "destination": "wwwroot/lib/babel-standalone/"
+    },
+    {
+      "library": "react-dom@17.0.2",
+      "destination": "wwwroot/lib/react-dom/"
+    },
+    {
       "library": "angular-ui-select@0.19.8",
-      "destination": "wwwroot/lib/angular-ui-select/"
+      "destination": "wwwroot/Lib/angular-ui-select/"
     }
   ]
 }

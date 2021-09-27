@@ -465,6 +465,114 @@ namespace SiteCore.Models
         public int S_5_7 { get; set; }
         public int S_5_8 { get; set; }
     }
+    public class Report2TMKRow
+    {
+        public static List<Report2TMKRow> Get(IEnumerable<DataRow> row)
+        {
+            return row.Select(Get).ToList();
+        }
+
+        public static Report2TMKRow Get(DataRow row)
+        {
+            try
+            {
+                var item = new Report2TMKRow
+                {
+                    SUB = row[nameof(SUB)].ToString(),
+                    SMO = row[nameof(SMO)].ToString(),
+                    nam_smok = row[nameof(nam_smok)].ToString(),
+                    NMIC = row[nameof(NMIC)].ToString(),
+                    MO = row[nameof(MO)].ToString(),
+                    nam_mok = row[nameof(nam_mok)].ToString(),
+                    C = Convert.ToInt32(row[nameof(C)]),
+                    C_V = Convert.ToInt32(row[nameof(C_V)]),
+                    C_P = Convert.ToInt32(row[nameof(C_P)]),
+                    C_MEE_SMO = Convert.ToInt32(row[nameof(C_MEE_SMO)]),
+                    C_EKMP_SMO = Convert.ToInt32(row[nameof(C_EKMP_SMO)]),
+                    C_MEE_D_SMO = Convert.ToInt32(row[nameof(C_MEE_D_SMO)]),
+                    C_EKMP_D_SMO = Convert.ToInt32(row[nameof(C_EKMP_D_SMO)]),
+                    C_EKMP_SMO_PROC = Convert.ToDecimal(row[nameof(C_EKMP_SMO_PROC)]),
+                    S_MEE_D_SMO = Convert.ToInt32(row[nameof(S_MEE_D_SMO)]),
+                    S_EKMP_D_SMO = Convert.ToInt32(row[nameof(S_EKMP_D_SMO)]),
+                    S_SUM_SMO = Convert.ToDecimal(row[nameof(S_SUM_SMO)]),
+                    S_FINE_SMO = Convert.ToDecimal(row[nameof(S_FINE_SMO)]),
+                    S_ALL = Convert.ToInt32(row[nameof(S_ALL)]),
+                    S_1_4_3 = Convert.ToInt32(row[nameof(S_1_4_3)]),
+                    S_1_6_1 = Convert.ToInt32(row[nameof(S_1_6_1)]),
+                    S_1_9 = Convert.ToInt32(row[nameof(S_1_9)]),
+                    S_1_10 = Convert.ToInt32(row[nameof(S_1_10)]),
+                    S_2_1 = Convert.ToInt32(row[nameof(S_2_1)]),
+                    S_2_17 = Convert.ToInt32(row[nameof(S_2_17)]),
+                    S_3_1_2 = Convert.ToInt32(row[nameof(S_3_1_2)]),
+                    S_3_1_3 = Convert.ToInt32(row[nameof(S_3_1_3)]),
+                    S_3_1_4 = Convert.ToInt32(row[nameof(S_3_1_4)]),
+                    S_3_1_5 = Convert.ToInt32(row[nameof(S_3_1_5)]),
+                    S_3_2_2 = Convert.ToInt32(row[nameof(S_3_2_2)]),
+                    S_3_2_3 = Convert.ToInt32(row[nameof(S_3_2_3)]),
+                    S_3_2_4 = Convert.ToInt32(row[nameof(S_3_2_4)]),
+                    S_3_2_5 = Convert.ToInt32(row[nameof(S_3_2_5)]),
+                    S_3_3 = Convert.ToInt32(row[nameof(S_3_3)]),
+                    S_3_4 = Convert.ToInt32(row[nameof(S_3_4)]),
+                    S_3_5 = Convert.ToInt32(row[nameof(S_3_5)]),
+                    S_3_6 = Convert.ToInt32(row[nameof(S_3_6)]),
+                    S_3_8 = Convert.ToInt32(row[nameof(S_3_8)]),
+                    S_3_7 = Convert.ToInt32(row[nameof(S_3_7)]),
+                    S_3_10 = Convert.ToInt32(row[nameof(S_3_10)]),
+                    S_3_11 = Convert.ToInt32(row[nameof(S_3_11)]),
+                    S_3_13 = Convert.ToInt32(row[nameof(S_3_13)]),
+    };
+                return item;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ошибка получения Report2TMKRow: {ex.Message}", ex);
+            }
+
+        }
+        public string SUB { get; set; }
+        public string SMO { get; set; }
+        public string NMIC { get; set; }
+        public string nam_smok { get; set; }
+        public string MO { get; set; }
+        public string nam_mok { get; set; }
+        public int C { get; set; }
+        public int C_V { get; set; }
+        public int C_P { get; set; }
+        public int C_MEE_SMO { get; set; }
+        public int C_EKMP_SMO { get; set; }
+        public decimal C_EKMP_SMO_PROC { get; set; }
+        public int C_MEE_D_SMO { get; set; }
+        public int C_EKMP_D_SMO { get; set; }
+        public int S_MEE_D_SMO { get; set; }
+        public int S_EKMP_D_SMO { get; set; }
+        public decimal S_SUM_SMO { get; set; }
+        public decimal S_FINE_SMO { get; set; }
+
+        public int S_ALL { get; set; }
+        public int S_1_4_3 { get; set; }
+        public int S_1_6_1 { get; set; }
+        public int S_1_9 { get; set; }
+        public int S_1_10 { get; set; }
+        public int S_2_1 { get; set; }
+        public int S_2_17 { get; set; }
+        public int S_3_1_2 { get; set; }
+        public int S_3_1_3 { get; set; }
+        public int S_3_1_4 { get; set; }
+        public int S_3_1_5 { get; set; }
+        public int S_3_2_2 { get; set; }
+        public int S_3_2_3 { get; set; }
+        public int S_3_2_4 { get; set; }
+        public int S_3_2_5 { get; set; }
+        public int S_3_3 { get; set; }
+        public int S_3_4 { get; set; }
+        public int S_3_5 { get; set; }
+        public int S_3_6 { get; set; }
+        public int S_3_8 { get; set; }
+        public int S_3_7 { get; set; }
+        public int S_3_10 { get; set; }
+        public int S_3_11 { get; set; }
+        public int S_3_13 { get; set; }
+    }
 
 
     public class CONTACT_INFOModel
@@ -513,6 +621,13 @@ namespace SiteCore.Models
     public class TMKReportModel
     {
         public List<NMIC_VID_NHISTORY> NMIC_VID_NHISTORY { get; set; }
+    }
+
+
+    public class TMKReportTableModel
+    {
+        public List<ReportTMKRow> Report { get; set; } = new List<ReportTMKRow>();
+        public List<Report2TMKRow> Report2 { get; set; } = new List<Report2TMKRow>();
     }
 
     public class TMKListModel

@@ -23,19 +23,28 @@ namespace SiteCore.Data
         {
             modelBuilder.HasDefaultSchema("SITE");
             // modelBuilder.Entity<FILES>().HasOne(x=>x.FILE_L).WithOne(x=>x.ID_FILEL).HasForeignKey(x=>x.ID_FILEL);
-            modelBuilder.Entity<FILES>().HasOne(x => x.PARENT).WithOne(x => x.FILE_L)
-                .HasForeignKey<FILES>(x => x.ID_FILEL);
+            modelBuilder.Entity<FILES>().HasOne(x => x.PARENT).WithOne(x => x.FILE_L).HasForeignKey<FILES>(x => x.ID_FILEL);
 
             modelBuilder.Entity<FILES>().HasOne(x => x.FILEPACK).WithMany(x => x.FILES).HasForeignKey(x => x.ID_PACK);
 
             modelBuilder.Entity<NEWS>().HasMany(x => x.NEWS_ROLE).WithOne(x => x.NEWS).HasForeignKey(x => x.ID_NEW);
-            modelBuilder.Entity<NEWS_ROLE>().HasOne(x => x.NEWS).WithMany(x => x.NEWS_ROLE)
-                .HasForeignKey(x => x.ID_NEW);
+            modelBuilder.Entity<NEWS_ROLE>().HasOne(x => x.NEWS).WithMany(x => x.NEWS_ROLE).HasForeignKey(x => x.ID_NEW);
             modelBuilder.Entity<NEWS_ROLE>().HasKey(x => new { x.ID_NEW, x.ID_ROLE });
 
-            modelBuilder.Entity<ErrorSPRSection>().HasMany(x => x.Error).WithOne(x => x.Section)
-                .HasForeignKey(x => x.ID_SECTION);
+            modelBuilder.Entity<ErrorSPRSection>().HasMany(x => x.Error).WithOne(x => x.Section).HasForeignKey(x => x.ID_SECTION);
 
+            modelBuilder.Entity<SIGN_LIST>().HasOne(x => x.ROLE).WithMany(x => x.Signs).HasForeignKey(x => x.SIGN_ROLE_ID);
+            modelBuilder.Entity<SIGN_LIST>().HasOne(x => x.MO_NAME).WithMany().HasForeignKey(x => x.CODE_MO);
+
+
+            modelBuilder.Entity<DOC_SIGN>().HasOne(x => x.DOC).WithMany().HasForeignKey(x => x.DOC_FOR_SIGN_ID).IsRequired();
+            modelBuilder.Entity<DOC_SIGN>().HasOne(x => x.ROLE).WithMany().HasForeignKey(x => x.SIGN_ROLE_ID).IsRequired();
+            modelBuilder.Entity<DOC_SIGN>().HasOne(x => x.SIGN_ITEM).WithMany().HasForeignKey(x => x.SIGN_LIST_ID);
+
+
+            modelBuilder.Entity<DOC_FOR_SIGN>().HasMany(x => x.SIGNs).WithOne(x=>x.DOC).HasForeignKey(x => x.DOC_FOR_SIGN_ID);
+            modelBuilder.Entity<DOC_FOR_SIGN>().HasOne(x => x.CODE_MO_NAME).WithMany().HasForeignKey(x => x.CODE_MO);
+            
         }
 
         public virtual DbSet<FILEPACK> FILEPACK { get; set; }
@@ -46,7 +55,13 @@ namespace SiteCore.Data
         public virtual DbSet<NEWS> NEWS { get; set; }
         public virtual DbSet<ErrorSPRSection> ErrorSPRSection { get; set; }
         public virtual DbSet<ErrorSPR> ErrorSPR { get; set; }
+        public virtual DbSet<SIGN_LIST> SIGN_LIST { get; set; }
+        public virtual DbSet<SIGN_ROLE> SIGN_ROLE { get; set; }
+        public virtual DbSet<SIGN_ISSUER> SING_ISSUER { get; set; }
 
+        public virtual DbSet<CODE_MO> CODE_MO { get; set; }
+        public virtual DbSet<DOC_SIGN> DOC_SIGN { get; set; }
+        public virtual DbSet<DOC_FOR_SIGN> DOC_FOR_SIGN { get; set; }
 
         public List<Abort_Row> GetReportAbort(int YEAR)
         {
@@ -144,7 +159,7 @@ namespace SiteCore.Data
 
         public async Task BUILD_STAT_STAC_TBL_1(DateTime dt1, DateTime dt2)
         {
-            using var con = new OracleConnection(Database.GetDbConnection().ConnectionString);
+            await using var con = new OracleConnection(Database.GetDbConnection().ConnectionString);
             var cmd = new OracleCommand("begin STAT_STAC.GET_TAB1(:dt1,:dt2);  end;", con);
             cmd.Parameters.Add("dt1", dt1);
             cmd.Parameters.Add("dt2", dt2);
@@ -155,7 +170,7 @@ namespace SiteCore.Data
 
         public async Task BUILD_STAT_STAC_TBL_2(DateTime dt1, DateTime dt2)
         {
-            using var con = new OracleConnection(Database.GetDbConnection().ConnectionString);
+            await using var con = new OracleConnection(Database.GetDbConnection().ConnectionString);
             var cmd = new OracleCommand("begin STAT_STAC.GET_TAB2(:dt1,:dt2);  end;", con);
             cmd.Parameters.Add("dt1", dt1);
             cmd.Parameters.Add("dt2", dt2);
@@ -166,7 +181,7 @@ namespace SiteCore.Data
 
         public async Task BUILD_STAT_STAC_TBL_3(DateTime dt1, DateTime dt2)
         {
-            using var con = new OracleConnection(Database.GetDbConnection().ConnectionString);
+            await using var con = new OracleConnection(Database.GetDbConnection().ConnectionString);
             var cmd = new OracleCommand("begin STAT_STAC.GET_TAB3(:dt1,:dt2);  end;", con);
             cmd.Parameters.Add("dt1", dt1);
             cmd.Parameters.Add("dt2", dt2);
@@ -177,7 +192,7 @@ namespace SiteCore.Data
 
         public async Task BUILD_STAT_STAC_TBL_4(DateTime dt1, DateTime dt2)
         {
-            using var con = new OracleConnection(Database.GetDbConnection().ConnectionString);
+            await using var con = new OracleConnection(Database.GetDbConnection().ConnectionString);
             var cmd = new OracleCommand("begin STAT_STAC.GET_TAB4(:dt1,:dt2);  end;", con);
             cmd.Parameters.Add("dt1", dt1);
             cmd.Parameters.Add("dt2", dt2);
@@ -215,9 +230,6 @@ namespace SiteCore.Data
         public DateTime? TAL_D { get; set; }
         public string OS_SLUCH { get; set; }
         public decimal? SUMM { get; set; }
-
-
-
     }
     [Serializable]
     public class Abort_Row
@@ -788,6 +800,98 @@ namespace SiteCore.Data
     }
 
 
+    [Table("SIGN_LIST")]
+    public class SIGN_LIST
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
+        [Required] 
+        public string PUBLICKEY { get; set; }
+        [Required]
+        public string PUBLICKEY_ISSUER { get; set; }
+        [Required]
+        public string CODE_MO { get; set; }
+        [Required]
+        public DateTime DATE_B { get; set; }
+        public DateTime? DATE_E { get; set; }
+        [Required]
+        public int SIGN_ROLE_ID { get; set; }
+        [Required]
+        [MaxLength(2*1024*1024)]
+        public byte[] FILE_CERT { get; set; }
+        [MaxLength(20 * 1024 * 1024)]
+        [Required]
+        public byte[] FILE_CONFIRM { get; set; }
+        [Required]
+        public string FILE_CONFIRM_EXT { get; set; }
+
+        public virtual SIGN_ROLE ROLE { get; set; }
+
+        public virtual CODE_MO MO_NAME { get; set; }
+       
+    }
+
+    [Table("SIGN_ROLE")]
+    public class SIGN_ROLE
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int SIGN_ROLE_ID { get; set; }
+        [Required]
+        public string CAPTION { get; set; }
+        [Required]
+        public string PREFIX { get; set; }
+        public virtual  ICollection<SIGN_LIST> Signs { get; set; }
+    }
+    [Table("SIGN_ISSUER")]
+    public class SIGN_ISSUER
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int SING_ISSUER_ID { get; set; }
+        [Required]
+        public string CAPTION { get; set; }
+        public DateTime DATE_B { get; set; }
+        public DateTime? DATE_E { get; set; }
+        public byte[] FILE_CERT { get; set; }
+
+        public string PUBLICKEY { get; set; }
+    }
+    [Table("DOC_SIGN")]
+    public class DOC_SIGN
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int DOC_SIGN_ID { get; set; }
+        public int DOC_FOR_SIGN_ID { get; set; }
+        public byte[] SIGN { get; set; }
+        public int SIGN_ROLE_ID { get; set; }
+        public int? SIGN_LIST_ID { get; set; }
+        public DateTime DATE_CREATE { get; set; } = DateTime.Now;
+        public  DateTime? DATE_SIGN { get; set; }
+        public virtual DOC_FOR_SIGN DOC { get; set; }
+        public virtual SIGN_ROLE ROLE { get; set; }
+        public virtual SIGN_LIST SIGN_ITEM { get; set; }
+    }
+
+    [Table("DOC_FOR_SIGN")]
+    public class DOC_FOR_SIGN
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int DOC_FOR_SIGN_ID { get; set; }
+        public byte[] DATA { get; set; }
+        public string FILENAME { get; set; }
+        public string CODE_MO { get; set; }
+        public DateTime DATE_CREATE { get; set; } = DateTime.Now;
+        public virtual CODE_MO CODE_MO_NAME { get; set; }
+        public virtual ICollection<DOC_SIGN> SIGNs { get; set; } = new List<DOC_SIGN>();
+        public string THEME { get; set; }
+    }
+
+  
+
 
 
 
@@ -839,4 +943,6 @@ namespace SiteCore.Data
     }
 
 
+
+    
 }

@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Drawing;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ServiceLoaderMedpomData;
 using SiteCore.Class;
@@ -67,6 +68,8 @@ namespace SiteCore
             services.AddONK(Configuration);
             services.AddZPZ(Configuration);
             services.AddSTAC(Configuration);
+            services.AddSIGN(Configuration);
+            
 
         }
 
@@ -178,9 +181,17 @@ namespace SiteCore
             });
             return services;
         }
+        public static IServiceCollection AddSIGN(this IServiceCollection services, IConfiguration Configuration)
+        {
+            services.AddTransient<IX509CertificateManager>(provider => new X509CertificateManager(provider.GetService<MyOracleSet>()));
+            var host = Configuration.GetSection("WCFCrypto").GetValue("HOST", "");
+            services.AddSingleton(provider => new WCFCryptoConnect(host, provider.GetService<ILogger>()));
+            
+            return services;
+        }
 
 
-
+        
     }
 
 

@@ -12,7 +12,7 @@ namespace SiteCore.Class
     public interface ITMKExcelCreator
     {
          byte[] GetTMKReestrXLSX(IEnumerable<TMKListModel> items);
-         byte[] GetReportXLS(List<ReportTMKRow> items);
+         byte[] GetReportXLS(List<ReportTMKRow> items, List<Report2TMKRow> items2);
     }
     public class TMKExcelCreator: ITMKExcelCreator
     {
@@ -72,7 +72,7 @@ namespace SiteCore.Class
             return stream.ToArray();
         }
 
-        public byte[] GetReportXLS(List<ReportTMKRow> items)
+        public byte[] GetReportXLS(List<ReportTMKRow> items, List<Report2TMKRow> items2)
         {
             using var xls = new ExcelOpenXML();
             using var stream = new MemoryStream();
@@ -151,7 +151,6 @@ namespace SiteCore.Class
                 xls.PrintCell(r, 56, rep.S_5_7, stylecenter);
                 xls.PrintCell(r, 57, rep.S_5_8, stylecenter);
             }
-
             if (items.Count > 1)
             {
                 r = xls.GetRow(rowIndex);
@@ -214,20 +213,142 @@ namespace SiteCore.Class
                 xls.PrintCell(r, 56, Convert.ToDouble(items.Sum(x => x.S_5_7)), stylecenter);
                 xls.PrintCell(r, 57, Convert.ToDouble(items.Sum(x => x.S_5_8)), stylecenter);
             }
-
             if (items.All(x => string.IsNullOrEmpty(x.SMO)))
             {
                 xls.SetColumnVisible("B", false);
                 xls.SetColumnVisible("C", false);
             }
-
             if (items.All(x => string.IsNullOrEmpty(x.MO)))
             {
                 xls.SetColumnVisible("D", false);
                 xls.SetColumnVisible("E", false);
             }
-
             if (items.All(x => string.IsNullOrEmpty(x.NMIC)))
+            {
+                xls.SetColumnVisible("F", false);
+            }
+
+
+
+
+
+            xls.SetCurrentSchet(1);
+            rowIndex = 5;
+
+            foreach (var rep in items2)
+            {
+                r = xls.GetRow(rowIndex);
+                rowIndex++;
+                xls.PrintCell(r, 1, rep.SUB, styleright);
+                xls.PrintCell(r, 2, rep.SMO, stylecenter);
+                xls.PrintCell(r, 3, rep.nam_smok, styleright);
+                xls.PrintCell(r, 4, rep.MO, stylecenter);
+                xls.PrintCell(r, 5, rep.nam_mok, styleright);
+                xls.PrintCell(r, 6, rep.NMIC, stylecenter);
+                xls.PrintCell(r, 7, rep.C, stylecenter);
+                xls.PrintCell(r, 8, rep.C_V, stylecenter);
+                xls.PrintCell(r, 9, rep.C_P, stylecenter);
+               
+                xls.PrintCell(r, 10, rep.C_MEE_SMO, stylecenter);
+                xls.PrintCell(r, 11, rep.C_EKMP_SMO, stylecenter);
+                xls.PrintCell(r, 12, rep.C_EKMP_SMO_PROC, stylecenter);
+              
+                xls.PrintCell(r, 13, rep.C_MEE_D_SMO, stylecenter);
+                xls.PrintCell(r, 14, rep.C_EKMP_D_SMO, stylecenter);
+              
+                xls.PrintCell(r, 15, rep.S_MEE_D_SMO, stylecenter);
+                xls.PrintCell(r, 16, rep.S_EKMP_D_SMO, stylecenter);
+           
+                xls.PrintCell(r, 17, Convert.ToDouble(rep.S_SUM_SMO), stylecenterNUM);
+                xls.PrintCell(r, 18, Convert.ToDouble(rep.S_FINE_SMO), stylecenterNUM);
+
+                xls.PrintCell(r, 19, rep.S_ALL, stylecenter);
+                xls.PrintCell(r, 20, rep.S_1_4_3, stylecenter);
+                xls.PrintCell(r, 21, rep.S_1_6_1, stylecenter);
+                xls.PrintCell(r, 22, rep.S_1_9, stylecenter);
+                xls.PrintCell(r, 23, rep.S_1_10, stylecenter);
+                xls.PrintCell(r, 24, rep.S_2_1, stylecenter);
+                xls.PrintCell(r, 25, rep.S_2_17, stylecenter);
+                xls.PrintCell(r, 26, rep.S_3_1_2, stylecenter);
+                xls.PrintCell(r, 27, rep.S_3_1_3, stylecenter);
+                xls.PrintCell(r, 28, rep.S_3_1_4, stylecenter);
+                xls.PrintCell(r, 29, rep.S_3_1_5, stylecenter);
+                xls.PrintCell(r, 30, rep.S_3_2_2, stylecenter);
+                xls.PrintCell(r, 31, rep.S_3_2_3, stylecenter);
+                xls.PrintCell(r, 32, rep.S_3_2_4, stylecenter);
+                xls.PrintCell(r, 33, rep.S_3_2_5, stylecenter);
+                xls.PrintCell(r, 34, rep.S_3_3, stylecenter);
+                xls.PrintCell(r, 35, rep.S_3_4, stylecenter);
+                xls.PrintCell(r, 36, rep.S_3_5, stylecenter);
+                xls.PrintCell(r, 37, rep.S_3_6, stylecenter);
+                xls.PrintCell(r, 38, rep.S_3_8, stylecenter);
+                xls.PrintCell(r, 39, rep.S_3_7, stylecenter);
+                xls.PrintCell(r, 40, rep.S_3_10, stylecenter);
+                xls.PrintCell(r, 41, rep.S_3_11, stylecenter);
+                xls.PrintCell(r, 42, rep.S_3_13, stylecenter);
+            }
+            if (items2.Count > 1)
+            {
+                r = xls.GetRow(rowIndex);
+                xls.PrintCell(r, 1, "Всего", stylerightBOLD);
+                xls.PrintCell(r, 2, "", stylecenterBOLD);
+                xls.PrintCell(r, 3, "", stylerightBOLD);
+                xls.PrintCell(r, 4, "", stylecenterBOLD);
+                xls.PrintCell(r, 5, "", stylerightBOLD);
+                xls.PrintCell(r, 6, "", stylerightBOLD);
+                xls.PrintCell(r, 7, items2.Sum(x => x.C), stylecenterBOLD);
+                xls.PrintCell(r, 8, items2.Sum(x => x.C_V), stylecenterBOLD);
+                xls.PrintCell(r, 9, items2.Sum(x => x.C_P), stylecenterBOLD);
+               
+                xls.PrintCell(r, 10, items2.Sum(x => x.C_MEE_SMO), stylecenterBOLD);
+                xls.PrintCell(r, 11, items2.Sum(x => x.C_EKMP_SMO), stylecenterBOLD);
+                xls.PrintCell(r, 12, "", stylecenterBOLD);
+
+                xls.PrintCell(r, 13, items2.Sum(x => x.C_MEE_D_SMO), stylecenterBOLD);
+                xls.PrintCell(r, 14, items2.Sum(x => x.C_EKMP_D_SMO), stylecenterBOLD);
+                
+                xls.PrintCell(r, 15, items2.Sum(x => x.S_MEE_D_SMO), stylecenterBOLD);
+                xls.PrintCell(r, 16, items2.Sum(x => x.S_EKMP_D_SMO), stylecenterBOLD);
+ 
+                xls.PrintCell(r, 17, Convert.ToDouble(items2.Sum(x => x.S_SUM_SMO)), stylecenterNUMBOLD);
+                xls.PrintCell(r, 18, Convert.ToDouble(items2.Sum(x => x.S_FINE_SMO)), stylecenterNUMBOLD);
+
+                xls.PrintCell(r, 19,items2.Sum(x => x.S_ALL), stylecenter);
+                xls.PrintCell(r, 20,items2.Sum(x => x.S_1_4_3), stylecenter);
+                xls.PrintCell(r, 21,items2.Sum(x => x.S_1_6_1), stylecenter);
+                xls.PrintCell(r, 22,items2.Sum(x => x.S_1_9), stylecenter);
+                xls.PrintCell(r, 23,items2.Sum(x => x.S_1_10), stylecenter);
+                xls.PrintCell(r, 24,items2.Sum(x => x.S_2_1), stylecenter);
+                xls.PrintCell(r, 25,items2.Sum(x => x.S_2_17), stylecenter);
+                xls.PrintCell(r, 26,items2.Sum(x => x.S_3_1_2), stylecenter);
+                xls.PrintCell(r, 27,items2.Sum(x => x.S_3_1_3), stylecenter);
+                xls.PrintCell(r, 28,items2.Sum(x => x.S_3_1_4), stylecenter);
+                xls.PrintCell(r, 29,items2.Sum(x => x.S_3_1_5), stylecenter);
+                xls.PrintCell(r, 30,items2.Sum(x => x.S_3_2_2), stylecenter);
+                xls.PrintCell(r, 31,items2.Sum(x => x.S_3_2_3), stylecenter);
+                xls.PrintCell(r, 32,items2.Sum(x => x.S_3_2_4), stylecenter);
+                xls.PrintCell(r, 33,items2.Sum(x => x.S_3_2_5), stylecenter);
+                xls.PrintCell(r, 34,items2.Sum(x => x.S_3_3), stylecenter);
+                xls.PrintCell(r, 35,items2.Sum(x => x.S_3_4), stylecenter);
+                xls.PrintCell(r, 36,items2.Sum(x => x.S_3_5), stylecenter);
+                xls.PrintCell(r, 37,items2.Sum(x => x.S_3_6), stylecenter);
+                xls.PrintCell(r, 38,items2.Sum(x => x.S_3_8), stylecenter);
+                xls.PrintCell(r, 39,items2.Sum(x => x.S_3_7), stylecenter);
+                xls.PrintCell(r, 40,items2.Sum(x => x.S_3_10), stylecenter);
+                xls.PrintCell(r, 41,items2.Sum(x => x.S_3_11), stylecenter);
+                xls.PrintCell(r, 42,items2.Sum(x => x.S_3_13), stylecenter);
+            }
+            if (items2.All(x => string.IsNullOrEmpty(x.SMO)))
+            {
+                xls.SetColumnVisible("B", false);
+                xls.SetColumnVisible("C", false);
+            }
+            if (items2.All(x => string.IsNullOrEmpty(x.MO)))
+            {
+                xls.SetColumnVisible("D", false);
+                xls.SetColumnVisible("E", false);
+            }
+            if (items2.All(x => string.IsNullOrEmpty(x.NMIC)))
             {
                 xls.SetColumnVisible("F", false);
             }

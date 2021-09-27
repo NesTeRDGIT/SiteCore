@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Подпись документов";
+    var isSignAdmin = User.IsInRole("SignAdmin");
+
+}
+@section Lib
+{
+    @{ await Html.RenderPartialAsync("_ReactScriptsPartical");}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+}
+
+
+<div id="app" isAdmin="@(isSignAdmin.ToString())"> </div>
+
+@section Scripts
+{
+    <script src="~/lib/Cades/cadesplugin_api.js"></script>
+    <script src="~/lib/Cades/es6-promise.min.js"></script>
+    <script src="~/lib/Cades/ie_eventlistner_polyfill.js"></script>
+
+
+    <script src="~/js/ReactApp/Sign.js" asp-append-version="true"></script>
+  
+}

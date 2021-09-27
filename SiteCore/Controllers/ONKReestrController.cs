@@ -66,7 +66,10 @@ namespace SiteCore.Controllers
                 x.V_SL_MINI.N_DS1,
                 x.V_SL_MINI.N_RSLT,
                 x.V_SL_MINI.DS_ONK,
-                x.V_SL_MINI.N_SMO
+                x.V_SL_MINI.N_SMO,
+                x.V_SL_MINI.NSCHET,
+                x.V_SL_MINI.DSCHET
+
             }).ToList());
         }
         private ICollection<ONK_REESTR_SL> GetONKReestrSL(int ONK_REESTR_ID)

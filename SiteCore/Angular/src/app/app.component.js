@@ -134,6 +134,8 @@ class SLUCH_ITEM {
             this.N_SMO = obj.N_SMO;
             this.YEAR = obj.YEAR;
             this.MONTH = obj.MONTH;
+            this.DSCHET = obj.DSCHET;
+            this.NSCHET = obj.NSCHET;
         }
     }
 }

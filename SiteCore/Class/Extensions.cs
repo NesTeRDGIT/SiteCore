@@ -232,7 +232,16 @@ namespace SiteCore.Class
             return values.Contains(val);
         }
 
+        public static bool Between(this DateTime? value, DateTime dt1, DateTime dt2)
+        {
+            if (!value.HasValue) return false;
+            return value.Value.Between(dt1,dt2);
+        }
 
+        public static bool Between(this DateTime value, DateTime dt1, DateTime dt2)
+        {
+            return value >= dt1 && value <= dt2;
+        }
     }
     public static class SessionExtensions
     {
@@ -271,5 +280,7 @@ namespace SiteCore.Class
         }
     }
 
+
+   
 
 }

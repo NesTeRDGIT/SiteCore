@@ -90,7 +90,9 @@ namespace SiteCore.Class
                 var entry = zip.CreateEntry(file.FileName);
                 using var entryStream = entry.Open();
                 entryStream.Write(file.Data);
+                entryStream.Close();
             }
+            zip.Dispose();
             return st.ToArray();
         }
     }

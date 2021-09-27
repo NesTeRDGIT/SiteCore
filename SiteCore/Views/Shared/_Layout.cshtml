@@ -12,13 +12,13 @@
     <link rel="shortcut icon" href="~/Image/favicon.png" type="image/png">
     <!--[if lte IE 9]>
         <script >
-            window.location.href = '/MEDPOM/Content/oldies/Index.html';
+            window.location.href = '/oldBrowser/Index.html';
         </script>
     <![endif]-->
     <script>
         if (navigator.userAgent.indexOf('MSIE') !== -1
             || navigator.appVersion.indexOf('Trident/') > -1) {
-            window.location.href = '/MEDPOM/Content/oldies/Index.html';
+            window.location.href = '/oldBrowser/Index.html';
         }
     </script>
     <environment names="Development">
@@ -27,7 +27,7 @@
     <environment names="Staging,Production">
         <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
     </environment>
-   
+
     <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
 
     @await RenderSectionAsync("Lib", required: false)
@@ -53,6 +53,9 @@
     var isSignReestrAdmin = User.IsInRole("SignReestrAdmin");
     var isCS = User.IsInRole("CS");
     var isAdmin = User.IsInRole("Admin");
+    var isSignAdmin = User.IsInRole("SignAdmin");
+    var isSignMO = User.IsInRole("SignMO");
+   
 }
 <body>
 
@@ -83,9 +86,9 @@
                                     <li><a asp-action="ViewReestr" asp-controller="MedpomReestr">Статус загрузки</a></li>
                                     <li><a asp-action="InstructionView" asp-controller="MedpomReestr">Инструкция</a></li>
                                     <li><a asp-action="ErrorSPR" asp-controller="MedpomReestr">Справочник ошибок</a></li>
-                                    @if (isSignReestrAdmin)
+                                    @if (isSignAdmin|| isSignMO)
                                     {
-                                        <li>@Html.ActionLink("Подписи", "SIGN_LIST", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                                        <li><a asp-action="SignSPR" asp-controller="Sign">Подписи</a></li>
                                     }
                                     @if (isCS)
                                     {

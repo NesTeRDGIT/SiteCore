@@ -6,7 +6,7 @@
     "ng": "ng",
     "start": "echo hello && ng serve",
     "build": "ng build",
-    "dev1": "build --watch --source-map"
+    "dev1": "ng build --watch --source-map"
   },
   "dependencies": {
     "@angular/common": "12.1.3",

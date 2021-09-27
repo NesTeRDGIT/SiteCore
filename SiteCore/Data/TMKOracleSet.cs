@@ -77,6 +77,20 @@ namespace SiteCore.Data
             return ReportTMKRow.Get(tbl.Select());
         }
 
+        public List<Report2TMKRow> GetReport2(DateTime date1, DateTime date2, bool isMO, bool isSMO, bool isNMIC, string SMO, int[] VID_HISTORY)
+        {
+            var oda = new Oracle.ManagedDataAccess.Client.OracleDataAdapter($"select * from table(NMIC_REPORT.report2(:date1, :date2, :isMO, :isSMO,:isNMIC, :SMO,{VID_HISTORY.ToOraParametr() ?? new[] { -1 }.ToOraParametr() }))", this.Database.GetConnectionString());
+            oda.SelectCommand.Parameters.Add("date1", date1.Date);
+            oda.SelectCommand.Parameters.Add("date2", date2.Date);
+            oda.SelectCommand.Parameters.Add("isMO", isMO ? 1 : 0);
+            oda.SelectCommand.Parameters.Add("isSMO", isSMO ? 1 : 0);
+            oda.SelectCommand.Parameters.Add("isNMIC", isNMIC ? 1 : 0);
+            oda.SelectCommand.Parameters.Add("SMO", SMO);
+            var tbl = new DataTable();
+            oda.Fill(tbl);
+            return Report2TMKRow.Get(tbl.Select());
+        }
+
         public virtual DbSet<CONTACT_INFO> CONTACT_INFO { get; set; }
 
 
