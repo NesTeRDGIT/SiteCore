@@ -27,17 +27,22 @@ namespace SiteCore.Controllers
         private IZipArchiver zipArchiver;
         private IHasher hasher;
 
-        private string _CODE_MO;
-        private string CODE_MO
+        private UserInfoHelper userInfoHelper;
+        private UserInfo _userInfo;
+        private UserInfo userInfo
         {
             get
             {
-                if (string.IsNullOrEmpty(_CODE_MO))
-                    _CODE_MO = User.CODE_MO();
-                return _CODE_MO;
+                if (_userInfo == null)
+                {
+                    _userInfo = userInfoHelper.GetInfo(User.Identity.Name);
+                }
+                return _userInfo;
             }
         }
-        public MedpomReestrController(WCFConnect WcfConnect, UserManager<ApplicationUser> userManager, MyOracleSet myOracleSet, ILogger logger, IZipArchiver zipArchiver, IMedpomRepository medpomFileManager, IHasher hasher)
+
+      
+        public MedpomReestrController(WCFConnect WcfConnect, UserManager<ApplicationUser> userManager, MyOracleSet myOracleSet, ILogger logger, IZipArchiver zipArchiver, IMedpomRepository medpomFileManager, IHasher hasher, UserInfoHelper userInfoHelper)
         {
             this.WcfConnect = WcfConnect;
             this.userManager = userManager;
@@ -46,6 +51,7 @@ namespace SiteCore.Controllers
             this.zipArchiver = zipArchiver;
             this.medpomFileManager = medpomFileManager;
             this.hasher = hasher;
+            this.userInfoHelper = userInfoHelper;
         }
 
         #region Просмотр реестров
@@ -56,7 +62,6 @@ namespace SiteCore.Controllers
 
         public IActionResult ViewReestrAjax()
         {
-
             return PartialView("_ViewReestrPartial", GetViewReestrModel);
         }
         ViewReestrViewModel GetViewReestrModel
@@ -64,11 +69,10 @@ namespace SiteCore.Controllers
             get
             {
                 var VRVM = new ViewReestrViewModel { ConnectWCFon = WcfConnect.Ping() };
-                if (!VRVM.ConnectWCFon) return VRVM;
-                var CODE_MO = User.CODE_MO();
-                if (!string.IsNullOrEmpty(CODE_MO))
+                if (!VRVM.ConnectWCFon) return VRVM;             
+                if (!string.IsNullOrEmpty(userInfo.CODE_MO))
                 {
-                    var t = WcfConnect.GetPackForMO(CODE_MO);
+                    var t = WcfConnect.GetPackForMO(userInfo.CODE_MO);
                     VRVM.FP = t.FP;
                     VRVM.Order = t.ORDER;
                 }
@@ -82,9 +86,9 @@ namespace SiteCore.Controllers
             try
             {
                 var pack = await MyPACK();
-                var pserv = WcfConnect.GetPackForMO(CODE_MO);
+                var pserv = WcfConnect.GetPackForMO(userInfo.CODE_MO);
 
-                var file = File(WcfConnect.GetProtocol(CODE_MO), System.Net.Mime.MediaTypeNames.Application.Zip, Path.GetFileName(pserv.FP.PATH_ZIP));
+                var file = File(WcfConnect.GetProtocol(userInfo.CODE_MO), System.Net.Mime.MediaTypeNames.Application.Zip, Path.GetFileName(pserv.FP.PATH_ZIP));
                 pack.DOWNPROT_LAST = DateTime.Now;
                 await MyOracleSet.SaveChangesAsync();
                 return file;
@@ -104,10 +108,10 @@ namespace SiteCore.Controllers
         {
             try
             {
-                var p = await MyOracleSet.FILEPACK.Include(x => x.FILES).FirstOrDefaultAsync(x => x.CODE_MO == CODE_MO && x.STATUS == STATUS_FILEPACK.CURRENT);
+                var p = await MyOracleSet.FILEPACK.Include(x => x.FILES).FirstOrDefaultAsync(x => x.CODE_MO == userInfo.CODE_MO && x.STATUS == STATUS_FILEPACK.CURRENT);
                 //Если нет до вставляем
                 if (p != null) return p;
-                p = new FILEPACK { CODE_MO = CODE_MO, STATUS = STATUS_FILEPACK.CURRENT };
+                p = new FILEPACK { CODE_MO = userInfo.CODE_MO, STATUS = STATUS_FILEPACK.CURRENT };
                 MyOracleSet.FILEPACK.Add(p);
                 await MyOracleSet.SaveChangesAsync();
                 return p;
@@ -137,7 +141,7 @@ namespace SiteCore.Controllers
                     PACKET = await GetFile(),
                     ConnectWCFon = WcfConnect.Ping(),
                     SNILS_SIGN = await GetListSIGN(),
-                    CODE_MO = CODE_MO,
+                    CODE_MO = userInfo.CODE_MO,
                     NAME_OK = user.CODE_MO_NAME?.NAM_MOK
                 };
                 if (Error != null)
@@ -167,7 +171,7 @@ namespace SiteCore.Controllers
             var CurrentPack = await MyPACK();
             foreach (var f in CurrentPack.FILES)
             {
-                var path = medpomFileManager.GetPath(CODE_MO, f.FILENAME);
+                var path = medpomFileManager.GetPath(userInfo.CODE_MO, f.FILENAME);
                 if (System.IO.File.Exists(path)) continue;
                 f.STATUS = STATUS_FILE.NOT_INVITE;
                 f.COMENT = "Файл не найден на сервере!";
@@ -177,7 +181,7 @@ namespace SiteCore.Controllers
         }
         private Task<List<SNILS_SIGN>> GetListSIGN()
         {
-            return Task.Run(() => { return MyOracleSet.SNILS_SIGN.Where(x => x.CODE_MO == CODE_MO).ToList(); });
+            return Task.Run(() => { return MyOracleSet.SNILS_SIGN.Where(x => x.CODE_MO == userInfo.CODE_MO).ToList(); });
         }
 
 
@@ -212,7 +216,7 @@ namespace SiteCore.Controllers
                             continue;
                         }
 
-                        var PathInRepo = await medpomFileManager.AddFile(CODE_MO, FileName, file.OpenReadStream());
+                        var PathInRepo = await medpomFileManager.AddFile(userInfo.CODE_MO, FileName, file.OpenReadStream());
                         //Разархивировать
                         if (ext == ".ZIP")
                         {
@@ -300,6 +304,8 @@ namespace SiteCore.Controllers
                         case TYPEFILE.DS:
                         case TYPEFILE.DU:
                         case TYPEFILE.DV:
+                        case TYPEFILE.DA:
+                        case TYPEFILE.DB:
                         case TYPEFILE.H:
 
                             findfile = $"L{findfile.Remove(0, 1)}";
@@ -334,7 +340,7 @@ namespace SiteCore.Controllers
                 foreach (var fs in FP.FILES.Where(x => x.STATUS == STATUS_FILE.INVITE && !x.TYPE_FILE.Contains(TYPEFILE.LD, TYPEFILE.LF, TYPEFILE.LH, TYPEFILE.LO, TYPEFILE.LP, TYPEFILE.LR, TYPEFILE.LS, TYPEFILE.LT, TYPEFILE.LU, TYPEFILE.LV, TYPEFILE.LC, TYPEFILE.LA, TYPEFILE.LB)))
                 {
                     var code_mo = SchemaChecking.GetELEMENT(medpomFileManager.GetPath(FP.CODE_MO, fs.FILENAME), "CODE_MO");
-                    if (code_mo != CODE_MO)
+                    if (code_mo != userInfo.CODE_MO)
                     {
                         fs.STATUS = STATUS_FILE.NOT_INVITE;
                         fs.COMENT = "Код МО в файле(CODE_MO) не соответствует Вашей организации";
@@ -358,7 +364,7 @@ namespace SiteCore.Controllers
                 var file = p.FILES.FirstOrDefault(x => x.FILENAME == FileName);
                 if (file != null)
                 {
-                    await using var st = System.IO.File.OpenRead(medpomFileManager.GetPath(CODE_MO, file.FILENAME));
+                    await using var st = System.IO.File.OpenRead(medpomFileManager.GetPath(userInfo.CODE_MO, file.FILENAME));
 
                     var bufISP = Encoding.UTF8.GetBytes(file.SIGN_ISP_STR);
                     var bufBUH = Encoding.UTF8.GetBytes(file.SIGN_BUH_STR);
@@ -392,10 +398,10 @@ namespace SiteCore.Controllers
                 if (t.FILE_L != null)
                 {
                     pac.FILES.Remove(t.FILE_L);
-                    medpomFileManager.DeleteFile(CODE_MO, t.FILE_L.FILENAME);
+                    medpomFileManager.DeleteFile(userInfo.CODE_MO, t.FILE_L.FILENAME);
                 }
                 pac.FILES.Remove(t);
-                medpomFileManager.DeleteFile(CODE_MO, t.FILENAME);
+                medpomFileManager.DeleteFile(userInfo.CODE_MO, t.FILENAME);
                 await MyOracleSet.SaveChangesAsync();
             }
             return PartialView("_LoadReestrFileListPartial", await getLoadReestViewModel());
@@ -412,7 +418,7 @@ namespace SiteCore.Controllers
             if (pac != null)
             {
                 pac.FILES.Clear();
-                medpomFileManager.Clear(CODE_MO);
+                medpomFileManager.Clear(userInfo.CODE_MO);
                 await MyOracleSet.SaveChangesAsync();
             }
             return PartialView("_LoadReestrFileListPartial", await getLoadReestViewModel());
@@ -431,7 +437,7 @@ namespace SiteCore.Controllers
                     if (f != null)
                     {
                         var sign = Convert.FromBase64String(item.Value);
-                        var hash = await System.IO.File.ReadAllBytesAsync(medpomFileManager.GetPath(CODE_MO, f.FILENAME));
+                        var hash = await System.IO.File.ReadAllBytesAsync(medpomFileManager.GetPath(userInfo.CODE_MO, f.FILENAME));
                         var check = hasher.Viryfi(sign, hash);
 
                         if (!check.Valid)
@@ -487,7 +493,7 @@ namespace SiteCore.Controllers
         {
             var dtnow = DateTime.Now.Date;
             var valid = new CheckCertificateResult { Result = false };
-            var SNILS_SIGNs = MyOracleSet.SNILS_SIGN.Where(row => row.CODE_MO == CODE_MO && (row.DATE_B <= dtnow && (row.DATE_E ?? dtnow) >= dtnow) && row.SN.ToUpper() == SN && row.PUBLICKEY == PublicKey);
+            var SNILS_SIGNs = MyOracleSet.SNILS_SIGN.Where(row => row.CODE_MO == userInfo.CODE_MO && (row.DATE_B <= dtnow && (row.DATE_E ?? dtnow) >= dtnow) && row.SN.ToUpper() == SN && row.PUBLICKEY == PublicKey);
 
             if (!SNILS_SIGNs.Any())
             {

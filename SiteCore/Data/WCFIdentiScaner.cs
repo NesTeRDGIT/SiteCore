@@ -18,18 +18,14 @@ namespace SiteCore.Data
     {
         private  IWCFIdentiScaner _MyWcfConnection;
         private  volatile bool InConnect = false;
-        private string HOST { get; }
-        private string UserName { get; }
-        private string Password { get; }
+        private string HOST { get; }    
         private ILogger logger { get; }
         private IHubContext<NotificationHub> NotificationHubContext { get; }
         private CSOracleSet csOracleSet { get; }
 
-        public WCFIdentiScaner(string HOST, string UserName, string Password, ILogger logger, IHubContext<NotificationHub> NotificationHubContext, CSOracleSet csOracleSet)
+        public WCFIdentiScaner(string HOST, ILogger logger, IHubContext<NotificationHub> NotificationHubContext, CSOracleSet csOracleSet)
         {
-            this.HOST = HOST;
-            this.UserName = UserName;
-            this.Password = Password;
+            this.HOST = HOST;            
             this.logger = logger;
             this.NotificationHubContext = NotificationHubContext;
             this.csOracleSet = csOracleSet;
@@ -44,7 +40,7 @@ namespace SiteCore.Data
                     Connect();
                     return _MyWcfConnection;
                 }
-                if (((ICommunicationObject)_MyWcfConnection).State == CommunicationState.Faulted)
+                if (!((ICommunicationObject)_MyWcfConnection).State.In(CommunicationState.Opened, CommunicationState.Opening))
                 {
                     Connect();
                     return _MyWcfConnection;
@@ -111,12 +107,11 @@ namespace SiteCore.Data
 
         private void Callback_onNewListState(List<int> ID)
         {
-            var list = csOracleSet.CS_LIST.Where(x => ID.Contains(x.CS_LIST_ID)).GroupBy(x => x.CODE_MO);
+            var list = csOracleSet.CS_LIST.Where(x => ID.Contains(x.CS_LIST_ID)).Select(x => x.CODE_MO).Distinct();
 
-            foreach (var item in list)
-            {
-                var CODE_MO = item.Key; 
-                NotificationHubContext.Clients.Groups(CODE_MO).SendAsync("NewListState", ID);
+            foreach (var codeMo in list)
+            {                
+                NotificationHubContext.Clients.Groups(codeMo).SendAsync("NewListState", ID);
             }
             NotificationHubContext.Clients.Group("Admin").SendAsync("NewListState", ID);
         }
@@ -158,6 +153,15 @@ namespace SiteCore.Data
         public void PING()
         {
 
+        }
+    }
+
+
+    public static class CommunicationStateEx
+    {
+        public static bool In(this CommunicationState value,params CommunicationState[] items)
+        {
+            return items.Contains(value);
         }
     }
 }

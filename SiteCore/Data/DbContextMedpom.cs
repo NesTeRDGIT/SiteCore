@@ -44,7 +44,9 @@ namespace SiteCore.Data
 
             modelBuilder.Entity<DOC_FOR_SIGN>().HasMany(x => x.SIGNs).WithOne(x=>x.DOC).HasForeignKey(x => x.DOC_FOR_SIGN_ID);
             modelBuilder.Entity<DOC_FOR_SIGN>().HasOne(x => x.CODE_MO_NAME).WithMany().HasForeignKey(x => x.CODE_MO);
-            
+
+            modelBuilder.Entity<DOC_FOR_SIGN>().HasOne(x => x.THEME).WithMany(x=>x.DOCs).HasForeignKey(x => x.THEME_ID);
+
         }
 
         public virtual DbSet<FILEPACK> FILEPACK { get; set; }
@@ -62,6 +64,8 @@ namespace SiteCore.Data
         public virtual DbSet<CODE_MO> CODE_MO { get; set; }
         public virtual DbSet<DOC_SIGN> DOC_SIGN { get; set; }
         public virtual DbSet<DOC_FOR_SIGN> DOC_FOR_SIGN { get; set; }
+
+        public virtual  DbSet<DOC_THEME> DOC_THEME { get; set; }
 
         public List<Abort_Row> GetReportAbort(int YEAR)
         {
@@ -208,7 +212,7 @@ namespace SiteCore.Data
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public decimal ID { get; set; }
+        public int ID { get; set; }
         public string TEXT { get; set; }
         public LEV_MESSAGE? LEV { get; set; }
     }
@@ -216,7 +220,7 @@ namespace SiteCore.Data
     public class CURRENT_VMP_OOMS
     {
         [Key]
-        public decimal ID { get; set; }
+        public int ID { get; set; }
         public string CODE_MO { get; set; }
         public string SMO { get; set; }
         public string FIO { get; set; }
@@ -229,6 +233,7 @@ namespace SiteCore.Data
         public DateTime? TAL_P { get; set; }
         public DateTime? TAL_D { get; set; }
         public string OS_SLUCH { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal? SUMM { get; set; }
     }
     [Serializable]
@@ -547,7 +552,7 @@ namespace SiteCore.Data
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public decimal ID { get; set; }
+        public int ID { get; set; }
         public string CODE_MO { get; set; }
         public STATUS_FILEPACK? STATUS { get; set; }
         public DateTime? DOWNPROT_LAST { get; set; }
@@ -561,7 +566,7 @@ namespace SiteCore.Data
         public FILES()
         {
         }
-        public FILES(decimal? iD_FILEL, decimal? iD_PACK, STATUS_FILE? sTATUS)
+        public FILES(int? iD_FILEL, int? iD_PACK, STATUS_FILE? sTATUS)
         {
             ID_FILEL = iD_FILEL;
             ID_PACK = iD_PACK;
@@ -569,11 +574,11 @@ namespace SiteCore.Data
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public decimal ID { get;  set; }
+        public int ID { get;  set; }
         public string FILENAME { get; set; }
         public DateTime? DATECREATE { get; set; }
-        public decimal? ID_FILEL { get; set; }
-        public decimal? ID_PACK { get; set; }
+        public int? ID_FILEL { get; set; }
+        public int? ID_PACK { get; set; }
         public STATUS_FILE? STATUS { get; set; }
         public string COMENT { get; set; }
         public string HASH { get; set; } = "";
@@ -881,17 +886,27 @@ namespace SiteCore.Data
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int DOC_FOR_SIGN_ID { get; set; }
+        [Column(TypeName = "BLOB")]
         public byte[] DATA { get; set; }
         public string FILENAME { get; set; }
         public string CODE_MO { get; set; }
         public DateTime DATE_CREATE { get; set; } = DateTime.Now;
+        public int THEME_ID { get; set; }
         public virtual CODE_MO CODE_MO_NAME { get; set; }
         public virtual ICollection<DOC_SIGN> SIGNs { get; set; } = new List<DOC_SIGN>();
-        public string THEME { get; set; }
+        public virtual DOC_THEME THEME { get; set; }
+        
     }
 
-  
-
+    [Table("DOC_THEME")]
+    public class DOC_THEME
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int THEME_ID { get; set; }
+        public string CAPTION { get; set; }
+        public virtual ICollection<DOC_FOR_SIGN> DOCs { get; set; }
+    }
 
 
 

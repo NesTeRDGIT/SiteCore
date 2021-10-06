@@ -22,11 +22,25 @@ namespace SiteCore.Controllers
         private IMSEExcelCreator mseExcelCreator { get; }
         private MSEOracleSet dbo { get; }
         private ILogger logger;
-        public MSEController(MSEOracleSet dbo, ILogger logger, IMSEExcelCreator mseExcelCreator)
+        private UserInfoHelper userInfoHelper;
+        private UserInfo _userInfo;
+        private UserInfo userInfo
+        {
+            get
+            {
+                if (_userInfo == null)
+                {
+                    _userInfo = userInfoHelper.GetInfo(User.Identity.Name);
+                }
+                return _userInfo;
+            }
+        }
+        public MSEController(MSEOracleSet dbo, ILogger logger, IMSEExcelCreator mseExcelCreator, UserInfoHelper userInfoHelper)
         {
             this.dbo = dbo;
             this.logger = logger;
             this.mseExcelCreator = mseExcelCreator;
+            this.userInfoHelper = userInfoHelper;
         }
         private async Task<CustomJsonResult> CreateInternalError(bool errorList = true)
         {
@@ -135,7 +149,7 @@ namespace SiteCore.Controllers
              
                 if (User.IsInRole("MSESmo"))
                 {
-                    if (item.SMO_IDENT != CODE_SMO)
+                    if (item.SMO_IDENT != userInfo.CODE_SMO)
                         throw new ModelException("", "Данные не доступны для Вашей СМО");
                 }
                 if (item == null)
@@ -228,7 +242,7 @@ namespace SiteCore.Controllers
             IQueryable<MSE_TF01> nodes = null;
             if (User.IsInRole("MSESmo"))
             {
-                nodes = dbo.MSE_TF01.Where(x => !string.IsNullOrEmpty(x.SMO_IDENT) && x.SMO_IDENT == CODE_SMO);
+                nodes = dbo.MSE_TF01.Where(x => !string.IsNullOrEmpty(x.SMO_IDENT) && x.SMO_IDENT == userInfo.CODE_SMO);
             }
 
             if (User.IsInRole("MSEAdmin"))
@@ -330,10 +344,10 @@ namespace SiteCore.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var r = await dbo.MSE_TF01.FirstOrDefaultAsync(x => x.MSE_ID == model.MSE_ID && x.SMO_IDENT == CODE_SMO);
+                    var r = await dbo.MSE_TF01.FirstOrDefaultAsync(x => x.MSE_ID == model.MSE_ID && x.SMO_IDENT == userInfo.CODE_SMO);
                     if (r == null)
                     {
-                        throw new ModelException("", $"Запись МСЭ не найдена для СМО ={CODE_SMO}");
+                        throw new ModelException("", $"Запись МСЭ не найдена для СМО ={userInfo.CODE_SMO}");
                     }
 
                     if (!model.MSE_SLUCH_ID.HasValue)
@@ -343,7 +357,7 @@ namespace SiteCore.Controllers
                             DATE_1 = model.SLUCH.DATE_1.Value,
                             DATE_2 = model.SLUCH.DATE_2.Value,
                             N_HISTORY = model.SLUCH.N_HISTORY,
-                            USER_ID = USER_ID
+                            USER_ID = userInfo.USER_ID
                         });
                     }
                     else
@@ -447,10 +461,10 @@ namespace SiteCore.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var sl = await dbo.SLUCH.Include(x => x.MSE_TF01).FirstOrDefaultAsync(x => x.MSE_TF01.SMO_IDENT == CODE_SMO && x.MSE_SLUCH_ID == model.MSE_SLUCH_ID);
+                    var sl = await dbo.SLUCH.Include(x => x.MSE_TF01).FirstOrDefaultAsync(x => x.MSE_TF01.SMO_IDENT == userInfo.CODE_SMO && x.MSE_SLUCH_ID == model.MSE_SLUCH_ID);
                     if (sl == null)
                     {
-                        throw new ModelException("", $"Случай №{model.MSE_SLUCH_ID} не найден для СМО ={CODE_SMO}");
+                        throw new ModelException("", $"Случай №{model.MSE_SLUCH_ID} не найден для СМО ={userInfo.CODE_SMO}");
                     }
 
                     if (!string.IsNullOrEmpty(model.N_EXP))
@@ -474,7 +488,7 @@ namespace SiteCore.Controllers
                             NUMACT = model.NUMACT,
                             N_EXP = model.N_EXP,
                             S_TIP = model.S_TIP,
-                            USER_ID = USER_ID,
+                            USER_ID = userInfo.USER_ID,
                             OSN = model.OSN?.Select(x => new MSEExpertizeOSN()
                             {
                                 S_COM = x.S_COM,
@@ -521,7 +535,7 @@ namespace SiteCore.Controllers
                     var item = await dbo.Expertizes.Include(x=>x.OSN).FirstOrDefaultAsync(x => x.EXPERTIZE_ID == EXPERTIZE_ID);
                     if (item == null)
                     {
-                        throw new ModelException("", $"Запись экспертиза не найдена для СМО ={CODE_SMO}");
+                        throw new ModelException("", $"Запись экспертиза не найдена для СМО ={userInfo.CODE_SMO}");
                     }
                     return CustomJsonResult.Create(new MSE_ExpertizeModel()
                     {
@@ -565,9 +579,9 @@ namespace SiteCore.Controllers
         {
             try
             {
-                var item = await dbo.Expertizes.Include(x => x.MSE_SLUCH).ThenInclude(x => x.MSE_TF01).Include(x => x.OSN).FirstOrDefaultAsync(x => x.EXPERTIZE_ID == EXPERTIZE_ID && x.MSE_SLUCH.MSE_TF01.SMO_IDENT == CODE_SMO);
+                var item = await dbo.Expertizes.Include(x => x.MSE_SLUCH).ThenInclude(x => x.MSE_TF01).Include(x => x.OSN).FirstOrDefaultAsync(x => x.EXPERTIZE_ID == EXPERTIZE_ID && x.MSE_SLUCH.MSE_TF01.SMO_IDENT == userInfo.CODE_SMO);
                 if (item == null)
-                    throw new ModelException("", $"Не удалось найти экспертизу №{EXPERTIZE_ID} для СМО {CODE_SMO}");
+                    throw new ModelException("", $"Не удалось найти экспертизу №{EXPERTIZE_ID} для СМО {userInfo.CODE_SMO}");
                 dbo.Expertizes.Remove(item);
                 await dbo.SaveChangesAsync();
                 return CustomJsonResult.Create(null);
@@ -636,39 +650,6 @@ namespace SiteCore.Controllers
         #endregion
 
 
-        #region Private
-        private string _CODE_MO;
-        private string CODE_MO
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_CODE_MO))
-                    _CODE_MO = User.CODE_MO();
-                return _CODE_MO;
-            }
-        }
-
-        private string _CODE_SMO;
-        private string CODE_SMO
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_CODE_SMO))
-                    _CODE_SMO = User.CODE_SMO();
-                return _CODE_SMO;
-            }
-        }
-
-        private string _USER_ID;
-        private string USER_ID
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_USER_ID))
-                    _USER_ID = User.ID();
-                return _USER_ID;
-            }
-        }
-        #endregion
+    
     }
 }

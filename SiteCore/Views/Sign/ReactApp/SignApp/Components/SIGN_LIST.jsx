@@ -19,7 +19,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { makeStyles, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { makeStyles, createTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -28,9 +28,10 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import CertList from "./CertList.jsx";
 import ShowCertDialog from "./ShowCertDialog.jsx";
 import { saveFile, downloadBase64File } from "../API/FileAPI.js";
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { Repository } from "../API/Repository.js";
 
-
-const theme = createMuiTheme({
+const theme = createTheme({
     palette: {
         primary: {
             main: '#4CAF50'
@@ -44,6 +45,7 @@ const theme = createMuiTheme({
     },
 });
 
+const repo = new Repository();
 
 
 
@@ -51,21 +53,15 @@ export default  function SIGN_LIST() {
     const tableRef = React.useRef(null);
     const [signList, setSignList] = React.useState([]);
 
-    const getSignList = async () => {
+    const refresh = async () => {
         try {
-            const response = await window.fetch("GetSignList", { credentials: "same-origin"});
-            const result = await response.json();
-            setSignList(result.Value);
+            setSignList(await repo.GetSignList());
         } catch (err) {
             alert(err.toString());
         }
     }
 
-    React.useEffect(() => {
-        getSignList();
-    }, []);
-
-    function refresh() { getSignList(); }
+    React.useEffect(() => { refresh(); }, []);
 
     const [isOpenSignDialog, setIsOpenSignDialog] = React.useState(false);
     const closeSignDialog = () => {
@@ -79,11 +75,11 @@ export default  function SIGN_LIST() {
 
 
     const [isOpenShowSignDialog, setIsOpenShowSignDialog] = React.useState(false);
-    const [showCertInfo, setshowCertInfo] = React.useState(null);
+    const [showCertInfo, setShowCertInfo] = React.useState(null);
 
     const closeShowDialog = () => {
         setIsOpenShowSignDialog(false);
-        setshowCertInfo(null);
+        setShowCertInfo(null);
     };
 
 
@@ -98,7 +94,7 @@ export default  function SIGN_LIST() {
             if (data.Result === false) {
                 alert(data.Value);
             } else {
-                setshowCertInfo(data.Value);
+                setShowCertInfo(data.Value);
                 setIsOpenShowSignDialog(true);
             }
         } catch (error) {
@@ -128,17 +124,11 @@ export default  function SIGN_LIST() {
     }
 
     const downloadFile = async (event, rowData) => {
-        const requestOptions = {
-            method: "GET",
-            headers: { 'Content-Type': "application/json" }
-        };
-        
-        const response = await window.fetch(`DownloadCert?id=${rowData.ID}`, requestOptions);
-        const data = await response.json();
-        if (data.Result === true) {
-            downloadBase64File(data.Value.FileContents, data.Value.ContentType, data.Value.FileDownloadName);
-        } else {
-            alert(data.Value);
+        try {
+            const file = await repo.DownloadCert(rowData.ID);
+            downloadBase64File(file.FileContents, file.ContentType, file.FileDownloadName);
+        } catch (err) {
+            alert(err.toString());
         }
     }
   
@@ -246,21 +236,8 @@ export function AddSingDialog(props) {
     const readCertificate = async () => {
         try {
             setProcessReadCertificate(true);
-            const formData = new FormData();
-            formData.append("file", file, file.name);
-            const requestOptions = {
-                method: "POST",
-                credentials: "same-origin",
-                body: formData
-            };
-
-            const response = await window.fetch("GetCertificateINFO", requestOptions);
-            const data = await response.json();
-            if (data.Result === false) {
-                setErrorMessage(data.Value);
-            } else {
-                setCertInfo(data.Value);
-            }
+            const info = await repo.GetCertificateINFO(file);
+            setCertInfo(info);
         } catch (error) {
             setErrorMessage(error.toString());
         }
@@ -297,10 +274,8 @@ export function AddSingDialog(props) {
             <Dialog open={isOpen} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} maxWidth={"lg"}>
                 <DialogTitle id="form-dialog-title">Добавление подписи</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
-                        <div>Введите наименование роли и нажмите на кнопку "Сохранить"</div>
-                        <div className="RedText">{errorMessage}</div>
-                    </DialogContentText>
+                    <DialogContentText>Введите наименование роли и нажмите на кнопку "Сохранить"</DialogContentText>
+                    <div className="RedText">{errorMessage}</div>
                     <div>
                         <div>
                             <Stepper activeStep={activeStep} orientation="vertical">
@@ -309,9 +284,9 @@ export function AddSingDialog(props) {
                                     <StepContent>
                                         <div>
                                             <Typography>Выберите файл формата .cer</Typography>
-                                            <input type="file" accept=".cer" onChange={selectFile} />
+                                            <input type="file" accept=".cer" onChange={selectFile}/>
                                         </div>
-                                        <br />
+                                        <br/>
                                         <div>
                                             <Button className={classes.button} variant="contained" color="primary" onClick={handleNext} disabled={file == null}>Далее</Button>
                                         </div>
@@ -320,13 +295,18 @@ export function AddSingDialog(props) {
                                 <Step key={1}>
                                     <StepLabel>Просмотр данных сертификата</StepLabel>
                                     <StepContent>
-                                        {certInfo != null ? <CertList items={certInfo.Data}  /> : <div></div>}
-                                        <br />
+                                        {processReadCertificate ?
+                                            <div>
+                                                <CircularProgress size="25px" />
+                                                <div className="BoldText">Проверка сертификата на сервере</div>
+                                            </div> : null}
+                                        {certInfo != null ? <CertList certInfo={certInfo} /> : <div></div>}
+                                        <br/>
                                         <div>
                                             <div>
                                                 <Button className={classes.button} disabled={activeStep === 0} onClick={handleReset}>Назад</Button>
-                                                <Button className={classes.button} variant="contained" color="primary" onClick={readCertificate}>Проверить сертификат</Button>
-                                                <Button className={classes.button} variant="contained" color="primary" onClick={handleNext} disabled={(certInfo != null ? certInfo.Valid === false : true) || processReadCertificate}  >Далее</Button>
+                                                <Button className={classes.button} variant="contained" color="primary" onClick={readCertificate} disabled={processReadCertificate}>Проверить сертификат</Button>
+                                                <Button className={classes.button} variant="contained" color="primary" onClick={handleNext} disabled={(certInfo != null ? certInfo.Valid === false : true) || processReadCertificate}>Далее</Button>
                                             </div>
                                         </div>
                                     </StepContent>
@@ -335,7 +315,7 @@ export function AddSingDialog(props) {
                                     <StepLabel>Сохранение сертификата</StepLabel>
                                     <StepContent>
                                         <AddCert file={file} onSave={handleSave} dateB={certInfo != null && certInfo.Data.length !== 0 ? certInfo.Data[0].DATE_B : null} dateE={certInfo != null && certInfo.Data.length !== 0 ? certInfo.Data[0].DATE_E : null}/>
-                                        <br />
+                                        <br/>
                                         <div>
                                             <div>
                                                 <Button className={classes.button} disabled={activeStep === 0} onClick={handleReset}>Назад</Button>
@@ -354,8 +334,8 @@ export function AddSingDialog(props) {
 
 function AddCert(props) {
     const { file, onSave, dateB, dateE } = props;
-    const [roles, setRoles] = React.useState(null);
-    const [lpu, setLpu] = React.useState(null);
+    const [roles, setRoles] = React.useState([]);
+    const [lpu, setLpu] = React.useState([]);
     const [certData, setCertData] = React.useState({ DATE_B: new Date(), DATE_E: null, MO: null, ROLE: null,fileConfirm:null });
     const [validationErr, setValidationErr] = React.useState([]);
 
@@ -376,25 +356,17 @@ function AddCert(props) {
         setValidationErr(err);
     }
 
-    useEffect(() => {
-        window.fetch("GetRole")
-            .then(response => response.json())
-            .then(result => {
-                if (result.Result === true)
-                    setRoles(result.Value);
-                else
-                    alert(`Ошибка получения справочника ролей:${result.Value}`);
-            });
-        window.fetch("GetF003")
-            .then(response => response.json())
-            .then(result => {
-                if (result.Result === true)
-                    setLpu(result.Value);
-                else
-                    alert(`Ошибка получения справочника МО:${result.Value}`);
-            });
-        setCertData(certData => ({ ...certData, DATE_B: dateB, DATE_E: dateE }));
-
+    useEffect(async () => {
+        try {
+            const rol = await repo.GetRoleSPR();
+            const f003 = await repo.GetF003();
+            setLpu(f003);
+            setRoles(rol);
+            repo.GetF003();
+            setCertData(certData => ({ ...certData, DATE_B: dateB, DATE_E: dateE }));
+        } catch (err) {
+            alert(err.toString());
+        }
     }, []);
 
     useEffect(() => { validate(); }, [certData, file]);
@@ -418,31 +390,16 @@ function AddCert(props) {
     }
 
     const [processSaveCert, setProcessSaveCert] = React.useState(false);
-    const saveCert = async (event, newValue) => {
+    const saveCert = async () => {
         try {
             setProcessSaveCert(true);
-            const formData = new FormData();
-            formData.append("File", file, file.name);
-            formData.append("FileConfirm", certData.fileConfirm, certData.fileConfirm.name);
-            formData.append("ROLE_ID", certData.ROLE.SIGN_ROLE_ID);
-            formData.append("CODE_MO", certData.MO.MCOD);
-            formData.append("DATE_B", new Date(certData.DATE_B).toLocaleDateString());
-            if (certData.DATE_E != null)
-                formData.append("DATE_E", new Date(certData.DATE_E).toLocaleDateString());
-
-
-            const requestOptions = {
-                method: "POST",
-                credentials: "same-origin",
-                body: formData
-            };
-
-            const response = await window.fetch("AddCert", requestOptions);
-            const result = await response.json();
-            if (result.Result === true)
-                onSave();
-            else
-                setValidationErr(result.Value);
+            await repo.AddSignCert(file,
+                certData.fileConfirm,
+                certData.ROLE.SIGN_ROLE_ID,
+                certData.MO.MCOD,
+                certData.DATE_B,
+                certData.DATE_E);
+            onSave();
         } catch (err) {
             setValidationErr(err);
         } finally {
@@ -453,7 +410,7 @@ function AddCert(props) {
     return (
         <div>
             <div>
-                {validationErr != null ? (Array.isArray(validationErr) ? <ul className="ErrorLi">{validationErr.map((value) => <li>{value}</li>)}</ul>: validationErr) : null}
+                {validationErr != null ? (Array.isArray(validationErr) ? <ul className="ErrorLi">{validationErr.map((value, index) => <li key={index}>{value}</li>)}</ul>: validationErr) : null}
             </div>
             <div><Autocomplete options={roles} getOptionLabel={(option) => option.CAPTION} style={{ width: 400 }} value={certData.ROLE} onChange={roleIdChange} renderInput={(params) => <TextField {...params} label="Роль" variant="outlined" />} /></div><br />
             <div><Autocomplete options={lpu} getOptionLabel={(option) => option.NAME} style={{ width: 400 }} value={certData.MO} onChange={codeMoChange} renderInput={(params) => <TextField {...params} label="Медицинская организация" variant="outlined" />} /></div><br />

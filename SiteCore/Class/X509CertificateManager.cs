@@ -96,6 +96,7 @@ namespace SiteCore.Class
         public DateTime DATE_E { get; set; }
 
         public List<CertAttribute> OtherAttribute { get; set; } = new List<CertAttribute>();
+        public string SingAlg { get; internal set; }
 
         private static List<string> SplitData(string Data)
         {
@@ -195,14 +196,16 @@ namespace SiteCore.Class
     {
         public bool Valid => Data.Min(x => x.VALID);
         public List<CertData> Data { get; set; } = new();
-
-        public List<string> Errors => Data.SelectMany(x => x.Error).ToList();
+        public List<string> Errors => Error.Union(Data.SelectMany(x => x.Error)).ToList();
+        public List<string> Error { get; set; } = new List<string>();
     }
 
 
     public class X509CertificateManager : IX509CertificateManager
     {
         private MyOracleSet myOracleSet;
+
+          List<string> SupportSignAlg = new List<string> { "1.2.643.7.1.1.3.2", "1.2.643.7.1.1.3.3" };
 
         public X509CertificateManager(MyOracleSet myOracleSet)
         {
@@ -212,17 +215,30 @@ namespace SiteCore.Class
         {
             var result = new CertificateInfo();
             var certificateChain = new X509Chain();
-            certificateChain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
-            var isCertificateChainValid = certificateChain.Build(new X509Certificate2(file));
+            certificateChain.ChainPolicy.RevocationMode = X509RevocationMode.Online;
+         
+            certificateChain.Build(new X509Certificate2(file));
+
+            var allErrorChain = new List<X509ChainStatus>();
             foreach (var chainElement in certificateChain.ChainElements)
             {
                 var data = CertData.GetCertData(chainElement.Certificate.Subject);
                 data.PublicKey = chainElement.Certificate.GetPublicKeyString();
                 data.DATE_B = Convert.ToDateTime(chainElement.Certificate.GetEffectiveDateString());
                 data.DATE_E = Convert.ToDateTime(chainElement.Certificate.GetExpirationDateString());
+                data.SingAlg = chainElement.Certificate.SignatureAlgorithm.Value;
+                if(!SupportSignAlg.Contains(data.SingAlg))
+                {
+                    data.Error.Add($"Не поддерживаемый алгорит подписи: {data.SingAlg} - {chainElement.Certificate.SignatureAlgorithm.FriendlyName}");
+                }
                 data.Error.AddRange(chainElement.ChainElementStatus.Select(x=>x.StatusInformation));
+                allErrorChain.AddRange(chainElement.ChainElementStatus.Select(x=>x));
+                if (!string.IsNullOrEmpty(chainElement.Information))
+                    data.Error.Add(chainElement.Information);
                 result.Data.Add(data);
             }
+            result.Error.AddRange(certificateChain.ChainStatus.Where(x => !allErrorChain.Contains(x)).Select(x=>x.StatusInformation));
+
             return result;
         }
 

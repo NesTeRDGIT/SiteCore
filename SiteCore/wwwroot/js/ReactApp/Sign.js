@@ -3618,6 +3618,110 @@ var Dialog = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(function
 
 /***/ }),
 
+/***/ 55517:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* unused harmony export styles */
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(87462);
+/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(45987);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(67294);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(45697);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(86010);
+/* harmony import */ var _styles_withStyles__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(52543);
+/* harmony import */ var _styles_colorManipulator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(59693);
+
+
+
+
+
+
+
+var styles = function styles(theme) {
+  return {
+    /* Styles applied to the root element. */
+    root: {
+      height: 1,
+      margin: 0,
+      // Reset browser default style.
+      border: 'none',
+      flexShrink: 0,
+      backgroundColor: theme.palette.divider
+    },
+
+    /* Styles applied to the root element if `absolute={true}`. */
+    absolute: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      width: '100%'
+    },
+
+    /* Styles applied to the root element if `variant="inset"`. */
+    inset: {
+      marginLeft: 72
+    },
+
+    /* Styles applied to the root element if `light={true}`. */
+    light: {
+      backgroundColor: (0,_styles_colorManipulator__WEBPACK_IMPORTED_MODULE_2__/* .alpha */ .Fq)(theme.palette.divider, 0.08)
+    },
+
+    /* Styles applied to the root element if `variant="middle"`. */
+    middle: {
+      marginLeft: theme.spacing(2),
+      marginRight: theme.spacing(2)
+    },
+
+    /* Styles applied to the root element if `orientation="vertical"`. */
+    vertical: {
+      height: '100%',
+      width: 1
+    },
+
+    /* Styles applied to the root element if `flexItem={true}`. */
+    flexItem: {
+      alignSelf: 'stretch',
+      height: 'auto'
+    }
+  };
+};
+var Divider = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(function Divider(props, ref) {
+  var _props$absolute = props.absolute,
+      absolute = _props$absolute === void 0 ? false : _props$absolute,
+      classes = props.classes,
+      className = props.className,
+      _props$component = props.component,
+      Component = _props$component === void 0 ? 'hr' : _props$component,
+      _props$flexItem = props.flexItem,
+      flexItem = _props$flexItem === void 0 ? false : _props$flexItem,
+      _props$light = props.light,
+      light = _props$light === void 0 ? false : _props$light,
+      _props$orientation = props.orientation,
+      orientation = _props$orientation === void 0 ? 'horizontal' : _props$orientation,
+      _props$role = props.role,
+      role = _props$role === void 0 ? Component !== 'hr' ? 'separator' : undefined : _props$role,
+      _props$variant = props.variant,
+      variant = _props$variant === void 0 ? 'fullWidth' : _props$variant,
+      other = (0,_babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z)(props, ["absolute", "classes", "className", "component", "flexItem", "light", "orientation", "role", "variant"]);
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Component, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z)({
+    className: (0,clsx__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z)(classes.root, className, variant !== 'fullWidth' && classes[variant], absolute && classes.absolute, flexItem && classes.flexItem, light && classes.light, orientation === 'vertical' && classes.vertical),
+    role: role,
+    ref: ref
+  }, other));
+});
+ false ? 0 : void 0;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_styles_withStyles__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z)(styles, {
+  name: 'MuiDivider'
+})(Divider));
+
+/***/ }),
+
 /***/ 73637:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -17983,7 +18087,7 @@ var red = {
 
 /***/ }),
 
-/***/ 37394:
+/***/ 75161:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -18025,7 +18129,7 @@ __webpack_require__.d(__webpack_exports__, {
   "DialogContent": () => (/* reexport */ DialogContent/* default */.Z),
   "DialogContentText": () => (/* reexport */ DialogContentText/* default */.Z),
   "DialogTitle": () => (/* reexport */ DialogTitle/* default */.Z),
-  "Divider": () => (/* reexport */ Divider_Divider),
+  "Divider": () => (/* reexport */ Divider/* default */.Z),
   "Drawer": () => (/* reexport */ Drawer_Drawer),
   "ExpansionPanel": () => (/* reexport */ ExpansionPanel_ExpansionPanel),
   "ExpansionPanelActions": () => (/* reexport */ ExpansionPanelActions_ExpansionPanelActions),
@@ -18118,18 +18222,18 @@ __webpack_require__.d(__webpack_exports__, {
   "Unstable_TrapFocus": () => (/* reexport */ Unstable_TrapFocus/* default */.Z),
   "Zoom": () => (/* reexport */ Zoom_Zoom),
   "alpha": () => (/* reexport */ colorManipulator/* alpha */.Fq),
-  "capitalize": () => (/* reexport */ capitalize/* default */.Z),
+  "capitalize": () => (/* reexport */ utils.capitalize),
   "colors": () => (/* reexport */ colors_namespaceObject),
-  "createChainedFunction": () => (/* reexport */ createChainedFunction/* default */.Z),
+  "createChainedFunction": () => (/* reexport */ utils.createChainedFunction),
   "createGenerateClassName": () => (/* reexport */ createGenerateClassName/* default */.Z),
   "createMuiTheme": () => (/* reexport */ createTheme/* createMuiTheme */.A),
   "createStyles": () => (/* reexport */ createStyles/* default */.Z),
-  "createSvgIcon": () => (/* reexport */ createSvgIcon/* default */.Z),
+  "createSvgIcon": () => (/* reexport */ utils.createSvgIcon),
   "createTheme": () => (/* reexport */ createTheme/* default */.Z),
   "darken": () => (/* reexport */ colorManipulator/* darken */._j),
-  "debounce": () => (/* reexport */ debounce/* default */.Z),
+  "debounce": () => (/* reexport */ utils.debounce),
   "decomposeColor": () => (/* reexport */ colorManipulator/* decomposeColor */.tB),
-  "deprecatedPropType": () => (/* reexport */ deprecatedPropType),
+  "deprecatedPropType": () => (/* reexport */ utils.deprecatedPropType),
   "duration": () => (/* reexport */ transitions/* duration */.x9),
   "easing": () => (/* reexport */ transitions/* easing */.Ui),
   "emphasize": () => (/* reexport */ colorManipulator/* emphasize */._4),
@@ -18138,29 +18242,29 @@ __webpack_require__.d(__webpack_exports__, {
   "getLuminance": () => (/* reexport */ colorManipulator/* getLuminance */.H3),
   "hexToRgb": () => (/* reexport */ colorManipulator/* hexToRgb */.oo),
   "hslToRgb": () => (/* reexport */ colorManipulator/* hslToRgb */.ve),
-  "isMuiElement": () => (/* reexport */ isMuiElement/* default */.Z),
+  "isMuiElement": () => (/* reexport */ utils.isMuiElement),
   "isWidthDown": () => (/* reexport */ withWidth/* isWidthDown */.Vf),
   "isWidthUp": () => (/* reexport */ withWidth/* isWidthUp */.yJ),
   "jssPreset": () => (/* reexport */ jssPreset/* default */.Z),
   "lighten": () => (/* reexport */ colorManipulator/* lighten */.$n),
   "makeStyles": () => (/* reexport */ makeStyles/* default */.Z),
-  "ownerDocument": () => (/* reexport */ ownerDocument/* default */.Z),
-  "ownerWindow": () => (/* reexport */ ownerWindow/* default */.Z),
+  "ownerDocument": () => (/* reexport */ utils.ownerDocument),
+  "ownerWindow": () => (/* reexport */ utils.ownerWindow),
   "recomposeColor": () => (/* reexport */ colorManipulator/* recomposeColor */.wy),
-  "requirePropFactory": () => (/* reexport */ requirePropFactory),
+  "requirePropFactory": () => (/* reexport */ utils.requirePropFactory),
   "responsiveFontSizes": () => (/* reexport */ responsiveFontSizes),
   "rgbToHex": () => (/* reexport */ colorManipulator/* rgbToHex */.vq),
-  "setRef": () => (/* reexport */ setRef/* default */.Z),
+  "setRef": () => (/* reexport */ utils.setRef),
   "styleFunction": () => (/* reexport */ Box/* styleFunction */.n),
   "styled": () => (/* reexport */ styled/* default */.Z),
   "unstable_createMuiStrictModeTheme": () => (/* reexport */ createMuiStrictModeTheme),
-  "unstable_useId": () => (/* reexport */ unstable_useId/* default */.Z),
-  "unsupportedProp": () => (/* reexport */ unsupportedProp),
-  "useControlled": () => (/* reexport */ useControlled/* default */.Z),
-  "useEventCallback": () => (/* reexport */ useEventCallback/* default */.Z),
-  "useForkRef": () => (/* reexport */ useForkRef/* default */.Z),
+  "unstable_useId": () => (/* reexport */ utils.unstable_useId),
+  "unsupportedProp": () => (/* reexport */ utils.unsupportedProp),
+  "useControlled": () => (/* reexport */ utils.useControlled),
+  "useEventCallback": () => (/* reexport */ utils.useEventCallback),
+  "useForkRef": () => (/* reexport */ utils.useForkRef),
   "useFormControl": () => (/* reexport */ esm_FormControl.useFormControl),
-  "useIsFocusVisible": () => (/* reexport */ useIsFocusVisible/* default */.Z),
+  "useIsFocusVisible": () => (/* reexport */ utils.useIsFocusVisible),
   "useMediaQuery": () => (/* reexport */ useMediaQuery/* default */.Z),
   "useRadioGroup": () => (/* reexport */ useRadioGroup),
   "useScrollTrigger": () => (/* reexport */ useScrollTrigger),
@@ -18720,105 +18824,8 @@ var ThemeProvider = __webpack_require__(13457);
 
 
 
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/capitalize.js
-var capitalize = __webpack_require__(93871);
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/createChainedFunction.js
-var createChainedFunction = __webpack_require__(82568);
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/createSvgIcon.js
-var createSvgIcon = __webpack_require__(63786);
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/debounce.js
-var debounce = __webpack_require__(79437);
-;// CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/utils/deprecatedPropType.js
-function deprecatedPropType(validator, reason) {
-  if (true) {
-    return function () {
-      return null;
-    };
-  }
-
-  return function (props, propName, componentName, location, propFullName) {
-    var componentNameSafe = componentName || '<<anonymous>>';
-    var propFullNameSafe = propFullName || propName;
-
-    if (typeof props[propName] !== 'undefined') {
-      return new Error("The ".concat(location, " `").concat(propFullNameSafe, "` of ") + "`".concat(componentNameSafe, "` is deprecated. ").concat(reason));
-    }
-
-    return null;
-  };
-}
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/isMuiElement.js
-var isMuiElement = __webpack_require__(83711);
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/ownerDocument.js
-var ownerDocument = __webpack_require__(30626);
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/ownerWindow.js
-var ownerWindow = __webpack_require__(80713);
-;// CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/utils/requirePropFactory.js
-function requirePropFactory(componentNameInError) {
-  if (true) {
-    return function () {
-      return null;
-    };
-  }
-
-  var requireProp = function requireProp(requiredProp) {
-    return function (props, propName, componentName, location, propFullName) {
-      var propFullNameSafe = propFullName || propName;
-
-      if (typeof props[propName] !== 'undefined' && !props[requiredProp]) {
-        return new Error("The prop `".concat(propFullNameSafe, "` of ") + "`".concat(componentNameInError, "` must be used on `").concat(requiredProp, "`."));
-      }
-
-      return null;
-    };
-  };
-
-  return requireProp;
-}
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/setRef.js
-var setRef = __webpack_require__(34236);
-;// CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/utils/unsupportedProp.js
-function unsupportedProp(props, propName, componentName, location, propFullName) {
-  if (true) {
-    return null;
-  }
-
-  var propFullNameSafe = propFullName || propName;
-
-  if (typeof props[propName] !== 'undefined') {
-    return new Error("The prop `".concat(propFullNameSafe, "` is not supported. Please remove it."));
-  }
-
-  return null;
-}
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/useControlled.js
-var useControlled = __webpack_require__(22775);
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/useEventCallback.js
-var useEventCallback = __webpack_require__(55192);
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/useForkRef.js
-var useForkRef = __webpack_require__(17294);
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/unstable_useId.js
-var unstable_useId = __webpack_require__(95001);
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/useIsFocusVisible.js
-var useIsFocusVisible = __webpack_require__(24896);
-;// CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/utils/index.js
-
-
-
-
-
-
-
-
-
-
-
-
-
- // eslint-disable-next-line camelcase
-
-
-
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/index.js + 3 modules
+var utils = __webpack_require__(28546);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
 var arrayWithHoles = __webpack_require__(83878);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/iterableToArray.js
@@ -18863,6 +18870,8 @@ var AccordionContext = react.createContext({});
 if (false) {}
 
 /* harmony default export */ const Accordion_AccordionContext = (AccordionContext);
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/useControlled.js
+var useControlled = __webpack_require__(22775);
 ;// CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/Accordion/Accordion.js
 
 
@@ -19218,6 +19227,8 @@ var AccordionSummary = /*#__PURE__*/react.forwardRef(function AccordionSummary(p
 /* harmony default export */ const AccordionSummary_AccordionSummary = ((0,withStyles/* default */.Z)(AccordionSummary_styles, {
   name: 'MuiAccordionSummary'
 })(AccordionSummary));
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/capitalize.js
+var capitalize = __webpack_require__(93871);
 ;// CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/AppBar/AppBar.js
 
 
@@ -19331,6 +19342,8 @@ var AppBar = /*#__PURE__*/react.forwardRef(function AppBar(props, ref) {
 /* harmony default export */ const AppBar_AppBar = ((0,withStyles/* default */.Z)(AppBar_styles, {
   name: 'MuiAppBar'
 })(AppBar));
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/createSvgIcon.js
+var createSvgIcon = __webpack_require__(63786);
 ;// CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/internal/svg-icons/Person.js
 
 
@@ -20727,6 +20740,12 @@ var Chip = __webpack_require__(71267);
 var CircularProgress = __webpack_require__(95477);
 // EXTERNAL MODULE: ./node_modules/react-dom/index.js
 var react_dom = __webpack_require__(73935);
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/ownerDocument.js
+var ownerDocument = __webpack_require__(30626);
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/useForkRef.js
+var useForkRef = __webpack_require__(17294);
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/useEventCallback.js
+var useEventCallback = __webpack_require__(55192);
 ;// CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/ClickAwayListener/ClickAwayListener.js
 
 
@@ -21051,98 +21070,16 @@ var DialogContent = __webpack_require__(29525);
 var DialogContentText = __webpack_require__(7212);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/DialogTitle/DialogTitle.js
 var DialogTitle = __webpack_require__(66083);
-;// CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/Divider/Divider.js
-
-
-
-
-
-
-
-var Divider_styles = function styles(theme) {
-  return {
-    /* Styles applied to the root element. */
-    root: {
-      height: 1,
-      margin: 0,
-      // Reset browser default style.
-      border: 'none',
-      flexShrink: 0,
-      backgroundColor: theme.palette.divider
-    },
-
-    /* Styles applied to the root element if `absolute={true}`. */
-    absolute: {
-      position: 'absolute',
-      bottom: 0,
-      left: 0,
-      width: '100%'
-    },
-
-    /* Styles applied to the root element if `variant="inset"`. */
-    inset: {
-      marginLeft: 72
-    },
-
-    /* Styles applied to the root element if `light={true}`. */
-    light: {
-      backgroundColor: (0,colorManipulator/* alpha */.Fq)(theme.palette.divider, 0.08)
-    },
-
-    /* Styles applied to the root element if `variant="middle"`. */
-    middle: {
-      marginLeft: theme.spacing(2),
-      marginRight: theme.spacing(2)
-    },
-
-    /* Styles applied to the root element if `orientation="vertical"`. */
-    vertical: {
-      height: '100%',
-      width: 1
-    },
-
-    /* Styles applied to the root element if `flexItem={true}`. */
-    flexItem: {
-      alignSelf: 'stretch',
-      height: 'auto'
-    }
-  };
-};
-var Divider = /*#__PURE__*/react.forwardRef(function Divider(props, ref) {
-  var _props$absolute = props.absolute,
-      absolute = _props$absolute === void 0 ? false : _props$absolute,
-      classes = props.classes,
-      className = props.className,
-      _props$component = props.component,
-      Component = _props$component === void 0 ? 'hr' : _props$component,
-      _props$flexItem = props.flexItem,
-      flexItem = _props$flexItem === void 0 ? false : _props$flexItem,
-      _props$light = props.light,
-      light = _props$light === void 0 ? false : _props$light,
-      _props$orientation = props.orientation,
-      orientation = _props$orientation === void 0 ? 'horizontal' : _props$orientation,
-      _props$role = props.role,
-      role = _props$role === void 0 ? Component !== 'hr' ? 'separator' : undefined : _props$role,
-      _props$variant = props.variant,
-      variant = _props$variant === void 0 ? 'fullWidth' : _props$variant,
-      other = (0,objectWithoutProperties/* default */.Z)(props, ["absolute", "classes", "className", "component", "flexItem", "light", "orientation", "role", "variant"]);
-
-  return /*#__PURE__*/react.createElement(Component, (0,esm_extends/* default */.Z)({
-    className: (0,clsx_m/* default */.Z)(classes.root, className, variant !== 'fullWidth' && classes[variant], absolute && classes.absolute, flexItem && classes.flexItem, light && classes.light, orientation === 'vertical' && classes.vertical),
-    role: role,
-    ref: ref
-  }, other));
-});
- false ? 0 : void 0;
-/* harmony default export */ const Divider_Divider = ((0,withStyles/* default */.Z)(Divider_styles, {
-  name: 'MuiDivider'
-})(Divider));
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/Divider/Divider.js
+var Divider = __webpack_require__(55517);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/Modal/Modal.js + 1 modules
 var Modal = __webpack_require__(36015);
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/debounce.js
+var debounce = __webpack_require__(79437);
 // EXTERNAL MODULE: ./node_modules/react-transition-group/esm/Transition.js + 1 modules
 var Transition = __webpack_require__(12666);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/transitions/utils.js
-var utils = __webpack_require__(5653);
+var transitions_utils = __webpack_require__(5653);
 ;// CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/Slide/Slide.js
 
 
@@ -21258,14 +21195,14 @@ var Slide = /*#__PURE__*/react.forwardRef(function Slide(props, ref) {
 
   var handleEnter = normalizedTransitionCallback(function (node, isAppearing) {
     setTranslateValue(direction, node);
-    (0,utils/* reflow */.n)(node);
+    (0,transitions_utils/* reflow */.n)(node);
 
     if (onEnter) {
       onEnter(node, isAppearing);
     }
   });
   var handleEntering = normalizedTransitionCallback(function (node, isAppearing) {
-    var transitionProps = (0,utils/* getTransitionProps */.C)({
+    var transitionProps = (0,transitions_utils/* getTransitionProps */.C)({
       timeout: timeout,
       style: style
     }, {
@@ -21287,7 +21224,7 @@ var Slide = /*#__PURE__*/react.forwardRef(function Slide(props, ref) {
   var handleEntered = normalizedTransitionCallback(onEntered);
   var handleExiting = normalizedTransitionCallback(onExiting);
   var handleExit = normalizedTransitionCallback(function (node) {
-    var transitionProps = (0,utils/* getTransitionProps */.C)({
+    var transitionProps = (0,transitions_utils/* getTransitionProps */.C)({
       timeout: timeout,
       style: style
     }, {
@@ -22250,6 +22187,8 @@ var GridList = /*#__PURE__*/react.forwardRef(function GridList(props, ref) {
 /* harmony default export */ const GridList_GridList = ((0,withStyles/* default */.Z)(GridList_styles, {
   name: 'MuiGridList'
 })(GridList));
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/isMuiElement.js
+var isMuiElement = __webpack_require__(83711);
 ;// CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/GridListTile/GridListTile.js
 
 
@@ -22844,6 +22783,8 @@ var InputBase = __webpack_require__(41598);
 var InputLabel = __webpack_require__(96394);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/LinearProgress/LinearProgress.js
 var LinearProgress = __webpack_require__(33681);
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/useIsFocusVisible.js
+var useIsFocusVisible = __webpack_require__(24896);
 ;// CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/Link/Link.js
 
 
@@ -23351,6 +23292,8 @@ function RadioButtonIcon(props) {
 /* harmony default export */ const Radio_RadioButtonIcon = ((0,withStyles/* default */.Z)(RadioButtonIcon_styles, {
   name: 'PrivateRadioButtonIcon'
 })(RadioButtonIcon));
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/createChainedFunction.js
+var createChainedFunction = __webpack_require__(82568);
 ;// CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/RadioGroup/RadioGroupContext.js
 
 /**
@@ -23484,6 +23427,8 @@ var Radio = /*#__PURE__*/react.forwardRef(function Radio(props, ref) {
 /* harmony default export */ const Radio_Radio = ((0,withStyles/* default */.Z)(Radio_styles, {
   name: 'MuiRadio'
 })(Radio));
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/unstable_useId.js
+var unstable_useId = __webpack_require__(95001);
 ;// CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/RadioGroup/RadioGroup.js
 
 
@@ -23566,6 +23511,8 @@ var inherits = __webpack_require__(60136);
 var possibleConstructorReturn = __webpack_require__(82963);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js
 var getPrototypeOf = __webpack_require__(61120);
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/setRef.js
+var setRef = __webpack_require__(34236);
 ;// CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/RootRef/RootRef.js
 
 
@@ -25290,7 +25237,7 @@ var SwipeableDrawer = /*#__PURE__*/react.forwardRef(function SwipeableDrawer(inP
     var transition = '';
 
     if (mode) {
-      transition = theme.transitions.create('all', (0,utils/* getTransitionProps */.C)({
+      transition = theme.transitions.create('all', (0,transitions_utils/* getTransitionProps */.C)({
         timeout: transitionDuration
       }, {
         mode: mode
@@ -26039,9 +25986,9 @@ var Zoom = /*#__PURE__*/react.forwardRef(function Zoom(props, ref) {
 
   var handleEntering = normalizedTransitionCallback(onEntering);
   var handleEnter = normalizedTransitionCallback(function (node, isAppearing) {
-    (0,utils/* reflow */.n)(node); // So the animation always start from the start.
+    (0,transitions_utils/* reflow */.n)(node); // So the animation always start from the start.
 
-    var transitionProps = (0,utils/* getTransitionProps */.C)({
+    var transitionProps = (0,transitions_utils/* getTransitionProps */.C)({
       style: style,
       timeout: timeout
     }, {
@@ -26057,7 +26004,7 @@ var Zoom = /*#__PURE__*/react.forwardRef(function Zoom(props, ref) {
   var handleEntered = normalizedTransitionCallback(onEntered);
   var handleExiting = normalizedTransitionCallback(onExiting);
   var handleExit = normalizedTransitionCallback(function (node) {
-    var transitionProps = (0,utils/* getTransitionProps */.C)({
+    var transitionProps = (0,transitions_utils/* getTransitionProps */.C)({
       style: style,
       timeout: timeout
     }, {
@@ -28036,6 +27983,135 @@ function getScrollbarSize() {
 
 /***/ }),
 
+/***/ 28546:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+// ESM COMPAT FLAG
+__webpack_require__.r(__webpack_exports__);
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  "capitalize": () => (/* reexport */ capitalize/* default */.Z),
+  "createChainedFunction": () => (/* reexport */ createChainedFunction/* default */.Z),
+  "createSvgIcon": () => (/* reexport */ createSvgIcon/* default */.Z),
+  "debounce": () => (/* reexport */ debounce/* default */.Z),
+  "deprecatedPropType": () => (/* reexport */ deprecatedPropType),
+  "isMuiElement": () => (/* reexport */ isMuiElement/* default */.Z),
+  "ownerDocument": () => (/* reexport */ ownerDocument/* default */.Z),
+  "ownerWindow": () => (/* reexport */ ownerWindow/* default */.Z),
+  "requirePropFactory": () => (/* reexport */ requirePropFactory),
+  "setRef": () => (/* reexport */ setRef/* default */.Z),
+  "unstable_useId": () => (/* reexport */ unstable_useId/* default */.Z),
+  "unsupportedProp": () => (/* reexport */ unsupportedProp),
+  "useControlled": () => (/* reexport */ useControlled/* default */.Z),
+  "useEventCallback": () => (/* reexport */ useEventCallback/* default */.Z),
+  "useForkRef": () => (/* reexport */ useForkRef/* default */.Z),
+  "useIsFocusVisible": () => (/* reexport */ useIsFocusVisible/* default */.Z)
+});
+
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/capitalize.js
+var capitalize = __webpack_require__(93871);
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/createChainedFunction.js
+var createChainedFunction = __webpack_require__(82568);
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/createSvgIcon.js
+var createSvgIcon = __webpack_require__(63786);
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/debounce.js
+var debounce = __webpack_require__(79437);
+;// CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/utils/deprecatedPropType.js
+function deprecatedPropType(validator, reason) {
+  if (true) {
+    return function () {
+      return null;
+    };
+  }
+
+  return function (props, propName, componentName, location, propFullName) {
+    var componentNameSafe = componentName || '<<anonymous>>';
+    var propFullNameSafe = propFullName || propName;
+
+    if (typeof props[propName] !== 'undefined') {
+      return new Error("The ".concat(location, " `").concat(propFullNameSafe, "` of ") + "`".concat(componentNameSafe, "` is deprecated. ").concat(reason));
+    }
+
+    return null;
+  };
+}
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/isMuiElement.js
+var isMuiElement = __webpack_require__(83711);
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/ownerDocument.js
+var ownerDocument = __webpack_require__(30626);
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/ownerWindow.js
+var ownerWindow = __webpack_require__(80713);
+;// CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/utils/requirePropFactory.js
+function requirePropFactory(componentNameInError) {
+  if (true) {
+    return function () {
+      return null;
+    };
+  }
+
+  var requireProp = function requireProp(requiredProp) {
+    return function (props, propName, componentName, location, propFullName) {
+      var propFullNameSafe = propFullName || propName;
+
+      if (typeof props[propName] !== 'undefined' && !props[requiredProp]) {
+        return new Error("The prop `".concat(propFullNameSafe, "` of ") + "`".concat(componentNameInError, "` must be used on `").concat(requiredProp, "`."));
+      }
+
+      return null;
+    };
+  };
+
+  return requireProp;
+}
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/setRef.js
+var setRef = __webpack_require__(34236);
+;// CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/utils/unsupportedProp.js
+function unsupportedProp(props, propName, componentName, location, propFullName) {
+  if (true) {
+    return null;
+  }
+
+  var propFullNameSafe = propFullName || propName;
+
+  if (typeof props[propName] !== 'undefined') {
+    return new Error("The prop `".concat(propFullNameSafe, "` is not supported. Please remove it."));
+  }
+
+  return null;
+}
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/useControlled.js
+var useControlled = __webpack_require__(22775);
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/useEventCallback.js
+var useEventCallback = __webpack_require__(55192);
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/useForkRef.js
+var useForkRef = __webpack_require__(17294);
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/unstable_useId.js
+var unstable_useId = __webpack_require__(95001);
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/utils/useIsFocusVisible.js
+var useIsFocusVisible = __webpack_require__(24896);
+;// CONCATENATED MODULE: ./node_modules/@material-ui/core/esm/utils/index.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+ // eslint-disable-next-line camelcase
+
+
+
+
+/***/ }),
+
 /***/ 83711:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -29747,6 +29823,82 @@ var zIndex = {
 };
 var _default = zIndex;
 exports["default"] = _default;
+
+/***/ }),
+
+/***/ 35025:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+var __webpack_unused_export__;
+
+
+var _interopRequireDefault = __webpack_require__(95318);
+
+var _interopRequireWildcard = __webpack_require__(20862);
+
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.Z = void 0;
+
+var React = _interopRequireWildcard(__webpack_require__(67294));
+
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(2108));
+
+var _default = (0, _createSvgIcon.default)( /*#__PURE__*/React.createElement("path", {
+  d: "M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"
+}), 'ExpandLess');
+
+exports.Z = _default;
+
+/***/ }),
+
+/***/ 64566:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+var __webpack_unused_export__;
+
+
+var _interopRequireDefault = __webpack_require__(95318);
+
+var _interopRequireWildcard = __webpack_require__(20862);
+
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.Z = void 0;
+
+var React = _interopRequireWildcard(__webpack_require__(67294));
+
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(2108));
+
+var _default = (0, _createSvgIcon.default)( /*#__PURE__*/React.createElement("path", {
+  d: "M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"
+}), 'ExpandMore');
+
+exports.Z = _default;
+
+/***/ }),
+
+/***/ 2108:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+Object.defineProperty(exports, "default", ({
+  enumerable: true,
+  get: function get() {
+    return _utils.createSvgIcon;
+  }
+}));
+
+var _utils = __webpack_require__(28546);
 
 /***/ }),
 
@@ -57051,7 +57203,7 @@ var _withStyles = _interopRequireDefault(__webpack_require__(78252));
 
 var _reactBeautifulDnd = __webpack_require__(36184);
 
-var _core = __webpack_require__(37394);
+var _core = __webpack_require__(75161);
 
 var CommonValues = _interopRequireWildcard(__webpack_require__(96530));
 
@@ -58652,7 +58804,7 @@ var _debounce = __webpack_require__(20296);
 
 var _fastDeepEqual = _interopRequireDefault(__webpack_require__(50110));
 
-var _core = __webpack_require__(37394);
+var _core = __webpack_require__(75161);
 
 var CommonValues = _interopRequireWildcard(__webpack_require__(96530));
 
@@ -85986,14 +86138,1335 @@ var Dialog = __webpack_require__(52663);
 var DialogActions = __webpack_require__(66856);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/DialogContent/DialogContent.js
 var DialogContent = __webpack_require__(29525);
-// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/DialogContentText/DialogContentText.js
-var DialogContentText = __webpack_require__(7212);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/DialogTitle/DialogTitle.js
 var DialogTitle = __webpack_require__(66083);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/Button/Button.js
 var Button = __webpack_require__(282);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/TextField/TextField.js
 var TextField = __webpack_require__(39803);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/classCallCheck.js
+var classCallCheck = __webpack_require__(15671);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/createClass.js
+var createClass = __webpack_require__(43144);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
+var defineProperty = __webpack_require__(4942);
+;// CONCATENATED MODULE: ./SignApp/API/Repository.js
+
+
+
+
+
+
+function throwResponse(response) {
+  throw new Error("".concat(response.status, "-").concat(response.statusText));
+}
+
+var Repository = /*#__PURE__*/function () {
+  function Repository() {
+    (0,classCallCheck/* default */.Z)(this, Repository);
+
+    (0,defineProperty/* default */.Z)(this, "AddRole", /*#__PURE__*/function () {
+      var _ref = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee(caption, prefix) {
+        var formData, requestOptions, response, result;
+        return regenerator_default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                formData = new FormData();
+                formData.append("caption", caption);
+                formData.append("prefix", prefix);
+                requestOptions = {
+                  method: "POST",
+                  credentials: "same-origin",
+                  body: formData
+                };
+                _context.next = 6;
+                return window.fetch("AddRole", requestOptions);
+
+              case 6:
+                response = _context.sent;
+
+                if (!response.ok) {
+                  _context.next = 16;
+                  break;
+                }
+
+                _context.next = 10;
+                return response.json();
+
+              case 10:
+                result = _context.sent;
+
+                if (!result.Result) {
+                  _context.next = 13;
+                  break;
+                }
+
+                return _context.abrupt("return", result.Value);
+
+              case 13:
+                throw new Error(result.Value);
+
+              case 16:
+                throwResponse(response);
+
+              case 17:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      return function (_x, _x2) {
+        return _ref.apply(this, arguments);
+      };
+    }());
+
+    (0,defineProperty/* default */.Z)(this, "AddSignCert", /*#__PURE__*/function () {
+      var _ref2 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee2(file, fileConfirm, signRoleId, mcod, dateB, dateE) {
+        var formData, requestOptions, response, result;
+        return regenerator_default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                formData = new FormData();
+                formData.append("File", file, file.name);
+                formData.append("FileConfirm", fileConfirm, fileConfirm.name);
+                formData.append("ROLE_ID", signRoleId);
+                formData.append("CODE_MO", mcod);
+                formData.append("DATE_B", new Date(dateB).toLocaleDateString());
+                if (dateE != null) formData.append("DATE_E", new Date(dateE).toLocaleDateString());
+                requestOptions = {
+                  method: "POST",
+                  credentials: "same-origin",
+                  body: formData
+                };
+                _context2.next = 10;
+                return window.fetch("AddCert", requestOptions);
+
+              case 10:
+                response = _context2.sent;
+
+                if (!response.ok) {
+                  _context2.next = 20;
+                  break;
+                }
+
+                _context2.next = 14;
+                return response.json();
+
+              case 14:
+                result = _context2.sent;
+
+                if (!result.Result) {
+                  _context2.next = 17;
+                  break;
+                }
+
+                return _context2.abrupt("return", result.Value);
+
+              case 17:
+                throw new Error(result.Value);
+
+              case 20:
+                throwResponse(response);
+
+              case 21:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      return function (_x3, _x4, _x5, _x6, _x7, _x8) {
+        return _ref2.apply(this, arguments);
+      };
+    }());
+  }
+
+  (0,createClass/* default */.Z)(Repository, [{
+    key: "GetTheme",
+    value: function () {
+      var _GetTheme = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee3() {
+        var response, result;
+        return regenerator_default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return window.fetch("GetTheme", {
+                  credentials: "same-origin"
+                });
+
+              case 2:
+                response = _context3.sent;
+
+                if (!response.ok) {
+                  _context3.next = 12;
+                  break;
+                }
+
+                _context3.next = 6;
+                return response.json();
+
+              case 6:
+                result = _context3.sent;
+
+                if (!result.Result) {
+                  _context3.next = 9;
+                  break;
+                }
+
+                return _context3.abrupt("return", result.Value);
+
+              case 9:
+                throw new Error(result.Value);
+
+              case 12:
+                throwResponse(response);
+
+              case 13:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      function GetTheme() {
+        return _GetTheme.apply(this, arguments);
+      }
+
+      return GetTheme;
+    }()
+  }, {
+    key: "AddTheme",
+    value: function () {
+      var _AddTheme = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee4(theme) {
+        var formData, requestOptions, response, result;
+        return regenerator_default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                formData = new FormData();
+                formData.append("Theme", theme);
+                requestOptions = {
+                  method: "POST",
+                  credentials: "same-origin",
+                  body: formData
+                };
+                _context4.next = 5;
+                return window.fetch("AddTheme", requestOptions);
+
+              case 5:
+                response = _context4.sent;
+
+                if (!response.ok) {
+                  _context4.next = 15;
+                  break;
+                }
+
+                _context4.next = 9;
+                return response.json();
+
+              case 9:
+                result = _context4.sent;
+
+                if (!result.Result) {
+                  _context4.next = 12;
+                  break;
+                }
+
+                return _context4.abrupt("return", result.Value);
+
+              case 12:
+                throw new Error(result.Value);
+
+              case 15:
+                throwResponse(response);
+
+              case 16:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }));
+
+      function AddTheme(_x9) {
+        return _AddTheme.apply(this, arguments);
+      }
+
+      return AddTheme;
+    }()
+  }, {
+    key: "RemoveTheme",
+    value: function () {
+      var _RemoveTheme = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee5(themeId) {
+        var formData, requestOptions, response, result;
+        return regenerator_default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                formData = new FormData();
+                formData.append("THEME_ID", themeId);
+                requestOptions = {
+                  method: "POST",
+                  credentials: "same-origin",
+                  body: formData
+                };
+                _context5.next = 5;
+                return window.fetch("RemoveTheme", requestOptions);
+
+              case 5:
+                response = _context5.sent;
+
+                if (!response.ok) {
+                  _context5.next = 15;
+                  break;
+                }
+
+                _context5.next = 9;
+                return response.json();
+
+              case 9:
+                result = _context5.sent;
+
+                if (!result.Result) {
+                  _context5.next = 12;
+                  break;
+                }
+
+                return _context5.abrupt("return", result.Value);
+
+              case 12:
+                throw new Error(result.Value);
+
+              case 15:
+                throwResponse(response);
+
+              case 16:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }));
+
+      function RemoveTheme(_x10) {
+        return _RemoveTheme.apply(this, arguments);
+      }
+
+      return RemoveTheme;
+    }()
+  }, {
+    key: "GetDocsList",
+    value: function () {
+      var _GetDocsList = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee6(themeId) {
+        var response, result;
+        return regenerator_default().wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _context6.next = 2;
+                return window.fetch("GetDOC?THEME_ID=".concat(themeId), {
+                  credentials: "same-origin"
+                });
+
+              case 2:
+                response = _context6.sent;
+
+                if (!response.ok) {
+                  _context6.next = 12;
+                  break;
+                }
+
+                _context6.next = 6;
+                return response.json();
+
+              case 6:
+                result = _context6.sent;
+
+                if (!result.Result) {
+                  _context6.next = 9;
+                  break;
+                }
+
+                return _context6.abrupt("return", result.Value);
+
+              case 9:
+                throw new Error(result.Value);
+
+              case 12:
+                throwResponse(response);
+
+              case 13:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }));
+
+      function GetDocsList(_x11) {
+        return _GetDocsList.apply(this, arguments);
+      }
+
+      return GetDocsList;
+    }()
+  }, {
+    key: "DownloadFileForSign",
+    value: function () {
+      var _DownloadFileForSign = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee7(docForSignId) {
+        var requestOptions, response, result;
+        return regenerator_default().wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                requestOptions = {
+                  method: "GET",
+                  headers: {
+                    'Content-Type': "application/json"
+                  },
+                  credentials: "same-origin"
+                };
+                _context7.next = 3;
+                return window.fetch("DownloadFileForSign?DOC_FOR_SIGN_ID=".concat(docForSignId), requestOptions);
+
+              case 3:
+                response = _context7.sent;
+
+                if (!response.ok) {
+                  _context7.next = 13;
+                  break;
+                }
+
+                _context7.next = 7;
+                return response.json();
+
+              case 7:
+                result = _context7.sent;
+
+                if (!result.Result) {
+                  _context7.next = 10;
+                  break;
+                }
+
+                return _context7.abrupt("return", result.Value);
+
+              case 10:
+                throw new Error(result.Value);
+
+              case 13:
+                throwResponse(response);
+
+              case 14:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7);
+      }));
+
+      function DownloadFileForSign(_x12) {
+        return _DownloadFileForSign.apply(this, arguments);
+      }
+
+      return DownloadFileForSign;
+    }()
+  }, {
+    key: "DownloadDocAndSign",
+    value: function () {
+      var _DownloadDocAndSign = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee8(docForSignId) {
+        var requestOptions, response, result;
+        return regenerator_default().wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                requestOptions = {
+                  method: "GET",
+                  headers: {
+                    'Content-Type': "application/json"
+                  },
+                  credentials: "same-origin"
+                };
+                _context8.next = 3;
+                return window.fetch("DownloadFileForSignAndSign?DOC_FOR_SIGN_ID=".concat(docForSignId), requestOptions);
+
+              case 3:
+                response = _context8.sent;
+
+                if (!response.ok) {
+                  _context8.next = 13;
+                  break;
+                }
+
+                _context8.next = 7;
+                return response.json();
+
+              case 7:
+                result = _context8.sent;
+
+                if (!result.Result) {
+                  _context8.next = 10;
+                  break;
+                }
+
+                return _context8.abrupt("return", result.Value);
+
+              case 10:
+                throw new Error(result.Value);
+
+              case 13:
+                throwResponse(response);
+
+              case 14:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
+      }));
+
+      function DownloadDocAndSign(_x13) {
+        return _DownloadDocAndSign.apply(this, arguments);
+      }
+
+      return DownloadDocAndSign;
+    }()
+  }, {
+    key: "DownloadAllFileTheme",
+    value: function () {
+      var _DownloadAllFileTheme = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee9(themeId, connectionId) {
+        var requestOptions, response, result;
+        return regenerator_default().wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                requestOptions = {
+                  method: "GET",
+                  headers: {
+                    'Content-Type': "application/json"
+                  },
+                  credentials: "same-origin"
+                };
+                _context9.next = 3;
+                return window.fetch("DownloadAllFileTheme?THEME_ID=".concat(themeId, "&&ConnectionId=").concat(connectionId), requestOptions);
+
+              case 3:
+                response = _context9.sent;
+
+                if (!response.ok) {
+                  _context9.next = 13;
+                  break;
+                }
+
+                _context9.next = 7;
+                return response.json();
+
+              case 7:
+                result = _context9.sent;
+
+                if (!result.Result) {
+                  _context9.next = 10;
+                  break;
+                }
+
+                return _context9.abrupt("return", result.Value);
+
+              case 10:
+                throw new Error(result.Value);
+
+              case 13:
+                throwResponse(response);
+
+              case 14:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9);
+      }));
+
+      function DownloadAllFileTheme(_x14, _x15) {
+        return _DownloadAllFileTheme.apply(this, arguments);
+      }
+
+      return DownloadAllFileTheme;
+    }()
+  }, {
+    key: "RemoveDoc",
+    value: function () {
+      var _RemoveDoc = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee10(docForSignId) {
+        var requestOptions, response, result;
+        return regenerator_default().wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                requestOptions = {
+                  method: "POST",
+                  headers: {
+                    'Content-Type': "application/json"
+                  },
+                  credentials: "same-origin",
+                  body: JSON.stringify(docForSignId)
+                };
+                _context10.next = 3;
+                return window.fetch("RemoveFileForSign", requestOptions);
+
+              case 3:
+                response = _context10.sent;
+
+                if (!response.ok) {
+                  _context10.next = 13;
+                  break;
+                }
+
+                _context10.next = 7;
+                return response.json();
+
+              case 7:
+                result = _context10.sent;
+
+                if (!result.Result) {
+                  _context10.next = 10;
+                  break;
+                }
+
+                return _context10.abrupt("return", result.Value);
+
+              case 10:
+                throw new Error(result.Value);
+
+              case 13:
+                throwResponse(response);
+
+              case 14:
+              case "end":
+                return _context10.stop();
+            }
+          }
+        }, _callee10);
+      }));
+
+      function RemoveDoc(_x16) {
+        return _RemoveDoc.apply(this, arguments);
+      }
+
+      return RemoveDoc;
+    }()
+  }, {
+    key: "GetRoleSPR",
+    value: function () {
+      var _GetRoleSPR = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee11() {
+        var response, result;
+        return regenerator_default().wrap(function _callee11$(_context11) {
+          while (1) {
+            switch (_context11.prev = _context11.next) {
+              case 0:
+                _context11.next = 2;
+                return window.fetch("GetRole", {
+                  credentials: "same-origin"
+                });
+
+              case 2:
+                response = _context11.sent;
+
+                if (!response.ok) {
+                  _context11.next = 12;
+                  break;
+                }
+
+                _context11.next = 6;
+                return response.json();
+
+              case 6:
+                result = _context11.sent;
+
+                if (!result.Result) {
+                  _context11.next = 9;
+                  break;
+                }
+
+                return _context11.abrupt("return", result.Value);
+
+              case 9:
+                throw new Error(result.Value);
+
+              case 12:
+                throwResponse(response);
+
+              case 13:
+              case "end":
+                return _context11.stop();
+            }
+          }
+        }, _callee11);
+      }));
+
+      function GetRoleSPR() {
+        return _GetRoleSPR.apply(this, arguments);
+      }
+
+      return GetRoleSPR;
+    }()
+  }, {
+    key: "RemoveRole",
+    value: function () {
+      var _RemoveRole = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee12(signRoleId) {
+        var requestOptions, response, result;
+        return regenerator_default().wrap(function _callee12$(_context12) {
+          while (1) {
+            switch (_context12.prev = _context12.next) {
+              case 0:
+                requestOptions = {
+                  method: "POST",
+                  headers: {
+                    'Content-Type': "application/json"
+                  },
+                  credentials: "same-origin",
+                  body: JSON.stringify(signRoleId)
+                };
+                _context12.next = 3;
+                return window.fetch("RemoveRole", requestOptions);
+
+              case 3:
+                response = _context12.sent;
+
+                if (!response.ok) {
+                  _context12.next = 13;
+                  break;
+                }
+
+                _context12.next = 7;
+                return response.json();
+
+              case 7:
+                result = _context12.sent;
+
+                if (!result.Result) {
+                  _context12.next = 10;
+                  break;
+                }
+
+                return _context12.abrupt("return", result.Value);
+
+              case 10:
+                throw new Error(result.Value);
+
+              case 13:
+                throwResponse(response);
+
+              case 14:
+              case "end":
+                return _context12.stop();
+            }
+          }
+        }, _callee12);
+      }));
+
+      function RemoveRole(_x17) {
+        return _RemoveRole.apply(this, arguments);
+      }
+
+      return RemoveRole;
+    }()
+  }, {
+    key: "GetF003",
+    value: function () {
+      var _GetF = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee13() {
+        var response, result;
+        return regenerator_default().wrap(function _callee13$(_context13) {
+          while (1) {
+            switch (_context13.prev = _context13.next) {
+              case 0:
+                _context13.next = 2;
+                return window.fetch("GetF003", {
+                  credentials: "same-origin"
+                });
+
+              case 2:
+                response = _context13.sent;
+
+                if (!response.ok) {
+                  _context13.next = 12;
+                  break;
+                }
+
+                _context13.next = 6;
+                return response.json();
+
+              case 6:
+                result = _context13.sent;
+
+                if (!result.Result) {
+                  _context13.next = 9;
+                  break;
+                }
+
+                return _context13.abrupt("return", result.Value);
+
+              case 9:
+                throw new Error(result.Value);
+
+              case 12:
+                throwResponse(response);
+
+              case 13:
+              case "end":
+                return _context13.stop();
+            }
+          }
+        }, _callee13);
+      }));
+
+      function GetF003() {
+        return _GetF.apply(this, arguments);
+      }
+
+      return GetF003;
+    }()
+  }, {
+    key: "AddFileForSign",
+    value: function () {
+      var _AddFileForSign = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee14(file, themeId, mcod, signRoleId) {
+        var formData, requestOptions, response, result;
+        return regenerator_default().wrap(function _callee14$(_context14) {
+          while (1) {
+            switch (_context14.prev = _context14.next) {
+              case 0:
+                formData = new FormData();
+                formData.append("FILE", file, file.name);
+                formData.append("THEME_ID", themeId);
+                formData.append("CODE_MO", mcod);
+                signRoleId.forEach(function (id) {
+                  formData.append("ROLE_ID[]", id);
+                });
+                requestOptions = {
+                  method: "POST",
+                  credentials: "same-origin",
+                  body: formData
+                };
+                _context14.next = 8;
+                return window.fetch("AddFileForSign", requestOptions);
+
+              case 8:
+                response = _context14.sent;
+
+                if (!response.ok) {
+                  _context14.next = 18;
+                  break;
+                }
+
+                _context14.next = 12;
+                return response.json();
+
+              case 12:
+                result = _context14.sent;
+
+                if (!result.Result) {
+                  _context14.next = 15;
+                  break;
+                }
+
+                return _context14.abrupt("return", result.Value);
+
+              case 15:
+                throw new Error(result.Value);
+
+              case 18:
+                throwResponse(response);
+
+              case 19:
+              case "end":
+                return _context14.stop();
+            }
+          }
+        }, _callee14);
+      }));
+
+      function AddFileForSign(_x18, _x19, _x20, _x21) {
+        return _AddFileForSign.apply(this, arguments);
+      }
+
+      return AddFileForSign;
+    }()
+  }, {
+    key: "AddSigFile",
+    value: function () {
+      var _AddSigFile = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee15(file, docForSignId) {
+        var formData, requestOptions, response, result;
+        return regenerator_default().wrap(function _callee15$(_context15) {
+          while (1) {
+            switch (_context15.prev = _context15.next) {
+              case 0:
+                formData = new FormData();
+                formData.append("FILE", file, file.name);
+                formData.append("DOC_FOR_SIGN_ID", docForSignId);
+                requestOptions = {
+                  method: "POST",
+                  credentials: "same-origin",
+                  body: formData
+                };
+                _context15.next = 6;
+                return window.fetch("UploadFileSig", requestOptions);
+
+              case 6:
+                response = _context15.sent;
+
+                if (!response.ok) {
+                  _context15.next = 16;
+                  break;
+                }
+
+                _context15.next = 10;
+                return response.json();
+
+              case 10:
+                result = _context15.sent;
+
+                if (!result.Result) {
+                  _context15.next = 13;
+                  break;
+                }
+
+                return _context15.abrupt("return", result.Value);
+
+              case 13:
+                throw new Error(result.Value);
+
+              case 16:
+                throwResponse(response);
+
+              case 17:
+              case "end":
+                return _context15.stop();
+            }
+          }
+        }, _callee15);
+      }));
+
+      function AddSigFile(_x22, _x23) {
+        return _AddSigFile.apply(this, arguments);
+      }
+
+      return AddSigFile;
+    }()
+  }, {
+    key: "GetISSUER",
+    value: function () {
+      var _GetISSUER = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee16() {
+        var requestOptions, response, result;
+        return regenerator_default().wrap(function _callee16$(_context16) {
+          while (1) {
+            switch (_context16.prev = _context16.next) {
+              case 0:
+                requestOptions = {
+                  method: "GET",
+                  credentials: "same-origin"
+                };
+                _context16.next = 3;
+                return window.fetch("GetISSUER", requestOptions);
+
+              case 3:
+                response = _context16.sent;
+
+                if (!response.ok) {
+                  _context16.next = 13;
+                  break;
+                }
+
+                _context16.next = 7;
+                return response.json();
+
+              case 7:
+                result = _context16.sent;
+
+                if (!result.Result) {
+                  _context16.next = 10;
+                  break;
+                }
+
+                return _context16.abrupt("return", result.Value);
+
+              case 10:
+                throw new Error(result.Value);
+
+              case 13:
+                throwResponse(response);
+
+              case 14:
+              case "end":
+                return _context16.stop();
+            }
+          }
+        }, _callee16);
+      }));
+
+      function GetISSUER() {
+        return _GetISSUER.apply(this, arguments);
+      }
+
+      return GetISSUER;
+    }()
+  }, {
+    key: "RemoveISSUER",
+    value: function () {
+      var _RemoveISSUER = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee17(singIssuerId) {
+        var requestOptions, response, result;
+        return regenerator_default().wrap(function _callee17$(_context17) {
+          while (1) {
+            switch (_context17.prev = _context17.next) {
+              case 0:
+                requestOptions = {
+                  method: "POST",
+                  headers: {
+                    'Content-Type': "application/json"
+                  },
+                  body: JSON.stringify(singIssuerId)
+                };
+                _context17.next = 3;
+                return window.fetch("RemoveISSUER", requestOptions);
+
+              case 3:
+                response = _context17.sent;
+
+                if (!response.ok) {
+                  _context17.next = 13;
+                  break;
+                }
+
+                _context17.next = 7;
+                return response.json();
+
+              case 7:
+                result = _context17.sent;
+
+                if (!result.Result) {
+                  _context17.next = 10;
+                  break;
+                }
+
+                return _context17.abrupt("return", result.Value);
+
+              case 10:
+                throw new Error(result.Value);
+
+              case 13:
+                throwResponse(response);
+
+              case 14:
+              case "end":
+                return _context17.stop();
+            }
+          }
+        }, _callee17);
+      }));
+
+      function RemoveISSUER(_x24) {
+        return _RemoveISSUER.apply(this, arguments);
+      }
+
+      return RemoveISSUER;
+    }()
+  }, {
+    key: "GetISSUERCertInfo",
+    value: function () {
+      var _GetISSUERCertInfo = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee18(singIssuerId) {
+        var requestOptions, response, result;
+        return regenerator_default().wrap(function _callee18$(_context18) {
+          while (1) {
+            switch (_context18.prev = _context18.next) {
+              case 0:
+                requestOptions = {
+                  method: "GET"
+                };
+                _context18.next = 3;
+                return window.fetch("GetISSUERCertInfo?ID=".concat(singIssuerId), requestOptions);
+
+              case 3:
+                response = _context18.sent;
+
+                if (!response.ok) {
+                  _context18.next = 13;
+                  break;
+                }
+
+                _context18.next = 7;
+                return response.json();
+
+              case 7:
+                result = _context18.sent;
+
+                if (!result.Result) {
+                  _context18.next = 10;
+                  break;
+                }
+
+                return _context18.abrupt("return", result.Value);
+
+              case 10:
+                throw new Error(result.Value);
+
+              case 13:
+                throwResponse(response);
+
+              case 14:
+              case "end":
+                return _context18.stop();
+            }
+          }
+        }, _callee18);
+      }));
+
+      function GetISSUERCertInfo(_x25) {
+        return _GetISSUERCertInfo.apply(this, arguments);
+      }
+
+      return GetISSUERCertInfo;
+    }()
+  }, {
+    key: "AddISSUER",
+    value: function () {
+      var _AddISSUER = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee19(file, caption, dateB, dateE) {
+        var formData, requestOptions, response, result;
+        return regenerator_default().wrap(function _callee19$(_context19) {
+          while (1) {
+            switch (_context19.prev = _context19.next) {
+              case 0:
+                formData = new FormData();
+                formData.append("File", file, file.name);
+                formData.append("CAPTION", caption);
+                formData.append("DATE_B", dateB.toLocaleDateString());
+                if (dateE != null) formData.append("DATE_E", dateE.toLocaleDateString());
+                requestOptions = {
+                  method: "POST",
+                  body: formData
+                };
+                _context19.next = 8;
+                return window.fetch("AddISSUER", requestOptions);
+
+              case 8:
+                response = _context19.sent;
+
+                if (!response.ok) {
+                  _context19.next = 18;
+                  break;
+                }
+
+                _context19.next = 12;
+                return response.json();
+
+              case 12:
+                result = _context19.sent;
+
+                if (!result.Result) {
+                  _context19.next = 15;
+                  break;
+                }
+
+                return _context19.abrupt("return", result.Value);
+
+              case 15:
+                throw new Error(result.Value);
+
+              case 18:
+                throwResponse(response);
+
+              case 19:
+              case "end":
+                return _context19.stop();
+            }
+          }
+        }, _callee19);
+      }));
+
+      function AddISSUER(_x26, _x27, _x28, _x29) {
+        return _AddISSUER.apply(this, arguments);
+      }
+
+      return AddISSUER;
+    }()
+  }, {
+    key: "GetSignList",
+    value: function () {
+      var _GetSignList = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee20() {
+        var requestOptions, response, result;
+        return regenerator_default().wrap(function _callee20$(_context20) {
+          while (1) {
+            switch (_context20.prev = _context20.next) {
+              case 0:
+                requestOptions = {
+                  method: "GET",
+                  credentials: "same-origin"
+                };
+                _context20.next = 3;
+                return window.fetch("GetSignList", requestOptions);
+
+              case 3:
+                response = _context20.sent;
+
+                if (!response.ok) {
+                  _context20.next = 13;
+                  break;
+                }
+
+                _context20.next = 7;
+                return response.json();
+
+              case 7:
+                result = _context20.sent;
+
+                if (!result.Result) {
+                  _context20.next = 10;
+                  break;
+                }
+
+                return _context20.abrupt("return", result.Value);
+
+              case 10:
+                throw new Error(result.Value);
+
+              case 13:
+                throwResponse(response);
+
+              case 14:
+              case "end":
+                return _context20.stop();
+            }
+          }
+        }, _callee20);
+      }));
+
+      function GetSignList() {
+        return _GetSignList.apply(this, arguments);
+      }
+
+      return GetSignList;
+    }()
+  }, {
+    key: "DownloadCert",
+    value: function () {
+      var _DownloadCert = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee21(id) {
+        var requestOptions, response, result;
+        return regenerator_default().wrap(function _callee21$(_context21) {
+          while (1) {
+            switch (_context21.prev = _context21.next) {
+              case 0:
+                requestOptions = {
+                  method: "GET",
+                  credentials: "same-origin"
+                };
+                _context21.next = 3;
+                return window.fetch("DownloadCert?id=".concat(id), requestOptions);
+
+              case 3:
+                response = _context21.sent;
+
+                if (!response.ok) {
+                  _context21.next = 13;
+                  break;
+                }
+
+                _context21.next = 7;
+                return response.json();
+
+              case 7:
+                result = _context21.sent;
+
+                if (!result.Result) {
+                  _context21.next = 10;
+                  break;
+                }
+
+                return _context21.abrupt("return", result.Value);
+
+              case 10:
+                throw new Error(result.Value);
+
+              case 13:
+                throwResponse(response);
+
+              case 14:
+              case "end":
+                return _context21.stop();
+            }
+          }
+        }, _callee21);
+      }));
+
+      function DownloadCert(_x30) {
+        return _DownloadCert.apply(this, arguments);
+      }
+
+      return DownloadCert;
+    }()
+  }, {
+    key: "GetCertificateINFO",
+    value: function () {
+      var _GetCertificateINFO = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee22(file) {
+        var formData, requestOptions, response, result;
+        return regenerator_default().wrap(function _callee22$(_context22) {
+          while (1) {
+            switch (_context22.prev = _context22.next) {
+              case 0:
+                formData = new FormData();
+                formData.append("file", file, file.name);
+                requestOptions = {
+                  method: "POST",
+                  credentials: "same-origin",
+                  body: formData
+                };
+                _context22.next = 5;
+                return window.fetch("GetCertificateINFO", requestOptions);
+
+              case 5:
+                response = _context22.sent;
+
+                if (!response.ok) {
+                  _context22.next = 15;
+                  break;
+                }
+
+                _context22.next = 9;
+                return response.json();
+
+              case 9:
+                result = _context22.sent;
+
+                if (!result.Result) {
+                  _context22.next = 12;
+                  break;
+                }
+
+                return _context22.abrupt("return", result.Value);
+
+              case 12:
+                throw new Error(result.Value);
+
+              case 15:
+                throwResponse(response);
+
+              case 16:
+              case "end":
+                return _context22.stop();
+            }
+          }
+        }, _callee22);
+      }));
+
+      function GetCertificateINFO(_x31) {
+        return _GetCertificateINFO.apply(this, arguments);
+      }
+
+      return GetCertificateINFO;
+    }()
+  }]);
+
+  return Repository;
+}();
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/createTheme.js + 6 modules
 var createTheme = __webpack_require__(48904);
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/ThemeProvider/ThemeProvider.js
@@ -86012,7 +87485,7 @@ var ThemeProvider = __webpack_require__(13457);
 
 
 
-var theme = (0,createTheme/* createMuiTheme */.A)({
+var theme = (0,createTheme/* default */.Z)({
   palette: {
     primary: {
       main: '#4CAF50'
@@ -86025,6 +87498,7 @@ var theme = (0,createTheme/* createMuiTheme */.A)({
     }
   }
 });
+var repo = new Repository();
 function RoleList() {
   var tableRef = react.useRef(null);
 
@@ -86043,51 +87517,47 @@ function RoleList() {
       roleList = _React$useState4[0],
       setRoleList = _React$useState4[1];
 
-  var getRoleList = /*#__PURE__*/function () {
+  var refresh = /*#__PURE__*/function () {
     var _ref = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee() {
-      var response, result;
       return regenerator_default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
-              return window.fetch("GetRole", {
-                credentials: "same-origin"
-              });
+              _context.prev = 0;
+              _context.t0 = setRoleList;
+              _context.next = 4;
+              return repo.GetRoleSPR();
 
-            case 2:
-              response = _context.sent;
-              _context.next = 5;
-              return response.json();
+            case 4:
+              _context.t1 = _context.sent;
+              (0, _context.t0)(_context.t1);
+              _context.next = 11;
+              break;
 
-            case 5:
-              result = _context.sent;
-              setRoleList(result.Value);
+            case 8:
+              _context.prev = 8;
+              _context.t2 = _context["catch"](0);
+              alert(_context.t2.toString());
 
-            case 7:
+            case 11:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee);
+      }, _callee, null, [[0, 8]]);
     }));
 
-    return function getRoleList() {
+    return function refresh() {
       return _ref.apply(this, arguments);
     };
   }();
 
   react.useEffect(function () {
-    getRoleList();
+    refresh();
   }, []);
-
-  function refresh() {
-    getRoleList();
-  }
 
   var removeRole = /*#__PURE__*/function () {
     var _ref2 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee2(event, rowData) {
-      var requestOptions, response, data;
       return regenerator_default().wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
@@ -86095,50 +87565,32 @@ function RoleList() {
               _context2.prev = 0;
 
               if (!confirm("\u0412\u044B \u0443\u0432\u0435\u0440\u0435\u043D\u044B \u0447\u0442\u043E \u0445\u043E\u0442\u0438\u0442\u0435 \u0443\u0434\u0430\u043B\u0438\u0442\u044C \u0440\u043E\u043B\u044C: ".concat(rowData.CAPTION, "?"))) {
-                _context2.next = 10;
+                _context2.next = 6;
                 break;
               }
 
-              requestOptions = {
-                method: "POST",
-                headers: {
-                  'Content-Type': "application/json"
-                },
-                credentials: "same-origin",
-                body: JSON.stringify(rowData.SIGN_ROLE_ID)
-              };
-              _context2.next = 5;
-              return window.fetch("RemoveRole", requestOptions);
+              _context2.next = 4;
+              return repo.RemoveRole(rowData.SIGN_ROLE_ID);
 
-            case 5:
-              response = _context2.sent;
-              _context2.next = 8;
-              return response.json();
+            case 4:
+              _context2.next = 6;
+              return refresh();
 
-            case 8:
-              data = _context2.sent;
-
-              if (data.Result === false) {
-                alert(data.Value);
-              } else {
-                refresh();
-              }
-
-            case 10:
-              _context2.next = 15;
+            case 6:
+              _context2.next = 11;
               break;
 
-            case 12:
-              _context2.prev = 12;
+            case 8:
+              _context2.prev = 8;
               _context2.t0 = _context2["catch"](0);
               alert(_context2.t0.toString());
 
-            case 15:
+            case 11:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, null, [[0, 12]]);
+      }, _callee2, null, [[0, 8]]);
     }));
 
     return function removeRole(_x, _x2) {
@@ -86245,7 +87697,8 @@ function RoleDialog(props) {
 
   var handleClose = function handleClose() {
     onClose();
-    setCaption(null);
+    setCaption("");
+    setPrefix("");
   };
 
   var _React$useState11 = react.useState(false),
@@ -86253,64 +87706,43 @@ function RoleDialog(props) {
       processSaveRole = _React$useState12[0],
       setProcessSaveRole = _React$useState12[1];
 
-  var SaveRole = /*#__PURE__*/function () {
+  var saveRole = /*#__PURE__*/function () {
     var _ref3 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee3() {
-      var formData, requestOptions, response, data;
       return regenerator_default().wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
               _context3.prev = 0;
               setProcessSaveRole(true);
-              formData = new FormData();
-              formData.append("caption", caption);
-              formData.append("prefix", prefix);
-              requestOptions = {
-                method: "POST",
-                credentials: "same-origin",
-                body: formData
-              };
-              _context3.next = 8;
-              return window.fetch("AddRole", requestOptions);
+              _context3.next = 4;
+              return repo.AddRole(caption, prefix);
 
-            case 8:
-              response = _context3.sent;
-              _context3.next = 11;
-              return response.json();
-
-            case 11:
-              data = _context3.sent;
-
-              if (data.Result === false) {
-                setErrorMessage(data.Value);
-              } else {
-                setErrorMessage("");
-                setCaption("");
-                handleClose();
-              }
-
-              _context3.next = 18;
+            case 4:
+              setErrorMessage("");
+              setCaption("");
+              handleClose();
+              _context3.next = 12;
               break;
 
-            case 15:
-              _context3.prev = 15;
+            case 9:
+              _context3.prev = 9;
               _context3.t0 = _context3["catch"](0);
               setErrorMessage(_context3.t0.toString());
 
-            case 18:
-              _context3.prev = 18;
-              setProcessSaveRole(true);
-              return _context3.finish(18);
+            case 12:
+              _context3.prev = 12;
+              setProcessSaveRole(false);
+              return _context3.finish(12);
 
-            case 21:
+            case 15:
             case "end":
               return _context3.stop();
           }
         }
-      }, _callee3, null, [[0, 15, 18, 21]]);
+      }, _callee3, null, [[0, 9, 12, 15]]);
     }));
 
-    return function SaveRole() {
+    return function saveRole() {
       return _ref3.apply(this, arguments);
     };
   }();
@@ -86321,13 +87753,14 @@ function RoleDialog(props) {
     "aria-labelledby": "form-dialog-title"
   }, /*#__PURE__*/react.createElement(DialogTitle/* default */.Z, {
     id: "form-dialog-title"
-  }, "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u0440\u043E\u043B\u0438"), /*#__PURE__*/react.createElement(DialogContent/* default */.Z, null, /*#__PURE__*/react.createElement(DialogContentText/* default */.Z, null, /*#__PURE__*/react.createElement("div", null, "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0438\u043C\u0435\u043D\u043E\u0432\u0430\u043D\u0438\u0435 \u0440\u043E\u043B\u0438 \u0438 \u043D\u0430\u0436\u043C\u0438\u0442\u0435 \u043D\u0430 \u043A\u043D\u043E\u043F\u043A\u0443 \"\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C\""), Array.isArray(errorMessage) ? errorMessage.map(function (value) {
+  }, "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u0440\u043E\u043B\u0438"), /*#__PURE__*/react.createElement(DialogContent/* default */.Z, null, /*#__PURE__*/react.createElement("div", null, "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0438\u043C\u0435\u043D\u043E\u0432\u0430\u043D\u0438\u0435 \u0440\u043E\u043B\u0438 \u0438 \u043D\u0430\u0436\u043C\u0438\u0442\u0435 \u043D\u0430 \u043A\u043D\u043E\u043F\u043A\u0443 \"\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C\""), Array.isArray(errorMessage) ? errorMessage.map(function (value, index) {
     return /*#__PURE__*/react.createElement("div", {
+      key: index,
       className: "RedText"
     }, value);
   }) : /*#__PURE__*/react.createElement("div", {
     className: "RedText"
-  }, errorMessage)), /*#__PURE__*/react.createElement(TextField/* default */.Z, {
+  }, errorMessage), /*#__PURE__*/react.createElement(TextField/* default */.Z, {
     autoFocus: true,
     margin: "dense",
     label: "\u041D\u0430\u0438\u043C\u0435\u043D\u043E\u0432\u0430\u043D\u0438\u0435 \u0440\u043E\u043B\u0438",
@@ -86348,13 +87781,11 @@ function RoleDialog(props) {
     onClick: handleClose,
     color: "primary"
   }, "\u041E\u0442\u043C\u0435\u043D\u0438\u0442\u044C"), /*#__PURE__*/react.createElement(Button/* default */.Z, {
-    onClick: SaveRole,
+    onClick: saveRole,
     color: "primary",
     disabled: processSaveRole
   }, "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"))));
 }
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
-var defineProperty = __webpack_require__(4942);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/Stepper/Stepper.js
 var Stepper = __webpack_require__(4686);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/Step/Step.js
@@ -92983,6 +94414,7 @@ var ru_locale = {
 /* harmony default export */ const ru = (ru_locale);
 // EXTERNAL MODULE: ./node_modules/prop-types/index.js
 var prop_types = __webpack_require__(45697);
+var prop_types_default = /*#__PURE__*/__webpack_require__.n(prop_types);
 ;// CONCATENATED MODULE: ./node_modules/@material-ui/pickers/esm/useUtils-cfb96ac9.js
 
 
@@ -93307,10 +94739,6 @@ var rifm_esm = __webpack_require__(48315);
 var SvgIcon = __webpack_require__(62087);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/useTheme.js
 var useTheme = __webpack_require__(8920);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/classCallCheck.js
-var classCallCheck = __webpack_require__(15671);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/createClass.js
-var createClass = __webpack_require__(43144);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js
 var possibleConstructorReturn = __webpack_require__(82963);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js
@@ -95913,6 +97341,8 @@ KeyboardDatePicker.defaultProps = defaultProps;
 var stable = __webpack_require__(28594);
 // EXTERNAL MODULE: ./node_modules/regenerator-runtime/runtime.js
 var runtime = __webpack_require__(35666);
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/DialogContentText/DialogContentText.js
+var DialogContentText = __webpack_require__(7212);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/Popper/Popper.js + 1 modules
 var Popper = __webpack_require__(96617);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/ListSubheader/ListSubheader.js
@@ -97552,7 +98982,7 @@ var ListItemStyles = (0,makeStyles/* default */.Z)(function (theme) {
   };
 });
 function CertList(props) {
-  var items = props.items;
+  var certInfo = props.certInfo;
   var classes = ListItemStyles();
 
   var _React$useState = react.useState(0),
@@ -97564,7 +98994,15 @@ function CertList(props) {
     setselectedIndex(index);
   };
 
-  return /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Grid/* default */.Z, {
+  return /*#__PURE__*/react.createElement("div", null, certInfo != null ? /*#__PURE__*/react.createElement("div", null, certInfo.Error.length != 0 ? /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", {
+    className: "BoldText"
+  }, "\u041E\u0448\u0438\u0431\u043A\u0438 \u0446\u0435\u043F\u043E\u0447\u043A\u0438"), /*#__PURE__*/react.createElement("ul", {
+    className: "ErrorLi"
+  }, certInfo.Error.map(function (value, index) {
+    return /*#__PURE__*/react.createElement("li", {
+      key: index
+    }, value);
+  }))) : null, /*#__PURE__*/react.createElement(Grid/* default */.Z, {
     container: true,
     spacing: 1
   }, /*#__PURE__*/react.createElement(Grid/* default */.Z, {
@@ -97574,8 +99012,9 @@ function CertList(props) {
     className: "BoldText"
   }, "\u0421\u043F\u0438\u0441\u043E\u043A \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u043E\u0432"), /*#__PURE__*/react.createElement(List/* default */.Z, {
     "aria-label": "secondary mailbox folder"
-  }, items.map(function (value, index) {
+  }, certInfo.Data.map(function (value, index) {
     return /*#__PURE__*/react.createElement(ListItem/* default */.Z, {
+      key: index,
       className: value.VALID ? classes.green : classes.red,
       selected: selectedIndex === index,
       button: true,
@@ -97589,8 +99028,8 @@ function CertList(props) {
     item: true,
     xs: true
   }, /*#__PURE__*/react.createElement(ShowInfoCert, {
-    data: items[selectedIndex]
-  }))));
+    data: certInfo.Data[selectedIndex]
+  })))) : null);
 }
 
 function ShowInfoCert(props) {
@@ -97599,13 +99038,17 @@ function ShowInfoCert(props) {
     className: "BoldText"
   }, "\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F \u043E \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u0435"), /*#__PURE__*/react.createElement("ul", {
     className: "ErrorLi"
-  }, data.Error.map(function (err) {
-    return /*#__PURE__*/react.createElement("li", null, err);
+  }, data.Error.map(function (err, index) {
+    return /*#__PURE__*/react.createElement("li", {
+      key: index
+    }, err);
   })), /*#__PURE__*/react.createElement("table", {
     className: "table_report"
-  }, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("th", null, "\u041F\u0430\u0440\u0430\u043C\u0435\u0442\u0440"), /*#__PURE__*/react.createElement("th", null, "\u0417\u043D\u0430\u0447\u0435\u043D\u0438\u0435")), data.NAME != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u041E\u0431\u0449\u0435\u0435 \u0438\u043C\u044F(CN)"), /*#__PURE__*/react.createElement("td", null, data.NAME)) : null, data.ORG != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u041E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u044F(O)"), /*#__PURE__*/react.createElement("td", null, data.ORG)) : null, data.PODR != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u041F\u043E\u0434\u0440\u0430\u0437\u0434\u0435\u043B\u0435\u043D\u0438\u0435(OU)"), /*#__PURE__*/react.createElement("td", null, data.PODR)) : null, data.DOLG != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0414\u043E\u043B\u0436\u043D\u043E\u0441\u0442\u044C(T)"), /*#__PURE__*/react.createElement("td", null, data.DOLG)) : null, data.FAM != null || data.IM_OT != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0424\u0418\u041E(SN+GN)"), /*#__PURE__*/react.createElement("td", null, data.FAM, " ", data.IM_OT)) : null, data.Country != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0421\u0442\u0440\u0430\u043D\u0430(C)"), /*#__PURE__*/react.createElement("td", null, data.Country)) : null, data.Region != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0420\u0435\u0433\u0438\u043E\u043D(S)"), /*#__PURE__*/react.createElement("td", null, data.Region)) : null, data.City != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u041D\u0430\u0441\u0435\u043B\u0435\u043D\u043D\u044B\u0439 \u043F\u0443\u043D\u043A\u0442(L)"), /*#__PURE__*/react.createElement("td", null, data.City)) : null, data.Adres != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0410\u0434\u0440\u0435\u0441(Street)"), /*#__PURE__*/react.createElement("td", null, data.Adres)) : null, data.EMAIL != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "Email(E)"), /*#__PURE__*/react.createElement("td", null, data.EMAIL)) : null, data.SNILS != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, " \u0421\u041D\u0418\u041B\u0421(SNILS)"), /*#__PURE__*/react.createElement("td", null, data.SNILS)) : null, data.INN != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0418\u041D\u041D(INN)"), /*#__PURE__*/react.createElement("td", null, data.INN)) : null, data.OGRN != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u041E\u0413\u0420\u041D(OGRN)"), /*#__PURE__*/react.createElement("td", null, data.OGRN)) : null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0414\u0430\u0442\u0430 \u043D\u0430\u0447\u0430\u043B\u0430"), /*#__PURE__*/react.createElement("td", null, format(new Date(data.DATE_B), "dd-MM-yyyy"))), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0414\u0430\u0442\u0430 \u043E\u043A\u043E\u043D\u0447\u0430\u043D\u0438\u044F"), /*#__PURE__*/react.createElement("td", null, format(new Date(data.DATE_E), "dd-MM-yyyy"))), data.OtherAttribute.map(function (value) {
-    return /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, value.Name), /*#__PURE__*/react.createElement("td", null, value.Value));
-  }))) : /*#__PURE__*/react.createElement("div", null);
+  }, /*#__PURE__*/react.createElement("tbody", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("th", null, "\u041F\u0430\u0440\u0430\u043C\u0435\u0442\u0440"), /*#__PURE__*/react.createElement("th", null, "\u0417\u043D\u0430\u0447\u0435\u043D\u0438\u0435")), data.NAME != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u041E\u0431\u0449\u0435\u0435 \u0438\u043C\u044F(CN)"), /*#__PURE__*/react.createElement("td", null, data.NAME)) : null, data.ORG != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u041E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u044F(O)"), /*#__PURE__*/react.createElement("td", null, data.ORG)) : null, data.PODR != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u041F\u043E\u0434\u0440\u0430\u0437\u0434\u0435\u043B\u0435\u043D\u0438\u0435(OU)"), /*#__PURE__*/react.createElement("td", null, data.PODR)) : null, data.DOLG != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0414\u043E\u043B\u0436\u043D\u043E\u0441\u0442\u044C(T)"), /*#__PURE__*/react.createElement("td", null, data.DOLG)) : null, data.FAM != null || data.IM_OT != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0424\u0418\u041E(SN+GN)"), /*#__PURE__*/react.createElement("td", null, data.FAM, " ", data.IM_OT)) : null, data.Country != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0421\u0442\u0440\u0430\u043D\u0430(C)"), /*#__PURE__*/react.createElement("td", null, data.Country)) : null, data.Region != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0420\u0435\u0433\u0438\u043E\u043D(S)"), /*#__PURE__*/react.createElement("td", null, data.Region)) : null, data.City != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u041D\u0430\u0441\u0435\u043B\u0435\u043D\u043D\u044B\u0439 \u043F\u0443\u043D\u043A\u0442(L)"), /*#__PURE__*/react.createElement("td", null, data.City)) : null, data.Adres != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0410\u0434\u0440\u0435\u0441(Street)"), /*#__PURE__*/react.createElement("td", null, data.Adres)) : null, data.EMAIL != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "Email(E)"), /*#__PURE__*/react.createElement("td", null, data.EMAIL)) : null, data.SNILS != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, " \u0421\u041D\u0418\u041B\u0421(SNILS)"), /*#__PURE__*/react.createElement("td", null, data.SNILS)) : null, data.INN != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0418\u041D\u041D(INN)"), /*#__PURE__*/react.createElement("td", null, data.INN)) : null, data.OGRN != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u041E\u0413\u0420\u041D(OGRN)"), /*#__PURE__*/react.createElement("td", null, data.OGRN)) : null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0414\u0430\u0442\u0430 \u043D\u0430\u0447\u0430\u043B\u0430"), /*#__PURE__*/react.createElement("td", null, format(new Date(data.DATE_B), "dd-MM-yyyy"))), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0414\u0430\u0442\u0430 \u043E\u043A\u043E\u043D\u0447\u0430\u043D\u0438\u044F"), /*#__PURE__*/react.createElement("td", null, format(new Date(data.DATE_E), "dd-MM-yyyy"))), data.OtherAttribute.map(function (value, index) {
+    return /*#__PURE__*/react.createElement("tr", {
+      key: index
+    }, /*#__PURE__*/react.createElement("td", null, value.Name), /*#__PURE__*/react.createElement("td", null, value.Value));
+  })))) : /*#__PURE__*/react.createElement("div", null);
 }
 ;// CONCATENATED MODULE: ./SignApp/Components/ShowCertDialog.jsx
 
@@ -97640,7 +99083,7 @@ function ShowCertDialog(props) {
     "aria-labelledby": "form-dialog-title",
     fullWidth: true,
     maxWidth: "lg"
-  }, /*#__PURE__*/react.createElement(DialogContent/* default */.Z, null, /*#__PURE__*/react.createElement(DialogContentText/* default */.Z, null, /*#__PURE__*/react.createElement("div", null, "\u041F\u0440\u043E\u0441\u043C\u043E\u0442\u0440 \u0434\u0430\u043D\u043D\u044B\u0445 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u0430")), /*#__PURE__*/react.createElement("div", null, certInfo != null ? /*#__PURE__*/react.createElement(CertList, {
+  }, /*#__PURE__*/react.createElement(DialogContent/* default */.Z, null, /*#__PURE__*/react.createElement(DialogContentText/* default */.Z, null, "\u041F\u0440\u043E\u0441\u043C\u043E\u0442\u0440 \u0434\u0430\u043D\u043D\u044B\u0445 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u0430"), /*#__PURE__*/react.createElement("div", null, certInfo != null ? /*#__PURE__*/react.createElement(CertList, {
     items: certInfo.Data
   }) : /*#__PURE__*/react.createElement("div", null)), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Button/* default */.Z, {
     className: classes.button,
@@ -97713,7 +99156,9 @@ function SIGN_LIST_objectSpread(target) { for (var i = 1; i < arguments.length; 
 
 
 
-var SIGN_LIST_theme = (0,createTheme/* createMuiTheme */.A)({
+
+
+var SIGN_LIST_theme = (0,createTheme/* default */.Z)({
   palette: {
     primary: {
       main: '#4CAF50'
@@ -97726,6 +99171,7 @@ var SIGN_LIST_theme = (0,createTheme/* createMuiTheme */.A)({
     }
   }
 });
+var SIGN_LIST_repo = new Repository();
 function SIGN_LIST() {
   var tableRef = react.useRef(null);
 
@@ -97734,55 +99180,44 @@ function SIGN_LIST() {
       signList = _React$useState2[0],
       setSignList = _React$useState2[1];
 
-  var getSignList = /*#__PURE__*/function () {
+  var refresh = /*#__PURE__*/function () {
     var _ref = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee() {
-      var response, result;
       return regenerator_default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               _context.prev = 0;
-              _context.next = 3;
-              return window.fetch("GetSignList", {
-                credentials: "same-origin"
-              });
+              _context.t0 = setSignList;
+              _context.next = 4;
+              return SIGN_LIST_repo.GetSignList();
 
-            case 3:
-              response = _context.sent;
-              _context.next = 6;
-              return response.json();
-
-            case 6:
-              result = _context.sent;
-              setSignList(result.Value);
-              _context.next = 13;
+            case 4:
+              _context.t1 = _context.sent;
+              (0, _context.t0)(_context.t1);
+              _context.next = 11;
               break;
 
-            case 10:
-              _context.prev = 10;
-              _context.t0 = _context["catch"](0);
-              alert(_context.t0.toString());
+            case 8:
+              _context.prev = 8;
+              _context.t2 = _context["catch"](0);
+              alert(_context.t2.toString());
 
-            case 13:
+            case 11:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[0, 10]]);
+      }, _callee, null, [[0, 8]]);
     }));
 
-    return function getSignList() {
+    return function refresh() {
       return _ref.apply(this, arguments);
     };
   }();
 
   react.useEffect(function () {
-    getSignList();
+    refresh();
   }, []);
-
-  function refresh() {
-    getSignList();
-  }
 
   var _React$useState3 = react.useState(false),
       _React$useState4 = (0,slicedToArray/* default */.Z)(_React$useState3, 2),
@@ -97806,11 +99241,11 @@ function SIGN_LIST() {
   var _React$useState7 = react.useState(null),
       _React$useState8 = (0,slicedToArray/* default */.Z)(_React$useState7, 2),
       showCertInfo = _React$useState8[0],
-      setshowCertInfo = _React$useState8[1];
+      setShowCertInfo = _React$useState8[1];
 
   var closeShowDialog = function closeShowDialog() {
     setIsOpenShowSignDialog(false);
-    setshowCertInfo(null);
+    setShowCertInfo(null);
   };
 
   var showDetail = /*#__PURE__*/function () {
@@ -97841,7 +99276,7 @@ function SIGN_LIST() {
               if (data.Result === false) {
                 alert(data.Value);
               } else {
-                setshowCertInfo(data.Value);
+                setShowCertInfo(data.Value);
                 setIsOpenShowSignDialog(true);
               }
 
@@ -97928,40 +99363,32 @@ function SIGN_LIST() {
 
   var downloadFile = /*#__PURE__*/function () {
     var _ref4 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee4(event, rowData) {
-      var requestOptions, response, data;
+      var file;
       return regenerator_default().wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
-              requestOptions = {
-                method: "GET",
-                headers: {
-                  'Content-Type': "application/json"
-                }
-              };
+              _context4.prev = 0;
               _context4.next = 3;
-              return window.fetch("DownloadCert?id=".concat(rowData.ID), requestOptions);
+              return SIGN_LIST_repo.DownloadCert(rowData.ID);
 
             case 3:
-              response = _context4.sent;
-              _context4.next = 6;
-              return response.json();
+              file = _context4.sent;
+              downloadBase64File(file.FileContents, file.ContentType, file.FileDownloadName);
+              _context4.next = 10;
+              break;
 
-            case 6:
-              data = _context4.sent;
+            case 7:
+              _context4.prev = 7;
+              _context4.t0 = _context4["catch"](0);
+              alert(_context4.t0.toString());
 
-              if (data.Result === true) {
-                downloadBase64File(data.Value.FileContents, data.Value.ContentType, data.Value.FileDownloadName);
-              } else {
-                alert(data.Value);
-              }
-
-            case 8:
+            case 10:
             case "end":
               return _context4.stop();
           }
         }
-      }, _callee4);
+      }, _callee4, null, [[0, 7]]);
     }));
 
     return function downloadFile(_x5, _x6) {
@@ -98110,56 +99537,38 @@ function AddSingDialog(props) {
 
   var readCertificate = /*#__PURE__*/function () {
     var _ref5 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee5() {
-      var formData, requestOptions, response, data;
+      var info;
       return regenerator_default().wrap(function _callee5$(_context5) {
         while (1) {
           switch (_context5.prev = _context5.next) {
             case 0:
               _context5.prev = 0;
               setProcessReadCertificate(true);
-              formData = new FormData();
-              formData.append("file", file, file.name);
-              requestOptions = {
-                method: "POST",
-                credentials: "same-origin",
-                body: formData
-              };
-              _context5.next = 7;
-              return window.fetch("GetCertificateINFO", requestOptions);
+              _context5.next = 4;
+              return SIGN_LIST_repo.GetCertificateINFO(file);
 
-            case 7:
-              response = _context5.sent;
-              _context5.next = 10;
-              return response.json();
-
-            case 10:
-              data = _context5.sent;
-
-              if (data.Result === false) {
-                setErrorMessage(data.Value);
-              } else {
-                setCertInfo(data.Value);
-              }
-
-              _context5.next = 17;
+            case 4:
+              info = _context5.sent;
+              setCertInfo(info);
+              _context5.next = 11;
               break;
 
-            case 14:
-              _context5.prev = 14;
+            case 8:
+              _context5.prev = 8;
               _context5.t0 = _context5["catch"](0);
               setErrorMessage(_context5.t0.toString());
 
-            case 17:
-              _context5.prev = 17;
+            case 11:
+              _context5.prev = 11;
               setProcessReadCertificate(false);
-              return _context5.finish(17);
+              return _context5.finish(11);
 
-            case 20:
+            case 14:
             case "end":
               return _context5.stop();
           }
         }
-      }, _callee5, null, [[0, 14, 17, 20]]);
+      }, _callee5, null, [[0, 8, 11, 14]]);
     }));
 
     return function readCertificate() {
@@ -98202,9 +99611,9 @@ function AddSingDialog(props) {
     maxWidth: "lg"
   }, /*#__PURE__*/react.createElement(DialogTitle/* default */.Z, {
     id: "form-dialog-title"
-  }, "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u043F\u043E\u0434\u043F\u0438\u0441\u0438"), /*#__PURE__*/react.createElement(DialogContent/* default */.Z, null, /*#__PURE__*/react.createElement(DialogContentText/* default */.Z, null, /*#__PURE__*/react.createElement("div", null, "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0438\u043C\u0435\u043D\u043E\u0432\u0430\u043D\u0438\u0435 \u0440\u043E\u043B\u0438 \u0438 \u043D\u0430\u0436\u043C\u0438\u0442\u0435 \u043D\u0430 \u043A\u043D\u043E\u043F\u043A\u0443 \"\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C\""), /*#__PURE__*/react.createElement("div", {
+  }, "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u043F\u043E\u0434\u043F\u0438\u0441\u0438"), /*#__PURE__*/react.createElement(DialogContent/* default */.Z, null, /*#__PURE__*/react.createElement(DialogContentText/* default */.Z, null, "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0438\u043C\u0435\u043D\u043E\u0432\u0430\u043D\u0438\u0435 \u0440\u043E\u043B\u0438 \u0438 \u043D\u0430\u0436\u043C\u0438\u0442\u0435 \u043D\u0430 \u043A\u043D\u043E\u043F\u043A\u0443 \"\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C\""), /*#__PURE__*/react.createElement("div", {
     className: "RedText"
-  }, errorMessage)), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Stepper/* default */.Z, {
+  }, errorMessage), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Stepper/* default */.Z, {
     activeStep: activeStep,
     orientation: "vertical"
   }, /*#__PURE__*/react.createElement(Step/* default */.Z, {
@@ -98221,8 +99630,12 @@ function AddSingDialog(props) {
     disabled: file == null
   }, "\u0414\u0430\u043B\u0435\u0435")))), /*#__PURE__*/react.createElement(Step/* default */.Z, {
     key: 1
-  }, /*#__PURE__*/react.createElement(StepLabel/* default */.Z, null, "\u041F\u0440\u043E\u0441\u043C\u043E\u0442\u0440 \u0434\u0430\u043D\u043D\u044B\u0445 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u0430"), /*#__PURE__*/react.createElement(StepContent/* default */.Z, null, certInfo != null ? /*#__PURE__*/react.createElement(CertList, {
-    items: certInfo.Data
+  }, /*#__PURE__*/react.createElement(StepLabel/* default */.Z, null, "\u041F\u0440\u043E\u0441\u043C\u043E\u0442\u0440 \u0434\u0430\u043D\u043D\u044B\u0445 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u0430"), /*#__PURE__*/react.createElement(StepContent/* default */.Z, null, processReadCertificate ? /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(CircularProgress/* default */.Z, {
+    size: "25px"
+  }), /*#__PURE__*/react.createElement("div", {
+    className: "BoldText"
+  }, "\u041F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u0430 \u043D\u0430 \u0441\u0435\u0440\u0432\u0435\u0440\u0435")) : null, certInfo != null ? /*#__PURE__*/react.createElement(CertList, {
+    certInfo: certInfo
   }) : /*#__PURE__*/react.createElement("div", null), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Button/* default */.Z, {
     className: classes.button,
     disabled: activeStep === 0,
@@ -98231,7 +99644,8 @@ function AddSingDialog(props) {
     className: classes.button,
     variant: "contained",
     color: "primary",
-    onClick: readCertificate
+    onClick: readCertificate,
+    disabled: processReadCertificate
   }, "\u041F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442"), /*#__PURE__*/react.createElement(Button/* default */.Z, {
     className: classes.button,
     variant: "contained",
@@ -98258,12 +99672,12 @@ function AddCert(props) {
       dateB = props.dateB,
       dateE = props.dateE;
 
-  var _React$useState19 = react.useState(null),
+  var _React$useState19 = react.useState([]),
       _React$useState20 = (0,slicedToArray/* default */.Z)(_React$useState19, 2),
       roles = _React$useState20[0],
       setRoles = _React$useState20[1];
 
-  var _React$useState21 = react.useState(null),
+  var _React$useState21 = react.useState([]),
       _React$useState22 = (0,slicedToArray/* default */.Z)(_React$useState21, 2),
       lpu = _React$useState22[0],
       setLpu = _React$useState22[1];
@@ -98295,24 +99709,47 @@ function AddCert(props) {
     setValidationErr(err);
   };
 
-  (0,react.useEffect)(function () {
-    window.fetch("GetRole").then(function (response) {
-      return response.json();
-    }).then(function (result) {
-      if (result.Result === true) setRoles(result.Value);else alert("\u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u043E\u043B\u0443\u0447\u0435\u043D\u0438\u044F \u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u0430 \u0440\u043E\u043B\u0435\u0439:".concat(result.Value));
-    });
-    window.fetch("GetF003").then(function (response) {
-      return response.json();
-    }).then(function (result) {
-      if (result.Result === true) setLpu(result.Value);else alert("\u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u043E\u043B\u0443\u0447\u0435\u043D\u0438\u044F \u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u0430 \u041C\u041E:".concat(result.Value));
-    });
-    setCertData(function (certData) {
-      return SIGN_LIST_objectSpread(SIGN_LIST_objectSpread({}, certData), {}, {
-        DATE_B: dateB,
-        DATE_E: dateE
-      });
-    });
-  }, []);
+  (0,react.useEffect)( /*#__PURE__*/(0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee6() {
+    var rol, f003;
+    return regenerator_default().wrap(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            _context6.prev = 0;
+            _context6.next = 3;
+            return SIGN_LIST_repo.GetRoleSPR();
+
+          case 3:
+            rol = _context6.sent;
+            _context6.next = 6;
+            return SIGN_LIST_repo.GetF003();
+
+          case 6:
+            f003 = _context6.sent;
+            setLpu(f003);
+            setRoles(rol);
+            SIGN_LIST_repo.GetF003();
+            setCertData(function (certData) {
+              return SIGN_LIST_objectSpread(SIGN_LIST_objectSpread({}, certData), {}, {
+                DATE_B: dateB,
+                DATE_E: dateE
+              });
+            });
+            _context6.next = 16;
+            break;
+
+          case 13:
+            _context6.prev = 13;
+            _context6.t0 = _context6["catch"](0);
+            alert(_context6.t0.toString());
+
+          case 16:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, _callee6, null, [[0, 13]]);
+  })), []);
   (0,react.useEffect)(function () {
     validate();
   }, [certData, file]);
@@ -98364,67 +99801,50 @@ function AddCert(props) {
       setProcessSaveCert = _React$useState28[1];
 
   var saveCert = /*#__PURE__*/function () {
-    var _ref6 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee6(event, newValue) {
-      var formData, requestOptions, response, result;
-      return regenerator_default().wrap(function _callee6$(_context6) {
+    var _ref7 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee7() {
+      return regenerator_default().wrap(function _callee7$(_context7) {
         while (1) {
-          switch (_context6.prev = _context6.next) {
+          switch (_context7.prev = _context7.next) {
             case 0:
-              _context6.prev = 0;
+              _context7.prev = 0;
               setProcessSaveCert(true);
-              formData = new FormData();
-              formData.append("File", file, file.name);
-              formData.append("FileConfirm", certData.fileConfirm, certData.fileConfirm.name);
-              formData.append("ROLE_ID", certData.ROLE.SIGN_ROLE_ID);
-              formData.append("CODE_MO", certData.MO.MCOD);
-              formData.append("DATE_B", new Date(certData.DATE_B).toLocaleDateString());
-              if (certData.DATE_E != null) formData.append("DATE_E", new Date(certData.DATE_E).toLocaleDateString());
-              requestOptions = {
-                method: "POST",
-                credentials: "same-origin",
-                body: formData
-              };
-              _context6.next = 12;
-              return window.fetch("AddCert", requestOptions);
+              _context7.next = 4;
+              return SIGN_LIST_repo.AddSignCert(file, certData.fileConfirm, certData.ROLE.SIGN_ROLE_ID, certData.MO.MCOD, certData.DATE_B, certData.DATE_E);
 
-            case 12:
-              response = _context6.sent;
-              _context6.next = 15;
-              return response.json();
-
-            case 15:
-              result = _context6.sent;
-              if (result.Result === true) onSave();else setValidationErr(result.Value);
-              _context6.next = 22;
+            case 4:
+              onSave();
+              _context7.next = 10;
               break;
 
-            case 19:
-              _context6.prev = 19;
-              _context6.t0 = _context6["catch"](0);
-              setValidationErr(_context6.t0);
+            case 7:
+              _context7.prev = 7;
+              _context7.t0 = _context7["catch"](0);
+              setValidationErr(_context7.t0);
 
-            case 22:
-              _context6.prev = 22;
+            case 10:
+              _context7.prev = 10;
               setProcessSaveCert(false);
-              return _context6.finish(22);
+              return _context7.finish(10);
 
-            case 25:
+            case 13:
             case "end":
-              return _context6.stop();
+              return _context7.stop();
           }
         }
-      }, _callee6, null, [[0, 19, 22, 25]]);
+      }, _callee7, null, [[0, 7, 10, 13]]);
     }));
 
-    return function saveCert(_x7, _x8) {
-      return _ref6.apply(this, arguments);
+    return function saveCert() {
+      return _ref7.apply(this, arguments);
     };
   }();
 
   return /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, validationErr != null ? Array.isArray(validationErr) ? /*#__PURE__*/react.createElement("ul", {
     className: "ErrorLi"
-  }, validationErr.map(function (value) {
-    return /*#__PURE__*/react.createElement("li", null, value);
+  }, validationErr.map(function (value, index) {
+    return /*#__PURE__*/react.createElement("li", {
+      key: index
+    }, value);
   })) : validationErr : null), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Autocomplete_Autocomplete, {
     options: roles,
     getOptionLabel: function getOptionLabel(option) {
@@ -98527,6 +99947,9 @@ function IssuerList_objectSpread(target) { for (var i = 1; i < arguments.length;
 
 
 
+
+
+var IssuerList_repo = new Repository();
 function IssuerList() {
   var tableRef = react.useRef(null);
 
@@ -98540,45 +99963,44 @@ function IssuerList() {
       issuerList = _React$useState4[0],
       setIssuerList = _React$useState4[1];
 
-  var getIssuerList = /*#__PURE__*/function () {
+  var refresh = /*#__PURE__*/function () {
     var _ref = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee() {
-      var response, result;
       return regenerator_default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
-              return window.fetch("GetISSUER");
+              _context.prev = 0;
+              _context.t0 = setIssuerList;
+              _context.next = 4;
+              return IssuerList_repo.GetISSUER();
 
-            case 2:
-              response = _context.sent;
-              _context.next = 5;
-              return response.json();
+            case 4:
+              _context.t1 = _context.sent;
+              (0, _context.t0)(_context.t1);
+              _context.next = 11;
+              break;
 
-            case 5:
-              result = _context.sent;
-              setIssuerList(result.Value);
+            case 8:
+              _context.prev = 8;
+              _context.t2 = _context["catch"](0);
+              alert(_context.t2.toString());
 
-            case 7:
+            case 11:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee);
+      }, _callee, null, [[0, 8]]);
     }));
 
-    return function getIssuerList() {
+    return function refresh() {
       return _ref.apply(this, arguments);
     };
   }();
 
   react.useEffect(function () {
-    getIssuerList();
+    refresh();
   }, []);
-
-  var refresh = function refresh() {
-    getIssuerList();
-  };
 
   var closeIssuerDialog = function closeIssuerDialog() {
     setisOpenRoleDialog(false);
@@ -98590,34 +100012,46 @@ function IssuerList() {
     refresh();
   };
 
-  var removeIssuer = function removeIssuer(event, rowData) {
-    try {
-      if (confirm("\u0412\u044B \u0443\u0432\u0435\u0440\u0435\u043D\u044B \u0447\u0442\u043E \u0445\u043E\u0442\u0438\u0442\u0435 \u0443\u0434\u0430\u043B\u0438\u0442\u044C \u0438\u0437\u0434\u0430\u0442\u0435\u043B\u044F: ".concat(rowData.CAPTION, "?"))) {
-        var requestOptions = {
-          method: "POST",
-          headers: {
-            'Content-Type': "application/json"
-          },
-          body: JSON.stringify(rowData.SING_ISSUER_ID)
-        };
-        window.fetch("RemoveISSUER", requestOptions).then(function (response) {
-          return response.json();
-        }).then(function (data) {
-          if (data) {
-            if (data.Result === false) {
-              alert(data.Value);
-            } else {
+  var removeIssuer = /*#__PURE__*/function () {
+    var _ref2 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee2(event, rowData) {
+      return regenerator_default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+
+              if (!confirm("\u0412\u044B \u0443\u0432\u0435\u0440\u0435\u043D\u044B \u0447\u0442\u043E \u0445\u043E\u0442\u0438\u0442\u0435 \u0443\u0434\u0430\u043B\u0438\u0442\u044C \u0438\u0437\u0434\u0430\u0442\u0435\u043B\u044F: ".concat(rowData.CAPTION, "?"))) {
+                _context2.next = 5;
+                break;
+              }
+
+              _context2.next = 4;
+              return IssuerList_repo.RemoveISSUER(rowData.SING_ISSUER_ID);
+
+            case 4:
               refresh();
-            }
+
+            case 5:
+              _context2.next = 10;
+              break;
+
+            case 7:
+              _context2.prev = 7;
+              _context2.t0 = _context2["catch"](0);
+              alert(_context2.t0.toString());
+
+            case 10:
+            case "end":
+              return _context2.stop();
           }
-        })["catch"](function (error) {
-          alert(error.toString());
-        });
-      }
-    } catch (error) {
-      alert(error.toString());
-    }
-  };
+        }
+      }, _callee2, null, [[0, 7]]);
+    }));
+
+    return function removeIssuer(_x, _x2) {
+      return _ref2.apply(this, arguments);
+    };
+  }();
 
   var _React$useState5 = react.useState(false),
       _React$useState6 = (0,slicedToArray/* default */.Z)(_React$useState5, 2),
@@ -98634,34 +100068,43 @@ function IssuerList() {
     setshowCertInfo(null);
   };
 
-  var showDetail = function showDetail(event, rowData) {
-    try {
-      var requestOptions = {
-        method: "GET",
-        headers: {
-          'Content-Type': "application/json"
-        }
-      };
-      window.fetch("GetISSUERCertInfo?ID=".concat(rowData.SING_ISSUER_ID), requestOptions).then(function (response) {
-        return response.json();
-      }).then(function (data) {
-        if (data) {
-          if (data.Result === false) {
-            alert(data.Value);
-          } else {
-            setshowCertInfo(data.Value);
-            setisOpenShowSignDialog(true);
+  var showDetail = /*#__PURE__*/function () {
+    var _ref3 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee3(event, rowData) {
+      var info;
+      return regenerator_default().wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.prev = 0;
+              _context3.next = 3;
+              return IssuerList_repo.GetISSUERCertInfo(rowData.SING_ISSUER_ID);
+
+            case 3:
+              info = _context3.sent;
+              setshowCertInfo(info);
+              setisOpenShowSignDialog(true);
+              _context3.next = 11;
+              break;
+
+            case 8:
+              _context3.prev = 8;
+              _context3.t0 = _context3["catch"](0);
+              alert(_context3.t0.toString());
+
+            case 11:
+            case "end":
+              return _context3.stop();
           }
         }
-      })["catch"](function (error) {
-        alert(error.toString());
-      });
-    } catch (error) {
-      alert(error.toString());
-    }
-  };
+      }, _callee3, null, [[0, 8]]);
+    }));
 
-  var theme = (0,createTheme/* createMuiTheme */.A)({
+    return function showDetail(_x3, _x4) {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+
+  var theme = (0,createTheme/* default */.Z)({
     palette: {
       primary: {
         main: '#4CAF50'
@@ -98799,13 +100242,13 @@ function AddISSUERDialog(props) {
   };
 
   var readCertificate = /*#__PURE__*/function () {
-    var _ref2 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee2() {
+    var _ref4 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee4() {
       var formData, requestOptions, response, data;
-      return regenerator_default().wrap(function _callee2$(_context2) {
+      return regenerator_default().wrap(function _callee4$(_context4) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
-              _context2.prev = 0;
+              _context4.prev = 0;
               setProcessReadCertificate(true);
               formData = new FormData();
               formData.append("file", file, file.name);
@@ -98814,16 +100257,16 @@ function AddISSUERDialog(props) {
                 method: "POST",
                 body: formData
               };
-              _context2.next = 8;
+              _context4.next = 8;
               return window.fetch("GetCertificateINFO", requestOptions);
 
             case 8:
-              response = _context2.sent;
-              _context2.next = 11;
+              response = _context4.sent;
+              _context4.next = 11;
               return response.json();
 
             case 11:
-              data = _context2.sent;
+              data = _context4.sent;
 
               if (data) {
                 if (data.Result === false) {
@@ -98833,29 +100276,29 @@ function AddISSUERDialog(props) {
                 }
               }
 
-              _context2.next = 18;
+              _context4.next = 18;
               break;
 
             case 15:
-              _context2.prev = 15;
-              _context2.t0 = _context2["catch"](0);
+              _context4.prev = 15;
+              _context4.t0 = _context4["catch"](0);
               setErrorMessage(error.toString());
 
             case 18:
-              _context2.prev = 18;
+              _context4.prev = 18;
               setProcessReadCertificate(false);
-              return _context2.finish(18);
+              return _context4.finish(18);
 
             case 21:
             case "end":
-              return _context2.stop();
+              return _context4.stop();
           }
         }
-      }, _callee2, null, [[0, 15, 18, 21]]);
+      }, _callee4, null, [[0, 15, 18, 21]]);
     }));
 
     return function readCertificate() {
-      return _ref2.apply(this, arguments);
+      return _ref4.apply(this, arguments);
     };
   }();
 
@@ -98894,9 +100337,9 @@ function AddISSUERDialog(props) {
     maxWidth: "lg"
   }, /*#__PURE__*/react.createElement(DialogTitle/* default */.Z, {
     id: "form-dialog-title"
-  }, "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u0438\u0437\u0434\u0430\u0442\u0435\u043B\u044F"), /*#__PURE__*/react.createElement(DialogContent/* default */.Z, null, /*#__PURE__*/react.createElement(DialogContentText/* default */.Z, null, /*#__PURE__*/react.createElement("div", {
+  }, "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u0438\u0437\u0434\u0430\u0442\u0435\u043B\u044F"), /*#__PURE__*/react.createElement(DialogContent/* default */.Z, null, /*#__PURE__*/react.createElement("div", {
     className: "RedText"
-  }, errorMessage)), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Stepper/* default */.Z, {
+  }, errorMessage), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Stepper/* default */.Z, {
     activeStep: activeStep,
     orientation: "vertical"
   }, /*#__PURE__*/react.createElement(Step/* default */.Z, {
@@ -98913,8 +100356,12 @@ function AddISSUERDialog(props) {
     disabled: file == null
   }, "\u0414\u0430\u043B\u0435\u0435")))), /*#__PURE__*/react.createElement(Step/* default */.Z, {
     key: 1
-  }, /*#__PURE__*/react.createElement(StepLabel/* default */.Z, null, "\u041F\u0440\u043E\u0441\u043C\u043E\u0442\u0440 \u0434\u0430\u043D\u043D\u044B\u0445 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u0430"), /*#__PURE__*/react.createElement(StepContent/* default */.Z, null, certInfo != null ? /*#__PURE__*/react.createElement(CertList, {
-    items: certInfo.Data
+  }, /*#__PURE__*/react.createElement(StepLabel/* default */.Z, null, "\u041F\u0440\u043E\u0441\u043C\u043E\u0442\u0440 \u0434\u0430\u043D\u043D\u044B\u0445 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u0430"), /*#__PURE__*/react.createElement(StepContent/* default */.Z, null, processReadCertificate ? /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(CircularProgress/* default */.Z, {
+    size: "25px"
+  }), /*#__PURE__*/react.createElement("div", {
+    className: "BoldText"
+  }, "\u041F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u0430 \u043D\u0430 \u0441\u0435\u0440\u0432\u0435\u0440\u0435")) : null, certInfo != null ? /*#__PURE__*/react.createElement(CertList, {
+    certInfo: certInfo
   }) : /*#__PURE__*/react.createElement("div", null), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Button/* default */.Z, {
     className: classes.button,
     disabled: activeStep === 0,
@@ -99006,64 +100453,50 @@ function AddISSUER(props) {
       setProcessSaveIssuer = _React$useState24[1];
 
   var saveIssuer = /*#__PURE__*/function () {
-    var _ref3 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee3() {
-      var formData, requestOptions, response, result;
-      return regenerator_default().wrap(function _callee3$(_context3) {
+    var _ref5 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee5() {
+      return regenerator_default().wrap(function _callee5$(_context5) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context5.prev = _context5.next) {
             case 0:
-              _context3.prev = 0;
+              _context5.prev = 0;
               setProcessSaveIssuer(true);
-              formData = new FormData();
-              formData.append("File", file, file.name);
-              formData.append("CAPTION", certData.CAPTION);
-              formData.append("DATE_B", certData.DATE_B.toLocaleDateString());
-              if (certData.DATE_E != null) formData.append("DATE_E", certData.DATE_E.toLocaleDateString());
-              requestOptions = {
-                method: "POST",
-                body: formData
-              };
-              _context3.next = 10;
-              return window.fetch("AddISSUER", requestOptions);
+              _context5.next = 4;
+              return IssuerList_repo.AddISSUER(file, certData.CAPTION, certData.DATE_B, certData.DATE_E);
 
-            case 10:
-              response = _context3.sent;
-              _context3.next = 13;
-              return response.json();
-
-            case 13:
-              result = _context3.sent;
-              if (result.Result === true) onSave();else setValidationErr(result.Value);
-              _context3.next = 20;
+            case 4:
+              onSave();
+              _context5.next = 10;
               break;
 
-            case 17:
-              _context3.prev = 17;
-              _context3.t0 = _context3["catch"](0);
-              setValidationErr(_context3.t0.toString());
+            case 7:
+              _context5.prev = 7;
+              _context5.t0 = _context5["catch"](0);
+              setValidationErr(_context5.t0.toString());
 
-            case 20:
-              _context3.prev = 20;
+            case 10:
+              _context5.prev = 10;
               setProcessSaveIssuer(false);
-              return _context3.finish(20);
+              return _context5.finish(10);
 
-            case 23:
+            case 13:
             case "end":
-              return _context3.stop();
+              return _context5.stop();
           }
         }
-      }, _callee3, null, [[0, 17, 20, 23]]);
+      }, _callee5, null, [[0, 7, 10, 13]]);
     }));
 
     return function saveIssuer() {
-      return _ref3.apply(this, arguments);
+      return _ref5.apply(this, arguments);
     };
   }();
 
   return /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, validationErr != null ? /*#__PURE__*/react.createElement("ul", {
     className: "ErrorLi"
-  }, Array.isArray(validationErr) ? validationErr.map(function (value) {
-    return /*#__PURE__*/react.createElement("li", null, value);
+  }, Array.isArray(validationErr) ? validationErr.map(function (value, index) {
+    return /*#__PURE__*/react.createElement("li", {
+      key: index
+    }, value);
   }) : validationErr) : null), /*#__PURE__*/react.createElement("div", null, " ", /*#__PURE__*/react.createElement(TextField/* default */.Z, {
     autoFocus: true,
     margin: "dense",
@@ -99110,6 +100543,8 @@ function AddISSUER(props) {
 }
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js + 2 modules
 var toConsumableArray = __webpack_require__(93433);
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/MenuItem/MenuItem.js
+var MenuItem = __webpack_require__(85639);
 ;// CONCATENATED MODULE: ./SignApp/Cades/CryptoAPI.js
 
 
@@ -99124,6 +100559,10 @@ var ProviderSupport = [{
   FriendlyName: "ГОСТ Р 34.10-2012 256 бит",
   Value: "1.2.643.7.1.1.1.1",
   algorithm: cadesplugin.CADESCOM_HASH_ALGORITHM_CP_GOST_3411_2012_256
+}, {
+  FriendlyName: "ГОСТ Р 34.10-2012 512 бит",
+  Value: "1.2.643.7.1.1.1.2",
+  algorithm: cadesplugin.CADESCOM_HASH_ALGORITHM_CP_GOST_3411_2012_512
 }];
 function activatePluginAsync() {
   return _activatePluginAsync.apply(this, arguments);
@@ -99754,14 +101193,19 @@ function SingDialog(props) {
       currentCert = _React$useState8[0],
       setCurrentCert = _React$useState8[1];
 
+  var _React$useState9 = react.useState(false),
+      _React$useState10 = (0,slicedToArray/* default */.Z)(_React$useState9, 2),
+      signProcess = _React$useState10[0],
+      setSignProcess = _React$useState10[1];
+
   var handleClose = function handleClose() {
     onClose();
   };
 
-  var _React$useState9 = react.useState(false),
-      _React$useState10 = (0,slicedToArray/* default */.Z)(_React$useState9, 2),
-      checkingPlugin = _React$useState10[0],
-      setCheckingPlugin = _React$useState10[1];
+  var _React$useState11 = react.useState(false),
+      _React$useState12 = (0,slicedToArray/* default */.Z)(_React$useState11, 2),
+      checkingPlugin = _React$useState12[0],
+      setCheckingPlugin = _React$useState12[1];
 
   (0,react.useEffect)( /*#__PURE__*/(0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee() {
     var data;
@@ -99958,10 +101402,10 @@ function SingDialog(props) {
     };
   }();
 
-  var _React$useState11 = react.useState(""),
-      _React$useState12 = (0,slicedToArray/* default */.Z)(_React$useState11, 2),
-      singErr = _React$useState12[0],
-      setSignErr = _React$useState12[1];
+  var _React$useState13 = react.useState(""),
+      _React$useState14 = (0,slicedToArray/* default */.Z)(_React$useState13, 2),
+      singErr = _React$useState14[0],
+      setSignErr = _React$useState14[1];
 
   var signFiles = /*#__PURE__*/function () {
     var _ref5 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee5() {
@@ -99972,104 +101416,120 @@ function SingDialog(props) {
           switch (_context5.prev = _context5.next) {
             case 0:
               countOk = 0;
+              _context5.prev = 1;
+              setSignProcess(true);
               _iterator = _createForOfIteratorHelper(signList);
-              _context5.prev = 2;
+              _context5.prev = 4;
 
               _iterator.s();
 
-            case 4:
+            case 6:
               if ((_step = _iterator.n()).done) {
-                _context5.next = 30;
+                _context5.next = 32;
                 break;
               }
 
               signItem = _step.value;
               docForSignId = signItem.DOC_FOR_SIGN_ID;
               updateItemState(signItem, 1, "Загрузка файла с сервера");
-              _context5.next = 10;
+              _context5.next = 12;
               return downloadFile(docForSignId);
 
-            case 10:
+            case 12:
               file = _context5.sent;
 
               if (!file.Valid) {
-                _context5.next = 27;
+                _context5.next = 29;
                 break;
               }
 
               updateItemState(signItem, 1, "Подпись файла");
-              _context5.next = 15;
+              _context5.next = 17;
               return SignFile(file.File.FileContents, currentCert.SerialNumber);
 
-            case 15:
+            case 17:
               sign = _context5.sent;
 
               if (!sign.Result) {
-                _context5.next = 24;
+                _context5.next = 26;
                 break;
               }
 
               updateItemState(signItem, 1, "Отправка подписи");
-              _context5.next = 20;
+              _context5.next = 22;
               return sendSignFile(sign.SIGN, docForSignId);
 
-            case 20:
+            case 22:
               res = _context5.sent;
 
               if (res.Valid) {
                 updateItemState(signItem, 2, "Файл подписан");
                 countOk++;
               } else {
-                updateItemState(signItem, 3, res.Error);
+                updateItemState(signItem, 3, "\u041E\u0448\u0438\u0431\u043A\u0430 \u0441\u0435\u0440\u0432\u0435\u0440\u0430: ".concat(res.Error));
               }
 
-              _context5.next = 25;
+              _context5.next = 27;
               break;
 
-            case 24:
-              updateItemState(signItem, 3, sign.Error);
-
-            case 25:
-              _context5.next = 28;
-              break;
+            case 26:
+              updateItemState(signItem, 3, "\u041E\u0448\u0438\u0431\u043A\u0430 \u043A\u043B\u0438\u0435\u043D\u0442\u0430: ".concat(sign.Error));
 
             case 27:
-              updateItemState(signItem, 3, file.Error);
-
-            case 28:
-              _context5.next = 4;
+              _context5.next = 30;
               break;
 
+            case 29:
+              updateItemState(signItem, 3, "\u041E\u0448\u0438\u0431\u043A\u0430 \u043A\u043B\u0438\u0435\u043D\u0442\u0430: ".concat(file.Error));
+
             case 30:
-              _context5.next = 35;
+              _context5.next = 6;
               break;
 
             case 32:
-              _context5.prev = 32;
-              _context5.t0 = _context5["catch"](2);
+              _context5.next = 37;
+              break;
+
+            case 34:
+              _context5.prev = 34;
+              _context5.t0 = _context5["catch"](4);
 
               _iterator.e(_context5.t0);
 
-            case 35:
-              _context5.prev = 35;
+            case 37:
+              _context5.prev = 37;
 
               _iterator.f();
 
-              return _context5.finish(35);
+              return _context5.finish(37);
 
-            case 38:
+            case 40:
+              _context5.next = 45;
+              break;
+
+            case 42:
+              _context5.prev = 42;
+              _context5.t1 = _context5["catch"](1);
+              alert();
+
+            case 45:
+              _context5.prev = 45;
+              setSignProcess(false);
+
               if (countOk === signList.length) {
                 onSave();
               } else {
                 setSignErr("\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u0442\u044C: ".concat(signList.length - countOk, " \u0444\u0430\u0439\u043B\u043E\u0432"));
               }
 
-            case 39:
+              return _context5.finish(45);
+
+            case 49:
             case "end":
               return _context5.stop();
           }
         }
-      }, _callee5, null, [[2, 32, 35, 38]]);
+      }, _callee5, null, [[1, 42, 45, 49], [4, 34, 37, 40]]);
     }));
 
     return function signFiles() {
@@ -100104,13 +101564,13 @@ function SingDialog(props) {
       case 2:
         return /*#__PURE__*/react.createElement("img", {
           width: "25px",
-          src: "/Image/IconOK.png"
+          src: "../Image/IconOK.png"
         });
 
       case 3:
         return /*#__PURE__*/react.createElement("img", {
           width: "25px",
-          src: "/Image/IconERROR.png"
+          src: "../Image/IconERROR.png"
         });
 
       default:
@@ -100126,13 +101586,15 @@ function SingDialog(props) {
     maxWidth: "lg"
   }, /*#__PURE__*/react.createElement(DialogTitle/* default */.Z, {
     id: "form-dialog-title"
-  }, "\u041F\u043E\u0434\u043F\u0438\u0441\u0430\u0442\u044C \u0444\u0430\u0439\u043B"), /*#__PURE__*/react.createElement(DialogContent/* default */.Z, null, /*#__PURE__*/react.createElement(DialogContentText/* default */.Z, null), /*#__PURE__*/react.createElement("div", null, " ", signList != null ? /*#__PURE__*/react.createElement("table", {
+  }, "\u041F\u043E\u0434\u043F\u0438\u0441\u0430\u0442\u044C \u0444\u0430\u0439\u043B"), /*#__PURE__*/react.createElement(DialogContent/* default */.Z, null, /*#__PURE__*/react.createElement("div", null, " ", signList != null ? /*#__PURE__*/react.createElement("table", {
     className: "table_report"
-  }, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("th", null, "\u0418\u043C\u044F \u0444\u0430\u0439\u043B\u0430"), /*#__PURE__*/react.createElement("th", null, "\u0421\u0442\u0430\u0442\u0443\u0441"), /*#__PURE__*/react.createElement("th", null, "\u0414\u0435\u0439\u0441\u0442\u0432\u0438\u0435")), signList.map(function (value) {
-    return /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, value.FILENAME), /*#__PURE__*/react.createElement("td", null, switchIconStatus(value.isSing)), /*#__PURE__*/react.createElement("td", {
+  }, /*#__PURE__*/react.createElement("tbody", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("th", null, "\u0418\u043C\u044F \u0444\u0430\u0439\u043B\u0430"), /*#__PURE__*/react.createElement("th", null, "\u0421\u0442\u0430\u0442\u0443\u0441"), /*#__PURE__*/react.createElement("th", null, "\u0414\u0435\u0439\u0441\u0442\u0432\u0438\u0435")), signList.map(function (value, index) {
+    return /*#__PURE__*/react.createElement("tr", {
+      key: index
+    }, /*#__PURE__*/react.createElement("td", null, value.FILENAME), /*#__PURE__*/react.createElement("td", null, switchIconStatus(value.isSing)), /*#__PURE__*/react.createElement("td", {
       className: switchClassNameStatusText(value.isSing)
     }, value.Text));
-  })) : null), checkingPlugin ? /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(CircularProgress/* default */.Z, {
+  }))) : null), checkingPlugin ? /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(CircularProgress/* default */.Z, {
     size: "25px"
   })), /*#__PURE__*/react.createElement("div", null, "\u041E\u043F\u0440\u043E\u0441 \u043F\u043B\u0430\u0433\u0438\u043D\u0430")) : null, /*#__PURE__*/react.createElement("div", null, pluginInfo != null ? /*#__PURE__*/react.createElement(PluginInfo, {
     pluginInfo: pluginInfo
@@ -100144,7 +101606,8 @@ function SingDialog(props) {
   }, singErr), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement(Button/* default */.Z, {
     variant: "contained",
     color: "primary",
-    onClick: signFiles
+    onClick: signFiles,
+    disabled: signProcess
   }, "\u041F\u043E\u0434\u043F\u0438\u0441\u0430\u0442\u044C"))));
 }
 
@@ -100154,7 +101617,7 @@ function PluginInfo(props) {
     className: "GreenText"
   }, "\u041F\u043B\u0430\u0433\u0438\u043D \u0434\u043E\u0441\u0442\u0443\u043F\u0435\u043D") : /*#__PURE__*/react.createElement("div", {
     className: "RedText"
-  }, "\u041F\u043B\u0430\u0433\u0438\u043D \u043D\u0435 \u0434\u043E\u0441\u0442\u0443\u043F\u0435\u043D "), /*#__PURE__*/react.createElement("div", null, "\u0412\u0435\u0440\u0441\u0438\u044F \u043F\u043B\u0430\u0433\u0438\u043D\u0430: ", pluginInfo.version), /*#__PURE__*/react.createElement("div", null, "\u041A\u0440\u0438\u043F\u0442\u043E\u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440: ", pluginInfo.cspName), /*#__PURE__*/react.createElement("div", null, "\u0412\u0435\u0440\u0441\u0438\u044F \u043A\u0440\u0438\u043F\u0442\u043E\u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440\u0430: ", pluginInfo.versionCSP));
+  }, "\u041F\u043B\u0430\u0433\u0438\u043D \u043D\u0435 \u0434\u043E\u0441\u0442\u0443\u043F\u0435\u043D"), /*#__PURE__*/react.createElement("div", null, "\u0412\u0435\u0440\u0441\u0438\u044F \u043F\u043B\u0430\u0433\u0438\u043D\u0430: ", pluginInfo.version), /*#__PURE__*/react.createElement("div", null, "\u041A\u0440\u0438\u043F\u0442\u043E\u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440: ", pluginInfo.cspName), /*#__PURE__*/react.createElement("div", null, "\u0412\u0435\u0440\u0441\u0438\u044F \u043A\u0440\u0438\u043F\u0442\u043E\u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440\u0430: ", pluginInfo.versionCSP));
 }
 
 var SignDialog_ListItemStyles = (0,makeStyles/* default */.Z)(function (theme) {
@@ -100173,10 +101636,16 @@ function SignDialog_CertList(props) {
       onSelected = props.onSelected;
   var classes = SignDialog_ListItemStyles();
 
-  var _React$useState13 = react.useState(0),
-      _React$useState14 = (0,slicedToArray/* default */.Z)(_React$useState13, 2),
-      selectedIndex = _React$useState14[0],
-      setselectedIndex = _React$useState14[1];
+  var _React$useState15 = react.useState(0),
+      _React$useState16 = (0,slicedToArray/* default */.Z)(_React$useState15, 2),
+      selectedIndex = _React$useState16[0],
+      setselectedIndex = _React$useState16[1];
+
+  react.useEffect(function () {
+    if (items.length != 0) {
+      handleListItemClick(null, 0);
+    }
+  }, [items]);
 
   var handleListItemClick = function handleListItemClick(event, index) {
     setselectedIndex(index);
@@ -100195,6 +101664,7 @@ function SignDialog_CertList(props) {
     "aria-label": "secondary mailbox folder"
   }, items.map(function (value, index) {
     return /*#__PURE__*/react.createElement(ListItem/* default */.Z, {
+      key: index,
       className: value.isSupportAlg ? classes.green : classes.red,
       selected: selectedIndex === index,
       button: true,
@@ -100220,12 +101690,1607 @@ function InfoCert(props) {
     className: "RedText"
   }, "\u041D\u0435 \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0435\u043C\u044B\u0439 \u0430\u043B\u0433\u043E\u0440\u0438\u0442\u043C \u043A\u043B\u044E\u0447\u0430") : null, /*#__PURE__*/react.createElement("table", {
     className: "table_report"
-  }, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("th", null, "\u041F\u0430\u0440\u0430\u043C\u0435\u0442\u0440"), /*#__PURE__*/react.createElement("th", null, "\u0417\u043D\u0430\u0447\u0435\u043D\u0438\u0435")), cert.CertName != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0412\u043B\u0430\u0434\u0435\u043B\u0435\u0446"), /*#__PURE__*/react.createElement("td", null, cert.CertName)) : null, cert.FIO != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0424\u0418\u041E \u0432\u043B\u0430\u0434\u0435\u043B\u044C\u0446\u0430"), /*#__PURE__*/react.createElement("td", null, cert.FIO)) : null, cert.ValidFromDate != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0412\u044B\u0434\u0430\u043D"), /*#__PURE__*/react.createElement("td", null, format(cert.ValidFromDate, "dd-MM-yyyy"))) : null, cert.ValidToDate != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0414\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043B\u0435\u043D \u0434\u043E:"), /*#__PURE__*/react.createElement("td", null, format(cert.ValidToDate, "dd-MM-yyyy"))) : null, cert.ProviderName != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u041A\u0440\u0438\u043F\u0442\u043E\u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440"), /*#__PURE__*/react.createElement("td", null, cert.ProviderName)) : null, cert.FriendlyName != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0410\u043B\u0433\u043E\u0440\u0438\u0442\u043C \u043A\u043B\u044E\u0447\u0430"), /*#__PURE__*/react.createElement("td", null, cert.FriendlyName)) : null)) : /*#__PURE__*/react.createElement("div", null);
+  }, /*#__PURE__*/react.createElement("tbody", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("th", null, "\u041F\u0430\u0440\u0430\u043C\u0435\u0442\u0440"), /*#__PURE__*/react.createElement("th", null, "\u0417\u043D\u0430\u0447\u0435\u043D\u0438\u0435")), cert.CertName != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0412\u043B\u0430\u0434\u0435\u043B\u0435\u0446"), /*#__PURE__*/react.createElement("td", null, cert.CertName)) : null, cert.FIO != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0424\u0418\u041E \u0432\u043B\u0430\u0434\u0435\u043B\u044C\u0446\u0430"), /*#__PURE__*/react.createElement("td", null, cert.FIO)) : null, cert.ValidFromDate != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0412\u044B\u0434\u0430\u043D"), /*#__PURE__*/react.createElement("td", null, format(cert.ValidFromDate, "dd-MM-yyyy"))) : null, cert.ValidToDate != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0414\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043B\u0435\u043D \u0434\u043E:"), /*#__PURE__*/react.createElement("td", null, format(cert.ValidToDate, "dd-MM-yyyy"))) : null, cert.ProviderName != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u041A\u0440\u0438\u043F\u0442\u043E\u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440"), /*#__PURE__*/react.createElement("td", null, cert.ProviderName)) : null, cert.FriendlyName != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0410\u043B\u0433\u043E\u0440\u0438\u0442\u043C \u043A\u043B\u044E\u0447\u0430"), /*#__PURE__*/react.createElement("td", null, cert.FriendlyName)) : null))) : null;
 }
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/Divider/Divider.js
+var Divider = __webpack_require__(55517);
+// EXTERNAL MODULE: ./node_modules/classnames/index.js
+var classnames = __webpack_require__(94184);
+var classnames_default = /*#__PURE__*/__webpack_require__.n(classnames);
+// EXTERNAL MODULE: ./node_modules/object-assign/index.js
+var object_assign = __webpack_require__(27418);
+var object_assign_default = /*#__PURE__*/__webpack_require__.n(object_assign);
+;// CONCATENATED MODULE: ./node_modules/react-contextmenu/es6/helpers.js
+function callIfExists(func) {
+    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+    }
+
+    return typeof func === 'function' && func.apply(undefined, args);
+}
+
+function hasOwnProp(obj, prop) {
+    return Object.prototype.hasOwnProperty.call(obj, prop);
+}
+
+function uniqueId() {
+    return Math.random().toString(36).substring(7);
+}
+
+var cssClasses = {
+    menu: 'react-contextmenu',
+    menuVisible: 'react-contextmenu--visible',
+    menuWrapper: 'react-contextmenu-wrapper',
+    menuItem: 'react-contextmenu-item',
+    menuItemActive: 'react-contextmenu-item--active',
+    menuItemDisabled: 'react-contextmenu-item--disabled',
+    menuItemDivider: 'react-contextmenu-item--divider',
+    menuItemSelected: 'react-contextmenu-item--selected',
+    subMenu: 'react-contextmenu-submenu'
+};
+
+var store = {};
+
+var canUseDOM = Boolean(typeof window !== 'undefined' && window.document && window.document.createElement);
+;// CONCATENATED MODULE: ./node_modules/react-contextmenu/es6/actions.js
+
+
+
+
+var MENU_SHOW = 'REACT_CONTEXTMENU_SHOW';
+var MENU_HIDE = 'REACT_CONTEXTMENU_HIDE';
+
+function dispatchGlobalEvent(eventName, opts) {
+    var target = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : window;
+
+    // Compatibale with IE
+    // @see http://stackoverflow.com/questions/26596123/internet-explorer-9-10-11-event-constructor-doesnt-work
+    var event = void 0;
+
+    if (typeof window.CustomEvent === 'function') {
+        event = new window.CustomEvent(eventName, { detail: opts });
+    } else {
+        event = document.createEvent('CustomEvent');
+        event.initCustomEvent(eventName, false, true, opts);
+    }
+
+    if (target) {
+        target.dispatchEvent(event);
+        object_assign_default()(store, opts);
+    }
+}
+
+function showMenu() {
+    var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var target = arguments[1];
+
+    dispatchGlobalEvent(MENU_SHOW, object_assign_default()({}, opts, { type: MENU_SHOW }), target);
+}
+
+function hideMenu() {
+    var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var target = arguments[1];
+
+    dispatchGlobalEvent(MENU_HIDE, object_assign_default()({}, opts, { type: MENU_HIDE }), target);
+}
+;// CONCATENATED MODULE: ./node_modules/react-contextmenu/es6/globalEventListener.js
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+
+
+var GlobalEventListener = function GlobalEventListener() {
+    var _this = this;
+
+    _classCallCheck(this, GlobalEventListener);
+
+    this.handleShowEvent = function (event) {
+        for (var id in _this.callbacks) {
+            if (hasOwnProp(_this.callbacks, id)) _this.callbacks[id].show(event);
+        }
+    };
+
+    this.handleHideEvent = function (event) {
+        for (var id in _this.callbacks) {
+            if (hasOwnProp(_this.callbacks, id)) _this.callbacks[id].hide(event);
+        }
+    };
+
+    this.register = function (showCallback, hideCallback) {
+        var id = uniqueId();
+
+        _this.callbacks[id] = {
+            show: showCallback,
+            hide: hideCallback
+        };
+
+        return id;
+    };
+
+    this.unregister = function (id) {
+        if (id && _this.callbacks[id]) {
+            delete _this.callbacks[id];
+        }
+    };
+
+    this.callbacks = {};
+
+    if (canUseDOM) {
+        window.addEventListener(MENU_SHOW, this.handleShowEvent);
+        window.addEventListener(MENU_HIDE, this.handleHideEvent);
+    }
+};
+
+/* harmony default export */ const globalEventListener = (new GlobalEventListener());
+;// CONCATENATED MODULE: ./node_modules/react-contextmenu/es6/MenuItem.js
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function MenuItem_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+
+
+var MenuItem_MenuItem = function (_Component) {
+    _inherits(MenuItem, _Component);
+
+    function MenuItem() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        MenuItem_classCallCheck(this, MenuItem);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = MenuItem.__proto__ || Object.getPrototypeOf(MenuItem)).call.apply(_ref, [this].concat(args))), _this), _this.handleClick = function (event) {
+            if (event.button !== 0 && event.button !== 1) {
+                event.preventDefault();
+            }
+
+            if (_this.props.disabled || _this.props.divider) return;
+
+            callIfExists(_this.props.onClick, event, object_assign_default()({}, _this.props.data, store.data), store.target);
+
+            if (_this.props.preventClose) return;
+
+            hideMenu();
+        }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(MenuItem, [{
+        key: 'render',
+        value: function render() {
+            var _cx,
+                _this2 = this;
+
+            var _props = this.props,
+                attributes = _props.attributes,
+                children = _props.children,
+                className = _props.className,
+                disabled = _props.disabled,
+                divider = _props.divider,
+                selected = _props.selected;
+
+
+            var menuItemClassNames = classnames_default()(className, cssClasses.menuItem, attributes.className, (_cx = {}, _defineProperty(_cx, classnames_default()(cssClasses.menuItemDisabled, attributes.disabledClassName), disabled), _defineProperty(_cx, classnames_default()(cssClasses.menuItemDivider, attributes.dividerClassName), divider), _defineProperty(_cx, classnames_default()(cssClasses.menuItemSelected, attributes.selectedClassName), selected), _cx));
+
+            return react.createElement(
+                'div',
+                _extends({}, attributes, { className: menuItemClassNames,
+                    role: 'menuitem', tabIndex: '-1', 'aria-disabled': disabled ? 'true' : 'false',
+                    'aria-orientation': divider ? 'horizontal' : null,
+                    ref: function ref(_ref2) {
+                        _this2.ref = _ref2;
+                    },
+                    onMouseMove: this.props.onMouseMove, onMouseLeave: this.props.onMouseLeave,
+                    onTouchEnd: this.handleClick, onClick: this.handleClick }),
+                divider ? null : children
+            );
+        }
+    }]);
+
+    return MenuItem;
+}(react.Component);
+
+MenuItem_MenuItem.propTypes = {
+    attributes: (prop_types_default()).object,
+    children: (prop_types_default()).node,
+    className: (prop_types_default()).string,
+    data: (prop_types_default()).object,
+    disabled: (prop_types_default()).bool,
+    divider: (prop_types_default()).bool,
+    onClick: (prop_types_default()).func,
+    onMouseLeave: (prop_types_default()).func,
+    onMouseMove: (prop_types_default()).func,
+    preventClose: (prop_types_default()).bool,
+    selected: (prop_types_default()).bool
+};
+MenuItem_MenuItem.defaultProps = {
+    attributes: {},
+    children: null,
+    className: '',
+    data: {},
+    disabled: false,
+    divider: false,
+    onClick: function onClick() {
+        return null;
+    },
+
+    onMouseMove: function onMouseMove() {
+        return null;
+    },
+    onMouseLeave: function onMouseLeave() {
+        return null;
+    },
+    preventClose: false,
+    selected: false
+};
+/* harmony default export */ const es6_MenuItem = (MenuItem_MenuItem);
+;// CONCATENATED MODULE: ./node_modules/react-contextmenu/es6/AbstractMenu.js
+function AbstractMenu_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function AbstractMenu_possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function AbstractMenu_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+var AbstractMenu = function (_Component) {
+    AbstractMenu_inherits(AbstractMenu, _Component);
+
+    function AbstractMenu(props) {
+        AbstractMenu_classCallCheck(this, AbstractMenu);
+
+        var _this = AbstractMenu_possibleConstructorReturn(this, (AbstractMenu.__proto__ || Object.getPrototypeOf(AbstractMenu)).call(this, props));
+
+        _initialiseProps.call(_this);
+
+        _this.seletedItemRef = null;
+        _this.state = {
+            selectedItem: null,
+            forceSubMenuOpen: false
+        };
+        return _this;
+    }
+
+    return AbstractMenu;
+}(react.Component);
+
+AbstractMenu.propTypes = {
+    children: (prop_types_default()).node.isRequired
+};
+
+var _initialiseProps = function _initialiseProps() {
+    var _this2 = this;
+
+    this.handleKeyNavigation = function (e) {
+        // check for isVisible strictly here as it might be undefined when this code executes in the context of SubMenu
+        // but we only need to check when it runs in the ContextMenu context
+        if (_this2.state.isVisible === false) {
+            return;
+        }
+
+        switch (e.keyCode) {
+            case 37: // left arrow
+            case 27:
+                // escape
+                e.preventDefault();
+                _this2.hideMenu(e);
+                break;
+            case 38:
+                // up arrow
+                e.preventDefault();
+                _this2.selectChildren(true);
+                break;
+            case 40:
+                // down arrow
+                e.preventDefault();
+                _this2.selectChildren(false);
+                break;
+            case 39:
+                // right arrow
+                _this2.tryToOpenSubMenu(e);
+                break;
+            case 13:
+                // enter
+                e.preventDefault();
+                _this2.tryToOpenSubMenu(e);
+                {
+                    // determine the selected item is disabled or not
+                    var disabled = _this2.seletedItemRef && _this2.seletedItemRef.props && _this2.seletedItemRef.props.disabled;
+
+                    if (_this2.seletedItemRef && _this2.seletedItemRef.ref instanceof HTMLElement && !disabled) {
+                        _this2.seletedItemRef.ref.click();
+                    } else {
+                        _this2.hideMenu(e);
+                    }
+                }
+                break;
+            default:
+            // do nothing
+        }
+    };
+
+    this.handleForceClose = function () {
+        _this2.setState({ forceSubMenuOpen: false });
+    };
+
+    this.tryToOpenSubMenu = function (e) {
+        if (_this2.state.selectedItem && _this2.state.selectedItem.type === _this2.getSubMenuType()) {
+            e.preventDefault();
+            _this2.setState({ forceSubMenuOpen: true });
+        }
+    };
+
+    this.selectChildren = function (forward) {
+        var selectedItem = _this2.state.selectedItem;
+
+        var children = [];
+        var disabledChildrenCount = 0;
+        var disabledChildIndexes = {};
+
+        var childCollector = function childCollector(child, index) {
+            // child can be empty in case you do conditional rendering of components, in which
+            // case it should not be accounted for as a real child
+            if (!child) {
+                return;
+            }
+
+            if ([es6_MenuItem, _this2.getSubMenuType()].indexOf(child.type) < 0) {
+                // Maybe the MenuItem or SubMenu is capsuled in a wrapper div or something else
+                react.Children.forEach(child.props.children, childCollector);
+            } else if (!child.props.divider) {
+                if (child.props.disabled) {
+                    ++disabledChildrenCount;
+                    disabledChildIndexes[index] = true;
+                }
+
+                children.push(child);
+            }
+        };
+
+        react.Children.forEach(_this2.props.children, childCollector);
+        if (disabledChildrenCount === children.length) {
+            // All menu items are disabled, so none can be selected, don't do anything
+            return;
+        }
+
+        function findNextEnabledChildIndex(currentIndex) {
+            var i = currentIndex;
+            var incrementCounter = function incrementCounter() {
+                if (forward) {
+                    --i;
+                } else {
+                    ++i;
+                }
+
+                if (i < 0) {
+                    i = children.length - 1;
+                } else if (i >= children.length) {
+                    i = 0;
+                }
+            };
+
+            do {
+                incrementCounter();
+            } while (i !== currentIndex && disabledChildIndexes[i]);
+
+            return i === currentIndex ? null : i;
+        }
+
+        var currentIndex = children.indexOf(selectedItem);
+        var nextEnabledChildIndex = findNextEnabledChildIndex(currentIndex);
+
+        if (nextEnabledChildIndex !== null) {
+            _this2.setState({
+                selectedItem: children[nextEnabledChildIndex],
+                forceSubMenuOpen: false
+            });
+        }
+    };
+
+    this.onChildMouseMove = function (child) {
+        if (_this2.state.selectedItem !== child) {
+            _this2.setState({ selectedItem: child, forceSubMenuOpen: false });
+        }
+    };
+
+    this.onChildMouseLeave = function () {
+        _this2.setState({ selectedItem: null, forceSubMenuOpen: false });
+    };
+
+    this.renderChildren = function (children) {
+        return react.Children.map(children, function (child) {
+            var props = {};
+            if (!react.isValidElement(child)) return child;
+            if ([es6_MenuItem, _this2.getSubMenuType()].indexOf(child.type) < 0) {
+                // Maybe the MenuItem or SubMenu is capsuled in a wrapper div or something else
+                props.children = _this2.renderChildren(child.props.children);
+                return react.cloneElement(child, props);
+            }
+            props.onMouseLeave = _this2.onChildMouseLeave.bind(_this2);
+            if (child.type === _this2.getSubMenuType()) {
+                // special props for SubMenu only
+                props.forceOpen = _this2.state.forceSubMenuOpen && _this2.state.selectedItem === child;
+                props.forceClose = _this2.handleForceClose;
+                props.parentKeyNavigationHandler = _this2.handleKeyNavigation;
+            }
+            if (!child.props.divider && _this2.state.selectedItem === child) {
+                // special props for selected item only
+                props.selected = true;
+                props.ref = function (ref) {
+                    _this2.seletedItemRef = ref;
+                };
+                return react.cloneElement(child, props);
+            }
+            // onMouseMove is only needed for non selected items
+            props.onMouseMove = function () {
+                return _this2.onChildMouseMove(child);
+            };
+            return react.cloneElement(child, props);
+        });
+    };
+};
+
+/* harmony default export */ const es6_AbstractMenu = (AbstractMenu);
+;// CONCATENATED MODULE: ./node_modules/react-contextmenu/es6/SubMenu.js
+var SubMenu_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var SubMenu_createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function SubMenu_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function SubMenu_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function SubMenu_possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function SubMenu_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+
+
+
+
+var SubMenu = function (_AbstractMenu) {
+    SubMenu_inherits(SubMenu, _AbstractMenu);
+
+    function SubMenu(props) {
+        SubMenu_classCallCheck(this, SubMenu);
+
+        var _this = SubMenu_possibleConstructorReturn(this, (SubMenu.__proto__ || Object.getPrototypeOf(SubMenu)).call(this, props));
+
+        _this.getMenuPosition = function () {
+            var _window = window,
+                innerWidth = _window.innerWidth,
+                innerHeight = _window.innerHeight;
+
+            var rect = _this.subMenu.getBoundingClientRect();
+            var position = {};
+
+            if (rect.bottom > innerHeight) {
+                position.bottom = 0;
+            } else {
+                position.top = 0;
+            }
+
+            if (rect.right < innerWidth) {
+                position.left = '100%';
+            } else {
+                position.right = '100%';
+            }
+
+            return position;
+        };
+
+        _this.getRTLMenuPosition = function () {
+            var _window2 = window,
+                innerHeight = _window2.innerHeight;
+
+            var rect = _this.subMenu.getBoundingClientRect();
+            var position = {};
+
+            if (rect.bottom > innerHeight) {
+                position.bottom = 0;
+            } else {
+                position.top = 0;
+            }
+
+            if (rect.left < 0) {
+                position.left = '100%';
+            } else {
+                position.right = '100%';
+            }
+
+            return position;
+        };
+
+        _this.hideSubMenu = function (e) {
+            // avoid closing submenus of a different menu tree
+            if (e.detail && e.detail.id && _this.menu && e.detail.id !== _this.menu.id) {
+                return;
+            }
+
+            if (_this.props.forceOpen) {
+                _this.props.forceClose();
+            }
+            _this.setState({ visible: false, selectedItem: null });
+            _this.unregisterHandlers();
+        };
+
+        _this.handleClick = function (event) {
+            event.preventDefault();
+
+            if (_this.props.disabled) return;
+
+            callIfExists(_this.props.onClick, event, object_assign_default()({}, _this.props.data, store.data), store.target);
+
+            if (!_this.props.onClick || _this.props.preventCloseOnClick) return;
+
+            hideMenu();
+        };
+
+        _this.handleMouseEnter = function () {
+            if (_this.closetimer) clearTimeout(_this.closetimer);
+
+            if (_this.props.disabled || _this.state.visible) return;
+
+            _this.opentimer = setTimeout(function () {
+                return _this.setState({
+                    visible: true,
+                    selectedItem: null
+                });
+            }, _this.props.hoverDelay);
+        };
+
+        _this.handleMouseLeave = function () {
+            if (_this.opentimer) clearTimeout(_this.opentimer);
+
+            if (!_this.state.visible) return;
+
+            _this.closetimer = setTimeout(function () {
+                return _this.setState({
+                    visible: false,
+                    selectedItem: null
+                });
+            }, _this.props.hoverDelay);
+        };
+
+        _this.menuRef = function (c) {
+            _this.menu = c;
+        };
+
+        _this.subMenuRef = function (c) {
+            _this.subMenu = c;
+        };
+
+        _this.registerHandlers = function () {
+            document.removeEventListener('keydown', _this.props.parentKeyNavigationHandler);
+            document.addEventListener('keydown', _this.handleKeyNavigation);
+        };
+
+        _this.unregisterHandlers = function (dismounting) {
+            document.removeEventListener('keydown', _this.handleKeyNavigation);
+            if (!dismounting) {
+                document.addEventListener('keydown', _this.props.parentKeyNavigationHandler);
+            }
+        };
+
+        _this.state = object_assign_default()({}, _this.state, {
+            visible: false
+        });
+        return _this;
+    }
+
+    SubMenu_createClass(SubMenu, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.listenId = globalEventListener.register(function () {}, this.hideSubMenu);
+        }
+    }, {
+        key: 'getSubMenuType',
+        value: function getSubMenuType() {
+            // eslint-disable-line class-methods-use-this
+            return SubMenu;
+        }
+    }, {
+        key: 'shouldComponentUpdate',
+        value: function shouldComponentUpdate(nextProps, nextState) {
+            this.isVisibilityChange = (this.state.visible !== nextState.visible || this.props.forceOpen !== nextProps.forceOpen) && !(this.state.visible && nextProps.forceOpen) && !(this.props.forceOpen && nextState.visible);
+            return true;
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+            var _this2 = this;
+
+            if (!this.isVisibilityChange) return;
+            if (this.props.forceOpen || this.state.visible) {
+                var wrapper = window.requestAnimationFrame || setTimeout;
+                wrapper(function () {
+                    var styles = _this2.props.rtl ? _this2.getRTLMenuPosition() : _this2.getMenuPosition();
+
+                    _this2.subMenu.style.removeProperty('top');
+                    _this2.subMenu.style.removeProperty('bottom');
+                    _this2.subMenu.style.removeProperty('left');
+                    _this2.subMenu.style.removeProperty('right');
+
+                    if (hasOwnProp(styles, 'top')) _this2.subMenu.style.top = styles.top;
+                    if (hasOwnProp(styles, 'left')) _this2.subMenu.style.left = styles.left;
+                    if (hasOwnProp(styles, 'bottom')) _this2.subMenu.style.bottom = styles.bottom;
+                    if (hasOwnProp(styles, 'right')) _this2.subMenu.style.right = styles.right;
+                    _this2.subMenu.classList.add(cssClasses.menuVisible);
+
+                    _this2.registerHandlers();
+                    _this2.setState({ selectedItem: null });
+                });
+            } else {
+                var cleanup = function cleanup() {
+                    _this2.subMenu.removeEventListener('transitionend', cleanup);
+                    _this2.subMenu.style.removeProperty('bottom');
+                    _this2.subMenu.style.removeProperty('right');
+                    _this2.subMenu.style.top = 0;
+                    _this2.subMenu.style.left = '100%';
+                    _this2.unregisterHandlers();
+                };
+                this.subMenu.addEventListener('transitionend', cleanup);
+                this.subMenu.classList.remove(cssClasses.menuVisible);
+            }
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            if (this.listenId) {
+                globalEventListener.unregister(this.listenId);
+            }
+
+            if (this.opentimer) clearTimeout(this.opentimer);
+
+            if (this.closetimer) clearTimeout(this.closetimer);
+
+            this.unregisterHandlers(true);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _cx;
+
+            var _props = this.props,
+                children = _props.children,
+                attributes = _props.attributes,
+                disabled = _props.disabled,
+                title = _props.title,
+                selected = _props.selected;
+            var visible = this.state.visible;
+
+            var menuProps = {
+                ref: this.menuRef,
+                onMouseEnter: this.handleMouseEnter,
+                onMouseLeave: this.handleMouseLeave,
+                className: classnames_default()(cssClasses.menuItem, cssClasses.subMenu, attributes.listClassName),
+                style: {
+                    position: 'relative'
+                }
+            };
+            var menuItemProps = {
+                className: classnames_default()(cssClasses.menuItem, attributes.className, (_cx = {}, SubMenu_defineProperty(_cx, classnames_default()(cssClasses.menuItemDisabled, attributes.disabledClassName), disabled), SubMenu_defineProperty(_cx, classnames_default()(cssClasses.menuItemActive, attributes.visibleClassName), visible), SubMenu_defineProperty(_cx, classnames_default()(cssClasses.menuItemSelected, attributes.selectedClassName), selected), _cx)),
+                onMouseMove: this.props.onMouseMove,
+                onMouseOut: this.props.onMouseOut,
+                onClick: this.handleClick
+            };
+            var subMenuProps = {
+                ref: this.subMenuRef,
+                style: {
+                    position: 'absolute',
+                    transition: 'opacity 1ms', // trigger transitionend event
+                    top: 0,
+                    left: '100%'
+                },
+                className: classnames_default()(cssClasses.menu, this.props.className)
+            };
+
+            return react.createElement(
+                'nav',
+                SubMenu_extends({}, menuProps, { role: 'menuitem', tabIndex: '-1', 'aria-haspopup': 'true' }),
+                react.createElement(
+                    'div',
+                    SubMenu_extends({}, attributes, menuItemProps),
+                    title
+                ),
+                react.createElement(
+                    'nav',
+                    SubMenu_extends({}, subMenuProps, { role: 'menu', tabIndex: '-1' }),
+                    this.renderChildren(children)
+                )
+            );
+        }
+    }]);
+
+    return SubMenu;
+}(es6_AbstractMenu);
+
+SubMenu.propTypes = {
+    children: (prop_types_default()).node.isRequired,
+    attributes: (prop_types_default()).object,
+    title: (prop_types_default()).node.isRequired,
+    className: (prop_types_default()).string,
+    disabled: (prop_types_default()).bool,
+    hoverDelay: (prop_types_default()).number,
+    rtl: (prop_types_default()).bool,
+    selected: (prop_types_default()).bool,
+    onMouseMove: (prop_types_default()).func,
+    onMouseOut: (prop_types_default()).func,
+    forceOpen: (prop_types_default()).bool,
+    forceClose: (prop_types_default()).func,
+    parentKeyNavigationHandler: (prop_types_default()).func
+};
+SubMenu.defaultProps = {
+    disabled: false,
+    hoverDelay: 500,
+    attributes: {},
+    className: '',
+    rtl: false,
+    selected: false,
+    onMouseMove: function onMouseMove() {
+        return null;
+    },
+    onMouseOut: function onMouseOut() {
+        return null;
+    },
+    forceOpen: false,
+    forceClose: function forceClose() {
+        return null;
+    },
+    parentKeyNavigationHandler: function parentKeyNavigationHandler() {
+        return null;
+    }
+};
+/* harmony default export */ const es6_SubMenu = (SubMenu);
+;// CONCATENATED MODULE: ./node_modules/react-contextmenu/es6/ContextMenu.js
+var ContextMenu_createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function ContextMenu_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function ContextMenu_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ContextMenu_possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function ContextMenu_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+
+
+
+
+
+var ContextMenu = function (_AbstractMenu) {
+    ContextMenu_inherits(ContextMenu, _AbstractMenu);
+
+    function ContextMenu(props) {
+        ContextMenu_classCallCheck(this, ContextMenu);
+
+        var _this = ContextMenu_possibleConstructorReturn(this, (ContextMenu.__proto__ || Object.getPrototypeOf(ContextMenu)).call(this, props));
+
+        _this.registerHandlers = function () {
+            document.addEventListener('mousedown', _this.handleOutsideClick);
+            document.addEventListener('touchstart', _this.handleOutsideClick);
+            if (!_this.props.preventHideOnScroll) document.addEventListener('scroll', _this.handleHide);
+            if (!_this.props.preventHideOnContextMenu) document.addEventListener('contextmenu', _this.handleHide);
+            document.addEventListener('keydown', _this.handleKeyNavigation);
+            if (!_this.props.preventHideOnResize) window.addEventListener('resize', _this.handleHide);
+        };
+
+        _this.unregisterHandlers = function () {
+            document.removeEventListener('mousedown', _this.handleOutsideClick);
+            document.removeEventListener('touchstart', _this.handleOutsideClick);
+            document.removeEventListener('scroll', _this.handleHide);
+            document.removeEventListener('contextmenu', _this.handleHide);
+            document.removeEventListener('keydown', _this.handleKeyNavigation);
+            window.removeEventListener('resize', _this.handleHide);
+        };
+
+        _this.handleShow = function (e) {
+            if (e.detail.id !== _this.props.id || _this.state.isVisible) return;
+
+            var _e$detail$position = e.detail.position,
+                x = _e$detail$position.x,
+                y = _e$detail$position.y;
+
+
+            _this.setState({ isVisible: true, x: x, y: y });
+            _this.registerHandlers();
+            callIfExists(_this.props.onShow, e);
+        };
+
+        _this.handleHide = function (e) {
+            if (_this.state.isVisible && (!e.detail || !e.detail.id || e.detail.id === _this.props.id)) {
+                _this.unregisterHandlers();
+                _this.setState({ isVisible: false, selectedItem: null, forceSubMenuOpen: false });
+                callIfExists(_this.props.onHide, e);
+            }
+        };
+
+        _this.handleOutsideClick = function (e) {
+            if (!_this.menu.contains(e.target)) hideMenu();
+        };
+
+        _this.handleMouseLeave = function (event) {
+            event.preventDefault();
+
+            callIfExists(_this.props.onMouseLeave, event, object_assign_default()({}, _this.props.data, store.data), store.target);
+
+            if (_this.props.hideOnLeave) hideMenu();
+        };
+
+        _this.handleContextMenu = function (e) {
+            if (true) {
+                e.preventDefault();
+            }
+            _this.handleHide(e);
+        };
+
+        _this.hideMenu = function (e) {
+            if (e.keyCode === 27 || e.keyCode === 13) {
+                // ECS or enter
+                hideMenu();
+            }
+        };
+
+        _this.getMenuPosition = function () {
+            var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+            var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+            var menuStyles = {
+                top: y,
+                left: x
+            };
+
+            if (!_this.menu) return menuStyles;
+
+            var _window = window,
+                innerWidth = _window.innerWidth,
+                innerHeight = _window.innerHeight;
+
+            var rect = _this.menu.getBoundingClientRect();
+
+            if (y + rect.height > innerHeight) {
+                menuStyles.top -= rect.height;
+            }
+
+            if (x + rect.width > innerWidth) {
+                menuStyles.left -= rect.width;
+            }
+
+            if (menuStyles.top < 0) {
+                menuStyles.top = rect.height < innerHeight ? (innerHeight - rect.height) / 2 : 0;
+            }
+
+            if (menuStyles.left < 0) {
+                menuStyles.left = rect.width < innerWidth ? (innerWidth - rect.width) / 2 : 0;
+            }
+
+            return menuStyles;
+        };
+
+        _this.getRTLMenuPosition = function () {
+            var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+            var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+            var menuStyles = {
+                top: y,
+                left: x
+            };
+
+            if (!_this.menu) return menuStyles;
+
+            var _window2 = window,
+                innerWidth = _window2.innerWidth,
+                innerHeight = _window2.innerHeight;
+
+            var rect = _this.menu.getBoundingClientRect();
+
+            // Try to position the menu on the left side of the cursor
+            menuStyles.left = x - rect.width;
+
+            if (y + rect.height > innerHeight) {
+                menuStyles.top -= rect.height;
+            }
+
+            if (menuStyles.left < 0) {
+                menuStyles.left += rect.width;
+            }
+
+            if (menuStyles.top < 0) {
+                menuStyles.top = rect.height < innerHeight ? (innerHeight - rect.height) / 2 : 0;
+            }
+
+            if (menuStyles.left + rect.width > innerWidth) {
+                menuStyles.left = rect.width < innerWidth ? (innerWidth - rect.width) / 2 : 0;
+            }
+
+            return menuStyles;
+        };
+
+        _this.menuRef = function (c) {
+            _this.menu = c;
+        };
+
+        _this.state = object_assign_default()({}, _this.state, {
+            x: 0,
+            y: 0,
+            isVisible: false
+        });
+        return _this;
+    }
+
+    ContextMenu_createClass(ContextMenu, [{
+        key: 'getSubMenuType',
+        value: function getSubMenuType() {
+            // eslint-disable-line class-methods-use-this
+            return es6_SubMenu;
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.listenId = globalEventListener.register(this.handleShow, this.handleHide);
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+            var _this2 = this;
+
+            var wrapper = window.requestAnimationFrame || setTimeout;
+            if (this.state.isVisible) {
+                wrapper(function () {
+                    var _state = _this2.state,
+                        x = _state.x,
+                        y = _state.y;
+
+                    var _ref = _this2.props.rtl ? _this2.getRTLMenuPosition(x, y) : _this2.getMenuPosition(x, y),
+                        top = _ref.top,
+                        left = _ref.left;
+
+                    wrapper(function () {
+                        if (!_this2.menu) return;
+                        _this2.menu.style.top = top + 'px';
+                        _this2.menu.style.left = left + 'px';
+                        _this2.menu.style.opacity = 1;
+                        _this2.menu.style.pointerEvents = 'auto';
+                    });
+                });
+            } else {
+                wrapper(function () {
+                    if (!_this2.menu) return;
+                    _this2.menu.style.opacity = 0;
+                    _this2.menu.style.pointerEvents = 'none';
+                });
+            }
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            if (this.listenId) {
+                globalEventListener.unregister(this.listenId);
+            }
+
+            this.unregisterHandlers();
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                children = _props.children,
+                className = _props.className,
+                style = _props.style;
+            var isVisible = this.state.isVisible;
+
+            var inlineStyle = object_assign_default()({}, style, { position: 'fixed', opacity: 0, pointerEvents: 'none' });
+            var menuClassnames = classnames_default()(cssClasses.menu, className, ContextMenu_defineProperty({}, cssClasses.menuVisible, isVisible));
+
+            return react.createElement(
+                'nav',
+                {
+                    role: 'menu', tabIndex: '-1', ref: this.menuRef, style: inlineStyle, className: menuClassnames,
+                    onContextMenu: this.handleContextMenu, onMouseLeave: this.handleMouseLeave },
+                this.renderChildren(children)
+            );
+        }
+    }]);
+
+    return ContextMenu;
+}(es6_AbstractMenu);
+
+ContextMenu.propTypes = {
+    id: (prop_types_default()).string.isRequired,
+    children: (prop_types_default()).node.isRequired,
+    data: (prop_types_default()).object,
+    className: (prop_types_default()).string,
+    hideOnLeave: (prop_types_default()).bool,
+    rtl: (prop_types_default()).bool,
+    onHide: (prop_types_default()).func,
+    onMouseLeave: (prop_types_default()).func,
+    onShow: (prop_types_default()).func,
+    preventHideOnContextMenu: (prop_types_default()).bool,
+    preventHideOnResize: (prop_types_default()).bool,
+    preventHideOnScroll: (prop_types_default()).bool,
+    style: (prop_types_default()).object
+};
+ContextMenu.defaultProps = {
+    className: '',
+    data: {},
+    hideOnLeave: false,
+    rtl: false,
+    onHide: function onHide() {
+        return null;
+    },
+    onMouseLeave: function onMouseLeave() {
+        return null;
+    },
+    onShow: function onShow() {
+        return null;
+    },
+
+    preventHideOnContextMenu: false,
+    preventHideOnResize: false,
+    preventHideOnScroll: false,
+    style: {}
+};
+/* harmony default export */ const es6_ContextMenu = (ContextMenu);
+;// CONCATENATED MODULE: ./node_modules/react-contextmenu/es6/ContextMenuTrigger.js
+var ContextMenuTrigger_createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function ContextMenuTrigger_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ContextMenuTrigger_possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function ContextMenuTrigger_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+
+
+var ContextMenuTrigger = function (_Component) {
+    ContextMenuTrigger_inherits(ContextMenuTrigger, _Component);
+
+    function ContextMenuTrigger() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        ContextMenuTrigger_classCallCheck(this, ContextMenuTrigger);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = ContextMenuTrigger_possibleConstructorReturn(this, (_ref = ContextMenuTrigger.__proto__ || Object.getPrototypeOf(ContextMenuTrigger)).call.apply(_ref, [this].concat(args))), _this), _this.touchHandled = false, _this.handleMouseDown = function (event) {
+            if (_this.props.holdToDisplay >= 0 && event.button === 0) {
+                event.persist();
+                event.stopPropagation();
+
+                _this.mouseDownTimeoutId = setTimeout(function () {
+                    return _this.handleContextClick(event);
+                }, _this.props.holdToDisplay);
+            }
+            callIfExists(_this.props.attributes.onMouseDown, event);
+        }, _this.handleMouseUp = function (event) {
+            if (event.button === 0) {
+                clearTimeout(_this.mouseDownTimeoutId);
+            }
+            callIfExists(_this.props.attributes.onMouseUp, event);
+        }, _this.handleMouseOut = function (event) {
+            if (event.button === 0) {
+                clearTimeout(_this.mouseDownTimeoutId);
+            }
+            callIfExists(_this.props.attributes.onMouseOut, event);
+        }, _this.handleTouchstart = function (event) {
+            _this.touchHandled = false;
+
+            if (_this.props.holdToDisplay >= 0) {
+                event.persist();
+                event.stopPropagation();
+
+                _this.touchstartTimeoutId = setTimeout(function () {
+                    _this.handleContextClick(event);
+                    _this.touchHandled = true;
+                }, _this.props.holdToDisplay);
+            }
+            callIfExists(_this.props.attributes.onTouchStart, event);
+        }, _this.handleTouchEnd = function (event) {
+            if (_this.touchHandled) {
+                event.preventDefault();
+            }
+            clearTimeout(_this.touchstartTimeoutId);
+            callIfExists(_this.props.attributes.onTouchEnd, event);
+        }, _this.handleContextMenu = function (event) {
+            if (event.button === _this.props.mouseButton) {
+                _this.handleContextClick(event);
+            }
+            callIfExists(_this.props.attributes.onContextMenu, event);
+        }, _this.handleMouseClick = function (event) {
+            if (event.button === _this.props.mouseButton) {
+                _this.handleContextClick(event);
+            }
+            callIfExists(_this.props.attributes.onClick, event);
+        }, _this.handleContextClick = function (event) {
+            if (_this.props.disable) return;
+            if (_this.props.disableIfShiftIsPressed && event.shiftKey) return;
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            var x = event.clientX || event.touches && event.touches[0].pageX;
+            var y = event.clientY || event.touches && event.touches[0].pageY;
+
+            if (_this.props.posX) {
+                x -= _this.props.posX;
+            }
+            if (_this.props.posY) {
+                y -= _this.props.posY;
+            }
+
+            hideMenu();
+
+            var data = callIfExists(_this.props.collect, _this.props);
+            var showMenuConfig = {
+                position: { x: x, y: y },
+                target: _this.elem,
+                id: _this.props.id
+            };
+            if (data && typeof data.then === 'function') {
+                // it's promise
+                data.then(function (resp) {
+                    showMenuConfig.data = object_assign_default()({}, resp, {
+                        target: event.target
+                    });
+                    showMenu(showMenuConfig);
+                });
+            } else {
+                showMenuConfig.data = object_assign_default()({}, data, {
+                    target: event.target
+                });
+                showMenu(showMenuConfig);
+            }
+        }, _this.elemRef = function (c) {
+            _this.elem = c;
+        }, _temp), ContextMenuTrigger_possibleConstructorReturn(_this, _ret);
+    }
+
+    ContextMenuTrigger_createClass(ContextMenuTrigger, [{
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                renderTag = _props.renderTag,
+                attributes = _props.attributes,
+                children = _props.children;
+
+            var newAttrs = object_assign_default()({}, attributes, {
+                className: classnames_default()(cssClasses.menuWrapper, attributes.className),
+                onContextMenu: this.handleContextMenu,
+                onClick: this.handleMouseClick,
+                onMouseDown: this.handleMouseDown,
+                onMouseUp: this.handleMouseUp,
+                onTouchStart: this.handleTouchstart,
+                onTouchEnd: this.handleTouchEnd,
+                onMouseOut: this.handleMouseOut,
+                ref: this.elemRef
+            });
+
+            return react.createElement(renderTag, newAttrs, children);
+        }
+    }]);
+
+    return ContextMenuTrigger;
+}(react.Component);
+
+ContextMenuTrigger.propTypes = {
+    id: (prop_types_default()).string.isRequired,
+    children: (prop_types_default()).node.isRequired,
+    attributes: (prop_types_default()).object,
+    collect: (prop_types_default()).func,
+    disable: (prop_types_default()).bool,
+    holdToDisplay: (prop_types_default()).number,
+    posX: (prop_types_default()).number,
+    posY: (prop_types_default()).number,
+    renderTag: (prop_types_default()).elementType,
+    mouseButton: (prop_types_default()).number,
+    disableIfShiftIsPressed: (prop_types_default()).bool
+};
+ContextMenuTrigger.defaultProps = {
+    attributes: {},
+    collect: function collect() {
+        return null;
+    },
+
+    disable: false,
+    holdToDisplay: 1000,
+    renderTag: 'div',
+    posX: 0,
+    posY: 0,
+    mouseButton: 2, // 0 is left click, 2 is right click
+    disableIfShiftIsPressed: false
+};
+/* harmony default export */ const es6_ContextMenuTrigger = (ContextMenuTrigger);
+;// CONCATENATED MODULE: ./node_modules/react-contextmenu/es6/connectMenu.js
+var connectMenu_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var connectMenu_createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function connectMenu_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function connectMenu_possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function connectMenu_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+
+
+
+
+
+// collect ContextMenuTrigger's expected props to NOT pass them on as part of the context
+var ignoredTriggerProps = [].concat(_toConsumableArray(Object.keys(es6_ContextMenuTrigger.propTypes)), ['children']);
+
+// expect the id of the menu to be responsible for as outer parameter
+/* harmony default export */ function connectMenu(menuId) {
+    // expect menu component to connect as inner parameter
+    // <Child/> is presumably a wrapper of <ContextMenu/>
+    return function connect(Child) {
+        // return wrapper for <Child/> that forwards the ContextMenuTrigger's additional props
+        return function (_Component) {
+            connectMenu_inherits(ConnectMenu, _Component);
+
+            function ConnectMenu(props) {
+                connectMenu_classCallCheck(this, ConnectMenu);
+
+                var _this = connectMenu_possibleConstructorReturn(this, (ConnectMenu.__proto__ || Object.getPrototypeOf(ConnectMenu)).call(this, props));
+
+                _this.handleShow = function (e) {
+                    if (e.detail.id !== menuId) return;
+
+                    // the onShow event's detail.data object holds all ContextMenuTrigger props
+                    var data = e.detail.data;
+
+                    var filteredData = {};
+
+                    for (var key in data) {
+                        // exclude props the ContextMenuTrigger is expecting itself
+                        if (!ignoredTriggerProps.includes(key)) {
+                            filteredData[key] = data[key];
+                        }
+                    }
+                    _this.setState({ trigger: filteredData });
+                };
+
+                _this.handleHide = function () {
+                    _this.setState({ trigger: null });
+                };
+
+                _this.state = { trigger: null };
+                return _this;
+            }
+
+            connectMenu_createClass(ConnectMenu, [{
+                key: 'componentDidMount',
+                value: function componentDidMount() {
+                    this.listenId = listener.register(this.handleShow, this.handleHide);
+                }
+            }, {
+                key: 'componentWillUnmount',
+                value: function componentWillUnmount() {
+                    if (this.listenId) {
+                        listener.unregister(this.listenId);
+                    }
+                }
+            }, {
+                key: 'render',
+                value: function render() {
+                    return React.createElement(Child, connectMenu_extends({}, this.props, { id: menuId, trigger: this.state.trigger }));
+                }
+            }]);
+
+            return ConnectMenu;
+        }(Component);
+    };
+}
+;// CONCATENATED MODULE: ./node_modules/react-contextmenu/es6/index.js
+
+
+
+
+
+
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/Box/Box.js
 var Box = __webpack_require__(28889);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/LinearProgress/LinearProgress.js
 var LinearProgress = __webpack_require__(33681);
+;// CONCATENATED MODULE: ./SignApp/Components/LinearProgressWithLabel.jsx
+
+
+
+
+function LinearProgressWithLabel(props) {
+  var value = props.value;
+  return /*#__PURE__*/React.createElement(Box/* default */.Z, {
+    display: "flex",
+    alignItems: "center"
+  }, /*#__PURE__*/React.createElement(Box/* default */.Z, {
+    width: "100%",
+    mr: 1
+  }, /*#__PURE__*/React.createElement(LinearProgress/* default */.Z, (0,esm_extends/* default */.Z)({
+    variant: "determinate"
+  }, props))), /*#__PURE__*/React.createElement(Box/* default */.Z, {
+    minWidth: 35
+  }, /*#__PURE__*/React.createElement(Typography/* default */.Z, {
+    variant: "body2",
+    color: "textSecondary"
+  }, "".concat(Math.round(value), "%"))));
+}
+;// CONCATENATED MODULE: ./SignApp/API/HubAPI.js
+
+
+
+
+
+
+var HUBConnect = /*#__PURE__*/function () {
+  function HUBConnect() {
+    var _this = this;
+
+    (0,classCallCheck/* default */.Z)(this, HUBConnect);
+
+    (0,defineProperty/* default */.Z)(this, "onProgress", function (callback) {
+      _this.connection.on("Progress", function (data) {
+        callback(data);
+      });
+    });
+
+    this.connection = null;
+  }
+
+  (0,createClass/* default */.Z)(HUBConnect, [{
+    key: "Connect",
+    value: function () {
+      var _Connect = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee() {
+        return regenerator_default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                this.connection = new signalR.HubConnectionBuilder().withUrl("../Notification").build();
+                _context.next = 3;
+                return this.connection.start();
+
+              case 3:
+                _context.next = 5;
+                return this.connection.invoke('RegisterForLoadThemeFile');
+
+              case 5:
+                return _context.abrupt("return", this.connection.connection.connectionId);
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function Connect() {
+        return _Connect.apply(this, arguments);
+      }
+
+      return Connect;
+    }()
+  }, {
+    key: "Disconnect",
+    value: function () {
+      var _Disconnect = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee2() {
+        return regenerator_default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                if (this.connection != null) {}
+
+              case 1:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function Disconnect() {
+        return _Disconnect.apply(this, arguments);
+      }
+
+      return Disconnect;
+    }()
+  }]);
+
+  return HUBConnect;
+}();
+
+
+;// CONCATENATED MODULE: ./SignApp/Components/ThemeFileSaver.jsx
+
+
+
+
+
+
+
+
+
+
+
+
+var ThemeFileSaver_repo = new Repository();
+var hub = new HUBConnect();
+function ThemeFileSaver(props) {
+  var isOpen = props.isOpen,
+      onClose = props.onClose,
+      onSave = props.onSave,
+      themeId = props.themeId;
+
+  var _React$useState = react.useState(""),
+      _React$useState2 = (0,slicedToArray/* default */.Z)(_React$useState, 2),
+      errorMessage = _React$useState2[0],
+      setErrorMessage = _React$useState2[1];
+
+  var _React$useState3 = react.useState(""),
+      _React$useState4 = (0,slicedToArray/* default */.Z)(_React$useState3, 2),
+      statusText = _React$useState4[0],
+      setStatusText = _React$useState4[1];
+
+  var _React$useState5 = react.useState(50),
+      _React$useState6 = (0,slicedToArray/* default */.Z)(_React$useState5, 2),
+      progress = _React$useState6[0],
+      setProgress = _React$useState6[1];
+
+  var connectionId = "";
+
+  var onProgress = function onProgress(data) {
+    var maxProcess = data.maxProcess;
+    var message = data.message;
+    var process = data.process;
+    setStatusText(message);
+
+    if (maxProcess === 0) {
+      setProgress(0);
+    } else {
+      setProgress(process / maxProcess * 100);
+    }
+  };
+
+  var saveAllFile = /*#__PURE__*/function () {
+    var _ref = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee() {
+      var data;
+      return regenerator_default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return ThemeFileSaver_repo.DownloadAllFileTheme(themeId, connectionId);
+
+            case 3:
+              data = _context.sent;
+              debugger;
+              setStatusText("Загрузка файла");
+              downloadBase64File(data.FileContents, data.ContentType, data.FileDownloadName);
+              setStatusText("Загрузка завершена");
+              onClose();
+              _context.next = 14;
+              break;
+
+            case 11:
+              _context.prev = 11;
+              _context.t0 = _context["catch"](0);
+              alert(_context.t0.toString());
+
+            case 14:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[0, 11]]);
+    }));
+
+    return function saveAllFile() {
+      return _ref.apply(this, arguments);
+    };
+  }();
+
+  react.useEffect( /*#__PURE__*/(0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee2() {
+    return regenerator_default().wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            if (!isOpen) {
+              _context2.next = 8;
+              break;
+            }
+
+            _context2.next = 3;
+            return hub.Connect();
+
+          case 3:
+            connectionId = _context2.sent;
+            hub.onProgress(onProgress);
+            saveAllFile();
+            _context2.next = 9;
+            break;
+
+          case 8:
+            hub.Disconnect();
+
+          case 9:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  })), [isOpen]);
+
+  var handleReset = function handleReset() {
+    setStatusText("");
+    setErrorMessage("");
+    setProgress(0);
+  };
+
+  var handleClose = function handleClose() {
+    onClose();
+    handleReset();
+  };
+
+  return /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Dialog/* default */.Z, {
+    open: isOpen,
+    onClose: handleClose,
+    "aria-labelledby": "form-dialog-title",
+    fullWidth: true,
+    maxWidth: false
+  }, /*#__PURE__*/react.createElement(DialogTitle/* default */.Z, {
+    id: "form-dialog-title"
+  }, "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430 \u0444\u0430\u0439\u043B\u0430"), /*#__PURE__*/react.createElement(DialogContent/* default */.Z, null, /*#__PURE__*/react.createElement("div", {
+    className: "RedText"
+  }, errorMessage), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(LinearProgressWithLabel, {
+    value: progress
+  })), /*#__PURE__*/react.createElement("div", {
+    className: "BoldText"
+  }, statusText)))));
+}
 ;// CONCATENATED MODULE: ./SignApp/Components/DOC_LIST.jsx
 
 
@@ -100267,7 +103332,23 @@ function DOC_LIST_arrayLikeToArray(arr, len) { if (len == null || len > arr.leng
 
 
 
-var DOC_LIST_theme = (0,createTheme/* createMuiTheme */.A)({
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var DOC_LIST_repo = new Repository();
+var DOC_LIST_theme = (0,createTheme/* default */.Z)({
   palette: {
     primary: {
       main: '#4CAF50'
@@ -100286,63 +103367,149 @@ function DOC_LIST(props) {
 
   var _React$useState = react.useState([]),
       _React$useState2 = (0,slicedToArray/* default */.Z)(_React$useState, 2),
-      docsList = _React$useState2[0],
-      setDocsList = _React$useState2[1];
+      themeList = _React$useState2[0],
+      setThemeList = _React$useState2[1];
 
-  var getDocsList = /*#__PURE__*/function () {
+  var onRefreshTheme = /*#__PURE__*/function () {
     var _ref = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee() {
-      var response, result;
       return regenerator_default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.prev = 0;
+              _context.t0 = setThemeList;
               _context.next = 3;
-              return window.fetch("GetDOC", {
-                credentials: "same-origin"
-              });
+              return DOC_LIST_repo.GetTheme();
 
             case 3:
-              response = _context.sent;
-              _context.next = 6;
-              return response.json();
+              _context.t1 = _context.sent;
+              (0, _context.t0)(_context.t1);
 
-            case 6:
-              result = _context.sent;
-              setDocsList(result.Value);
-              _context.next = 13;
-              break;
-
-            case 10:
-              _context.prev = 10;
-              _context.t0 = _context["catch"](0);
-              alert(_context.t0.toString());
-
-            case 13:
+            case 5:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[0, 10]]);
+      }, _callee);
     }));
 
-    return function getDocsList() {
+    return function onRefreshTheme() {
       return _ref.apply(this, arguments);
     };
   }();
 
-  react.useEffect(function () {
-    getDocsList();
-  }, []);
+  react.useEffect( /*#__PURE__*/(0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee2() {
+    return regenerator_default().wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            try {
+              onRefreshTheme();
+            } catch (err) {
+              alert(err.message);
+            }
+
+          case 1:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  })), []);
+
+  var _React$useState3 = react.useState([]),
+      _React$useState4 = (0,slicedToArray/* default */.Z)(_React$useState3, 2),
+      currentTheme = _React$useState4[0],
+      setCurrentTheme = _React$useState4[1];
+
+  var _React$useState5 = react.useState([]),
+      _React$useState6 = (0,slicedToArray/* default */.Z)(_React$useState5, 2),
+      docsList = _React$useState6[0],
+      setDocsList = _React$useState6[1];
+
+  var onSelectThemeChanged = /*#__PURE__*/function () {
+    var _ref3 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee3(themeItem) {
+      return regenerator_default().wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.prev = 0;
+              setCurrentTheme(themeItem);
+              _context3.t0 = setDocsList;
+              _context3.next = 5;
+              return DOC_LIST_repo.GetDocsList(themeItem.THEME_ID);
+
+            case 5:
+              _context3.t1 = _context3.sent;
+              (0, _context3.t0)(_context3.t1);
+              _context3.next = 12;
+              break;
+
+            case 9:
+              _context3.prev = 9;
+              _context3.t2 = _context3["catch"](0);
+              alert(_context3.t2.toString());
+
+            case 12:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3, null, [[0, 9]]);
+    }));
+
+    return function onSelectThemeChanged(_x) {
+      return _ref3.apply(this, arguments);
+    };
+  }();
 
   function refresh() {
-    getDocsList();
+    return _refresh.apply(this, arguments);
   }
 
-  var _React$useState3 = react.useState(false),
-      _React$useState4 = (0,slicedToArray/* default */.Z)(_React$useState3, 2),
-      isOpenAddDocsDialog = _React$useState4[0],
-      setIsOpenAddDocsDialog = _React$useState4[1];
+  function _refresh() {
+    _refresh = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee7() {
+      return regenerator_default().wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              _context7.prev = 0;
+
+              if (!(currentTheme != null)) {
+                _context7.next = 7;
+                break;
+              }
+
+              _context7.t0 = setDocsList;
+              _context7.next = 5;
+              return DOC_LIST_repo.GetDocsList(currentTheme.THEME_ID);
+
+            case 5:
+              _context7.t1 = _context7.sent;
+              (0, _context7.t0)(_context7.t1);
+
+            case 7:
+              _context7.next = 12;
+              break;
+
+            case 9:
+              _context7.prev = 9;
+              _context7.t2 = _context7["catch"](0);
+              alert(_context7.t2.toString());
+
+            case 12:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      }, _callee7, null, [[0, 9]]);
+    }));
+    return _refresh.apply(this, arguments);
+  }
+
+  var _React$useState7 = react.useState(false),
+      _React$useState8 = (0,slicedToArray/* default */.Z)(_React$useState7, 2),
+      isOpenAddDocsDialog = _React$useState8[0],
+      setIsOpenAddDocsDialog = _React$useState8[1];
 
   var closeAddDocsDialog = function closeAddDocsDialog() {
     setIsOpenAddDocsDialog(false);
@@ -100353,10 +103520,10 @@ function DOC_LIST(props) {
     refresh();
   };
 
-  var _React$useState5 = react.useState(false),
-      _React$useState6 = (0,slicedToArray/* default */.Z)(_React$useState5, 2),
-      isOpenSignDialog = _React$useState6[0],
-      setIsOpenSignDialog = _React$useState6[1];
+  var _React$useState9 = react.useState(false),
+      _React$useState10 = (0,slicedToArray/* default */.Z)(_React$useState9, 2),
+      isOpenSignDialog = _React$useState10[0],
+      setIsOpenSignDialog = _React$useState10[1];
 
   var closeSignDialog = function closeSignDialog() {
     setIsOpenSignDialog(false);
@@ -100367,200 +103534,185 @@ function DOC_LIST(props) {
     refresh();
   };
 
-  var _React$useState7 = react.useState(null),
-      _React$useState8 = (0,slicedToArray/* default */.Z)(_React$useState7, 2),
-      selectedFiles = _React$useState8[0],
-      setSelectedFiles = _React$useState8[1];
+  var _React$useState11 = react.useState(null),
+      _React$useState12 = (0,slicedToArray/* default */.Z)(_React$useState11, 2),
+      selectedFiles = _React$useState12[0],
+      setSelectedFiles = _React$useState12[1];
 
   var signDocs = function signDocs(event, rowsData) {
     setSelectedFiles(rowsData);
     setIsOpenSignDialog(true);
   };
 
-  var downloadDoc = function downloadDoc(event, rowData) {
-    try {
-      var requestOptions = {
-        method: "GET",
-        headers: {
-          'Content-Type': "application/json"
-        },
-        credentials: "same-origin"
-      };
-      window.fetch("DownloadFileForSign?DOC_FOR_SIGN_ID=".concat(rowData.DOC_FOR_SIGN_ID), requestOptions).then(function (response) {
-        return response.json();
-      }).then(function (data) {
-        if (data) {
-          if (data.Result === false) {
-            alert(data.Value);
-          } else {
-            downloadBase64File(data.Value.FileContents, data.Value.ContentType, data.Value.FileDownloadName);
-          }
-        }
-      })["catch"](function (error) {
-        alert(error.toString());
-      });
-    } catch (error) {
-      alert(error.toString());
-    }
-  };
-
-  var downloadDocAndSign = function downloadDocAndSign(event, rowData) {
-    try {
-      var requestOptions = {
-        method: "GET",
-        headers: {
-          'Content-Type': "application/json"
-        },
-        credentials: "same-origin"
-      };
-      window.fetch("DownloadFileForSignAndSign?DOC_FOR_SIGN_ID=".concat(rowData.DOC_FOR_SIGN_ID), requestOptions).then(function (response) {
-        return response.json();
-      }).then(function (data) {
-        if (data) {
-          if (data.Result === false) {
-            alert(data.Value);
-          } else {
-            downloadBase64File(data.Value.FileContents, data.Value.ContentType, data.Value.FileDownloadName);
-          }
-        }
-      })["catch"](function (error) {
-        alert(error.toString());
-      });
-    } catch (error) {
-      alert(error.toString());
-    }
-  };
-
-  var removeDoc = /*#__PURE__*/function () {
-    var _ref2 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee2(docForSignId) {
-      var requestOptions, response, data;
-      return regenerator_default().wrap(function _callee2$(_context2) {
+  var downloadDoc = /*#__PURE__*/function () {
+    var _ref4 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee4(event, rowData) {
+      var data;
+      return regenerator_default().wrap(function _callee4$(_context4) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
-              requestOptions = {
-                method: "POST",
-                headers: {
-                  'Content-Type': "application/json"
-                },
-                credentials: "same-origin",
-                body: JSON.stringify(docForSignId)
-              };
-              _context2.next = 3;
-              return window.fetch("RemoveFileForSign", requestOptions);
+              _context4.prev = 0;
+              _context4.next = 3;
+              return DOC_LIST_repo.DownloadFileForSign(rowData.DOC_FOR_SIGN_ID);
 
             case 3:
-              response = _context2.sent;
-
-              if (!response.ok) {
-                _context2.next = 11;
-                break;
-              }
-
-              _context2.next = 7;
-              return response.json();
-
-            case 7:
-              data = _context2.sent;
-
-              if (data.Result === false) {
-                alert(data.Value);
-              }
-
-              _context2.next = 12;
+              data = _context4.sent;
+              downloadBase64File(data.FileContents, data.ContentType, data.FileDownloadName);
+              _context4.next = 10;
               break;
 
-            case 11:
-              throw new Error("".concat(response.status, "-").concat(response.statusText));
+            case 7:
+              _context4.prev = 7;
+              _context4.t0 = _context4["catch"](0);
+              alert(_context4.t0.toString());
 
-            case 12:
+            case 10:
             case "end":
-              return _context2.stop();
+              return _context4.stop();
           }
         }
-      }, _callee2);
+      }, _callee4, null, [[0, 7]]);
     }));
 
-    return function removeDoc(_x) {
-      return _ref2.apply(this, arguments);
+    return function downloadDoc(_x2, _x3) {
+      return _ref4.apply(this, arguments);
+    };
+  }();
+
+  var downloadDocAndSign = /*#__PURE__*/function () {
+    var _ref5 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee5(event, rowData) {
+      var data;
+      return regenerator_default().wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              _context5.prev = 0;
+              _context5.next = 3;
+              return DOC_LIST_repo.DownloadDocAndSign(rowData.DOC_FOR_SIGN_ID);
+
+            case 3:
+              data = _context5.sent;
+              downloadBase64File(data.FileContents, data.ContentType, data.FileDownloadName);
+              _context5.next = 10;
+              break;
+
+            case 7:
+              _context5.prev = 7;
+              _context5.t0 = _context5["catch"](0);
+              alert(_context5.t0.toString());
+
+            case 10:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5, null, [[0, 7]]);
+    }));
+
+    return function downloadDocAndSign(_x4, _x5) {
+      return _ref5.apply(this, arguments);
     };
   }();
 
   var removeDocs = /*#__PURE__*/function () {
-    var _ref3 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee3(event, rowsData) {
+    var _ref6 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee6(event, rowsData) {
       var _iterator, _step, item;
 
-      return regenerator_default().wrap(function _callee3$(_context3) {
+      return regenerator_default().wrap(function _callee6$(_context6) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context6.prev = _context6.next) {
             case 0:
-              _context3.prev = 0;
+              _context6.prev = 0;
 
               if (!confirm("\u0412\u044B \u0443\u0432\u0435\u0440\u0435\u043D\u044B \u0447\u0442\u043E \u0445\u043E\u0442\u0438\u0442\u0435 \u0443\u0434\u0430\u043B\u0438\u0442\u044C ".concat(rowsData.length, " \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442?"))) {
-                _context3.next = 20;
+                _context6.next = 20;
                 break;
               }
 
               _iterator = DOC_LIST_createForOfIteratorHelper(rowsData);
-              _context3.prev = 3;
+              _context6.prev = 3;
 
               _iterator.s();
 
             case 5:
               if ((_step = _iterator.n()).done) {
-                _context3.next = 11;
+                _context6.next = 11;
                 break;
               }
 
               item = _step.value;
-              _context3.next = 9;
-              return removeDoc(item.DOC_FOR_SIGN_ID);
+              _context6.next = 9;
+              return DOC_LIST_repo.RemoveDoc(item.DOC_FOR_SIGN_ID);
 
             case 9:
-              _context3.next = 5;
+              _context6.next = 5;
               break;
 
             case 11:
-              _context3.next = 16;
+              _context6.next = 16;
               break;
 
             case 13:
-              _context3.prev = 13;
-              _context3.t0 = _context3["catch"](3);
+              _context6.prev = 13;
+              _context6.t0 = _context6["catch"](3);
 
-              _iterator.e(_context3.t0);
+              _iterator.e(_context6.t0);
 
             case 16:
-              _context3.prev = 16;
+              _context6.prev = 16;
 
               _iterator.f();
 
-              return _context3.finish(16);
+              return _context6.finish(16);
 
             case 19:
               refresh();
 
             case 20:
-              _context3.next = 25;
+              _context6.next = 25;
               break;
 
             case 22:
-              _context3.prev = 22;
-              _context3.t1 = _context3["catch"](0);
-              alert(_context3.t1.toString());
+              _context6.prev = 22;
+              _context6.t1 = _context6["catch"](0);
+              alert(_context6.t1.toString());
 
             case 25:
             case "end":
-              return _context3.stop();
+              return _context6.stop();
           }
         }
-      }, _callee3, null, [[0, 22], [3, 13, 16, 19]]);
+      }, _callee6, null, [[0, 22], [3, 13, 16, 19]]);
     }));
 
-    return function removeDocs(_x2, _x3) {
-      return _ref3.apply(this, arguments);
+    return function removeDocs(_x6, _x7) {
+      return _ref6.apply(this, arguments);
     };
   }();
+
+  var _React$useState13 = react.useState(false),
+      _React$useState14 = (0,slicedToArray/* default */.Z)(_React$useState13, 2),
+      isOpenSigFileDialog = _React$useState14[0],
+      setIsOpenSigFileDialog = _React$useState14[1];
+
+  var _React$useState15 = react.useState(null),
+      _React$useState16 = (0,slicedToArray/* default */.Z)(_React$useState15, 2),
+      docForSignId = _React$useState16[0],
+      setDocForSignId = _React$useState16[1];
+
+  var closeSigFileDialog = function closeSigFileDialog() {
+    setIsOpenSigFileDialog(false);
+  };
+
+  var saveSigFileDialog = function saveSigFileDialog() {
+    closeSigFileDialog();
+    refresh();
+  };
+
+  var uploadSigFile = function uploadSigFile(event, rowsData) {
+    setDocForSignId(rowsData.DOC_FOR_SIGN_ID);
+    setIsOpenSigFileDialog(true);
+  };
 
   function tableAction() {
     var action = [{
@@ -100602,7 +103754,10 @@ function DOC_LIST(props) {
         }
       },
       tooltip: "Загрузить открепленную подпись",
-      position: 'row'
+      position: 'row',
+      onClick: function onClick(e, data) {
+        uploadSigFile(e, data);
+      }
     }, {
       icon: "download",
       iconProps: {
@@ -100659,6 +103814,20 @@ function DOC_LIST(props) {
     style: {
       maxWidth: "100%"
     }
+  }, /*#__PURE__*/react.createElement(Grid/* default */.Z, {
+    container: true,
+    spacing: 1
+  }, /*#__PURE__*/react.createElement(Grid/* default */.Z, {
+    item: true,
+    xs: 2
+  }, /*#__PURE__*/react.createElement(ListTheme, {
+    themeItems: themeList,
+    onSelectChanged: onSelectThemeChanged,
+    isAdmin: isAdmin,
+    onRefresh: onRefreshTheme
+  })), /*#__PURE__*/react.createElement(Grid/* default */.Z, {
+    item: true,
+    xs: 10
   }, /*#__PURE__*/react.createElement(ThemeProvider/* default */.Z, {
     theme: DOC_LIST_theme
   }, /*#__PURE__*/react.createElement((dist_default()), {
@@ -100666,9 +103835,6 @@ function DOC_LIST(props) {
     columns: [{
       title: "Медицинская организация",
       field: "MO_NAME"
-    }, {
-      title: "Тема",
-      field: "Theme"
     }, {
       title: "Имя файла",
       field: "FILENAME"
@@ -100680,8 +103846,10 @@ function DOC_LIST(props) {
       title: "Подписано",
       field: "ROLE_SIGN",
       render: function render(rowData) {
-        return /*#__PURE__*/react.createElement("div", null, rowData.SIGNS.map(function (value) {
-          return /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("span", {
+        return /*#__PURE__*/react.createElement("div", null, rowData.SIGNS.map(function (value, index) {
+          return /*#__PURE__*/react.createElement("div", {
+            key: index
+          }, /*#__PURE__*/react.createElement("span", {
             className: value.IsSIGN ? "GreenText" : "RedText"
           }, value.ROLE_NAME), /*#__PURE__*/react.createElement("br", null));
         }));
@@ -100716,46 +103884,299 @@ function DOC_LIST(props) {
   })), /*#__PURE__*/react.createElement(AddDocsDialog, {
     onClose: closeAddDocsDialog,
     isOpen: isOpenAddDocsDialog,
-    onSave: saveDocsDialog
+    onSave: saveDocsDialog,
+    themeId: currentTheme != null ? currentTheme.THEME_ID : null
   }), /*#__PURE__*/react.createElement(SingDialog, {
     onClose: closeSignDialog,
     onSave: saveSignDialog,
     isOpen: isOpenSignDialog,
     files: selectedFiles
-  }));
+  }), /*#__PURE__*/react.createElement(AddSigFileDialog, {
+    onClose: closeSigFileDialog,
+    onSave: saveSigFileDialog,
+    isOpen: isOpenSigFileDialog,
+    docForSignId: docForSignId
+  }))));
 }
 var DOC_LIST_useStyles = (0,makeStyles/* default */.Z)(function (theme) {
   return {
-    button: {
-      marginRight: theme.spacing(1)
+    root: {
+      width: '100%',
+      maxWidth: 360,
+      backgroundColor: theme.palette.background.paper
+    },
+    themeListItem: {
+      color: 'green !important'
     }
   };
 });
-function AddDocsDialog(props) {
+
+function ListTheme(props) {
   var classes = DOC_LIST_useStyles();
+  var themeItems = props.themeItems,
+      onSelectChanged = props.onSelectChanged,
+      isAdmin = props.isAdmin,
+      onRefresh = props.onRefresh;
+
+  var _React$useState17 = react.useState(-1),
+      _React$useState18 = (0,slicedToArray/* default */.Z)(_React$useState17, 2),
+      selectedIndex = _React$useState18[0],
+      setSelectedIndex = _React$useState18[1];
+
+  var _React$useState19 = react.useState(null),
+      _React$useState20 = (0,slicedToArray/* default */.Z)(_React$useState19, 2),
+      currentThemeId = _React$useState20[0],
+      setCurrentThemeId = _React$useState20[1];
+
+  var _React$useState21 = react.useState(false),
+      _React$useState22 = (0,slicedToArray/* default */.Z)(_React$useState21, 2),
+      openAddDialog = _React$useState22[0],
+      setOpenAddDialog = _React$useState22[1];
+
+  var changeSelectedIndex = function changeSelectedIndex(newIndex) {
+    setSelectedIndex(newIndex);
+    setCurrentThemeId(themeItems[newIndex].THEME_ID);
+    onSelectChanged(themeItems[newIndex]);
+  };
+
+  react.useEffect(function () {
+    if (selectedIndex === -1 && themeItems.length !== 0) changeSelectedIndex(0);
+  }, [themeItems]);
+
+  function renderList() {
+    return /*#__PURE__*/react.createElement(List/* default */.Z, null, themeItems != null ? themeItems.map(function (value, index) {
+      return /*#__PURE__*/react.createElement(ListItem/* default */.Z, {
+        key: value.THEME_ID,
+        selected: selectedIndex === index,
+        className: classes.themeListItem,
+        onClick: function onClick() {
+          return changeSelectedIndex(index);
+        },
+        button: true
+      }, /*#__PURE__*/react.createElement(ListItemText/* default */.Z, {
+        primary: value.CAPTION
+      }));
+    }) : null);
+  }
+
+  var removeThemeClick = /*#__PURE__*/function () {
+    var _ref7 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee8() {
+      return regenerator_default().wrap(function _callee8$(_context8) {
+        while (1) {
+          switch (_context8.prev = _context8.next) {
+            case 0:
+              _context8.prev = 0;
+              _context8.next = 3;
+              return DOC_LIST_repo.RemoveTheme(themeItems[selectedIndex].THEME_ID);
+
+            case 3:
+              onRefresh();
+              _context8.next = 9;
+              break;
+
+            case 6:
+              _context8.prev = 6;
+              _context8.t0 = _context8["catch"](0);
+              alert(_context8.t0.message);
+
+            case 9:
+            case "end":
+              return _context8.stop();
+          }
+        }
+      }, _callee8, null, [[0, 6]]);
+    }));
+
+    return function removeThemeClick() {
+      return _ref7.apply(this, arguments);
+    };
+  }();
+
+  var _React$useState23 = react.useState(false),
+      _React$useState24 = (0,slicedToArray/* default */.Z)(_React$useState23, 2),
+      openThemeFileSaver = _React$useState24[0],
+      setOpenThemeFileSaver = _React$useState24[1];
+
+  var saveAllFileThemeClick = function saveAllFileThemeClick() {
+    try {
+      setOpenThemeFileSaver(true);
+    } catch (error) {
+      alert(error.toString());
+    }
+  };
+
+  var closeOpenThemeFileSaver = /*#__PURE__*/function () {
+    var _ref8 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee9() {
+      return regenerator_default().wrap(function _callee9$(_context9) {
+        while (1) {
+          switch (_context9.prev = _context9.next) {
+            case 0:
+              try {
+                setOpenThemeFileSaver(false);
+              } catch (error) {
+                alert(error.toString());
+              }
+
+            case 1:
+            case "end":
+              return _context9.stop();
+          }
+        }
+      }, _callee9);
+    }));
+
+    return function closeOpenThemeFileSaver() {
+      return _ref8.apply(this, arguments);
+    };
+  }();
+
+  var showAddDialog = function showAddDialog() {
+    setOpenAddDialog(true);
+  };
+
+  var hideAddDialog = function hideAddDialog() {
+    setOpenAddDialog(false);
+  };
+
+  var onSaveAddDialog = function onSaveAddDialog() {
+    hideAddDialog();
+    onRefresh();
+  };
+
+  var handleRefresh = function handleRefresh() {
+    onRefresh();
+  };
+
+  return /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, "\u0421\u043F\u0438\u0441\u043E\u043A \u0442\u0435\u043C:"), /*#__PURE__*/react.createElement(Divider/* default */.Z, null), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(es6_ContextMenuTrigger, {
+    id: "ThemeContextMenu1"
+  }, /*#__PURE__*/react.createElement("div", null, renderList())), /*#__PURE__*/react.createElement(es6_ContextMenu, {
+    id: "ThemeContextMenu1"
+  }, isAdmin ? /*#__PURE__*/react.createElement(es6_MenuItem, {
+    onClick: showAddDialog
+  }, /*#__PURE__*/react.createElement(MenuItem/* default */.Z, null, "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C")) : null, isAdmin ? /*#__PURE__*/react.createElement(es6_MenuItem, {
+    onClick: saveAllFileThemeClick
+  }, /*#__PURE__*/react.createElement(MenuItem/* default */.Z, null, "\u0421\u043A\u0430\u0447\u0430\u0442\u044C \u0432\u0441\u0435 \u0444\u0430\u0439\u043B\u044B")) : null, isAdmin ? /*#__PURE__*/react.createElement(Divider/* default */.Z, null) : null, /*#__PURE__*/react.createElement(es6_MenuItem, {
+    onClick: handleRefresh
+  }, /*#__PURE__*/react.createElement(MenuItem/* default */.Z, null, "\u041E\u0431\u043D\u043E\u0432\u0438\u0442\u044C")), isAdmin ? /*#__PURE__*/react.createElement(Divider/* default */.Z, null) : null, isAdmin ? /*#__PURE__*/react.createElement(es6_MenuItem, {
+    onClick: removeThemeClick
+  }, /*#__PURE__*/react.createElement(MenuItem/* default */.Z, null, "\u0423\u0434\u0430\u043B\u0438\u0442\u044C")) : null), /*#__PURE__*/react.createElement(AddThemeDialog, {
+    isOpen: openAddDialog,
+    onClose: hideAddDialog,
+    onSave: onSaveAddDialog
+  }), isAdmin ? /*#__PURE__*/react.createElement(ThemeFileSaver, {
+    isOpen: openThemeFileSaver,
+    themeId: currentThemeId,
+    onClose: closeOpenThemeFileSaver
+  }) : null));
+}
+
+function AddThemeDialog(props) {
   var onClose = props.onClose,
       isOpen = props.isOpen,
       onSave = props.onSave;
 
-  var _React$useState9 = react.useState(""),
-      _React$useState10 = (0,slicedToArray/* default */.Z)(_React$useState9, 2),
-      errorMessage = _React$useState10[0],
-      setErrorMessage = _React$useState10[1];
+  var _React$useState25 = react.useState(""),
+      _React$useState26 = (0,slicedToArray/* default */.Z)(_React$useState25, 2),
+      errorMessage = _React$useState26[0],
+      setErrorMessage = _React$useState26[1];
 
-  var _React$useState11 = react.useState(null),
-      _React$useState12 = (0,slicedToArray/* default */.Z)(_React$useState11, 2),
-      files = _React$useState12[0],
-      setFiles = _React$useState12[1];
+  var _React$useState27 = react.useState(""),
+      _React$useState28 = (0,slicedToArray/* default */.Z)(_React$useState27, 2),
+      theme = _React$useState28[0],
+      setTheme = _React$useState28[1];
+
+  react.useEffect(function () {
+    setTheme("");
+  }, []);
+
+  var themeChange = function themeChange(event) {
+    setTheme(event.target.value);
+  };
+
+  var handleClose = function handleClose() {
+    onClose();
+  };
+
+  var handleSave = /*#__PURE__*/function () {
+    var _ref9 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee10() {
+      return regenerator_default().wrap(function _callee10$(_context10) {
+        while (1) {
+          switch (_context10.prev = _context10.next) {
+            case 0:
+              _context10.prev = 0;
+              _context10.next = 3;
+              return DOC_LIST_repo.AddTheme(theme);
+
+            case 3:
+              onSave();
+              handleClose();
+              _context10.next = 10;
+              break;
+
+            case 7:
+              _context10.prev = 7;
+              _context10.t0 = _context10["catch"](0);
+              setErrorMessage(_context10.t0.toString());
+
+            case 10:
+            case "end":
+              return _context10.stop();
+          }
+        }
+      }, _callee10, null, [[0, 7]]);
+    }));
+
+    return function handleSave() {
+      return _ref9.apply(this, arguments);
+    };
+  }();
+
+  return /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Dialog/* default */.Z, {
+    open: isOpen,
+    onClose: handleClose,
+    "aria-labelledby": "form-dialog-title",
+    fullWidth: true,
+    maxWidth: false
+  }, /*#__PURE__*/react.createElement(DialogTitle/* default */.Z, {
+    id: "form-dialog-title"
+  }, "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u0444\u0430\u0439\u043B\u043E\u0432 \u043D\u0430 \u043F\u043E\u0434\u043F\u0438\u0441\u044C"), /*#__PURE__*/react.createElement(DialogContent/* default */.Z, null, /*#__PURE__*/react.createElement("div", {
+    className: "RedText"
+  }, errorMessage), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(TextField/* default */.Z, {
+    margin: "dense",
+    label: "\u041D\u0430\u0438\u043C\u0435\u043D\u043E\u0432\u0430\u043D\u0438\u0435 \u0442\u0435\u043C\u044B",
+    type: "text",
+    required: true,
+    fullWidth: true,
+    value: theme,
+    onChange: themeChange
+  })), /*#__PURE__*/react.createElement(Button/* default */.Z, {
+    variant: "contained",
+    color: "primary",
+    disabled: theme === "",
+    onClick: handleSave
+  }, "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"))));
+}
+function AddDocsDialog(props) {
+  var classes = DOC_LIST_useStyles();
+  var onClose = props.onClose,
+      isOpen = props.isOpen,
+      onSave = props.onSave,
+      themeId = props.themeId;
+
+  var _React$useState29 = react.useState(null),
+      _React$useState30 = (0,slicedToArray/* default */.Z)(_React$useState29, 2),
+      files = _React$useState30[0],
+      setFiles = _React$useState30[1];
 
   var selectFile = function selectFile(e) {
     var files = e.target.files;
     setFiles(Array.from(files));
   };
 
-  var _React$useState13 = react.useState(0),
-      _React$useState14 = (0,slicedToArray/* default */.Z)(_React$useState13, 2),
-      activeStep = _React$useState14[0],
-      setActiveStep = _React$useState14[1];
+  var _React$useState31 = react.useState(0),
+      _React$useState32 = (0,slicedToArray/* default */.Z)(_React$useState31, 2),
+      activeStep = _React$useState32[0],
+      setActiveStep = _React$useState32[1];
 
   var handleNext = function handleNext() {
     setActiveStep(function (prevActiveStep) {
@@ -100783,19 +104204,17 @@ function AddDocsDialog(props) {
     onClose: handleClose,
     "aria-labelledby": "form-dialog-title",
     fullWidth: true,
-    maxWidth: "false"
+    maxWidth: false
   }, /*#__PURE__*/react.createElement(DialogTitle/* default */.Z, {
     id: "form-dialog-title"
-  }, "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u0444\u0430\u0439\u043B\u043E\u0432 \u043D\u0430 \u043F\u043E\u0434\u043F\u0438\u0441\u044C"), /*#__PURE__*/react.createElement(DialogContent/* default */.Z, null, /*#__PURE__*/react.createElement(DialogContentText/* default */.Z, null, /*#__PURE__*/react.createElement("div", {
-    className: "RedText"
-  }, errorMessage)), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Stepper/* default */.Z, {
+  }, "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u0444\u0430\u0439\u043B\u043E\u0432 \u043D\u0430 \u043F\u043E\u0434\u043F\u0438\u0441\u044C"), /*#__PURE__*/react.createElement(DialogContent/* default */.Z, null, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Stepper/* default */.Z, {
     activeStep: activeStep,
     orientation: "vertical"
   }, /*#__PURE__*/react.createElement(Step/* default */.Z, {
     key: 0
   }, /*#__PURE__*/react.createElement(StepLabel/* default */.Z, null, "\u0412\u044B\u0431\u043E\u0440 \u0444\u0430\u0439\u043B\u043E\u0432"), /*#__PURE__*/react.createElement(StepContent/* default */.Z, null, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Typography/* default */.Z, null, "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0444\u0430\u0439\u043B\u044B"), /*#__PURE__*/react.createElement("input", {
     type: "file",
-    multiple: "true",
+    multiple: true,
     onChange: selectFile
   })), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Button/* default */.Z, {
     className: classes.button,
@@ -100807,6 +104226,7 @@ function AddDocsDialog(props) {
     key: 1
   }, /*#__PURE__*/react.createElement(StepLabel/* default */.Z, null, "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0430 \u0438 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u0444\u0430\u0439\u043B\u043E\u0432"), /*#__PURE__*/react.createElement(StepContent/* default */.Z, null, /*#__PURE__*/react.createElement(FileViwer, {
     files: files,
+    themeId: themeId,
     onSave: handleSave
   }), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Button/* default */.Z, {
     className: classes.button,
@@ -100814,35 +104234,140 @@ function AddDocsDialog(props) {
     onClick: handleReset
   }, "\u041D\u0430\u0437\u0430\u0434")))))))))));
 }
+function AddSigFileDialog(props) {
+  var classes = DOC_LIST_useStyles();
+  var onClose = props.onClose,
+      isOpen = props.isOpen,
+      onSave = props.onSave,
+      docForSignId = props.docForSignId;
+
+  var _React$useState33 = react.useState(""),
+      _React$useState34 = (0,slicedToArray/* default */.Z)(_React$useState33, 2),
+      errorMessage = _React$useState34[0],
+      setErrorMessage = _React$useState34[1];
+
+  var _React$useState35 = react.useState(null),
+      _React$useState36 = (0,slicedToArray/* default */.Z)(_React$useState35, 2),
+      file = _React$useState36[0],
+      setFile = _React$useState36[1];
+
+  var _React$useState37 = react.useState(false),
+      _React$useState38 = (0,slicedToArray/* default */.Z)(_React$useState37, 2),
+      processing = _React$useState38[0],
+      setProcessing = _React$useState38[1];
+
+  var selectFile = function selectFile(e) {
+    var file = e.target.files[0];
+    setFile(file);
+  };
+
+  var handleReset = function handleReset() {
+    setFile(null);
+    setErrorMessage("");
+  };
+
+  var handleSave = /*#__PURE__*/function () {
+    var _ref10 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee11() {
+      return regenerator_default().wrap(function _callee11$(_context11) {
+        while (1) {
+          switch (_context11.prev = _context11.next) {
+            case 0:
+              _context11.prev = 0;
+              setErrorMessage("");
+              setProcessing(true);
+              _context11.next = 5;
+              return DOC_LIST_repo.AddSigFile(file, docForSignId);
+
+            case 5:
+              onSave();
+              handleReset();
+              _context11.next = 12;
+              break;
+
+            case 9:
+              _context11.prev = 9;
+              _context11.t0 = _context11["catch"](0);
+              setErrorMessage(_context11.t0.toString());
+
+            case 12:
+              _context11.prev = 12;
+              setProcessing(false);
+              return _context11.finish(12);
+
+            case 15:
+            case "end":
+              return _context11.stop();
+          }
+        }
+      }, _callee11, null, [[0, 9, 12, 15]]);
+    }));
+
+    return function handleSave() {
+      return _ref10.apply(this, arguments);
+    };
+  }();
+
+  var handleClose = function handleClose() {
+    onClose();
+    handleReset();
+  };
+
+  return /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Dialog/* default */.Z, {
+    open: isOpen,
+    onClose: handleClose,
+    "aria-labelledby": "form-dialog-title",
+    fullWidth: false,
+    maxWidth: false
+  }, /*#__PURE__*/react.createElement(DialogTitle/* default */.Z, {
+    id: "form-dialog-title"
+  }, "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0442\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u043D\u043E\u0439 \u043F\u043E\u0434\u043F\u0438\u0441\u0438"), /*#__PURE__*/react.createElement(DialogContent/* default */.Z, null, /*#__PURE__*/react.createElement("div", {
+    className: "RedText"
+  }, errorMessage), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Typography/* default */.Z, null, "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0444\u0430\u0439\u043B\u044B"), /*#__PURE__*/react.createElement("input", {
+    type: "file",
+    accept: ".sig",
+    onChange: selectFile
+  })), /*#__PURE__*/react.createElement("br", null), processing ? /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(CircularProgress/* default */.Z, {
+    size: "25px"
+  }), " ", /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("span", {
+    className: "BoldText"
+  }, "\u041E\u0442\u043F\u0440\u0430\u0432\u043A\u0430 \u0434\u0430\u043D\u043D\u044B\u0445")) : null, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Button/* default */.Z, {
+    className: classes.button,
+    variant: "contained",
+    color: "primary",
+    onClick: handleSave,
+    disabled: file == null || processing
+  }, "\u041E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C"))))));
+}
 
 function FileViwer(props) {
   var files = props.files,
+      themeId = props.themeId,
       onSave = props.onSave;
 
-  var _React$useState15 = react.useState(null),
-      _React$useState16 = (0,slicedToArray/* default */.Z)(_React$useState15, 2),
-      roles = _React$useState16[0],
-      setRoles = _React$useState16[1];
+  var _React$useState39 = react.useState([]),
+      _React$useState40 = (0,slicedToArray/* default */.Z)(_React$useState39, 2),
+      roles = _React$useState40[0],
+      setRoles = _React$useState40[1];
 
-  var _React$useState17 = react.useState(null),
-      _React$useState18 = (0,slicedToArray/* default */.Z)(_React$useState17, 2),
-      lpu = _React$useState18[0],
-      setLpu = _React$useState18[1];
+  var _React$useState41 = react.useState([]),
+      _React$useState42 = (0,slicedToArray/* default */.Z)(_React$useState41, 2),
+      lpu = _React$useState42[0],
+      setLpu = _React$useState42[1];
 
-  var _React$useState19 = react.useState([]),
-      _React$useState20 = (0,slicedToArray/* default */.Z)(_React$useState19, 2),
-      items = _React$useState20[0],
-      setItems = _React$useState20[1];
+  var _React$useState43 = react.useState([]),
+      _React$useState44 = (0,slicedToArray/* default */.Z)(_React$useState43, 2),
+      items = _React$useState44[0],
+      setItems = _React$useState44[1];
 
-  var _React$useState21 = react.useState([]),
-      _React$useState22 = (0,slicedToArray/* default */.Z)(_React$useState21, 2),
-      validationErr = _React$useState22[0],
-      setValidationErr = _React$useState22[1];
+  var _React$useState45 = react.useState([]),
+      _React$useState46 = (0,slicedToArray/* default */.Z)(_React$useState45, 2),
+      validationErr = _React$useState46[0],
+      setValidationErr = _React$useState46[1];
 
-  var _React$useState23 = react.useState([]),
-      _React$useState24 = (0,slicedToArray/* default */.Z)(_React$useState23, 2),
-      selectAllRole = _React$useState24[0],
-      setSelectAllRole = _React$useState24[1];
+  var _React$useState47 = react.useState([]),
+      _React$useState48 = (0,slicedToArray/* default */.Z)(_React$useState47, 2),
+      selectAllRole = _React$useState48[0],
+      setSelectAllRole = _React$useState48[1];
 
   var findMo = function findMo(filename, lpu) {
     var regex = /\d{6}/;
@@ -100881,35 +104406,42 @@ function FileViwer(props) {
     setItems(list);
   };
 
-  (0,react.useEffect)(function () {
-    window.fetch("GetRole", {
-      credentials: "same-origin"
-    }).then(function (response) {
-      return response.json();
-    }).then(function (result) {
-      if (result.Result === true) setRoles(result.Value);else alert("Ошибка получения справочника ролей:" + result.Value);
-    });
-    window.fetch("GetF003", {
-      credentials: "same-origin"
-    }).then(function (response) {
-      return response.json();
-    }).then(function (result) {
-      if (result.Result === true) {
-        setLpu(result.Value);
-        createItems(result.Value);
-      } else alert("Ошибка получения справочника МО:" + result.Value);
-    });
-    ;
-  }, []);
+  (0,react.useEffect)( /*#__PURE__*/(0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee12() {
+    var f003;
+    return regenerator_default().wrap(function _callee12$(_context12) {
+      while (1) {
+        switch (_context12.prev = _context12.next) {
+          case 0:
+            _context12.prev = 0;
+            _context12.t0 = setRoles;
+            _context12.next = 4;
+            return DOC_LIST_repo.GetRoleSPR();
 
-  var _React$useState25 = react.useState(""),
-      _React$useState26 = (0,slicedToArray/* default */.Z)(_React$useState25, 2),
-      theme = _React$useState26[0],
-      setTheme = _React$useState26[1];
+          case 4:
+            _context12.t1 = _context12.sent;
+            (0, _context12.t0)(_context12.t1);
+            _context12.next = 8;
+            return DOC_LIST_repo.GetF003();
 
-  var themeChange = function themeChange(event) {
-    setTheme(event.target.value);
-  };
+          case 8:
+            f003 = _context12.sent;
+            createItems(f003);
+            setLpu(f003);
+            _context12.next = 16;
+            break;
+
+          case 13:
+            _context12.prev = 13;
+            _context12.t2 = _context12["catch"](0);
+            alert(_context12.t2.toString());
+
+          case 16:
+          case "end":
+            return _context12.stop();
+        }
+      }
+    }, _callee12, null, [[0, 13]]);
+  })), []);
 
   var moChange = function moChange(event, newValue, index) {
     var newItems = (0,toConsumableArray/* default */.Z)(items);
@@ -100944,20 +104476,19 @@ function FileViwer(props) {
       var validationResult = value.Validation();
       if (validationResult.length !== 0) validationError = validationError.concat(validationResult);
     });
-    if (theme === null || theme === "") validationError.push('Тема файлов обязательна к заполнению');
     setValidationErr(validationError);
     return validationError;
   };
 
   (0,react.useEffect)(function () {
     validation();
-  }, [items, theme]);
+  }, [items]);
 
   var updateItemState = /*#__PURE__*/function () {
-    var _ref4 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee4(item, isLoad, text) {
-      return regenerator_default().wrap(function _callee4$(_context4) {
+    var _ref12 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee13(item, isLoad, text) {
+      return regenerator_default().wrap(function _callee13$(_context13) {
         while (1) {
-          switch (_context4.prev = _context4.next) {
+          switch (_context13.prev = _context13.next) {
             case 0:
               item.isLoad = isLoad;
               item.Text = text;
@@ -100965,94 +104496,35 @@ function FileViwer(props) {
 
             case 3:
             case "end":
-              return _context4.stop();
+              return _context13.stop();
           }
         }
-      }, _callee4);
+      }, _callee13);
     }));
 
-    return function updateItemState(_x4, _x5, _x6) {
-      return _ref4.apply(this, arguments);
+    return function updateItemState(_x8, _x9, _x10) {
+      return _ref12.apply(this, arguments);
     };
   }();
 
-  var _React$useState27 = react.useState(0),
-      _React$useState28 = (0,slicedToArray/* default */.Z)(_React$useState27, 2),
-      progress = _React$useState28[0],
-      setProgress = _React$useState28[1];
+  var _React$useState49 = react.useState(0),
+      _React$useState50 = (0,slicedToArray/* default */.Z)(_React$useState49, 2),
+      progress = _React$useState50[0],
+      setProgress = _React$useState50[1];
 
-  var _React$useState29 = react.useState(false),
-      _React$useState30 = (0,slicedToArray/* default */.Z)(_React$useState29, 2),
-      processSaveFiles = _React$useState30[0],
-      setProcessSaveFiles = _React$useState30[1];
-
-  var loadFile = /*#__PURE__*/function () {
-    var _ref5 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee5(item) {
-      var formData, requestOptions, response, result;
-      return regenerator_default().wrap(function _callee5$(_context5) {
-        while (1) {
-          switch (_context5.prev = _context5.next) {
-            case 0:
-              _context5.prev = 0;
-              updateItemState(item, null, "Загрузка файла на сервер");
-              formData = new FormData();
-              formData.append("FILE", item.FILE, item.FILE.name);
-              formData.append("Theme", theme);
-              formData.append("CODE_MO", item.MO.MCOD);
-              item.ROLE.forEach(function (role) {
-                formData.append("ROLE_ID[]", role.SIGN_ROLE_ID);
-              });
-              requestOptions = {
-                method: "POST",
-                credentials: "same-origin",
-                body: formData
-              };
-              _context5.next = 10;
-              return window.fetch("AddFileForSign", requestOptions);
-
-            case 10:
-              response = _context5.sent;
-              _context5.next = 13;
-              return response.json();
-
-            case 13:
-              result = _context5.sent;
-
-              if (result.Result === true) {
-                updateItemState(item, true, "Файл загружен");
-              } else {
-                updateItemState(item, false, "Ошибка при загрузке:" + result.Value);
-              }
-
-              _context5.next = 20;
-              break;
-
-            case 17:
-              _context5.prev = 17;
-              _context5.t0 = _context5["catch"](0);
-              updateItemState(item, false, _context5.t0.toString());
-
-            case 20:
-            case "end":
-              return _context5.stop();
-          }
-        }
-      }, _callee5, null, [[0, 17]]);
-    }));
-
-    return function loadFile(_x7) {
-      return _ref5.apply(this, arguments);
-    };
-  }();
+  var _React$useState51 = react.useState(false),
+      _React$useState52 = (0,slicedToArray/* default */.Z)(_React$useState51, 2),
+      processSaveFiles = _React$useState52[0],
+      setProcessSaveFiles = _React$useState52[1];
 
   var saveFiles = /*#__PURE__*/function () {
-    var _ref6 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee6() {
-      var length, index;
-      return regenerator_default().wrap(function _callee6$(_context6) {
+    var _ref13 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee14() {
+      var length, index, item;
+      return regenerator_default().wrap(function _callee14$(_context14) {
         while (1) {
-          switch (_context6.prev = _context6.next) {
+          switch (_context14.prev = _context14.next) {
             case 0:
-              _context6.prev = 0;
+              _context14.prev = 0;
               setProgress(0);
               setProcessSaveFiles(true);
               length = items.length;
@@ -101060,48 +104532,65 @@ function FileViwer(props) {
 
             case 5:
               if (!(index < items.length)) {
-                _context6.next = 12;
+                _context14.next = 21;
                 break;
               }
 
-              _context6.next = 8;
-              return loadFile(items[index]);
+              item = items[index];
+              updateItemState(item, null, "Загрузка файла на сервер");
+              _context14.prev = 8;
+              _context14.next = 11;
+              return DOC_LIST_repo.AddFileForSign(item.FILE, themeId, item.MO.MCOD, item.ROLE.map(function (value) {
+                return value.SIGN_ROLE_ID;
+              }));
 
-            case 8:
-              setProgress(index / length * 100);
-
-            case 9:
-              index++;
-              _context6.next = 5;
+            case 11:
+              updateItemState(item, true, "Файл загружен");
+              _context14.next = 17;
               break;
 
-            case 12:
+            case 14:
+              _context14.prev = 14;
+              _context14.t0 = _context14["catch"](8);
+              updateItemState(item, false, "\u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u0440\u0438 \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0435:".concat(_context14.t0.toString()));
+
+            case 17:
+              setProgress(index / length * 100);
+
+            case 18:
+              index++;
+              _context14.next = 5;
+              break;
+
+            case 21:
               if (items.every(function (val) {
                 return val.isLoad === true;
               })) onSave();
 
-            case 13:
-              _context6.prev = 13;
+            case 22:
+              _context14.prev = 22;
               setProcessSaveFiles(false);
-              return _context6.finish(13);
+              return _context14.finish(22);
 
-            case 16:
+            case 25:
             case "end":
-              return _context6.stop();
+              return _context14.stop();
           }
         }
-      }, _callee6, null, [[0,, 13, 16]]);
+      }, _callee14, null, [[0,, 22, 25], [8, 14]]);
     }));
 
     return function saveFiles() {
-      return _ref6.apply(this, arguments);
+      return _ref13.apply(this, arguments);
     };
   }();
 
   return /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, validationErr != null ? /*#__PURE__*/react.createElement("ul", {
     className: "ErrorLi"
-  }, validationErr.map(function (value) {
-    return /*#__PURE__*/react.createElement("li", null, value);
+  }, validationErr.map(function (value, index) {
+    return /*#__PURE__*/react.createElement("li", {
+      key: index
+    }, value);
   })) : null), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Autocomplete_Autocomplete, {
     multiple: true,
     options: roles,
@@ -101120,17 +104609,9 @@ function FileViwer(props) {
     variant: "contained",
     color: "primary",
     onClick: setAllRole
-  }, "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C \u0432\u0441\u0435\u043C")), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement(TextField/* default */.Z, {
-    margin: "dense",
-    label: "\u0422\u0435\u043C\u0430 \u0444\u0430\u0439\u043B\u043E\u0432",
-    type: "text",
-    required: true,
-    fullWidth: true,
-    value: theme,
-    onChange: themeChange
-  })), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("table", {
+  }, "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C \u0432\u0441\u0435\u043C"))), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("table", {
     className: "table_report"
-  }, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("th", {
+  }, /*#__PURE__*/react.createElement("tbody", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("th", {
     width: "10%"
   }, "\u0421\u0442\u0430\u0442\u0443\u0441"), /*#__PURE__*/react.createElement("th", {
     width: "30%"
@@ -101141,14 +104622,16 @@ function FileViwer(props) {
   }, "\u041C\u0435\u0434\u0438\u0446\u0438\u043D\u0441\u043A\u0430\u044F \u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u044F"), /*#__PURE__*/react.createElement("th", {
     width: "25%"
   }, "\u041E\u0436\u0438\u0434\u0430\u0435\u043C\u044B\u0435 \u043F\u043E\u0434\u043F\u0438\u0441\u0438")), items.map(function (value, index) {
-    return /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, value.Text), /*#__PURE__*/react.createElement("td", null, value.FILENAME), /*#__PURE__*/react.createElement("td", null, value.SIZE), /*#__PURE__*/react.createElement("td", {
+    return /*#__PURE__*/react.createElement("tr", {
+      key: index
+    }, /*#__PURE__*/react.createElement("td", null, value.Text), /*#__PURE__*/react.createElement("td", null, value.FILENAME), /*#__PURE__*/react.createElement("td", null, value.SIZE), /*#__PURE__*/react.createElement("td", {
       style: {
-        margin: '5,5,5,5'
+        margin: 5
       }
     }, /*#__PURE__*/react.createElement(Autocomplete_Autocomplete, {
       options: lpu,
       getOptionLabel: function getOptionLabel(option) {
-        return option.NAME;
+        return option ? option.NAME : "";
       },
       value: value.MO,
       onChange: function onChange(event, newValue) {
@@ -101162,13 +104645,13 @@ function FileViwer(props) {
       }
     })), /*#__PURE__*/react.createElement("td", {
       style: {
-        margin: '5,5,5,5'
+        margin: 5
       }
     }, /*#__PURE__*/react.createElement(Autocomplete_Autocomplete, {
       multiple: true,
       options: roles,
       getOptionLabel: function getOptionLabel(option) {
-        return option.CAPTION;
+        return option ? option.CAPTION : "";
       },
       value: value.ROLE,
       onChange: function onChange(event, newValue) {
@@ -101181,7 +104664,7 @@ function FileViwer(props) {
         }, "variant", "outlined")));
       }
     })));
-  }))), /*#__PURE__*/react.createElement("br", null), processSaveFiles === true ? /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(LinearProgressWithLabel, {
+  })))), /*#__PURE__*/react.createElement("br", null), processSaveFiles === true ? /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(LinearProgressWithLabel, {
     value: progress
   }), /*#__PURE__*/react.createElement("br", null)) : null, /*#__PURE__*/react.createElement(Button/* default */.Z, {
     variant: "contained",
@@ -101189,23 +104672,296 @@ function FileViwer(props) {
     onClick: saveFiles,
     disabled: validationErr == null || validationErr.length !== 0 || processSaveFiles
   }, "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"));
+}
+// EXTERNAL MODULE: ./node_modules/@material-ui/icons/ExpandLess.js
+var ExpandLess = __webpack_require__(35025);
+// EXTERNAL MODULE: ./node_modules/@material-ui/icons/ExpandMore.js
+var ExpandMore = __webpack_require__(64566);
+// EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/Collapse/Collapse.js
+var Collapse = __webpack_require__(66037);
+;// CONCATENATED MODULE: ./SignApp/Components/Spoller.jsx
 
-  function LinearProgressWithLabel(props) {
-    return /*#__PURE__*/react.createElement(Box/* default */.Z, {
-      display: "flex",
-      alignItems: "center"
-    }, /*#__PURE__*/react.createElement(Box/* default */.Z, {
-      width: "100%",
-      mr: 1
-    }, /*#__PURE__*/react.createElement(LinearProgress/* default */.Z, (0,esm_extends/* default */.Z)({
-      variant: "determinate"
-    }, props))), /*#__PURE__*/react.createElement(Box/* default */.Z, {
-      minWidth: 35
-    }, /*#__PURE__*/react.createElement(Typography/* default */.Z, {
-      variant: "body2",
-      color: "textSecondary"
-    }, "".concat(Math.round(props.value), "%"))));
+
+
+
+
+
+
+function Spoller(props) {
+  var caption = props.caption;
+
+  var _React$useState = react.useState(false),
+      _React$useState2 = (0,slicedToArray/* default */.Z)(_React$useState, 2),
+      isOpen = _React$useState2[0],
+      setIsOpen = _React$useState2[1];
+
+  var handleClick = function handleClick() {
+    setIsOpen(!isOpen);
+  };
+
+  return /*#__PURE__*/react.createElement("div", {
+    style: {
+      marginLeft: "20px"
+    }
+  }, /*#__PURE__*/react.createElement(ListItem/* default */.Z, {
+    button: true,
+    onClick: handleClick
+  }, /*#__PURE__*/react.createElement(ListItemText/* default */.Z, {
+    primary: caption
+  }), isOpen ? /*#__PURE__*/react.createElement(ExpandLess/* default */.Z, null) : /*#__PURE__*/react.createElement(ExpandMore/* default */.Z, null)), /*#__PURE__*/react.createElement("hr", null), /*#__PURE__*/react.createElement(Collapse/* default */.Z, {
+    "in": isOpen,
+    timeout: "auto",
+    unmountOnExit: true
+  }, props.children));
+}
+;// CONCATENATED MODULE: ./SignApp/Components/InstructionDialog.jsx
+
+
+
+
+
+var InstructionDialog_styles = {
+  imgCenter: {
+    border: 'ridge',
+    display: 'block',
+    margin: 'auto'
+  },
+  textCenter: {
+    display: 'block',
+    textAlign: 'auto'
+  },
+  imgContainer: {
+    display: 'flex'
+  },
+  imgVerticalAlignCenter: {
+    alignSelf: 'center'
   }
+};
+function InstructionDialog(props) {
+  var isOpen = props.isOpen,
+      onClose = props.onClose;
+
+  var handleClose = function handleClose() {
+    onClose();
+  };
+
+  return /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Dialog/* default */.Z, {
+    open: isOpen,
+    onClose: handleClose,
+    "aria-labelledby": "form-dialog-title",
+    fullWidth: true,
+    maxWidth: "lg"
+  }, /*#__PURE__*/react.createElement(DialogContent/* default */.Z, null, /*#__PURE__*/react.createElement(DialogContentText/* default */.Z, null, "\u0418\u043D\u0441\u0442\u0440\u0443\u043A\u0446\u0438\u044F \u043F\u043E \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u044E \u043C\u043E\u0434\u0443\u043B\u044F"), /*#__PURE__*/react.createElement("p", {
+    className: "RedText"
+  }, "\u041E\u0431\u0440\u0430\u0449\u0430\u0435\u043C \u0412\u0430\u0448\u0435 \u0432\u043D\u0438\u043C\u0430\u043D\u0438\u0435, \u0447\u0442\u043E \u0441\u0435\u0440\u0432\u0438\u0441 \u0432\u0441\u0442\u0443\u043F\u0438\u0442 \u0432 \u0440\u0430\u0431\u043E\u0442\u0443, \u0442\u043E\u043B\u044C\u043A\u043E \u043F\u043E\u0441\u043B\u0435 \u0437\u0430\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u044F \u0441\u043E\u0433\u043B\u0430\u0448\u0435\u043D\u0438\u0435 \u043C\u0435\u0436\u0434\u0443 \u041C\u0435\u0434\u0438\u0446\u0438\u043D\u0441\u043A\u0438\u043C\u0438 \u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u044F\u043C\u0438 \u0438 \u0422\u0424\u041E\u041C\u0421 \u0417\u0430\u0431\u0430\u0439\u043A\u0430\u043B\u044C\u0441\u043A\u043E\u0433\u043E \u043A\u0440\u0430\u044F. \u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442 \u043D\u0430\u0445\u043E\u0434\u0438\u0442\u0441\u044F \u0432 \u0441\u0442\u0430\u0434\u0438\u0438 \u0440\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u043A\u0438"), /*#__PURE__*/react.createElement("p", {
+    className: "GreenText"
+  }, "\u041E\u0434\u043D\u0430\u043A\u043E \u0435\u0441\u043B\u0438 \u0443 \u0432\u0430\u0441 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D \u041A\u0440\u0438\u043F\u0442\u043E\u041F\u0440\u043E CSP \u0412\u044B \u043C\u043E\u0436\u0435\u0442\u0435 \u043F\u043E\u043F\u0440\u043E\u0431\u043E\u0432\u0430\u0442\u044C \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C \u0440\u0435\u0441\u0443\u0440\u0441(\u0432 \u0440\u0430\u043C\u043A\u0430\u0445 \u0442\u0435\u0441\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F). \u0414\u043B\u044F \u044D\u0442\u043E\u0433\u043E \u0441\u0432\u044F\u0436\u0438\u0442\u0435\u0441\u044C \u0441 \u0422\u0424\u041E\u041C\u0421 \u0417\u0430\u0431\u0430\u0439\u043A\u0430\u043B\u044C\u0441\u043A\u043E\u0433\u043E \u043A\u0440\u0430\u044F: 21-26-69"), /*#__PURE__*/react.createElement("p", null, "\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435: \u041C\u043E\u0434\u0443\u043B\u044C \u043F\u0440\u0435\u0434\u043D\u0430\u0437\u043D\u0430\u0447\u0435\u043D \u0434\u043B\u044F \u043F\u043E\u0434\u043F\u0438\u0441\u0438 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430\u043C \u043C\u0435\u0436\u0434\u0443 \u043C\u0435\u0434\u0438\u0446\u0438\u043D\u0441\u043A\u0438\u043C\u0438 \u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u044F\u043C\u0438 \u0438 \u0422\u0424\u041E\u041C\u0421 \u0417\u0430\u0431\u0430\u0439\u043A\u0430\u043B\u044C\u0441\u043A\u043E\u0433\u043E \u043A\u0440\u0430\u044F"), /*#__PURE__*/react.createElement("p", null, "\u041E\u0441\u043D\u043E\u0432\u043D\u044B\u0435 \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u0438:"), /*#__PURE__*/react.createElement("ul", null, /*#__PURE__*/react.createElement("li", null, "\u0421\u043A\u0430\u0447\u0438\u0432\u0430\u043D\u0438\u0435 \u0444\u0430\u0439\u043B\u043E\u0432"), /*#__PURE__*/react.createElement("li", null, "\u0421\u043A\u0430\u0447\u0438\u0432\u0430\u043D\u0438\u0435 \u0444\u0430\u0439\u043B\u043E\u0432 \u0441\u043E\u0432\u043C\u0435\u0441\u0442\u043D\u043E \u0441 \u043F\u043E\u0434\u043F\u0438\u0441\u044F\u043C\u0438"), /*#__PURE__*/react.createElement("li", null, "\u041F\u043E\u0434\u043F\u0438\u0441\u044C \u0444\u0430\u0439\u043B\u043E\u0432 \u0432 \u0431\u0440\u0430\u0443\u0437\u0435\u0440\u0435"), /*#__PURE__*/react.createElement("li", null, "\u041F\u043E\u0434\u043F\u0438\u0441\u044C \u0444\u0430\u0439\u043B\u043E\u0432 \u0447\u0435\u0440\u0435\u0437 \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0443 \u0444\u0430\u0439\u043B\u0430 \u043E\u0442\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u043D\u043E\u0439 \u043F\u043E\u0434\u043F\u0438\u0441\u0438")), /*#__PURE__*/react.createElement("p", {
+    className: "TextCursiv"
+  }, "\u0414\u043B\u044F \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u0435 \u0444\u0443\u043D\u043A\u0446\u0438\u0438 \xAB\u041F\u043E\u0434\u043F\u0438\u0441\u044C \u0444\u0430\u0439\u043B\u043E\u0432 \u0432 \u0431\u0440\u0430\u0443\u0437\u0435\u0440\u0435\xBB \u0412\u0430\u043C \u043D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u043F\u043E\u0434\u0433\u043E\u0442\u043E\u0432\u0438\u0442\u044C \u0440\u0430\u0431\u043E\u0447\u0435\u0435 \u043C\u0435\u0441\u0442\u043E. \u0414\u043B\u044F \u043F\u043E\u0434\u0433\u043E\u0442\u043E\u0432\u043A\u0438 \u0440\u0430\u0431\u043E\u0447\u0435\u0433\u043E \u043C\u0435\u0441\u0442\u0430 \u0436\u0435\u043B\u0430\u0442\u0435\u043B\u044C\u043D\u043E \u043E\u0431\u0440\u0430\u0442\u0438\u0442\u0435\u0441\u044C \u043A IT \u0441\u043F\u0435\u0446\u0438\u0430\u043B\u0438\u0441\u0442\u0430\u043C"), /*#__PURE__*/react.createElement(Spoller, {
+    caption: "\u041F\u043E\u0434\u0433\u043E\u0442\u043E\u0432\u043A\u0430 \u0440\u0430\u0431\u043E\u0447\u0435\u0433\u043E \u043C\u0435\u0441\u0442\u0430"
+  }, /*#__PURE__*/react.createElement("ul", null, /*#__PURE__*/react.createElement("li", null, "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C ", /*#__PURE__*/react.createElement("span", {
+    className: "BoldText"
+  }, "\u041A\u0440\u0438\u043F\u0442\u043E\u041F\u0440\u043E CSP"), "(\u043D\u0435 \u0440\u0430\u0441\u0441\u043C\u0430\u0442\u0440\u0438\u0432\u0430\u0435\u0442\u0441\u044F \u0432 \u0434\u0430\u043D\u043D\u043E\u0439 \u0438\u043D\u0441\u0442\u0440\u0443\u043A\u0446\u0438\u0438)"), /*#__PURE__*/react.createElement("li", null, "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C ", /*#__PURE__*/react.createElement("span", {
+    className: "BoldText"
+  }, "\u041A\u0440\u0438\u043F\u0442\u043E\u041F\u0440\u043E \u042D\u0426\u041F Browser plug-in")), /*#__PURE__*/react.createElement("li", null, "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C ", /*#__PURE__*/react.createElement("span", {
+    className: "BoldText"
+  }, "\u0440\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u0435 \u041A\u0440\u0438\u043F\u0442\u043E\u041F\u0440\u043E \u042D\u0426\u041F Browser plug-in"), " \u0434\u043B\u044F \u0432\u0435\u0431-\u0431\u0440\u0430\u0443\u0437\u0435\u0440\u0435"), /*#__PURE__*/react.createElement("li", null, "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F \u043A\u043E\u0442\u043E\u0440\u044B\u043C \u043F\u043B\u0430\u043D\u0438\u0440\u0443\u0435\u0442\u0441\u044F \u043F\u043E\u0434\u043F\u0438\u0441\u044B\u0432\u0430\u0442\u044C \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B")), /*#__PURE__*/react.createElement(Spoller, {
+    caption: "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0430 \u041A\u0440\u0438\u043F\u0442\u043E\u041F\u0440\u043E \u042D\u0426\u041F Browser plug-in:"
+  }, /*#__PURE__*/react.createElement("p", null, "\u041F\u0440\u0438 \u043D\u0430\u043B\u0438\u0447\u0438\u0438 \u0438\u043D\u0442\u0435\u0440\u043D\u0435\u0442\u0430 \u043F\u0435\u0440\u0435\u0439\u0434\u0438\u0442\u0435 \u043D\u0430 \u0441\u0430\u0439\u0442 ", /*#__PURE__*/react.createElement("a", {
+    href: "https://www.cryptopro.ru/products/cades/plugin",
+    target: "_blank"
+  }, "www.cryptopro.ru"), " \u0441\u043A\u0430\u0447\u0430\u0439\u0442\u0435 \u043F\u0440\u043E\u0434\u0443\u043A\u0442.", /*#__PURE__*/react.createElement("br", null), "\u041F\u0440\u0438 \u043E\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0438\u0438 \u0438\u043D\u0442\u0435\u0440\u043D\u0435\u0442\u0430 \u0441\u043A\u0430\u0447\u0430\u0442\u044C \u043F\u043B\u0430\u0433\u0438\u043D \u043C\u043E\u0436\u043D\u043E c \u0434\u0430\u043D\u043D\u043E\u0433\u043E \u0441\u0430\u0439\u0442\u0430: ", /*#__PURE__*/react.createElement("a", {
+    href: "../SignInstunction/Soft/cadesplugin.exe",
+    target: "_blank"
+  }, "\u041A\u0440\u0438\u043F\u0442\u043E\u041F\u0440\u043E \u042D\u0426\u041F Browser plug-in "), /*#__PURE__*/react.createElement("br", null), "\u041F\u043E\u0441\u043B\u0435 \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0438 \u0437\u0430\u043F\u0443\u0441\u0442\u0438\u0442\u0435 \u0444\u0430\u0439\u043B \u0438 \u0441\u043B\u0435\u0434\u0443\u0439\u0442\u0435 \u0438\u043D\u0441\u0442\u0440\u0443\u043A\u0446\u0438\u0438 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u0449\u0438\u043A\u0430.", /*#__PURE__*/react.createElement("br", null), "\u041F\u043E\u0441\u043B\u0435 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0438 \u0432 \u0412\u0430\u0448\u0435\u043C \u0432\u0435\u0431-\u0431\u0440\u0430\u0443\u0437\u0435\u0440\u0435 \u0434\u043E\u043B\u0436\u043D\u043E \u043F\u043E\u044F\u0432\u0438\u0442\u0441\u044F \u0440\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u0435: ", /*#__PURE__*/react.createElement("img", {
+    src: "../SignInstunction/Image/PluginICO.png"
+  })), /*#__PURE__*/react.createElement("p", null, "\u0415\u0441\u043B\u0438 \u043F\u0440\u0438 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0435 ", /*#__PURE__*/react.createElement("span", {
+    className: "BoldText"
+  }, "\u041A\u0440\u0438\u043F\u0442\u043E\u041F\u0440\u043E \u042D\u0426\u041F Browser plug-in"), " \u043F\u043E \u043A\u0430\u043A\u043E\u0439 \u0442\u043E \u043F\u0440\u0438\u0447\u0438\u043D\u0435 \u043D\u0435 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u043B\u043E\u0441\u044C \u0440\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u0435 \u0432 \u0432\u0435\u0431-\u0431\u0440\u0430\u0443\u0437\u0435\u0440\u0435, \u0442\u043E \u043C\u043E\u0436\u043D\u043E \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C \u0438\u0445 \u0432\u0440\u0443\u0447\u043D\u0443\u044E"), /*#__PURE__*/react.createElement(Spoller, {
+    caption: "\u0414\u043B\u044F Chrome:"
+  }, /*#__PURE__*/react.createElement("p", null, "\u0421\u043A\u0430\u0447\u0438\u0432\u0430\u0435\u043C \u0444\u0430\u0439\u043B \u0440\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u044F \u043F\u043E \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0435\u0439 \u0441\u0441\u044B\u043B\u043A\u0435: ", /*#__PURE__*/react.createElement("a", {
+    href: "../SignInstunction/Soft/\u0420\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u0435 CryptoPRO.crx",
+    target: "_blank"
+  }, "\u0420\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u0435 \u0434\u043B\u044F Chrome"), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("br", null), "\u0412 Chrome \u041C\u0435\u043D\u044E\u279C\u0414\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u0438\u043D\u0441\u0442\u0440\u0443\u043C\u0435\u043D\u0442\u044B\u279C\u0420\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u044F\u279C\u0410\u043A\u0442\u0438\u0432\u0438\u0440\u0443\u0435\u043C \u0440\u0435\u0436\u0438\u043C \u0440\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u0447\u0438\u043A\u0430\u279C\u041F\u0435\u0440\u0435\u043D\u043E\u0441\u0438\u043C \u0437\u0430\u0433\u0440\u0443\u0436\u0435\u043D\u043D\u044B\u0439 \u0444\u0430\u0439\u043B \u0432 \u0440\u0430\u0431\u043E\u0447\u0443\u044E \u043E\u0431\u043B\u0430\u0441\u0442\u044C", /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("br", null)), /*#__PURE__*/react.createElement("p", {
+    className: "BoldText",
+    align: "center"
+  }, "\u0410\u043D\u0438\u043C\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u0430\u044F \u0438\u043D\u0441\u0442\u0440\u0443\u043A\u0446\u0438\u044F"), /*#__PURE__*/react.createElement("img", {
+    src: "../SignInstunction/Image/\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0430 \u0432 Chrome.gif",
+    alt: "\u0410\u043D\u0438\u043C\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u0430\u044F \u0438\u043D\u0441\u0442\u0440\u0443\u043A\u0446\u0438\u044F",
+    style: InstructionDialog_styles.imgCenter
+  }), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("br", null)), /*#__PURE__*/react.createElement(Spoller, {
+    caption: "\u0414\u043B\u044F Firefox:"
+  }, /*#__PURE__*/react.createElement("p", null, "\u0421\u043A\u0430\u0447\u0438\u0432\u0430\u0435\u043C \u0444\u0430\u0439\u043B \u0440\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u044F \u043F\u043E \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0435\u0439 \u0441\u0441\u044B\u043B\u043A\u0435: ", /*#__PURE__*/react.createElement("a", {
+    href: "../SignInstunction/Soft/firefox_cryptopro_extension_latest.xpi",
+    target: "_blank"
+  }, "\u0420\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u0435 \u0434\u043B\u044F Firefox"), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("br", null), "\u041C\u0435\u043D\u044E\u279C\u0414\u043E\u043F\u043E\u043B\u043D\u0435\u043D\u0438\u044F \u0438 \u0442\u0435\u043C\u044B\u279C\u0420\u0430\u0437\u0434\u0435\u043B \xAB\u0420\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u044F\xBB\u279C\u0418\u043D\u0441\u0442\u0440\u0443\u043C\u0435\u043D\u0442\u044B \u0434\u043B\u044F \u0432\u0441\u0435\u0445 \u0434\u043E\u043F\u043E\u043B\u043D\u0435\u043D\u0438\u0439(\u0437\u043D\u0430\u0447\u043E\u043A \u0448\u0435\u0441\u0442\u0435\u0440\u0435\u043D\u043A\u0438)\u279C\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C \u0434\u043E\u043F\u043E\u043B\u043D\u0435\u043D\u0438\u0435 \u0438\u0437 \u0444\u0430\u0439\u043B\u0430"), /*#__PURE__*/react.createElement("p", {
+    className: "BoldText",
+    align: "center"
+  }, "\u0410\u043D\u0438\u043C\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u0430\u044F \u0438\u043D\u0441\u0442\u0440\u0443\u043A\u0446\u0438\u044F"), /*#__PURE__*/react.createElement("img", {
+    src: "../SignInstunction/Image/\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0430 \u0432 Firefox.gif",
+    alt: "\u0410\u043D\u0438\u043C\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u0430\u044F \u0438\u043D\u0441\u0442\u0440\u0443\u043A\u0446\u0438\u044F",
+    style: InstructionDialog_styles.imgCenter
+  }), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("br", null))), /*#__PURE__*/react.createElement(Spoller, {
+    caption: "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0430 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u0430:"
+  }, /*#__PURE__*/react.createElement("ul", null, /*#__PURE__*/react.createElement("li", null, "\u0423\u0441\u0442\u0430\u043D\u0430\u0432\u043B\u0438\u0432\u0430\u0435\u043C \u0442\u043E\u043A\u0435\u043D \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u043D\u043D\u043E\u0439 \u0446\u0438\u0444\u0440\u043E\u0432\u043E\u0439 \u043F\u043E\u0434\u043F\u0438\u0441\u0438 \u0432 USB \u043F\u043E\u0440\u0442 \u043A\u043E\u043C\u043F\u044C\u044E\u0442\u0435\u0440\u0430"), /*#__PURE__*/react.createElement("li", null, "\u041E\u0442\u043A\u0440\u044B\u0432\u0430\u0435\u043C \u041A\u0440\u0438\u043F\u0442\u043E\u041F\u0440\u043E CSP\u279CC\u0435\u0440\u0432\u0438\u0441\u279C\u041F\u043E\u0441\u043C\u043E\u0442\u0440\u0435\u0442\u044C \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u044B \u0432 \u043A\u043E\u043D\u0442\u0435\u0439\u043D\u0435\u0440\u0435"), /*#__PURE__*/react.createElement("li", null, "\u041E\u0431\u0437\u043E\u0440"), /*#__PURE__*/react.createElement("li", null, "\u041D\u0430\u0445\u043E\u0434\u0438\u043C \u0441\u0432\u043E\u0439 \u043A\u043E\u043D\u0442\u0435\u0439\u043D\u0435\u0440 \u0438 \u0436\u043C\u0435\u043C OK"), /*#__PURE__*/react.createElement("li", null, "\u041D\u0430\u0436\u0438\u043C\u0430\u0435\u043C \u0434\u0430\u043B\u0435\u0435 \u0438 \u043F\u0440\u043E\u0432\u0435\u0440\u044F\u0435\u043C \u0434\u0430\u043D\u043D\u044B\u0435 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u0430(\u0424\u0418\u041E \u0438\u0442\u0434)"), /*#__PURE__*/react.createElement("li", null, "\u0415\u0441\u043B\u0438 \u0432 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u0435 \u0432\u0441\u0435 \u0432\u0435\u0440\u043D\u043E, \u0436\u043C\u0435\u043C \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442")), /*#__PURE__*/react.createElement("p", {
+    className: "BoldText",
+    align: "center"
+  }, "\u0410\u043D\u0438\u043C\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u0430\u044F \u0438\u043D\u0441\u0442\u0440\u0443\u043A\u0446\u0438\u044F"), /*#__PURE__*/react.createElement("img", {
+    src: "../SignInstunction/Image/\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0430 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u0430.gif",
+    alt: "\u0410\u043D\u0438\u043C\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u0430\u044F \u0438\u043D\u0441\u0442\u0440\u0443\u043A\u0446\u0438\u044F",
+    style: InstructionDialog_styles.imgCenter
+  }), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("p", null, "\u0421\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442 \u0431\u0443\u0434\u0435\u0442 \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u0432 \u043B\u0438\u0447\u043D\u043E\u0435 \u0445\u0440\u0430\u043D\u0438\u043B\u0438\u0449\u0435 \u0442\u0435\u043A\u0443\u0449\u0435\u0433\u043E \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F", /*#__PURE__*/react.createElement("br", null), "\u041D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u0443\u0431\u0435\u0434\u0438\u0442\u0441\u044F, \u0447\u0442\u043E \u0432\u0441\u0435 \u0446\u0435\u043F\u043E\u0447\u043A\u0430 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u043E\u0432 \u0432\u0430\u043B\u0438\u0434\u043D\u0430 \u043D\u0430 \u0442\u0435\u043A\u0443\u0449\u0435\u043C \u0440\u0430\u0431\u043E\u0447\u0435\u043C \u043C\u0435\u0441\u0442\u0435:"), /*#__PURE__*/react.createElement("ul", null, /*#__PURE__*/react.createElement("li", null, "\u041E\u0442\u043A\u0440\u044B\u0432\u0430\u0435\u043C \u043C\u0435\u043D\u0435\u0434\u0436\u0435\u0440 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u0430\u043C\u0438(WIN+R \u0438\u043B\u0438 \u041F\u0443\u0441\u043A \u0432\u044B\u043F\u043E\u043B\u043D\u0438\u0442\u044C \u0438 \u0432\u0432\u043E\u0434\u0438\u043C \u043A\u043E\u043C\u0430\u043D\u0434\u0443 ", /*#__PURE__*/react.createElement("span", {
+    className: "BoldText"
+  }, "certmgr.msc"), ")"), /*#__PURE__*/react.createElement("li", null, "\u041D\u0430\u0445\u043E\u0434\u0438\u043C \u0441\u0432\u043E\u0438 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442 \u0432 \u0440\u0430\u0437\u0434\u0435\u043B\u0435 \u041B\u0438\u0447\u043D\u044B\u0435\u279C\u0421\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u044B"), /*#__PURE__*/react.createElement("li", null, "\u041E\u0442\u043A\u0440\u044B\u0432\u0430\u0435\u043C \u0435\u0433\u043E \u0438 \u043F\u0440\u043E\u0432\u0435\u0440\u044F\u0435\u043C, \u0447\u0442\u043E\u0431 \u0432 \u0440\u0430\u0437\u0434\u0435\u043B\u0435 \u043F\u0443\u0442\u044C \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u0438 \u0432\u0441\u0435 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u044B \u0431\u044B\u043B\u0438 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u043C\u0438")), /*#__PURE__*/react.createElement("p", {
+    className: "BoldText",
+    align: "center"
+  }, " \u041F\u0440\u0438\u043C\u0435\u0440 \u043D\u0435 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0439 \u0446\u0435\u043F\u043E\u0447\u043A\u0438"), /*#__PURE__*/react.createElement("img", {
+    src: "../SignInstunction/Image/\u041E\u0448\u0438\u0431\u043A\u0430 \u0446\u0435\u043F\u043E\u0447\u043A\u0438 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u043E\u0432.png",
+    alt: "\u041D\u0435 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0439 \u0446\u0435\u043F\u043E\u0447\u043A\u0430",
+    style: InstructionDialog_styles.imgCenter
+  }), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("p", null, "\u0427\u0442\u043E\u0431\u044B \u0438\u0441\u043F\u0440\u0430\u0432\u0438\u0442\u044C \u043E\u0448\u0438\u0431\u043A\u0443 \u043A\u0430\u043A \u043D\u0430 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0438 \u043D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u0434\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442 \"\u041C\u0438\u043D\u043A\u043E\u043C\u0441\u0432\u044F\u0437\u0438 \u0420\u043E\u0441\u0441\u0438\u0438\" \u0432 ", /*#__PURE__*/react.createElement("span", {
+    className: "BoldText"
+  }, "\u0434\u043E\u0432\u0435\u0440\u0435\u043D\u043D\u044B\u0435 \u043A\u043E\u0440\u043D\u0435\u0432\u044B\u0435 \u0446\u0435\u043D\u0442\u0440\u044B \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u0438")), /*#__PURE__*/react.createElement("p", {
+    className: "BoldText",
+    align: "center"
+  }, "\u0410\u043D\u0438\u043C\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u0430\u044F \u0438\u043D\u0441\u0442\u0440\u0443\u043A\u0446\u0438\u044F"), /*#__PURE__*/react.createElement("img", {
+    src: "../SignInstunction/Image/\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0430 \u0438\u0437\u0434\u0430\u0442\u0435\u043B\u0435\u0439.gif",
+    alt: "\u0410\u043D\u0438\u043C\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u0430\u044F \u0438\u043D\u0441\u0442\u0440\u0443\u043A\u0446\u0438\u044F",
+    style: InstructionDialog_styles.imgCenter
+  }), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("p", null, "\u0415\u0441\u043B\u0438 \u043D\u0430 \u0412\u0430\u0448\u0435\u043C \u0440\u0430\u0431\u043E\u0447\u0435\u043C \u043C\u0435\u0441\u0442\u0435 \u043E\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442 \u0438\u043D\u0442\u0435\u0440\u043D\u0435\u0442, \u0442\u043E \u0412\u0430\u043C \u043D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u043E \u0443\u0441\u0442\u0430\u043D\u0430\u0432\u043B\u0438\u0432\u0430\u0442\u044C \u0441\u043F\u0438\u0441\u043A\u0438 \u043E\u0442\u0437\u044B\u0432\u043E\u0432 \u0446\u0435\u043D\u0442\u0440\u0430 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u0438 \u043A\u043E\u0442\u043E\u0440\u044B\u0439 \u0432\u044B\u0434\u0430\u043B \u0412\u0430\u043C \u042D\u0426\u041F. \u042D\u0442\u043E \u043D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u0434\u0435\u043B\u0430\u0442\u044C \u0434\u043B\u044F \u0432\u0441\u0435\u0445 \u043A\u043E\u0440\u043D\u0435\u0432\u044B\u0445 \u0438 \u043F\u0440\u043E\u043C\u0435\u0436\u0443\u0442\u043E\u0447\u043D\u044B\u0445 \u0446\u0435\u043D\u0442\u0440\u043E\u0432 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u0438", /*#__PURE__*/react.createElement("br", null), "\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044E \u043E \u0442\u043E\u0447\u043A\u0435 \u0440\u0430\u0441\u043F\u0440\u043E\u0441\u0442\u0440\u0430\u043D\u0435\u043D\u0438\u044F \u0441\u043F\u0438\u0441\u043A\u043E\u0432 \u043E\u0442\u0437\u044B\u0432\u043E\u0432 \u043C\u043E\u0436\u043D\u043E \u043D\u0430\u0439\u0442\u0438 \u0432 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u0435"), /*#__PURE__*/react.createElement("p", {
+    className: "BoldText",
+    align: "center"
+  }, " \u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044E \u043E \u0442\u043E\u0447\u043A\u0435 \u0440\u0430\u0441\u043F\u0440\u043E\u0441\u0442\u0440\u0430\u043D\u0435\u043D\u0438\u044F \u0441\u043F\u0438\u0441\u043A\u043E\u0432 \u043E\u0442\u0437\u044B\u0432\u043E\u0432"), /*#__PURE__*/react.createElement("img", {
+    src: "../SignInstunction/Image/\u0422\u043E\u0447\u043A\u0430 \u0440\u0430\u0441\u043F\u0440\u043E\u0441\u0442\u0440\u0430\u043D\u0435\u043D\u0438\u044F.png",
+    style: InstructionDialog_styles.imgCenter
+  })), /*#__PURE__*/react.createElement(Spoller, {
+    caption: "\u041E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435 \u0441\u043F\u0438\u0441\u043A\u043E\u0432 \u043E\u0442\u0437\u044B\u0432\u043E\u0432 \u043F\u0440\u0438 \u043E\u0442\u0441\u0443\u0442\u0441\u0432\u0438\u0438 \u0441\u0435\u0442\u0438 \u0418\u043D\u0442\u0435\u0440\u043D\u0435\u0442"
+  }, /*#__PURE__*/react.createElement("p", null, "\u0422\u0424\u041E\u041C\u0421 \u0417\u0430\u0431\u0430\u0439\u043A\u0430\u043B\u044C\u0441\u043A\u043E\u0433\u043E \u043A\u0440\u0430\u044F \u043A\u043E\u043F\u0438\u0440\u0443\u0435\u0442 \u0441\u043F\u0438\u0441\u043A\u0438 \u043E\u0442\u0437\u044B\u0432\u043E\u0432(CRL), \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0435\u043C\u044B\u0445 \u0446\u0435\u043D\u0442\u0440\u043E\u0432 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u0438 \u043D\u0430 \u0434\u0430\u043D\u043D\u044B\u0439 \u0440\u0435\u0441\u0443\u0440\u0441"), /*#__PURE__*/react.createElement("p", null, "\u041D\u0430\u043F\u0440\u0438\u043C\u0435\u0440, \u0430\u0434\u0440\u0435\u0441 \u0442\u043E\u0447\u043A\u0438 \u0440\u0430\u0441\u043F\u0440\u043E\u0441\u0442\u0440\u0430\u043D\u043D\u0438\u044F CRL \u0434\u043B\u044F \u0446\u0435\u043D\u0442\u0440\u0430 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u0438 \u0424\u0424\u041E\u041C\u0421: http://", /*#__PURE__*/react.createElement("span", {
+    className: "BoldText"
+  }, "ucfoms.ffoms.ru"), "/cdp/630a8f435386a2e3f3e340c9adb5640bd9640dce.crl, \u0434\u0430\u043D\u043D\u044B\u0439 \u0444\u0430\u0439\u043B \u0432\u044B \u043C\u043E\u0436\u0435\u0442\u0435 \u043D\u0430\u0439\u0442\u0438 \u043D\u0430 http://", /*#__PURE__*/react.createElement("span", {
+    className: "BoldText"
+  }, "mis.zabtfoms.ru"), "/cdp/630a8f435386a2e3f3e340c9adb5640bd9640dce.crl"), /*#__PURE__*/react.createElement("p", null, "\u0417\u043D\u0430\u0447\u0438\u0442, \u0412\u044B \u043C\u043E\u0436\u0435\u0442\u0435 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C 1 \u0438\u0437 3 \u0432\u0430\u0440\u0438\u0430\u043D\u0442\u043E\u0432:", /*#__PURE__*/react.createElement("ul", null, /*#__PURE__*/react.createElement("li", null, "\u041F\u0435\u0440\u0435\u0434 \u043D\u0430\u0447\u0430\u043B\u043E\u043C \u043F\u043E\u0434\u043F\u0438\u0441\u0438 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u043E\u0432 \u0443\u0441\u0442\u0430\u043D\u0430\u0432\u043B\u0438\u0432\u0430\u0442\u044C CRL \u0441 ", /*#__PURE__*/react.createElement("a", {
+    target: "_blank",
+    href: "http://mis.zabtfoms.ru/cdp/630a8f435386a2e3f3e340c9adb5640bd9640dce.crl"
+  }, "http://mis.zabtfoms.ru/cdp/630a8f435386a2e3f3e340c9adb5640bd9640dce.crl"), " "), /*#__PURE__*/react.createElement("li", null, "\u041F\u043E\u043C\u0435\u043D\u044F\u0442\u044C \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u043B\u043E\u043A\u0430\u043B\u044C\u043D\u043E\u0433\u043E DNS \u0441\u0435\u0440\u0432\u0435\u0440\u0430 \u0443\u043A\u0430\u0437\u0430\u0442\u044C \u0435\u043C\u0443 \u0447\u0442\u043E \u0434\u043E\u043C\u0435\u043D\u043D\u043E\u0435 \u0438\u043C\u044F ", /*#__PURE__*/react.createElement("span", {
+    className: "BoldText"
+  }, "ucfoms.ffoms.ru"), ", \u043D\u0430\u0445\u043E\u0434\u0438\u0442\u0441\u044F \u043D\u0430 IP-\u0430\u0434\u0440\u0435\u0441\u0435 ", /*#__PURE__*/react.createElement("span", {
+    className: "BoldText"
+  }, "mis.zabtfoms.ru")), /*#__PURE__*/react.createElement("li", null, "\u0412\u043D\u0435\u0441\u0442\u0438 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u0435 \u0432 \u0444\u0430\u0439\u043B ..Windows\\System32\\drivers\\etc\\host \u043D\u0430 \u0440\u0430\u0431\u043E\u0447\u0435\u043C \u043C\u0435\u0441\u0442\u0435, \u0443\u043A\u0430\u0437\u0430\u0442\u044C \u0432 \u043D\u0435\u043C \u0447\u0442\u043E \u0434\u043E\u043C\u0435\u043D\u043D\u043E\u0435 \u0438\u043C\u044F ", /*#__PURE__*/react.createElement("span", {
+    className: "BoldText"
+  }, "ucfoms.ffoms.ru"), ", \u043D\u0430\u0445\u043E\u0434\u0438\u0442\u0441\u044F \u043D\u0430 IP-\u0430\u0434\u0440\u0435\u0441\u0435 ", /*#__PURE__*/react.createElement("span", {
+    className: "BoldText"
+  }, "mis.zabtfoms.ru")))))), /*#__PURE__*/react.createElement(Spoller, {
+    caption: "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u0435 \u0444\u0443\u043D\u043A\u0446\u0438\u0439 \u043C\u043E\u0434\u0443\u043B\u044F"
+  }, /*#__PURE__*/react.createElement(Spoller, {
+    caption: "\u0413\u043B\u0430\u0432\u043D\u043E\u0435 \u043E\u043A\u043D\u043E \u043C\u043E\u0434\u0443\u043B\u044F"
+  }, /*#__PURE__*/react.createElement("img", {
+    src: "../SignInstunction/Image/\u0413\u043B\u0430\u0432\u043D\u043E\u0435 \u043E\u043A\u043D\u043E.png",
+    alt: "\u0413\u043B\u0430\u0432\u043D\u043E\u0435 \u043E\u043A\u043D\u043E",
+    style: InstructionDialog_styles.imgCenter
+  }), /*#__PURE__*/react.createElement("p", null, "\u0413\u043B\u0430\u0432\u043D\u043E\u0435 \u043E\u043A\u043D\u043E \u043C\u043E\u0434\u0443\u043B\u044F \u0441\u043E\u0441\u0442\u043E\u0438\u0442 \u0438\u0437:"), /*#__PURE__*/react.createElement("ul", null, /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("div", null, "\u0420\u0430\u0437\u0434\u0435\u043B\u0430 \xAB\u0421\u043F\u0438\u0441\u043E\u043A \u0442\u0435\u043C\xBB - \u0433\u0440\u0443\u043F\u043F\u0430 \u0444\u0430\u0439\u043B\u043E\u0432 \u0441 \u043E\u043F\u0440\u0435\u0434\u0435\u043B\u0435\u043D\u043D\u043E\u0439 \u0442\u0435\u043C\u043E\u0439(\u043D\u0430\u043F\u0440\u0438\u043C\u0435\u0440 \u0410\u043A\u0442\u044B \u041C\u042D\u041A \u0437\u0430 \u044F\u043D\u0432\u0430\u0440\u044C 2021 \u0433\u043E\u0434\u0430)", /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("span", {
+    className: "TextCursiv"
+  }, "\u041D\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u044F \u043F\u043E \u0442\u0435\u043C\u0430\u043C \u043E\u0441\u0443\u0449\u0435\u0441\u0442\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u0441 \u043F\u043E\u043C\u043E\u0449\u044C\u044E \u0449\u0435\u043B\u0447\u043A\u0430 \u043B\u0435\u0432\u043E\u0439 \u043A\u043D\u043E\u043F\u043A\u043E\u0439 \u043C\u044B\u0448\u0438 \u043D\u0430 \u0441\u043E\u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0443\u044E\u0449\u0443\u044E \u0442\u0435\u043C\u0443"), /*#__PURE__*/react.createElement("span", {
+    className: "TextCursiv"
+  }, "\u0414\u043B\u044F \u043F\u043E\u0432\u0442\u043E\u0440\u043D\u043E\u0433\u043E \u0437\u0430\u043F\u0440\u043E\u0441\u0430 \u0441 \u0441\u0435\u0440\u0432\u0435\u0440\u0430 \u0441\u043F\u0438\u0441\u043A\u0430 \u0442\u0435\u043C \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439\u0442\u0435 \u043A\u043E\u043D\u0442\u0435\u043A\u0441\u0442\u043D\u043E\u0435 \u043C\u0435\u043D\u044E(\u0449\u0435\u043B\u0447\u043E\u043A \u043F\u0440\u0430\u0432\u043E\u0439 \u043A\u043D\u043E\u043F\u043A\u043E\u0439 \u043C\u044B\u0448\u0438 \u043D\u0430 \u043E\u0431\u043B\u0430\u0441\u0442\u0438 \u0442\u0435\u043C)"))), /*#__PURE__*/react.createElement("li", null, "\u0420\u0430\u0437\u0434\u0435\u043B\u0430 \u0444\u0430\u0439\u043B\u043E\u0432 \u043D\u0430 \u043F\u043E\u0434\u043F\u0438\u0441\u044C \u2013 \u0441\u043F\u0438\u0441\u043E\u043A \u0444\u0430\u0439\u043B\u043E\u0432 \u043D\u0430 \u043F\u043E\u0434\u043F\u0438\u0441\u044C \u0434\u043B\u044F \u0432\u044B\u0431\u0440\u0430\u043D\u043D\u043E\u0439 \u0442\u0435\u043C\u044B")), /*#__PURE__*/react.createElement("p", null, "\u0422\u0430\u0431\u043B\u0438\u0446\u0430 \u0441\u043F\u0438\u0441\u043A\u0430 \u0444\u0430\u0439\u043B\u043E\u0432 \u0441\u043E\u0434\u0435\u0440\u0436\u0438\u0442 \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0438\u0435 \u0441\u0442\u043E\u043B\u0431\u0446\u044B:"), /*#__PURE__*/react.createElement("ul", null, /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("span", {
+    className: "BoldText"
+  }, "\u041C\u0435\u0434\u0438\u0446\u0438\u043D\u0441\u043A\u0430\u044F \u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u044F"), " \u2013 \u043D\u0430\u0438\u043C\u0435\u043D\u043E\u0432\u0430\u043D\u0438\u0435 \u0412\u0430\u0448\u0435\u0439 \u043C\u0435\u0434\u0438\u0446\u0438\u043D\u0441\u043A\u043E\u0439 \u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u0438"), /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("span", {
+    className: "BoldText"
+  }, "\u0418\u043C\u044F \u0444\u0430\u0439\u043B\u0430"), " \u2013 \u043D\u0430\u0438\u043C\u0435\u043D\u043E\u0432\u0430\u043D\u0438\u0435 \u0444\u0430\u0439\u043B\u0430 \u0434\u043B\u044F \u043F\u043E\u0434\u043F\u0438\u0441\u0438"), /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("span", {
+    className: "BoldText"
+  }, "\u0414\u0430\u0442\u0430"), " \u2013 \u0434\u0430\u0442\u0430 \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0438 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430 \u0432 \u0438\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u043E\u043D\u043D\u0443\u044E \u0441\u0438\u0441\u0442\u0435\u043C\u0443"), /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("span", {
+    className: "BoldText"
+  }, "\u041F\u043E\u0434\u043F\u0438\u0441\u0430\u043D\u043E"), " \u2013 \u0421\u043F\u0438\u0441\u043E\u043A \u043B\u0438\u0446 \u043F\u043E\u0434\u043F\u0438\u0441\u044C \u043A\u043E\u0442\u043E\u0440\u044B\u0445 \u043E\u0436\u0438\u0434\u0430\u0435\u0442\u0441\u044F. \u0415\u0441\u043B\u0438 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D\u0442 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043B \u043F\u0438\u0441\u044C\u043C\u043E, \u0442\u043E \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0435 \u0431\u0443\u0434\u0435\u0442 ", /*#__PURE__*/react.createElement("span", {
+    className: "GreenText"
+  }, "\u0437\u0435\u043B\u0435\u043D\u043E\u0433\u043E \u0446\u0432\u0435\u0442\u0430 "), ", \u0435\u0441\u043B\u0438 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D\u0442 \u043D\u0435 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043B \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0435 \u0431\u0443\u0434\u0435\u0442 ", /*#__PURE__*/react.createElement("span", {
+    className: "RedText"
+  }, "\u043A\u0440\u0430\u0441\u043D\u043E\u0433\u043E \u0446\u0432\u0435\u0442\u0430 ")), /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("span", {
+    className: "BoldText"
+  }, "\u0414\u0435\u0439\u0441\u0442\u0432\u0438\u044F"), " \u2013 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044F \u043D\u0430\u0434 \u0444\u0430\u0439\u043B\u0430\u043C\u0438"))), /*#__PURE__*/react.createElement(Spoller, {
+    caption: "\u0414\u0435\u0439\u0441\u0442\u0432\u0438\u044F \u043D\u0430\u0434 \u0444\u0430\u0439\u043B\u0430\u043C\u0438"
+  }, /*#__PURE__*/react.createElement("p", null, "\u0412\u0441\u0435\u0433\u043E \u0432 \u043C\u043E\u0434\u0443\u043B\u0435 \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u0435\u0442 4 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044F:"), /*#__PURE__*/react.createElement("ul", null, /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("div", {
+    style: InstructionDialog_styles.imgContainer
+  }, /*#__PURE__*/react.createElement("img", {
+    src: "../SignInstunction/Image/DownloadICO.png",
+    alt: "\u0421\u043A\u0430\u0447\u0430\u0442\u044C \u0444\u0430\u0439\u043B",
+    style: InstructionDialog_styles.imgVerticalAlignCenter
+  }), /*#__PURE__*/react.createElement("span", {
+    style: InstructionDialog_styles.imgVerticalAlignCenter
+  }, /*#__PURE__*/react.createElement("span", {
+    className: "BoldText"
+  }, "\u0421\u043A\u0430\u0447\u0430\u0442\u044C \u0444\u0430\u0439\u043B"), " \u2013 \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u0444\u0430\u0439\u043B \u0441 \u0441\u0435\u0440\u0432\u0435\u0440\u0430"))), /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("div", {
+    style: InstructionDialog_styles.imgContainer
+  }, /*#__PURE__*/react.createElement("img", {
+    src: "../SignInstunction/Image/DownloadArchiveICO.png",
+    alt: "\u0421\u043A\u0430\u0447\u0430\u0442\u044C \u0444\u0430\u0439\u043B \u0441 \u043F\u043E\u0434\u043F\u0438\u0441\u044F\u043C\u0438",
+    style: InstructionDialog_styles.imgVerticalAlignCenter
+  }), /*#__PURE__*/react.createElement("span", {
+    style: InstructionDialog_styles.imgVerticalAlignCenter
+  }, /*#__PURE__*/react.createElement("span", {
+    className: "BoldText"
+  }, "\u0421\u043A\u0430\u0447\u0430\u0442\u044C \u0444\u0430\u0439\u043B \u0441 \u043F\u043E\u0434\u043F\u0438\u0441\u044F\u043C\u0438"), " \u2013 \u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u0444\u0430\u0439\u043B \u0438 \u0432\u0441\u0435 \u0435\u0433\u043E \u043F\u043E\u0434\u043F\u0438\u0441\u0438"))), /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("div", {
+    style: InstructionDialog_styles.imgContainer
+  }, /*#__PURE__*/react.createElement("img", {
+    src: "../SignInstunction/Image/SignICO.png",
+    alt: "\u041F\u043E\u0434\u043F\u0438\u0441\u0430\u0442\u044C",
+    style: InstructionDialog_styles.imgVerticalAlignCenter
+  }), /*#__PURE__*/react.createElement("span", {
+    style: InstructionDialog_styles.imgVerticalAlignCenter
+  }, /*#__PURE__*/react.createElement("span", {
+    className: "BoldText"
+  }, "\u041F\u043E\u0434\u043F\u0438\u0441\u0430\u0442\u044C"), " \u2013 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u0442\u044C \u0444\u0430\u0439\u043B \u0432 \u0431\u0440\u0430\u0443\u0437\u0435\u0440\u0435(\u0432\u043E\u0437\u043C\u043E\u0436\u043D\u0430 \u043C\u0430\u0441\u0441\u043E\u0432\u0430\u044F \u043F\u043E\u0434\u043F\u0438\u0441\u044C)"))), /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("div", {
+    style: InstructionDialog_styles.imgContainer
+  }, /*#__PURE__*/react.createElement("img", {
+    src: "../SignInstunction/Image/SigFileICO.png",
+    alt: "\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u043E\u0442\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u043D\u0443\u044E \u043F\u043E\u0434\u043F\u0438\u0441\u044C",
+    style: InstructionDialog_styles.imgVerticalAlignCenter
+  }), /*#__PURE__*/react.createElement("span", {
+    style: InstructionDialog_styles.imgVerticalAlignCenter
+  }, /*#__PURE__*/react.createElement("span", {
+    className: "BoldText"
+  }, "\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u043E\u0442\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u043D\u0443\u044E \u043F\u043E\u0434\u043F\u0438\u0441\u044C"), " \u2013 \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u0444\u0430\u0439\u043B \u043E\u0442\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u043D\u043E\u0439 \u043F\u043E\u0434\u043F\u0438\u0441\u0438 \u043A \u0444\u0430\u0439\u043B\u0443")))), /*#__PURE__*/react.createElement("p", null, "  \u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435 \u0440\u0430\u0431\u043E\u0442\u044B \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0439:"), /*#__PURE__*/react.createElement("p", null, "\u041F\u0440\u0438 \u0430\u043A\u0442\u0438\u0432\u0430\u0446\u0438\u0438 \"\u0421\u043A\u0430\u0447\u0430\u0442\u044C \u0444\u0430\u0439\u043B\" - \u0431\u0440\u0430\u0443\u0437\u0435\u0440 \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442 \u0444\u0430\u0439\u043B \u043D\u0430 \u0412\u0430\u0448 \u043A\u043E\u043C\u043F\u044C\u044E\u0442\u0435\u0440"), /*#__PURE__*/react.createElement("p", null, "\u041F\u0440\u0438 \u0430\u043A\u0442\u0438\u0432\u0430\u0446\u0438\u0438 \"\u0421\u043A\u0430\u0447\u0430\u0442\u044C \u0444\u0430\u0439\u043B \u0441 \u043F\u043E\u0434\u043F\u0438\u0441\u044F\u043C\u0438\" - \u0431\u0440\u0430\u0443\u0437\u0435\u0440 \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442 ZIP \u0430\u0440\u0445\u0438\u0432 \u0441 \u0444\u0430\u0439\u043B\u043E\u043C \u0438 \u0432\u0441\u0435\u043C\u0438 \u043F\u043E\u0434\u043F\u0438\u0441\u044F\u043C\u0438 \u043D\u0430 \u0412\u0430\u0448 \u043A\u043E\u043C\u043F\u044C\u044E\u0442\u0435\u0440"), /*#__PURE__*/react.createElement(Spoller, {
+    caption: "\u041F\u043E\u0434\u043F\u0438\u0441\u044C \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430"
+  }, /*#__PURE__*/react.createElement("p", null, "\u0414\u043B\u044F \u043F\u043E\u0434\u043F\u0438\u0441\u0438 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430 \u043D\u0430\u0436\u043C\u0438\u0442\u0435 \u043D\u0430 \u043A\u043D\u043E\u043F\u043A\u0443 \xAB\u041F\u043E\u0434\u043F\u0438\u0441\u0430\u0442\u044C\xBB, \u043F\u043E\u0441\u043B\u0435 \u0447\u0435\u0433\u043E \u043E\u0442\u043A\u0440\u043E\u0435\u0442\u0441\u044F \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0438\u0435 \u043E\u043A\u043D\u043E:"), /*#__PURE__*/react.createElement("img", {
+    src: "../SignInstunction/Image/\u041E\u043A\u043D\u043E \u043F\u043E\u0434\u043F\u0438\u0441\u0438.png",
+    alt: "\u041E\u043A\u043D\u043E \u043F\u043E\u0434\u043F\u0438\u0441\u0438",
+    style: InstructionDialog_styles.imgCenter
+  }), /*#__PURE__*/react.createElement("p", {
+    className: "TextCursiv"
+  }, "\u0415\u0441\u043B\u0438 \u043F\u043B\u0430\u0433\u0438\u043D \u043D\u0435 \u0434\u043E\u0441\u0442\u0443\u043F\u0435\u043D \u0437\u043D\u0430\u0447\u0438\u0442 \u0412\u0430\u0448\u0435 \u0440\u0430\u0431\u043E\u0447\u0435\u0435 \u043C\u0435\u0441\u0442\u043E \u043D\u0435 \u043F\u043E\u0434\u0433\u043E\u0442\u043E\u0432\u043B\u0435\u043D\u043E \u043A \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u044E \u042D\u0426\u041F"), /*#__PURE__*/react.createElement("p", {
+    className: "TextCursiv"
+  }, "\u0412 \u0434\u0430\u043D\u043D\u043E\u043C \u043E\u043A\u043D\u0435 \u043D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u0432\u044B\u0431\u0440\u0430\u0442\u044C \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F \u043A\u043E\u0442\u043E\u0440\u044B\u043C \u0432\u044B \u0445\u043E\u0442\u0438\u0442\u0435 \u043F\u043E\u0434\u043F\u0438\u0441\u044C \u0444\u0430\u0439\u043B \u0438 \u043D\u0430\u0436\u0430\u0442\u044C \u043D\u0430 \u043A\u043D\u043E\u043F\u043A\u0443 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u0442\u044C"), /*#__PURE__*/react.createElement("p", {
+    className: "TextCursiv"
+  }, "\u0411\u0440\u0430\u0443\u0437\u0435\u0440 \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442 \u0444\u0430\u0439\u043B, \u043F\u043E\u0434\u043F\u0438\u0448\u0435\u0442 \u0435\u0433\u043E \u0438 \u043E\u0442\u043F\u0440\u0430\u0432\u0438\u0442 \u043D\u0430 \u0441\u0435\u0440\u0432\u0435\u0440 \u0434\u043B\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0438"), /*#__PURE__*/react.createElement("p", null, "\u0412 \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u0435 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442 \u043F\u043E\u0434\u043F\u0438\u0448\u0435\u0442\u0441\u044F, \u0435\u0441\u043B\u0438 \u043F\u043E\u0434\u043F\u0438\u0441\u044C \u0432\u0430\u043B\u0438\u0434\u043D\u0430 \u0438\u043B\u0438 \u043D\u0435 \u043F\u043E\u0434\u043F\u0438\u0448\u0435\u0442\u0441\u044F, \u0438 \u0431\u0440\u0430\u0443\u0437\u0435\u0440 \u043E\u0442\u043E\u0431\u0440\u0430\u0437\u0438\u0442 \u043E\u0448\u0438\u0431\u043A\u0443"), /*#__PURE__*/react.createElement("p", null, "\u0412\u043E\u0437\u043C\u043E\u0436\u043D\u044B\u0435 \u043E\u0448\u0438\u0431\u043A\u0438 \u0441\u0435\u0440\u0432\u0435\u0440\u0430, \u0435\u0441\u043B\u0438 \u043F\u043E\u0434\u043F\u0438\u0441\u044C \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043B\u044C\u043D\u0430:"), /*#__PURE__*/react.createElement("ul", null, /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("span", {
+    className: "RedText"
+  }, "\u0424\u0430\u0439\u043B \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D \u043D\u0430 \u0441\u0435\u0440\u0432\u0435\u0440\u0435"), " \u2013 \u043D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043D\u0430\u0439\u0442\u0438 \u0444\u0430\u0439\u043B\u0430 \u043D\u0430 \u0441\u0435\u0440\u0432\u0435\u0440\u0435(\u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E \u043E\u043D \u0431\u044B\u043B \u0443\u0434\u0430\u043B\u0435\u043D \u043F\u043E\u043A\u0430 \u0412\u044B \u0433\u043E\u0442\u043E\u0432\u0438\u043B\u0438\u0441\u044C \u043A \u043F\u043E\u0434\u043F\u0438\u0441\u0438)"), /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("span", {
+    className: "RedText"
+  }, "\u041D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u0430 \u0434\u0430\u0442\u0430 \u043F\u043E\u0434\u043F\u0438\u0441\u0438"), " \u2013 \u043F\u043E\u0434\u043F\u0438\u0441\u044C \u043D\u0435 \u0441\u043E\u0434\u0435\u0440\u0436\u0438\u0442 \u0434\u0430\u0442\u0443 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D\u0438\u044F"), /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("span", {
+    className: "RedText"
+  }, "\u041D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D \u0432\u043B\u0430\u0434\u0435\u043B\u0435\u0446 \u043F\u043E\u0434\u043F\u0438\u0441\u0438"), " \u2013 \u043D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043D\u0430\u0439\u0442\u0438 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D\u0442\u0430 \u0432 \u0441\u043F\u0438\u0441\u043A\u0435 \u043B\u0438\u0446 \u0434\u043E\u043F\u0443\u0449\u0435\u043D\u043D\u044B\u0445 \u043A \u043F\u043E\u0434\u043F\u0438\u0441\u0438 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u043E\u0432"), /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("span", {
+    className: "RedText"
+  }, "\u0414\u0430\u043D\u043D\u0430\u044F \u043F\u043E\u0434\u043F\u0438\u0441\u044C \u043D\u0435 \u043E\u0436\u0438\u0434\u0430\u0435\u0442\u0441\u044F \u0434\u043B\u044F \u0434\u0430\u043D\u043D\u043E\u0433\u043E \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430"), " \u2013 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D\u0442 \u043D\u0430\u0439\u0434\u0435\u043D \u0432 \u0441\u043F\u0438\u0441\u043A\u0435 \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B\u0445, \u043E\u0434\u043D\u0430\u043A\u043E \u0434\u043B\u044F \u0434\u0430\u043D\u043D\u043E\u0433\u043E \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430 \u043D\u0435 \u0442\u0440\u0435\u0431\u0443\u0435\u0442\u0441\u044F \u0435\u0433\u043E \u043F\u043E\u0434\u043F\u0438\u0441\u044C"), /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("span", {
+    className: "RedText"
+  }, "\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442 \u0443\u0436\u0435 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D \u0434\u0430\u043D\u043D\u043E\u0439 \u043F\u043E\u0434\u043F\u0438\u0441\u044C\u044E"), " \u2013 \u0444\u0430\u0439\u043B \u0443\u0436\u0435 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D \u0434\u0430\u043D\u043D\u044B\u043C \u043B\u0438\u0446\u043E\u043C"))), /*#__PURE__*/react.createElement(Spoller, {
+    caption: "\u041F\u043E\u0434\u043F\u0438\u0441\u044C \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430 \u043F\u0443\u0442\u0435\u043C \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0438 \u043E\u0442\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u043D\u043E\u0439 \u043F\u043E\u0434\u043F\u0438\u0441\u0438"
+  }, /*#__PURE__*/react.createElement("p", null, "\u041E\u0442\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u043D\u0430\u044F \u043F\u043E\u0434\u043F\u0438\u0441\u044C - \u044D\u0442\u043E \u0444\u0430\u0439\u043B \u0441\u043E\u0434\u0435\u0440\u0436\u0430\u0449\u0438\u0439 \u0432 \u0441\u0435\u0431\u0435 \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u043D\u043D\u043E-\u0446\u0438\u0444\u0440\u043E\u0432\u0443\u044E \u043F\u043E\u0434\u043F\u0438\u0441\u044C \u0432 \u043A\u043E\u0434\u0438\u0440\u043E\u0432\u043A\u0435 BASE64. \u041E\u0431\u044B\u0447\u043D\u043E \u0442\u0430\u043A\u0438\u0435 \u0444\u0430\u0439\u043B\u044B \u0438\u043C\u0435\u044E\u0442 \u0440\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u0435 *.SIG"), /*#__PURE__*/react.createElement("p", null, "\u0414\u043B\u044F \u043F\u043E\u0434\u043F\u0438\u0441\u044C \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430 \u043F\u0443\u0442\u0435\u043C \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0438 \u043E\u0442\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u043D\u043E\u0439 \u043F\u043E\u0434\u043F\u0438\u0441\u0438 \u043D\u0430\u0436\u043C\u0438\u0442\u0435 \u043D\u0430 \u043A\u043D\u043E\u043F\u043A\u0443 \xAB\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u043E\u0442\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u043D\u0443\u044E \u043F\u043E\u0434\u043F\u0438\u0441\u044C\xBB, \u043F\u043E\u0441\u043B\u0435 \u0447\u0435\u0433\u043E \u043E\u0442\u043A\u0440\u043E\u0435\u0442\u0441\u044F \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0438\u0435 \u043E\u043A\u043D\u043E:"), /*#__PURE__*/react.createElement("img", {
+    src: "../SignInstunction/Image/\u041E\u043A\u043D\u043E \u043E\u0442\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u043D\u043E\u0439 \u043F\u043E\u0434\u043F\u0438\u0441\u0438.png",
+    alt: "\u041E\u043A\u043D\u043E \u043E\u0442\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u043D\u043E\u0439 \u043F\u043E\u0434\u043F\u0438\u0441\u0438",
+    style: InstructionDialog_styles.imgCenter
+  }), /*#__PURE__*/react.createElement("p", {
+    className: "TextCursiv"
+  }, "\u0412 \u0434\u0430\u043D\u043D\u043E\u043C \u043E\u043A\u043D\u0435 \u043D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u0432\u044B\u0431\u0440\u0430\u0442\u044C \u0444\u0430\u0439\u043B \u0434\u043B\u044F \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0438 \u0438 \u043D\u0430\u0436\u0430\u0442\u044C \u043D\u0430 \u043A\u043D\u043E\u043F\u043A\u0443 \"\u041E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C\""), /*#__PURE__*/react.createElement("p", {
+    className: "TextCursiv"
+  }, "\u0411\u0440\u0430\u0443\u0437\u0435\u0440 \u043E\u0442\u043F\u0440\u0430\u0432\u0438\u0442 \u0444\u0430\u0439\u043B\u0430 \u043D\u0430 \u0441\u0435\u0440\u0432\u0435\u0440 \u0434\u043B\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0438"), /*#__PURE__*/react.createElement("p", null, "\u0412 \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u0435 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442 \u043F\u043E\u0434\u043F\u0438\u0448\u0435\u0442\u0441\u044F, \u0435\u0441\u043B\u0438 \u043F\u043E\u0434\u043F\u0438\u0441\u044C \u0432\u0430\u043B\u0438\u0434\u043D\u0430 \u0438\u043B\u0438 \u043D\u0435 \u043F\u043E\u0434\u043F\u0438\u0448\u0435\u0442\u0441\u044F, \u0438 \u0431\u0440\u0430\u0443\u0437\u0435\u0440 \u043E\u0442\u043E\u0431\u0440\u0430\u0437\u0438\u0442 \u043E\u0448\u0438\u0431\u043A\u0443"), /*#__PURE__*/react.createElement("p", null, "\u0412\u043E\u0437\u043C\u043E\u0436\u043D\u044B\u0435 \u043E\u0448\u0438\u0431\u043A\u0438 \u0441\u0435\u0440\u0432\u0435\u0440\u0430, \u0435\u0441\u043B\u0438 \u043F\u043E\u0434\u043F\u0438\u0441\u044C \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043B\u044C\u043D\u0430:"), /*#__PURE__*/react.createElement("ul", null, /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("span", {
+    className: "RedText"
+  }, "\u0424\u0430\u0439\u043B \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D \u043D\u0430 \u0441\u0435\u0440\u0432\u0435\u0440\u0435"), " \u2013 \u043D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043D\u0430\u0439\u0442\u0438 \u0444\u0430\u0439\u043B\u0430 \u043D\u0430 \u0441\u0435\u0440\u0432\u0435\u0440\u0435(\u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E \u043E\u043D \u0431\u044B\u043B \u0443\u0434\u0430\u043B\u0435\u043D \u043F\u043E\u043A\u0430 \u0412\u044B \u0433\u043E\u0442\u043E\u0432\u0438\u043B\u0438\u0441\u044C \u043A \u043F\u043E\u0434\u043F\u0438\u0441\u0438)"), /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("span", {
+    className: "RedText"
+  }, "\u041D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u0430 \u0434\u0430\u0442\u0430 \u043F\u043E\u0434\u043F\u0438\u0441\u0438"), " \u2013 \u043F\u043E\u0434\u043F\u0438\u0441\u044C \u043D\u0435 \u0441\u043E\u0434\u0435\u0440\u0436\u0438\u0442 \u0434\u0430\u0442\u0443 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D\u0438\u044F"), /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("span", {
+    className: "RedText"
+  }, "\u041D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D \u0432\u043B\u0430\u0434\u0435\u043B\u0435\u0446 \u043F\u043E\u0434\u043F\u0438\u0441\u0438"), " \u2013 \u043D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043D\u0430\u0439\u0442\u0438 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D\u0442\u0430 \u0432 \u0441\u043F\u0438\u0441\u043A\u0435 \u043B\u0438\u0446 \u0434\u043E\u043F\u0443\u0449\u0435\u043D\u043D\u044B\u0445 \u043A \u043F\u043E\u0434\u043F\u0438\u0441\u0438 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u043E\u0432"), /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("span", {
+    className: "RedText"
+  }, "\u0414\u0430\u043D\u043D\u0430\u044F \u043F\u043E\u0434\u043F\u0438\u0441\u044C \u043D\u0435 \u043E\u0436\u0438\u0434\u0430\u0435\u0442\u0441\u044F \u0434\u043B\u044F \u0434\u0430\u043D\u043D\u043E\u0433\u043E \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430"), " \u2013 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D\u0442 \u043D\u0430\u0439\u0434\u0435\u043D \u0432 \u0441\u043F\u0438\u0441\u043A\u0435 \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B\u0445, \u043E\u0434\u043D\u0430\u043A\u043E \u0434\u043B\u044F \u0434\u0430\u043D\u043D\u043E\u0433\u043E \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430 \u043D\u0435 \u0442\u0440\u0435\u0431\u0443\u0435\u0442\u0441\u044F \u0435\u0433\u043E \u043F\u043E\u0434\u043F\u0438\u0441\u044C"), /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("span", {
+    className: "RedText"
+  }, "\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442 \u0443\u0436\u0435 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D \u0434\u0430\u043D\u043D\u043E\u0439 \u043F\u043E\u0434\u043F\u0438\u0441\u044C\u044E"), " \u2013 \u0444\u0430\u0439\u043B \u0443\u0436\u0435 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D \u0434\u0430\u043D\u043D\u044B\u043C \u043B\u0438\u0446\u043E\u043C"))))))));
 }
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/Tabs/Tabs.js + 4 modules
 var Tabs = __webpack_require__(8998);
@@ -101216,6 +104972,7 @@ var Tab = __webpack_require__(41423);
 
 
 var _excluded = ["children", "value", "index"];
+
 
 
 
@@ -101260,7 +105017,7 @@ function TabPanel(props) {
     "aria-labelledby": "simple-tab-".concat(index)
   }, other), value === index && /*#__PURE__*/react.createElement(Box/* default */.Z, {
     p: 3
-  }, /*#__PURE__*/react.createElement(Typography/* default */.Z, null, children)));
+  }, children));
 }
 
 function MainTab(props) {
@@ -101275,9 +105032,26 @@ function MainTab(props) {
     setValue(newValue);
   };
 
+  var _React$useState3 = react.useState(false),
+      _React$useState4 = (0,slicedToArray/* default */.Z)(_React$useState3, 2),
+      isOpenInstruction = _React$useState4[0],
+      setIsOpenInstruction = _React$useState4[1];
+
+  var hideInstruction = function hideInstruction() {
+    setIsOpenInstruction(false);
+  };
+
+  var showInstruction = function showInstruction() {
+    setIsOpenInstruction(true);
+  };
+
   return /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(ThemeProvider/* default */.Z, {
     theme: app_theme
-  }, /*#__PURE__*/react.createElement(Tabs/* default */.Z, {
+  }, /*#__PURE__*/react.createElement(Button/* default */.Z, {
+    variant: "contained",
+    color: "primary",
+    onClick: showInstruction
+  }, "\u0418\u043D\u0441\u0442\u0440\u0443\u043A\u0446\u0438\u044F \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F"), /*#__PURE__*/react.createElement(Tabs/* default */.Z, {
     value: value,
     indicatorColor: "primary",
     textColor: "primary",
@@ -101305,7 +105079,10 @@ function MainTab(props) {
   }, /*#__PURE__*/react.createElement(RoleList, null)) : null, isAdmin ? /*#__PURE__*/react.createElement(TabPanel, {
     value: value,
     index: 3
-  }, /*#__PURE__*/react.createElement(IssuerList, null)) : null));
+  }, /*#__PURE__*/react.createElement(IssuerList, null)) : null, /*#__PURE__*/react.createElement(InstructionDialog, {
+    isOpen: isOpenInstruction,
+    onClose: hideInstruction
+  })));
 }
 var app = document.getElementById("app");
 var isAdmin = app.attributes["isAdmin"].value === 'True';

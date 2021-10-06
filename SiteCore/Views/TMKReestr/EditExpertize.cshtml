@@ -15,7 +15,7 @@
             <label class="BoldText"> Дата акта </label><input ng-model="CurrentExpertize.DATEACT" type="date" />
             <label ng-if="CurrentExpertize.S_TIP == 2"> ФИО специалиста-эксперта </label><input ng-model="CurrentExpertize.FIO" type="text" ng-if="CurrentExpertize.S_TIP == 2" />
             <label class="BoldText" ng-if="CurrentExpertize.S_TIP == 3"> Врач ЭКМП </label>
-            <select ng-model="CurrentExpertize.N_EXP" class="select-select2" ng-if="CurrentExpertize.S_TIP == 3" convert-to-number select-2>
+            <select ng-model="CurrentExpertize.N_EXP" class="select-select2" ng-if="CurrentExpertize.S_TIP == 3"  select-2>
                 <option disabled value="">------</option>
                 @foreach (var item in Model.EXPERTS)
                 {

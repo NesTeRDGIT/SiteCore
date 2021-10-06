@@ -25,11 +25,26 @@ namespace SiteCore.Controllers
         private TMKOracleSet dbo { get; }
         private ILogger logger { get; }
         private ITMKExcelCreator tmkExcelCreator { get; }
-        public TMKReestrController(ILogger logger, TMKOracleSet dbo, ITMKExcelCreator tmkExcelCreator)
+        private UserInfoHelper userInfoHelper;
+        private UserInfo _userInfo;
+        private UserInfo userInfo
+        {
+            get
+            {
+                if (_userInfo == null)
+                {
+                    _userInfo = userInfoHelper.GetInfo(User.Identity.Name);
+                }
+                return _userInfo;
+            }
+        }
+
+        public TMKReestrController(ILogger logger, TMKOracleSet dbo, ITMKExcelCreator tmkExcelCreator, UserInfoHelper userInfoHelper)
         {
             this.logger = logger;
             this.dbo = dbo;
             this.tmkExcelCreator = tmkExcelCreator;
+            this.userInfoHelper = userInfoHelper;
         }
         public IActionResult TMKReestr()
         {
@@ -145,12 +160,12 @@ namespace SiteCore.Controllers
             IQueryable<TMKReestr> nodes = null;
             if (User.IsInRole("TMKSMO"))
             {
-                nodes = dbo.TMKReestr.Where(x => !string.IsNullOrEmpty(x.SMO) && x.SMO == CODE_SMO && x.STATUS == StatusTMKRow.Closed);
+                nodes = dbo.TMKReestr.Where(x => !string.IsNullOrEmpty(x.SMO) && x.SMO == userInfo.CODE_SMO && x.STATUS == StatusTMKRow.Closed);
             }
 
             if (User.IsInRole("TMKUser"))
             {
-                nodes = dbo.TMKReestr.Where(x => x.CODE_MO == CODE_MO);
+                nodes = dbo.TMKReestr.Where(x => x.CODE_MO == userInfo.CODE_MO);
             }
 
             if (User.IsInRole("TMKReader"))
@@ -234,13 +249,13 @@ namespace SiteCore.Controllers
                 return;
             if (User.IsInRole("TMKSMO"))
             {
-                if (smo != CODE_SMO)
+                if (smo != userInfo.CODE_SMO)
                     throw new ModelException("", "Запись не принадлежит Вашей СМО");
                 return;
             }
             if (User.IsInRole("TMKUser"))
             {
-                if (code_mo != CODE_MO)
+                if (code_mo != userInfo.CODE_MO)
                     throw new ModelException("", "Запись не принадлежит Вашей МО");
                 return;
             }
@@ -295,7 +310,7 @@ namespace SiteCore.Controllers
                     }
                     else
                     {
-                        if (delItem.CODE_MO != CODE_MO)
+                        if (delItem.CODE_MO != userInfo.CODE_MO)
                         {
                             Error.Add($"Запись №{delItem.TMK_ID} не принадлежит Вашей МО");
                             isERR = true;
@@ -496,7 +511,7 @@ namespace SiteCore.Controllers
                     }
                     else
                     {
-                        editItem = new TMKReestr { CODE_MO = CODE_MO, STATUS = StatusTMKRow.Open };
+                        editItem = new TMKReestr { CODE_MO = userInfo.CODE_MO, STATUS = StatusTMKRow.Open };
                         dbo.TMKReestr.Add(editItem);
                     }
 
@@ -506,7 +521,7 @@ namespace SiteCore.Controllers
                     }
                     else
                     {
-                        if (editItem.CODE_MO != CODE_MO)
+                        if (editItem.CODE_MO != userInfo.CODE_MO)
                         {
                             ModelState.AddModelError("", "Запись не принадлежит Вашей МО");
                         }
@@ -530,7 +545,7 @@ namespace SiteCore.Controllers
                         editItem.NMIC = item.NMIC.Value;
                         editItem.PROFIL = item.PROFIL.Value;
                         editItem.TMIS = item.TMIS.Value;
-                        editItem.USER_ID = USER_ID;
+                        editItem.USER_ID = userInfo.USER_ID;
                         editItem.NOVOR = item.NOVOR;
                         if (!editItem.NOVOR)
                         {
@@ -691,9 +706,9 @@ namespace SiteCore.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var r =await dbo.TMKReestr.FirstOrDefaultAsync(x => x.TMK_ID == item.TMK_ID && (x.SMO == CODE_SMO || x.ISNOTSMO && CODE_SMO == "75"));
+                    var r =await dbo.TMKReestr.FirstOrDefaultAsync(x => x.TMK_ID == item.TMK_ID && (x.SMO == userInfo.CODE_SMO || x.ISNOTSMO && userInfo.CODE_SMO == "75"));
                     if (r == null)
-                        throw new ModelException("", $"Запись ТМК не найдена для СМО={CODE_SMO}");
+                        throw new ModelException("", $"Запись ТМК не найдена для СМО={userInfo.CODE_SMO}");
 
                     if (!string.IsNullOrEmpty(item.N_EXP))
                     {
@@ -712,7 +727,7 @@ namespace SiteCore.Controllers
                     {
                         if (item.EXPERTIZE_ID == -1)
                         {
-                            var exp = new TMKReestRExpertize {USER_ID = USER_ID, TMK_ID = r.TMK_ID};
+                            var exp = new TMKReestRExpertize {USER_ID = userInfo.USER_ID, TMK_ID = r.TMK_ID};
                             item.CopyTo(exp);
                             dbo.Expertizes.Add(exp);
                             if (exp.S_TIP == ExpertTip.MEK)
@@ -759,7 +774,7 @@ namespace SiteCore.Controllers
                 var exp = await dbo.Expertizes.FirstOrDefaultAsync(x => x.EXPERTIZE_ID == EXPERTIZE_ID);
                 if (exp == null)
                     throw new ModelException("", "Экспертиза не найдена");
-                if (exp.TMKReestr.SMO != CODE_SMO) 
+                if (exp.TMKReestr.SMO != userInfo.CODE_SMO) 
                     throw new ModelException("", "Экспертиза принадлежит другой СМО");
 
                 dbo.Expertizes.Remove(exp);
@@ -826,7 +841,7 @@ namespace SiteCore.Controllers
               
                 if (User.IsInRole("TMKSMO"))
                 {
-                    smo = CODE_SMO;
+                    smo = userInfo.CODE_SMO;
                 }
                 if (User.IsInRole("TMKAdmin"))
                 {
@@ -880,7 +895,7 @@ namespace SiteCore.Controllers
                 {
                     if (User.IsInRole("TMKUser"))
                     {
-                        info = await dbo.CONTACT_INFO.Include(x => x.CODE_MO_NAME).Where(x => x.CODE_MO == CODE_MO).OrderBy(x => x.CODE_MO).ThenByDescending(x => x.ID_CONTACT_INFO).ToListAsync();
+                        info = await dbo.CONTACT_INFO.Include(x => x.CODE_MO_NAME).Where(x => x.CODE_MO == userInfo.CODE_MO).OrderBy(x => x.CODE_MO).ThenByDescending(x => x.ID_CONTACT_INFO).ToListAsync();
                     }
                 }
             }
@@ -913,7 +928,7 @@ namespace SiteCore.Controllers
                 if (User.IsInRole("TMKUser"))
                 {
                     if (ID_CONTACT_INFO != 0)
-                        item = new CONTACT_INFOModel(await dbo.CONTACT_INFO.FirstOrDefaultAsync(x => x.ID_CONTACT_INFO == ID_CONTACT_INFO && x.CODE_MO == CODE_MO));
+                        item = new CONTACT_INFOModel(await dbo.CONTACT_INFO.FirstOrDefaultAsync(x => x.ID_CONTACT_INFO == ID_CONTACT_INFO && x.CODE_MO == userInfo.CODE_MO));
                 }
             }
             return await GetEditCONTACT_INFOModel(item);
@@ -929,7 +944,7 @@ namespace SiteCore.Controllers
             {
                 if (User.IsInRole("TMKUser"))
                 {
-                    code_mo = await dbo.CODE_MO.Where(x => !x.D_END.HasValue && x.MCOD == CODE_MO).OrderBy(x => x.MCOD).ToListAsync();
+                    code_mo = await dbo.CODE_MO.Where(x => !x.D_END.HasValue && x.MCOD == userInfo.CODE_MO).OrderBy(x => x.MCOD).ToListAsync();
                 }
             }
             return new EditCONTACT_INFOModel { CODE_MO = code_mo, INFO = model };
@@ -953,7 +968,7 @@ namespace SiteCore.Controllers
 
                         if (User.IsInRole("TMKUser"))
                         {
-                            editItem = await dbo.CONTACT_INFO.FirstOrDefaultAsync(x => x.ID_CONTACT_INFO == item.ID_CONTACT_INFO && x.CODE_MO == CODE_MO);
+                            editItem = await dbo.CONTACT_INFO.FirstOrDefaultAsync(x => x.ID_CONTACT_INFO == item.ID_CONTACT_INFO && x.CODE_MO == userInfo.CODE_MO);
                         }
 
                         if (editItem == null)
@@ -1004,7 +1019,7 @@ namespace SiteCore.Controllers
             {
                 if (User.IsInRole("TMKUser"))
                 {
-                    t = await dbo.CONTACT_INFO.FirstOrDefaultAsync(x => x.ID_CONTACT_INFO == ID_CONTACT_INFO && x.CODE_MO == CODE_MO);
+                    t = await dbo.CONTACT_INFO.FirstOrDefaultAsync(x => x.ID_CONTACT_INFO == ID_CONTACT_INFO && x.CODE_MO == userInfo.CODE_MO);
                 }
             }
            
@@ -1018,39 +1033,6 @@ namespace SiteCore.Controllers
 
         #endregion
 
-        #region Private
-        private string _CODE_MO;
-        private string CODE_MO
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_CODE_MO))
-                    _CODE_MO = User.CODE_MO();
-                return _CODE_MO;
-            }
-        }
-
-        private string _CODE_SMO;
-        private string CODE_SMO
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_CODE_SMO))
-                    _CODE_SMO = User.CODE_SMO();
-                return _CODE_SMO;
-            }
-        }
-
-        private string _USER_ID;
-        private string USER_ID
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_USER_ID))
-                    _USER_ID = User.ID();
-                return _USER_ID;
-            }
-        }
-        #endregion
+       
     }
 }

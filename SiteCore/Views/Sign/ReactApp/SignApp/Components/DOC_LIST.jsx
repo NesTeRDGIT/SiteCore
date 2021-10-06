@@ -6,7 +6,7 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
-import { makeStyles, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { makeStyles, createTheme , MuiThemeProvider } from '@material-ui/core/styles';
 import DateFnsUtils from '@date-io/date-fns'; // choose your lib
 import ruLocale from "date-fns/locale/ru";
 import { KeyboardDatePicker, MuiPickersUtilsProvider, } from '@material-ui/pickers';
@@ -24,7 +24,12 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Typography from '@material-ui/core/Typography';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
 
 import SingDialog from "./SignDialog.jsx"
 
@@ -33,8 +38,21 @@ import Box from '@material-ui/core/Box';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 import { downloadBase64File } from "../API/FileAPI.js";
+import { Repository } from "../API/Repository.js";
+import Grid from '@material-ui/core/Grid';
+import Divider from '@material-ui/core/Divider';
+import Fade from '@material-ui/core/Fade';
+import Popper from '@material-ui/core/Popper';
+import { ContextMenu, MenuItem as ContextMenuItem, ContextMenuTrigger } from "react-contextmenu";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-const theme = createMuiTheme({
+import LinearProgressWithLabel from "./LinearProgressWithLabel.jsx"
+
+import ThemeFileSaver from "./ThemeFileSaver.jsx";
+
+
+const repo = new Repository();
+const theme = createTheme ({
     palette: {
         primary: {
             main: '#4CAF50'
@@ -49,28 +67,44 @@ const theme = createMuiTheme({
 });
 
 export default function DOC_LIST(props) {
+    
     const { isAdmin } = props;
     const tableRef = React.useRef(null);
 
+    const [themeList, setThemeList] = React.useState([]);
+    const onRefreshTheme = async () => {
+        setThemeList(await repo.GetTheme());
+    }
 
-    const [docsList, setDocsList] = React.useState([]);
-
-
-    const getDocsList = async () => {
+    React.useEffect(async () => {
         try {
-            const response = await window.fetch("GetDOC", { credentials: "same-origin"});
-            const result = await response.json();
-            setDocsList(result.Value);
+            onRefreshTheme();
+        }
+        catch(err) {
+            alert(err.message);
+        }
+    }, []);
+    const [currentTheme, setCurrentTheme] = React.useState([]);
+   
+    const [docsList, setDocsList] = React.useState([]);
+    const onSelectThemeChanged = async (themeItem) => {
+        try {
+            setCurrentTheme(themeItem);
+            setDocsList(await repo.GetDocsList(themeItem.THEME_ID));
         } catch (err) {
             alert(err.toString());
         }
     }
-    React.useEffect(() => {
-      
-        getDocsList();
 
-    }, []);
-    function refresh() { getDocsList(); }
+
+    async function refresh() {
+        try {
+            if (currentTheme!=null)
+                setDocsList(await repo.GetDocsList(currentTheme.THEME_ID));
+        } catch (err) {
+            alert(err.toString());
+        }
+    }
 
     const [isOpenAddDocsDialog, setIsOpenAddDocsDialog] = React.useState(false);
     const closeAddDocsDialog = () => {
@@ -99,87 +133,32 @@ export default function DOC_LIST(props) {
     }
 
    
-    const downloadDoc = (event, rowData) => {
+   
+    const downloadDoc = async (event, rowData) => {
         try {
-           
-            const requestOptions = {
-                method: "GET",
-                headers: { 'Content-Type': "application/json" },
-                credentials: "same-origin"
-            };
-            
-            window.fetch(`DownloadFileForSign?DOC_FOR_SIGN_ID=${rowData.DOC_FOR_SIGN_ID}`, requestOptions)
-                .then(response => response.json())
-                .then(data => {
-                    if (data) {
-                      
-                        if (data.Result === false) {
-                            alert(data.Value);
-                        } else {
-                            downloadBase64File(data.Value.FileContents, data.Value.ContentType, data.Value.FileDownloadName);
-                        }
-                    }
-                })
-                .catch(error => {
-                    alert(error.toString());
-                });
+        
+            const data = await repo.DownloadFileForSign(rowData.DOC_FOR_SIGN_ID);
+            downloadBase64File(data.FileContents, data.ContentType, data.FileDownloadName);
         } catch (error) {
 
             alert(error.toString());
         }
     }
-    const downloadDocAndSign = (event, rowData) => {
+    const downloadDocAndSign = async (event, rowData) => {
         try {
-
-            const requestOptions = {
-                method: "GET",
-                headers: { 'Content-Type': "application/json" },
-                credentials: "same-origin"
-            };
-
-            window.fetch(`DownloadFileForSignAndSign?DOC_FOR_SIGN_ID=${rowData.DOC_FOR_SIGN_ID}`, requestOptions)
-                .then(response => response.json())
-                .then(data => {
-                    if (data) {
-
-                        if (data.Result === false) {
-                            alert(data.Value);
-                        } else {
-                            downloadBase64File(data.Value.FileContents, data.Value.ContentType, data.Value.FileDownloadName);
-                        }
-                    }
-                })
-                .catch(error => {
-                    alert(error.toString());
-                });
+            const data = await repo.DownloadDocAndSign(rowData.DOC_FOR_SIGN_ID);
+            downloadBase64File(data.FileContents, data.ContentType, data.FileDownloadName);
         } catch (error) {
-
             alert(error.toString());
         }
     }
 
-    const removeDoc = async (docForSignId) => {
-        const requestOptions = {
-            method: "POST",
-            headers: { 'Content-Type': "application/json" },
-            credentials: "same-origin",
-            body: JSON.stringify(docForSignId)
-        };
-        const response = await window.fetch("RemoveFileForSign", requestOptions);
-        if (response.ok) {
-            const data = await response.json();
-            if (data.Result === false) {
-                alert(data.Value);
-            } 
-        } else {
-            throw new Error(`${response.status}-${response.statusText}`);
-        }
-    }
+ 
     const removeDocs = async (event, rowsData) => {
         try {
             if (confirm(`Вы уверены что хотите удалить ${rowsData.length} документ?`)) {
                 for (const item of rowsData) {
-                    await removeDoc(item.DOC_FOR_SIGN_ID);
+                    await repo.RemoveDoc(item.DOC_FOR_SIGN_ID);
                 }
                 refresh();
             }
@@ -187,6 +166,23 @@ export default function DOC_LIST(props) {
             alert(error.toString());
         }
     }
+
+    const [isOpenSigFileDialog, setIsOpenSigFileDialog] = React.useState(false);
+    const [docForSignId, setDocForSignId] = React.useState(null);
+    
+    const closeSigFileDialog = () => {
+        setIsOpenSigFileDialog(false);
+    }
+    const saveSigFileDialog = () => {
+        closeSigFileDialog();
+        refresh();
+    }
+
+    const uploadSigFile = (event, rowsData) => {
+        setDocForSignId(rowsData.DOC_FOR_SIGN_ID);
+        setIsOpenSigFileDialog(true);
+    }
+
 
     function tableAction() {
         const action = [
@@ -217,7 +213,8 @@ export default function DOC_LIST(props) {
                 icon: "uploadfile",
                 iconProps: { style: { color: "#5FE3FF" } },
                 tooltip: "Загрузить открепленную подпись",
-                position: 'row'
+                position: 'row',
+                onClick: (e, data) => { uploadSigFile(e, data) }
 
             },
             {
@@ -262,76 +259,235 @@ export default function DOC_LIST(props) {
         return action;
     }
 
-
+   
 
    
     return (
         <div style={{ maxWidth: "100%" }}>
-            <MuiThemeProvider theme={theme}>
-            <MaterialTable tableRef={tableRef}
-                           columns={[
-                               { title: "Медицинская организация", field: "MO_NAME" },
-                               { title: "Тема", field: "Theme" },
-                    { title: "Имя файла", field: "FILENAME" },
-                    { title: "Дата", field: "DateCreate", type: "date" },
-                               {
-                                   title: "Подписано",
-                                   field: "ROLE_SIGN",
-                                   render: rowData =>
-                                       <div>
-                                           {rowData.SIGNS.map((value) => <div><span className={value.IsSIGN ? "GreenText" : "RedText"}>{value.ROLE_NAME}</span><br/></div>)}
-                                       </div>
-                               }]}
-                    data={docsList}
-                            actions={tableAction()}
-                           options={{
-                               paging: false,
-                               grouping: true,
-                               actionsColumnIndex: -1,
-                               search: false,
-                               selection: true
-                           }}
-                           localization={{
-                               toolbar: {
-                                   searchPlaceholder: "Найти",
-                                   nRowsSelected: "{0} строк выбрано"
-                               },
-                               header: {
-                                   actions: "Действия"
-                               },
-                               body: {
-                                   emptyDataSourceMessage: "Нет записей"
-                               },
-                               grouping:
-                               {
-                                   placeholder: "Перетащите заголовок для группировки",
-                                   groupedBy: "Группировка по: "
-                               }
 
-                    }}
-                    title="Подписи" />
-            </MuiThemeProvider>
-            <AddDocsDialog onClose={closeAddDocsDialog} isOpen={isOpenAddDocsDialog} onSave={saveDocsDialog}/>
-            <SingDialog onClose={closeSignDialog} onSave={saveSignDialog} isOpen={isOpenSignDialog} files={selectedFiles}/>
+            <Grid container spacing={1}>
+                <Grid item={true} xs={2}>
+                    <ListTheme themeItems={themeList} onSelectChanged={onSelectThemeChanged} isAdmin={isAdmin} onRefresh={onRefreshTheme}/>
+                </Grid>
+                <Grid item={true} xs={10}>
+                    <MuiThemeProvider theme={theme}>
+                        <MaterialTable tableRef={tableRef}
+                                       columns={[
+                                    { title: "Медицинская организация", field: "MO_NAME" },
+                                    { title: "Имя файла", field: "FILENAME" },
+                                    { title: "Дата", field: "DateCreate", type: "date" },
+                                    {
+                                        title: "Подписано",
+                                        field: "ROLE_SIGN",
+                                        render: rowData =>
+                                            <div>
+                                                {rowData.SIGNS.map((value,index) =>
+                                                    <div key={index}>
+                                                        <span className={value.IsSIGN ? "GreenText" : "RedText"}>{value.ROLE_NAME}</span><br />
+                                                    </div>)}
+                                            </div>
+                                    }]}
+                                       data={docsList}
+                                       actions={tableAction()}
+                                       options={{
+                                    paging: false,
+                                    grouping: true,
+                                    actionsColumnIndex: -1,
+                                    search: false,
+                                    selection: true
+                                }}
+                                       localization={{
+                                    toolbar: {
+                                        searchPlaceholder: "Найти",
+                                        nRowsSelected: "{0} строк выбрано"
+                                    },
+                                    header: {
+                                        actions: "Действия"
+                                    },
+                                    body: {
+                                        emptyDataSourceMessage: "Нет записей"
+                                    },
+                                    grouping:
+                                    {
+                                        placeholder: "Перетащите заголовок для группировки",
+                                        groupedBy: "Группировка по: "
+                                    }
+
+                                }}
+                                       title="Подписи"/>
+                    </MuiThemeProvider>
+                    <AddDocsDialog onClose={closeAddDocsDialog} isOpen={isOpenAddDocsDialog} onSave={saveDocsDialog} themeId={currentTheme!=null? currentTheme.THEME_ID: null}/>
+                    <SingDialog onClose={closeSignDialog} onSave={saveSignDialog} isOpen={isOpenSignDialog} files={selectedFiles}/>
+                    <AddSigFileDialog onClose={closeSigFileDialog} onSave={saveSigFileDialog} isOpen={isOpenSigFileDialog} docForSignId={docForSignId}/>
+                </Grid>
+            </Grid>
+
+
+        </div>
+    );
+
+
+}
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        width: '100%',
+        maxWidth: 360,
+        backgroundColor: theme.palette.background.paper,
+    },
+    themeListItem: {
+        color: 'green !important'
+    }
+}));
+
+function ListTheme(props) {
+    const classes =  useStyles();
+    const { themeItems, onSelectChanged, isAdmin, onRefresh } = props;
+    const [selectedIndex, setSelectedIndex] = React.useState(-1);
+    const [currentThemeId, setCurrentThemeId] = React.useState(null);
+    const [openAddDialog, setOpenAddDialog] = React.useState(false);
+    const changeSelectedIndex = (newIndex) => {
+        setSelectedIndex(newIndex);
+        setCurrentThemeId(themeItems[newIndex].THEME_ID);
+        onSelectChanged(themeItems[newIndex]);
+    }
+
+    React.useEffect(() => {
+        if (selectedIndex === -1 && themeItems.length !== 0)
+            changeSelectedIndex(0);
+    }, [themeItems]);
+
+
+    function renderList() {
+        return <List>
+                   {themeItems != null
+                       ? themeItems.map((value, index) =>
+                           <ListItem key={value.THEME_ID} selected={selectedIndex === index} className={classes.themeListItem}  onClick={()=>changeSelectedIndex(index)} button>
+                               <ListItemText primary={value.CAPTION}/>
+                           </ListItem>
+                       )
+                       : null}
+               </List>;
+    }
+   
+    const removeThemeClick = async () => {
+        try {
+            await repo.RemoveTheme(themeItems[selectedIndex].THEME_ID);
+            onRefresh();
+        } catch (err) {
+            alert(err.message);
+        }
+      
+    }
+    const [openThemeFileSaver, setOpenThemeFileSaver] = React.useState(false);
+    const saveAllFileThemeClick =  () => {
+        try {
+            setOpenThemeFileSaver(true);
+        } catch (error) {
+            alert(error.toString());
+        }
+    }
+
+    const closeOpenThemeFileSaver = async () => {
+        try {
+            setOpenThemeFileSaver(false);
+        } catch (error) {
+            alert(error.toString());
+        }
+    }
+
+
+   
+    const showAddDialog = () => {
+        setOpenAddDialog(true);
+    }
+    const hideAddDialog = () => {
+        setOpenAddDialog(false);
+    }
+    const onSaveAddDialog = () => {
+        hideAddDialog();
+        onRefresh();
+    }
+    const handleRefresh = () => {
+        onRefresh();
+    }
+   
+   
+
+    return (
+        <div>
+            <div>Список тем:</div>
+            <Divider />
+            <div>
+                <ContextMenuTrigger id="ThemeContextMenu1">
+                    <div>{renderList()}</div>
+                </ContextMenuTrigger>
+                <ContextMenu id="ThemeContextMenu1">
+                    {isAdmin ? <ContextMenuItem onClick={showAddDialog}><MenuItem>Добавить</MenuItem></ContextMenuItem> : null}
+                    {isAdmin ? <ContextMenuItem onClick={saveAllFileThemeClick} ><MenuItem>Скачать все файлы</MenuItem></ContextMenuItem> : null}
+                    {isAdmin ? <Divider /> : null}
+                  
+                   
+                    <ContextMenuItem onClick={handleRefresh} ><MenuItem>Обновить</MenuItem></ContextMenuItem>
+                    {isAdmin ? <Divider /> : null}
+                    {isAdmin ? <ContextMenuItem onClick={removeThemeClick}><MenuItem>Удалить</MenuItem></ContextMenuItem> : null}
+                </ContextMenu>
+                <AddThemeDialog isOpen={openAddDialog} onClose={hideAddDialog} onSave={onSaveAddDialog}/>
+                {isAdmin ? <ThemeFileSaver isOpen={openThemeFileSaver} themeId={currentThemeId} onClose={closeOpenThemeFileSaver}/> : null}
+                
+            </div>
         </div>
     );
 }
 
 
-const useStyles = makeStyles((theme) => ({
-    button: {
-        marginRight: theme.spacing(1),
+export function AddThemeDialog(props) {
+    const { onClose, isOpen, onSave } = props;
+    const [errorMessage, setErrorMessage] = React.useState("");
+    const [theme, setTheme] = React.useState("");
+
+    React.useEffect(() => { setTheme(""); },[]);
+
+    const themeChange = (event) => {
+        setTheme(event.target.value);
     }
-}));
+    const handleClose = () => {
+        onClose();
+    };
+    const handleSave = async () => {
+        try {
+            await repo.AddTheme(theme);
+            onSave();
+            handleClose();
+        } catch (err) {
+            setErrorMessage(err.toString());
+        }
+
+    };
+    return (
+        <div>
+            <Dialog open={isOpen} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} maxWidth={false} >
+                <DialogTitle id="form-dialog-title">Добавление файлов на подпись</DialogTitle>
+                <DialogContent>
+                    <div className="RedText">{errorMessage}</div>
+                    <div>
+                        <TextField margin="dense" label="Наименование темы" type="text" required fullWidth value={theme} onChange={themeChange}></TextField>
+                    </div>
+                    <Button variant="contained" color="primary" disabled={theme === ""} onClick={handleSave}>Сохранить</Button>
+                </DialogContent>
+            </Dialog>
+        </div>
+    );
+}
+
+
 
 export function AddDocsDialog(props) {
     const classes = useStyles();
-    const { onClose, isOpen, onSave } = props;
-    const [errorMessage, setErrorMessage] = React.useState("");
+    const { onClose, isOpen, onSave, themeId } = props;
+    
     const [files, setFiles] = React.useState(null);
   
-    
-
    
     const selectFile = (e) => {
         var files = e.target.files;
@@ -358,12 +514,9 @@ export function AddDocsDialog(props) {
    
     return (
         <div>
-            <Dialog open={isOpen} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} maxWidth={"false"} >
+            <Dialog open={isOpen} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} maxWidth={false} >
                 <DialogTitle id="form-dialog-title">Добавление файлов на подпись</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
-                        <div className="RedText">{errorMessage}</div>
-                    </DialogContentText>
                     <div>
                         <div>
                             <Stepper activeStep={activeStep} orientation="vertical">
@@ -372,7 +525,7 @@ export function AddDocsDialog(props) {
                                     <StepContent>
                                         <div>
                                             <Typography>Выберите файлы</Typography>
-                                            <input type="file" multiple="true" onChange={selectFile} />
+                                            <input type="file" multiple={true}  onChange={selectFile} />
                                         </div>
                                         <br />
                                         <div>
@@ -383,7 +536,7 @@ export function AddDocsDialog(props) {
                                 <Step key={1}>
                                     <StepLabel>Настройка и сохранение файлов</StepLabel>
                                     <StepContent>
-                                        <FileViwer files={files} onSave={handleSave}/>
+                                        <FileViwer files={files} themeId={themeId} onSave={handleSave}/>
                                         <br />
                                         <div>
                                             <div>
@@ -401,10 +554,78 @@ export function AddDocsDialog(props) {
     );
 }
 
+export function AddSigFileDialog(props) {
+    const classes = useStyles();
+    const { onClose, isOpen, onSave, docForSignId } = props;
+    const [errorMessage, setErrorMessage] = React.useState("");
+    const [file, setFile] = React.useState(null);
+    const [processing, setProcessing] = React.useState(false);
+
+
+
+    const selectFile = (e) => {
+        var file = e.target.files[0];
+        setFile(file);
+    };
+
+  
+    const handleReset = () => {
+        setFile(null);
+        setErrorMessage("");
+    };
+    const handleSave = async () => {
+        try {
+            setErrorMessage("");
+            setProcessing(true);
+            await repo.AddSigFile(file, docForSignId);
+            onSave();
+            handleReset();
+        } catch (err) {
+            setErrorMessage(err.toString());
+        } finally {
+            setProcessing(false);
+        }
+      
+    };
+
+    const handleClose = () => {
+        onClose();
+        handleReset();
+    };
+
+    return (
+        <div>
+            <Dialog open={isOpen} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={false} maxWidth={false}>
+                <DialogTitle id="form-dialog-title">Добавление открепленной подписи</DialogTitle>
+                <DialogContent>
+                    <div className="RedText">{errorMessage}</div>
+                    <div>
+                        <div>
+                            <Typography>Выберите файлы</Typography>
+                            <input type="file" accept=".sig" onChange={selectFile}/>
+                        </div>
+                        <br/>
+                        {processing ? 
+                            <div>
+                                <CircularProgress size="25px" /> <br/>
+                                <span className="BoldText">Отправка данных</span>
+                            </div> : null}
+                        <div>
+                            <Button className={classes.button} variant="contained" color="primary" onClick={handleSave} disabled={file == null || processing}>Отправить</Button>
+                        </div>
+                    </div>
+                </DialogContent>
+            </Dialog>
+        </div>
+    );
+}
+
+
+
 function FileViwer(props) {
-    const { files, onSave } = props;
-    const [roles, setRoles] = React.useState(null);
-    const [lpu, setLpu] = React.useState(null);
+    const { files, themeId, onSave } = props;
+    const [roles, setRoles] = React.useState([]);
+    const [lpu, setLpu] = React.useState([]);
     const [items, setItems] = React.useState([]);
     const [validationErr, setValidationErr] = React.useState([]);
     const [selectAllRole, setSelectAllRole] = React.useState([]);
@@ -419,13 +640,9 @@ function FileViwer(props) {
         }
         return "";
     }
-
-    
     const createItems = (moList) => {
         const dicLpu = {};
-        moList.forEach(x => {
-            dicLpu[x.MCOD] = x;
-        });
+        moList.forEach(x => { dicLpu[x.MCOD] = x; });
         var list = [];
         files.forEach((x) => {
             list.push({
@@ -447,35 +664,20 @@ function FileViwer(props) {
         }) });
         setItems(list);
     }
-    useEffect(() => {
-        window.fetch("GetRole", { credentials: "same-origin" })
-            .then(response => response.json())
-            .then(result => {
-                if (result.Result === true)
-                    setRoles(result.Value);
-                else
-                    alert("Ошибка получения справочника ролей:" + result.Value);
-            });
-     
-        window.fetch("GetF003", { credentials: "same-origin"})
-            .then(response => response.json())
-            .then(result => {
-                if (result.Result === true) {
-                    setLpu(result.Value);
-                    createItems(result.Value);
-                }
-                else
-                    alert("Ошибка получения справочника МО:" + result.Value);
-            });
-        ;
+    useEffect(async () => {
+        try {
+            setRoles(await repo.GetRoleSPR());
+            const f003 = await repo.GetF003();
+           createItems(f003);
+            setLpu(f003);
+        } catch (err) {
+            alert(err.toString());
+        }
+    
     }, []);
 
   
-    const [theme, setTheme] = React.useState("");
-    const themeChange = (event) => {
-        setTheme(event.target.value);
-    }
-
+ 
     const moChange = (event, newValue, index) => {
         const newItems = [...items]; 
         newItems[index].MO =  newValue;
@@ -505,14 +707,10 @@ function FileViwer(props) {
             if (validationResult.length !== 0)
                 validationError = validationError.concat(validationResult);
         });
-        if (theme === null || theme === "")
-            validationError.push('Тема файлов обязательна к заполнению');
         setValidationErr(validationError);
         return validationError;
     }
-    useEffect(() => {
-        validation();
-    }, [items,theme]);
+    useEffect(() => { validation(); }, [items]);
 
 
     const updateItemState = async (item, isLoad, text) => {
@@ -525,38 +723,7 @@ function FileViwer(props) {
     const [processSaveFiles, setProcessSaveFiles] = React.useState(false);
 
 
-    const loadFile = async (item)=>
-    {
-        try {
-           
-            updateItemState(item, null, "Загрузка файла на сервер");
-
-            const formData = new FormData();
-            formData.append("FILE", item.FILE, item.FILE.name);
-            formData.append("Theme", theme);
-            
-            formData.append("CODE_MO", item.MO.MCOD);
-            item.ROLE.forEach((role) => {
-                formData.append("ROLE_ID[]", role.SIGN_ROLE_ID);
-            });
-            const requestOptions = {
-                method: "POST",
-                credentials: "same-origin",
-                body: formData
-            };
-
-            const response = await window.fetch("AddFileForSign", requestOptions);
-            const result = await response.json();
-            if (result.Result === true) {
-                updateItemState(item, true, "Файл загружен");
-            } else {
-                updateItemState(item, false, "Ошибка при загрузке:" + result.Value);
-            }
-        } catch (err) {
-            updateItemState(item, false, err.toString());
-        }
-        
-    };
+    
     const saveFiles = async () => {
         try {
             setProgress(0);
@@ -564,7 +731,15 @@ function FileViwer(props) {
             const length = items.length;
            
             for (let index = 0; index < items.length; index++) {
-                await loadFile(items[index]);
+                const item = items[index];
+                updateItemState(item, null, "Загрузка файла на сервер");
+                try {
+                    
+                    await repo.AddFileForSign(item.FILE, themeId, item.MO.MCOD, item.ROLE.map((value)=>value.SIGN_ROLE_ID));
+                    updateItemState(item, true, "Файл загружен");
+                } catch (err) {
+                    updateItemState(item, false, `Ошибка при загрузке:${err.toString()}`);
+                }
                 setProgress(index / length * 100);
             }
             if (items.every((val) => val.isLoad === true))
@@ -580,18 +755,17 @@ function FileViwer(props) {
     return (
         <div>
             <div>
-                {validationErr != null ? <ul className="ErrorLi">{validationErr.map((value) => <li>{value}</li>)}</ul> : null}
+                {validationErr != null ? <ul className="ErrorLi">{validationErr.map((value, index) => <li key={index}>{value}</li>)}</ul> : null}
             </div>
             <div>
                 <div>
-                    <div><Autocomplete multiple options={roles} getOptionLabel={(option) => option.CAPTION} value={selectAllRole} onChange={selectAllRoleChange} renderInput={(params) => <TextField {...params} variant="standard" label="Роли" variant="outlined" />}/></div>
+                    <div><Autocomplete multiple={true}  options={roles} getOptionLabel={(option) => option.CAPTION} value={selectAllRole} onChange={selectAllRoleChange} renderInput={(params) => <TextField {...params} variant="standard" label="Роли" variant="outlined" />}/></div>
                     <br/>
                     <div><Button variant="contained" color="primary" onClick={setAllRole}>Установить всем</Button></div>
-                    <br />
-                    <TextField margin="dense" label="Тема файлов" type="text" required fullWidth value={theme} onChange={themeChange}></TextField>
                 </div>
                 <br/>
                 <table className="table_report">
+                    <tbody>
                     <tr>
                         <th width="10%">Статус</th>
                         <th width="30%">Наименование файла</th>
@@ -600,14 +774,15 @@ function FileViwer(props) {
                         <th width="25%">Ожидаемые подписи</th>
                     </tr>
                     {items.map((value, index) =>
-                        <tr>
-                            <td>{value.Text}</td>
-                            <td>{value.FILENAME}</td>
-                            <td>{value.SIZE}</td>
-                            <td  style={{margin:'5,5,5,5'}}><Autocomplete options={lpu} getOptionLabel={(option) => option.NAME} value={value.MO} onChange={(event, newValue)=>{moChange(event,newValue,index)}} renderInput={(params) => <TextField {...params} label="Медицинская организация" variant="outlined" />} /></td>
-                            <td style={{margin: '5,5,5,5' }}><Autocomplete multiple options={roles} getOptionLabel={(option) => option.CAPTION} value={value.ROLE} onChange={(event, newValue) => { roleChange(event, newValue, index) }} renderInput={(params) => <TextField {...params}  variant="standard" label="Роли" variant="outlined" />} /></td>
-                        </tr>
-                    )}
+                        <tr key={index}>
+                                <td>{value.Text}</td>
+                                <td>{value.FILENAME}</td>
+                                <td>{value.SIZE}</td>
+                            <td style={{ margin: 5 }}><Autocomplete options={lpu} getOptionLabel={(option) => option ? option.NAME:""} value={value.MO} onChange={(event, newValue) => { moChange(event, newValue, index) }} renderInput={(params) => <TextField {...params} label="Медицинская организация" variant="outlined" />} /></td>
+                            <td style={{ margin: 5 }}><Autocomplete multiple={true} options={roles} getOptionLabel={(option) => option ? option.CAPTION : ""} value={value.ROLE} onChange={(event, newValue) => { roleChange(event, newValue, index) }} renderInput={(params) => <TextField {...params} variant="standard" label="Роли" variant="outlined" />} /></td>
+                            </tr>
+                        )}
+                    </tbody>
                 </table>
             </div>
             <br />
@@ -622,18 +797,5 @@ function FileViwer(props) {
     );
 
 
-
-    function LinearProgressWithLabel(props) {
-        return (
-            <Box display="flex" alignItems="center">
-                <Box width="100%" mr={1}>
-                    <LinearProgress variant="determinate" {...props} />
-                </Box>
-                <Box minWidth={35}>
-                    <Typography variant="body2" color="textSecondary">{`${Math.round(props.value,)}%`}</Typography>
-                </Box>
-            </Box>
-        );
-    }
 
 }

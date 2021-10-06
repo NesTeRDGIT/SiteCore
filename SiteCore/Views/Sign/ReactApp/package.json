@@ -4,16 +4,16 @@
   "version": "1.0.0",
   "author": "metanit.com",
   "scripts": {
-    "dev": "webpack serve  --mode=development",
-    "build": "webpack",
-    "dev3": "webpack watch"
+    "build": "webpack --mode=production",
+    "dev": "webpack watch --mode=development"
   },
   "dependencies": {
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.60",
     "@material-ui/pickers": "^3.3.10",
     "babel-runtime": "^6.26.0",
-    "moment": "^2.29.1"
+    "moment": "^2.29.1",
+    "react-contextmenu": "^2.14.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",

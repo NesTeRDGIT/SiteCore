@@ -164,8 +164,11 @@ namespace SiteCore.Data
             }
             return c;
         }
-
-
+        public static string CODE_MO(this ClaimsPrincipal user)
+        {
+            return user.Claims.FirstOrDefault(x => x.Type == "CODE_MO")?.Value;
+        }
+        /*
         public static string CODE_MO (this ClaimsPrincipal user)
         {
            return  user.Claims.FirstOrDefault(x=>x.Type == "CODE_MO")?.Value;
@@ -180,7 +183,48 @@ namespace SiteCore.Data
         {
             return user.Claims.FirstOrDefault(x => x.Type == "ID")?.Value;
         }
+
+        public static string NAME(this ClaimsPrincipal user)
+        {
+            return user.Claims.FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name")?.Value;
+        }*/
     }
+
+    public class UserInfo
+    {
+        public string CODE_MO { get; set; }
+        public string CODE_MO_NAME { get; set; }
+        public string CODE_SMO { get; set; }
+        public string USER_ID { get; set; }
+        public string NAME { get; set; }
+
+        public string Password { get; set; }
+    }
+
+
+    public class UserInfoHelper
+    {
+        ApplicationUserManager userManager;
+        public UserInfoHelper(ApplicationUserManager userManager)
+        {
+            this.userManager = userManager;
+        }
+        public  UserInfo GetInfo(string name)
+        {
+            var user = userManager.FindByName(name);
+            return new UserInfo()
+            {
+                CODE_MO = user.CODE_MO,
+                CODE_MO_NAME = user.CODE_MO_NAME?.NAM_MOK,
+                CODE_SMO = user.CODE_SMO,
+                USER_ID = user.Id,
+                NAME = user.UserName,
+                Password = user.PasswordClaim()?.ClaimValue
+            };
+        }
+
+    }
+
     public class ApplicationUserManager : UserManager<ApplicationUser>
     {
         public ApplicationUserManager(IUserStore<ApplicationUser> store, IOptions<IdentityOptions> optionsAccessor, IPasswordHasher<ApplicationUser> passwordHasher, IEnumerable<IUserValidator<ApplicationUser>> userValidators, IEnumerable<IPasswordValidator<ApplicationUser>> passwordValidators, ILookupNormalizer keyNormalizer, IdentityErrorDescriber errors, IServiceProvider services, ILogger<UserManager<ApplicationUser>> logger) : base(store, optionsAccessor, passwordHasher, userValidators, passwordValidators, keyNormalizer, errors, services, logger) { }
@@ -194,7 +238,12 @@ namespace SiteCore.Data
         {
             return Users.Include(c => c.UserRoles).Include(x => x.Claims).Include(x => x.CODE_MO_NAME).FirstOrDefaultAsync(u => u.NormalizedUserName == userName);
         }
-        
+        public ApplicationUser FindByName(string userName)
+        {
+            return Users.Include(c => c.UserRoles).Include(x => x.Claims).Include(x => x.CODE_MO_NAME).FirstOrDefault(u => u.NormalizedUserName == userName);
+        }
+
+
 
     }
     public class ApplicationClaimsIdentityFactory : UserClaimsPrincipalFactory<ApplicationUser, ApplicationRole>

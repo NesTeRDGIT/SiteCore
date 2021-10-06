@@ -94,7 +94,7 @@ namespace CryptoWCFService
                 if (attribute.Oid.Value == "1.2.840.113549.1.9.5")
                 {
                     var pkcs9_time = new Pkcs9SigningTime(attribute.Values[0].RawData);
-                    return pkcs9_time.SigningTime;
+                    return pkcs9_time.SigningTime.ToLocalTime();
                 }
             }
 

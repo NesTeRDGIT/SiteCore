@@ -76,7 +76,6 @@ namespace SiteCore.Models
         public List<DOCSignViewModel> SIGNS { get; set; } = new();
         public DateTime DateCreate { get; set; }
         public int DOC_FOR_SIGN_ID { get; set; }
-        public string Theme { get; set; }
     }
 
     public class DOCSignViewModel
@@ -90,7 +89,7 @@ namespace SiteCore.Models
     public class AddFilesModel
     { 
         [Required]
-        public string Theme { get; set; }
+        public int THEME_ID { get; set; }
         [Required]
         public IFormFile FILE { get; set; }
         [Required]
@@ -103,6 +102,12 @@ namespace SiteCore.Models
     public class AddSignModel
     {
         public string SIGN { get; set; }
+        public int DOC_FOR_SIGN_ID { get; set; }
+    }
+
+    public class AddSigFileModel
+    {
+        public IFormFile File { get; set; }
         public int DOC_FOR_SIGN_ID { get; set; }
     }
 }

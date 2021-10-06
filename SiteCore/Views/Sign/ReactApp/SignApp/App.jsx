@@ -4,15 +4,15 @@ import RoleList from "./Components/RoleList.jsx"
 import SIGN_LIST from "./Components/SIGN_LIST.jsx"
 import IssuerList from "./Components/IssuerList.jsx"
 import DOC_LIST from "./Components/DOC_LIST.jsx"
+import InstructionDialog from "./Components/InstructionDialog.jsx"
 
 
 
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
 import { createTheme, ThemeProvider} from '@material-ui/core/styles';
-
+import Button from "@material-ui/core/Button";
 
 const theme = createTheme({
     palette: {
@@ -41,7 +41,7 @@ function TabPanel(props) {
         <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
             {value === index && (
                 <Box p={3}>
-                    <Typography>{children}</Typography>
+                    {children}
                 </Box>
             )}
         </div>
@@ -54,28 +54,37 @@ export function MainTab(props) {
     const { isAdmin } = props;
     const [value, setValue] = React.useState(0);
 
+
+
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
+    const [isOpenInstruction, setIsOpenInstruction] = React.useState(false);
+
+    const hideInstruction = () => {
+        setIsOpenInstruction(false);
+    }
+    const showInstruction = () => {
+        setIsOpenInstruction(true);
+    }
+
     return (
         <div>
             <ThemeProvider theme={theme}>
-
+                <Button variant="contained" color="primary" onClick={showInstruction}>Инструкция пользователя</Button>
                 <Tabs value={value} indicatorColor="primary" textColor="primary" onChange={handleChange} aria-label="disabled tabs example">
                     <Tab label="Документы на подпись"/>
                     {isAdmin ? <Tab label="Подписи пользователей" /> :null}
                     {isAdmin ? <Tab label="Роли подписей" /> : null}
                     {isAdmin ? <Tab label="Доверенные издатели" /> : null}
-
-
                 </Tabs>
-                <TabPanel value={value} index={0}>
-                    <DOC_LIST isAdmin={isAdmin}/>
-                </TabPanel>
+                <TabPanel value={value} index={0}><DOC_LIST isAdmin={isAdmin}/></TabPanel>
                 {isAdmin ? <TabPanel value={value} index={1}><SIGN_LIST /></TabPanel> : null}
                 {isAdmin ? <TabPanel value={value} index={2}><RoleList /></TabPanel> : null}
                 {isAdmin ? <TabPanel value={value} index={3}><IssuerList /></TabPanel> : null}
+
+                <InstructionDialog isOpen={isOpenInstruction} onClose={hideInstruction}/>
             </ThemeProvider>
         </div>
        

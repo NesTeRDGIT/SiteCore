@@ -21,7 +21,7 @@
 {
 
     <script>
-        const Notification = new signalR.HubConnectionBuilder().withUrl(" /Notification").build();
+        const Notification = new signalR.HubConnectionBuilder().withUrl("../Notification").build();
         Notification.on("NewPackState", function() { HiddenBtnClick(); });
         Notification.start().catch(err =>
             console.error(err.toString())).then(() => { Notification.invoke('Register').catch(err => console.error(err.toString())); });

@@ -1,20 +1,15 @@
 ﻿import React, { Component, useRef, useEffect } from "react"
-
-
 import MaterialTable from "material-table"
-
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import { Repository } from "../API/Repository.js";
+import { makeStyles, createTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
-import { makeStyles, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
-
-const theme = createMuiTheme({
+const theme = createTheme({
     palette: {
         primary: {
             main: '#4CAF50'
@@ -30,6 +25,8 @@ const theme = createMuiTheme({
 
 
 
+const repo = new Repository();
+
 export default function RoleList() {
     const tableRef = React.useRef(null);
     
@@ -39,36 +36,24 @@ export default function RoleList() {
         refresh();
     };
     const [roleList, setRoleList] = React.useState([]);
-
-
-    const getRoleList = async  () => {
-        const response = await window.fetch("GetRole", { credentials: "same-origin"});
-        const result = await response.json();
-        setRoleList(result.Value);
+    const refresh =async () => {
+        try {
+            setRoleList(await repo.GetRoleSPR());
+        } catch (err) {
+            alert(err.toString());
+        }
+       
     }
 
-    React.useEffect(() => {
-            getRoleList();
-        }, []);
+    React.useEffect(() => { refresh(); }, []);
   
-    function refresh() { getRoleList(); }
+   
 
     const removeRole = async (event,rowData) => {
         try {
             if (confirm(`Вы уверены что хотите удалить роль: ${rowData.CAPTION}?`)) {
-                const requestOptions = {
-                    method: "POST",
-                    headers: { 'Content-Type': "application/json" },
-                    credentials: "same-origin",
-                    body: JSON.stringify(rowData.SIGN_ROLE_ID)
-                };
-                const response = await window.fetch("RemoveRole", requestOptions);
-                const data = await response.json();
-                if (data.Result === false) {
-                    alert(data.Value);
-                } else {
-                    refresh();
-                }
+                await repo.RemoveRole(rowData.SIGN_ROLE_ID);
+                await refresh();
             }
         } catch (error) {
             alert(error.toString());
@@ -146,36 +131,23 @@ export function RoleDialog(props) {
 
     const handleClose = () => {
         onClose();
-        setCaption(null);
+        setCaption("");
+        setPrefix("");
     };
 
 
     const [processSaveRole, setProcessSaveRole] = React.useState(false);
-    const SaveRole =async  () => {
+    const saveRole =async  () => {
         try {
             setProcessSaveRole(true);
-            const formData = new FormData();
-            formData.append("caption", caption);
-            formData.append("prefix", prefix);
-            const requestOptions = {
-                method: "POST",
-                credentials: "same-origin",
-                body: formData
-            };
-            const response = await window.fetch("AddRole", requestOptions);
-            const data = await response.json();
-
-            if (data.Result === false) {
-                setErrorMessage(data.Value);
-            } else {
-                setErrorMessage("");
-                setCaption("");
-                handleClose();
-            }
+            await repo.AddRole(caption, prefix);
+            setErrorMessage("");
+            setCaption("");
+            handleClose();
         } catch (err) {
             setErrorMessage(err.toString());
         } finally {
-            setProcessSaveRole(true);
+            setProcessSaveRole(false);
         }
     };
     return (
@@ -184,17 +156,15 @@ export function RoleDialog(props) {
             <Dialog open={isOpen} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Добавление роли</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
-                        <div>Введите наименование роли и нажмите на кнопку "Сохранить"</div>
-                        {Array.isArray(errorMessage) ? errorMessage.map((value) => <div className="RedText">{value}</div>) : <div className="RedText">{errorMessage}</div>}
-                    </DialogContentText>
+                    <div>Введите наименование роли и нажмите на кнопку "Сохранить"</div>
+                    {Array.isArray(errorMessage) ? errorMessage.map((value, index) => <div key={index} className="RedText">{value}</div>) : <div className="RedText">{errorMessage}</div>}
                     <TextField autoFocus margin="dense" label="Наименование роли" type="text" required fullWidth value={caption} onChange={handleCaptionChange}></TextField>
                     <br/>
                     <TextField margin="dense" label="Префикс роли" type="text" fullWidth required value={prefix} onChange={prefixChange}></TextField>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">Отменить</Button>
-                    <Button onClick={SaveRole} color="primary" disabled={processSaveRole}>Сохранить</Button>
+                    <Button onClick={saveRole} color="primary" disabled={processSaveRole}>Сохранить</Button>
                 </DialogActions>
             </Dialog>
         </div>

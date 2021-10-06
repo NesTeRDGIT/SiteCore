@@ -27,6 +27,9 @@ export default function SingDialog(props) {
 
     const [certs, setCerts] = React.useState([]);
     const [currentCert, setCurrentCert] = React.useState([]);
+
+    const [signProcess, setSignProcess] = React.useState(false);
+
     const handleClose = () => {
         onClose();
     };
@@ -118,37 +121,46 @@ export default function SingDialog(props) {
     const [singErr, setSignErr] = React.useState("");
     const signFiles = async () => {
         let countOk = 0;
-        for (const signItem of signList) {
-            const docForSignId = signItem.DOC_FOR_SIGN_ID;
-            updateItemState(signItem, 1, "Загрузка файла с сервера");
-            const file = await downloadFile(docForSignId);
-            if (file.Valid) {
-                updateItemState(signItem, 1, "Подпись файла");
-                const sign = await SignFile(file.File.FileContents, currentCert.SerialNumber);
-                if (sign.Result) {
-                    updateItemState(signItem, 1, "Отправка подписи");
-                    const res = await sendSignFile(sign.SIGN, docForSignId);
-                    if (res.Valid) {
-                        updateItemState(signItem, 2, "Файл подписан");
-                      
-                        countOk++;
+        try {
+            setSignProcess(true);
+            for (const signItem of signList) {
+                const docForSignId = signItem.DOC_FOR_SIGN_ID;
+                updateItemState(signItem, 1, "Загрузка файла с сервера");
+                const file = await downloadFile(docForSignId);
+                if (file.Valid) {
+                    updateItemState(signItem, 1, "Подпись файла");
+                    const sign = await SignFile(file.File.FileContents, currentCert.SerialNumber);
+                    if (sign.Result) {
+                        updateItemState(signItem, 1, "Отправка подписи");
+                        const res = await sendSignFile(sign.SIGN, docForSignId);
+                        if (res.Valid) {
+                            updateItemState(signItem, 2, "Файл подписан");
+                            countOk++;
+                        } else {
+                            updateItemState(signItem, 3, `Ошибка сервера: ${res.Error}`);
+                        }
                     } else {
-                        updateItemState(signItem, 3, res.Error);
+                        updateItemState(signItem, 3, `Ошибка клиента: ${sign.Error}`);
                     }
                 } else {
-                    updateItemState(signItem, 3, sign.Error);
+                    updateItemState(signItem, 3, `Ошибка клиента: ${file.Error}`);
                 }
-            } else {
-                updateItemState(signItem, 3, file.Error);
+            }
+         
+        }
+        catch (err) {
+            alert();
+        }
+        finally {
+            setSignProcess(false);
+            if (countOk === signList.length) {
+                onSave();
+            }
+            else {
+                setSignErr(`Не удалось подписать: ${signList.length - countOk} файлов`);
             }
         }
-        if (countOk === signList.length) {
-          
-            onSave();
-        }
-        else {
-            setSignErr(`Не удалось подписать: ${signList.length - countOk} файлов`);
-        }
+        
     }
 
 
@@ -173,33 +185,34 @@ export default function SingDialog(props) {
         case 1:
                 return <CircularProgress size="25px" />;
         case 2:
-                return <img width="25px" src="/Image/IconOK.png"/>;
+                return <img width="25px" src="../Image/IconOK.png"/>;
         case 3:
-                return <img width="25px" src="/Image/IconERROR.png"/>;
+                return <img width="25px" src="../Image/IconERROR.png"/>;
         default:
             return "";
         }
     }
     return (
-        <div>
+        <div >
             <Dialog open={isOpen} onClose={handleClose}  aria-labelledby="form-dialog-title" fullWidth={true} maxWidth={"lg"}>
                 <DialogTitle id="form-dialog-title">Подписать файл</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
-                    </DialogContentText>
                     <div> {signList != null ?
                         <table className="table_report">
+                            <tbody>
                             <tr><th>Имя файла</th><th>Статус</th><th>Действие</th></tr>
-                            {signList.map((value) =>
-                                <tr>
-                                    <td>{value.FILENAME}</td>
-                                    <td>{switchIconStatus(value.isSing)}</td>
-                                    <td className={switchClassNameStatusText(value.isSing)}>{value.Text}</td></tr>)}
+                            {signList.map((value, index) =>
+                                    <tr key={index}>
+                                        <td>{value.FILENAME}</td>
+                                        <td>{switchIconStatus(value.isSing)}</td>
+                                        <td className={switchClassNameStatusText(value.isSing)}>{value.Text}</td></tr>)}
+                            </tbody>
                         </table>
-                        : null}</div>
-                    {checkingPlugin ? 
+                        : null}
+                    </div>
+                    {checkingPlugin ?
                         <div>
-                            <div><CircularProgress size="25px" /></div>
+                            <div><CircularProgress size="25px"/></div>
                             <div>Опрос плагина</div>
                         </div>
                         : null
@@ -212,7 +225,7 @@ export default function SingDialog(props) {
                     </div>
                     <div className="RedText">{singErr}</div>
                     <br/>
-                    <Button variant="contained" color="primary" onClick={signFiles}>Подписать</Button>
+                    <Button variant="contained" color="primary" onClick={signFiles} disabled={signProcess}>Подписать</Button>
                 </DialogContent>
             </Dialog>
         </div>
@@ -224,7 +237,7 @@ function PluginInfo(props) {
     const { pluginInfo } = props;
     return (
         <div>
-            {pluginInfo.isEnabled ? <div className="GreenText">Плагин доступен</div> : <div className="RedText">Плагин не доступен </div>}
+            {pluginInfo.isEnabled ? <div className="GreenText">Плагин доступен</div> : <div className="RedText">Плагин не доступен</div>}
             <div>Версия плагина: {pluginInfo.version}</div>
             <div>Криптопровайдер: {pluginInfo.cspName}</div>
             <div>Версия криптопровайдера: {pluginInfo.versionCSP}</div>
@@ -247,7 +260,12 @@ const ListItemStyles = makeStyles((theme) => ({
 
     const classes = ListItemStyles();
 
-    const [selectedIndex, setselectedIndex] = React.useState(0);
+     const [selectedIndex, setselectedIndex] = React.useState(0);
+     React.useEffect(() => {
+         if (items.length != 0) {
+             handleListItemClick(null, 0);
+         }
+     }, [items] )
     const handleListItemClick = (event, index) => {
         setselectedIndex(index);
         onSelected(index);
@@ -255,13 +273,13 @@ const ListItemStyles = makeStyles((theme) => ({
     return (
         <div>
             <Grid container spacing={1}>
-                <Grid item xs>
+                <Grid item={true} xs>
                     <div className="BoldText">Список сертификатов</div>
                     <List aria-label="secondary mailbox folder">
-                        {items.map((value, index) => <ListItem className={value.isSupportAlg ? classes.green : classes.red} selected={selectedIndex === index} button onClick={(event) => handleListItemClick(event, index)}><ListItemText primary={`Сертификат:${value.CertName}`} /></ListItem>)}
+                        {items.map((value, index) => <ListItem key={index} className={value.isSupportAlg ? classes.green : classes.red} selected={selectedIndex === index} button onClick={(event) => handleListItemClick(event, index)}><ListItemText primary={`Сертификат:${value.CertName}`} /></ListItem>)}
                     </List>
                 </Grid>
-                <Grid item xs>
+                <Grid item={true} xs>
                     <InfoCert cert={items[selectedIndex]} />
                 </Grid>
             </Grid>
@@ -277,15 +295,17 @@ function InfoCert(props) {
                 <div className="BoldText">Информация о сертификате</div>
                 {!cert.isSupportAlg?<div className="RedText">Не поддерживаемый алгоритм ключа</div>:null} 
                 <table className="table_report">
+                    <tbody>
                     <tr><th>Параметр</th><th>Значение</th></tr>
                     {cert.CertName != null ? <tr><td>Владелец</td><td>{cert.CertName}</td></tr> : null}
                     {cert.FIO != null ? <tr><td>ФИО владельца</td><td>{cert.FIO}</td></tr> : null}
                     {cert.ValidFromDate != null ? <tr><td>Выдан</td><td>{format(cert.ValidFromDate, "dd-MM-yyyy")}</td></tr> : null}
-                    {cert.ValidToDate != null ? <tr><td>Действителен до:</td><td>{format(cert.ValidToDate,"dd-MM-yyyy")}</td></tr> : null}
+                    {cert.ValidToDate != null ? <tr><td>Действителен до:</td><td>{format(cert.ValidToDate, "dd-MM-yyyy")}</td></tr> : null}
                     {cert.ProviderName != null ? <tr><td>Криптопровайдер</td><td>{cert.ProviderName}</td></tr> : null}
                     {cert.FriendlyName != null ? <tr><td>Алгоритм ключа</td><td>{cert.FriendlyName}</td></tr> : null}
+                    </tbody>
                 </table>
             </div>
-            : <div></div>
+            : null
     );
 }

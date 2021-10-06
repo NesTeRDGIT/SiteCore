@@ -18,7 +18,7 @@ const ListItemStyles = makeStyles((theme) => ({
 
 
 export default function CertList(props) {
-    const { items } = props;
+    const { certInfo } = props;
 
     const classes = ListItemStyles();
 
@@ -27,19 +27,31 @@ export default function CertList(props) {
         setselectedIndex(index);
     };
     return (
+       
         <div>
-            <Grid container spacing={1}>
-                <Grid item xs>
-                    <div className="BoldText">Список сертификатов</div>
-                    <List aria-label="secondary mailbox folder">
-                        {items.map((value, index) => <ListItem className={value.VALID ? classes.green : classes.red} selected={selectedIndex === index} button onClick={(event) => handleListItemClick(event, index)}><ListItemText primary={`Сертификат:${value.CAPTION}`} /></ListItem>)}
-                    </List>
-                </Grid>
-                <Grid item xs>
-                    <ShowInfoCert data={items[selectedIndex]} />
-                </Grid>
-            </Grid>
-        </div>
+            {certInfo != null ?
+                <div>
+                    {certInfo.Error.length != 0 ?
+                        <div>
+                            <div className="BoldText">Ошибки цепочки</div>
+                            <ul className="ErrorLi">
+                                {certInfo.Error.map((value, index) => <li key={index}>{value}</li>)}
+                            </ul>
+                        </div> : null}
+                    <Grid container spacing={1}>
+                        <Grid item xs>
+                            <div className="BoldText">Список сертификатов</div>
+                            <List aria-label="secondary mailbox folder">
+                                {certInfo.Data.map((value, index) => <ListItem key={index} className={value.VALID ? classes.green : classes.red} selected={selectedIndex === index} button onClick={(event) => handleListItemClick(event, index)}><ListItemText primary={`Сертификат:${value.CAPTION}`} /></ListItem>)}
+                            </List>
+                        </Grid>
+                        <Grid item xs>
+                            <ShowInfoCert data={certInfo.Data[selectedIndex]} />
+                        </Grid>
+                    </Grid>
+                </div> : null}
+            </div> 
+
     );
 }
 
@@ -49,8 +61,10 @@ function ShowInfoCert(props) {
         data != null ?
             <div>
                 <div className="BoldText">Информация о сертификате</div>
-                <ul className="ErrorLi">{data.Error.map((err) => <li>{err}</li>)}</ul>
+
+                <ul className="ErrorLi">{data.Error.map((err, index) => <li key={index}>{err}</li>)}</ul>
                 <table className="table_report">
+                    <tbody>
                     <tr><th>Параметр</th><th>Значение</th></tr>
                     {data.NAME != null ? <tr><td>Общее имя(CN)</td><td>{data.NAME}</td></tr> : null}
                     {data.ORG != null ? <tr><td>Организация(O)</td><td>{data.ORG}</td></tr> : null}
@@ -68,7 +82,8 @@ function ShowInfoCert(props) {
                     <tr><td>Дата начала</td><td>{format(new Date(data.DATE_B), "dd-MM-yyyy")}</td></tr>
                     <tr><td>Дата окончания</td><td>{format(new Date(data.DATE_E), "dd-MM-yyyy")}</td></tr>
 
-                    {data.OtherAttribute.map((value) => <tr><td>{value.Name}</td><td>{value.Value}</td></tr>)}
+                    {data.OtherAttribute.map((value, index) => <tr key={index}><td>{value.Name}</td><td>{value.Value}</td></tr>)}
+                    </tbody>
                 </table>
             </div>
             : <div></div>

@@ -25,23 +25,27 @@ namespace SiteCore.Controllers
 
       
 
-        private string _CODE_MO;
-        private string CODE_MO
+       
+        private UserInfoHelper userInfoHelper;
+        private UserInfo _userInfo;
+        private UserInfo userInfo
         {
             get
             {
-                if (string.IsNullOrEmpty(_CODE_MO))
-                    _CODE_MO = User.CODE_MO();
-                return _CODE_MO;
+                if (_userInfo == null)
+                {
+                    _userInfo = userInfoHelper.GetInfo(User.Identity.Name);
+                }
+                return _userInfo;
             }
         }
 
-        public IdentificationController(CSOracleSet csOracleSet, WCFIdentiScaner wcfIdentiScaner, ILogger logger)
+        public IdentificationController(CSOracleSet csOracleSet, WCFIdentiScaner wcfIdentiScaner, ILogger logger, UserInfoHelper userInfoHelper)
         {
             this.csOracleSet = csOracleSet;
             this.wcfIdentiScaner = wcfIdentiScaner;
             this.logger = logger;
-           
+            this.userInfoHelper = userInfoHelper;
         }
 
 
@@ -90,7 +94,7 @@ namespace SiteCore.Controllers
                 {
                     var CSItem = new CS_LIST();
                     CSItem.DATE_CREATE = DateTime.Now;
-                    CSItem.CODE_MO = User.CODE_MO();
+                    CSItem.CODE_MO = userInfo.CODE_MO;
                     CSItem.CAPTION = string.IsNullOrEmpty(model.Caption) ? $"Запрос {CSItem.CODE_MO} от {CSItem.DATE_CREATE:dd.MM.yyyy HH:mm}" : model.Caption;
                     csOracleSet.CS_LIST.Add(CSItem);
                     await csOracleSet.SaveChangesAsync();
@@ -398,25 +402,25 @@ namespace SiteCore.Controllers
 
         private IQueryable<CS_LIST_IN> getCsList_INQ(int CS_LIST_ID)
         {
-            return !User.IsInRole("Admin") ? csOracleSet.CS_LIST_IN.Where(x => x.CS_LIST.CS_LIST_ID == CS_LIST_ID && x.CS_LIST.CODE_MO == CODE_MO) : csOracleSet.CS_LIST_IN.Where(x => x.CS_LIST_ID == CS_LIST_ID);
+            return !User.IsInRole("Admin") ? csOracleSet.CS_LIST_IN.Where(x => x.CS_LIST.CS_LIST_ID == CS_LIST_ID && x.CS_LIST.CODE_MO == userInfo.CODE_MO) : csOracleSet.CS_LIST_IN.Where(x => x.CS_LIST_ID == CS_LIST_ID);
         }
 
         private IQueryable<CS_LIST> getCsListsQ()
         {
-            return !User.IsInRole("Admin") ? csOracleSet.CS_LIST.Where(x => x.CODE_MO == CODE_MO) : csOracleSet.CS_LIST;
+            return !User.IsInRole("Admin") ? csOracleSet.CS_LIST.Where(x => x.CODE_MO == userInfo.CODE_MO) : csOracleSet.CS_LIST;
         }
         private async Task<CS_LIST> getCsList(int CS_LIST_ID)
         {
-            return !User.IsInRole("Admin") ? await csOracleSet.CS_LIST.FirstOrDefaultAsync(x => x.CODE_MO == CODE_MO && x.CS_LIST_ID == CS_LIST_ID) : await csOracleSet.CS_LIST.FirstOrDefaultAsync(x => x.CS_LIST_ID == CS_LIST_ID);
+            return !User.IsInRole("Admin") ? await csOracleSet.CS_LIST.FirstOrDefaultAsync(x => x.CODE_MO == userInfo.CODE_MO && x.CS_LIST_ID == CS_LIST_ID) : await csOracleSet.CS_LIST.FirstOrDefaultAsync(x => x.CS_LIST_ID == CS_LIST_ID);
         }
         private async Task<CS_LIST_IN> getCsItem(int CS_LIST_IN_ID)
         {
 
-            return !User.IsInRole("Admin") ? await csOracleSet.CS_LIST_IN.FirstOrDefaultAsync(x => x.CS_LIST.CODE_MO == CODE_MO && x.CS_LIST_IN_ID == CS_LIST_IN_ID) : await csOracleSet.CS_LIST_IN.FirstOrDefaultAsync(x => x.CS_LIST_IN_ID == CS_LIST_IN_ID);
+            return !User.IsInRole("Admin") ? await csOracleSet.CS_LIST_IN.FirstOrDefaultAsync(x => x.CS_LIST.CODE_MO == userInfo.CODE_MO && x.CS_LIST_IN_ID == CS_LIST_IN_ID) : await csOracleSet.CS_LIST_IN.FirstOrDefaultAsync(x => x.CS_LIST_IN_ID == CS_LIST_IN_ID);
         }
         private IQueryable<CS_LIST> getCsList(List<int> CS_LIST_ID)
         {
-            return !User.IsInRole("Admin") ? csOracleSet.CS_LIST.Where(x => x.CODE_MO == CODE_MO && CS_LIST_ID.Contains(x.CS_LIST_ID)) : csOracleSet.CS_LIST.Where(x => CS_LIST_ID.Contains(x.CS_LIST_ID));
+            return !User.IsInRole("Admin") ? csOracleSet.CS_LIST.Where(x => x.CODE_MO == userInfo.CODE_MO && CS_LIST_ID.Contains(x.CS_LIST_ID)) : csOracleSet.CS_LIST.Where(x => CS_LIST_ID.Contains(x.CS_LIST_ID));
         }
         #endregion
 

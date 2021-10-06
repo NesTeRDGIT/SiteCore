@@ -9,7 +9,7 @@ import MaterialTable from "material-table";
 import React,{ Component, useEffect, useRef} from "react";
 import ReactDOM from "react-dom"
 
-import { makeStyles, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { makeStyles, createTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import DateFnsUtils from '@date-io/date-fns'; // choose your lib
 import ruLocale from "date-fns/locale/ru";
 import { KeyboardDatePicker, MuiPickersUtilsProvider, } from '@material-ui/pickers';
@@ -24,9 +24,12 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 import CertList from "./CertList.jsx"
 import ShowCertDialog from "./ShowCertDialog.jsx"
+import { Repository } from "../API/Repository.js";
+const repo = new Repository();
+
 
 export default function IssuerList() {
     const tableRef = React.useRef(null);
@@ -34,16 +37,17 @@ export default function IssuerList() {
     const [issuerList, setIssuerList] = React.useState([]);
 
 
-    const getIssuerList = async () => {
-        const response = await window.fetch("GetISSUER");
-        const result = await response.json();
-        setIssuerList(result.Value);
+    const refresh = async () => {
+        try {
+            setIssuerList(await repo.GetISSUER());
+        } catch (err) {
+            alert(err.toString());
+        }
+
     }
 
-    React.useEffect(() => {
-        getIssuerList();
-    }, []);
-    const refresh = () => { getIssuerList(); }
+    React.useEffect(() => { refresh(); }, []);
+    
   
     const closeIssuerDialog = () => {
         setisOpenRoleDialog(false);
@@ -55,31 +59,13 @@ export default function IssuerList() {
         refresh();
     };
 
-    const removeIssuer = (event, rowData) => {
+    const removeIssuer = async (event, rowData) => {
         try {
             if (confirm(`Вы уверены что хотите удалить издателя: ${rowData.CAPTION}?`)) {
-                const requestOptions = {
-                    method: "POST",
-                    headers: { 'Content-Type': "application/json" },
-                    body: JSON.stringify(rowData.SING_ISSUER_ID)
-                };
-                window.fetch("RemoveISSUER", requestOptions)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data) {
-                            if (data.Result === false) {
-                                alert(data.Value);
-                            } else {
-                                refresh();
-                            }
-                        }
-                    })
-                    .catch(error => {
-                        alert(error.toString());
-                    });
+                await repo.RemoveISSUER(rowData.SING_ISSUER_ID);
+                refresh();
             }
         } catch (error) {
-
             alert(error.toString());
         }
     }
@@ -91,35 +77,18 @@ export default function IssuerList() {
         setshowCertInfo(null);
     };
 
-    const showDetail = (event, rowData) => {
+    const showDetail = async (event, rowData) => {
         try {
-            const requestOptions = {
-                method: "GET",
-                headers: { 'Content-Type': "application/json" }
-            };
-            window.fetch(`GetISSUERCertInfo?ID=${rowData.SING_ISSUER_ID}`, requestOptions)
-                .then(response => response.json())
-                .then(data => {
-                    if (data) {
-                        if (data.Result === false) {
-                            alert(data.Value);
-                        } else {
-                            setshowCertInfo(data.Value);
-                            setisOpenShowSignDialog(true);
-                        }
-                    }
-                })
-                .catch(error => {
-                    alert(error.toString());
-                });
+            const info = await repo.GetISSUERCertInfo(rowData.SING_ISSUER_ID);
+            setshowCertInfo(info);
+            setisOpenShowSignDialog(true);
         } catch (error) {
-
             alert(error.toString());
         }
     }
 
 
-    const theme = createMuiTheme({
+    const theme = createTheme({
         palette: {
             primary: {
                 main: '#4CAF50'
@@ -275,9 +244,7 @@ export function AddISSUERDialog(props) {
             <Dialog open={isOpen} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} maxWidth={"lg"}>
                 <DialogTitle id="form-dialog-title">Добавление издателя</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
-                        <div className="RedText">{errorMessage}</div>
-                    </DialogContentText>
+                     <div className="RedText">{errorMessage}</div>
                     <div>
                         <div>
                             <Stepper activeStep={activeStep} orientation="vertical">
@@ -297,7 +264,12 @@ export function AddISSUERDialog(props) {
                                 <Step key={1}>
                                     <StepLabel>Просмотр данных сертификата</StepLabel>
                                     <StepContent>
-                                        {certInfo != null ? <CertList items={certInfo.Data} /> : <div></div>}
+                                        {processReadCertificate ?
+                                            <div>
+                                                <CircularProgress size="25px" />
+                                                <div className="BoldText">Проверка сертификата на сервере</div>
+                                            </div> : null}
+                                        {certInfo != null ? <CertList certInfo={certInfo} /> : <div></div>}
                                         <br />
                                         <div>
                                             <div>
@@ -365,25 +337,8 @@ function AddISSUER(props) {
     const saveIssuer = async () => {
         try {
             setProcessSaveIssuer(true);
-            const formData = new FormData();
-            formData.append("File", file, file.name);
-            formData.append("CAPTION", certData.CAPTION);
-            formData.append("DATE_B", certData.DATE_B.toLocaleDateString());
-            if (certData.DATE_E != null)
-                formData.append("DATE_E", certData.DATE_E.toLocaleDateString());
-
-
-            const requestOptions = {
-                method: "POST",
-                body: formData
-            };
-
-            const response = await window.fetch("AddISSUER", requestOptions);
-            const result = await response.json();
-            if (result.Result === true)
-                onSave();
-            else
-                setValidationErr(result.Value);
+            await repo.AddISSUER(file, certData.CAPTION, certData.DATE_B, certData.DATE_E);
+            onSave();
         } catch (err) {
             setValidationErr(err.toString());
         } finally {
@@ -394,7 +349,7 @@ function AddISSUER(props) {
     return (
         <div>
             <div>
-                {validationErr != null ? <ul className="ErrorLi">{Array.isArray(validationErr) ? validationErr.map((value) => <li>{value}</li>) : validationErr}</ul> : null}
+                {validationErr != null ? <ul className="ErrorLi">{Array.isArray(validationErr) ? validationErr.map((value, index) => <li key={index}>{value}</li>) : validationErr}</ul> : null}
             </div>
             <div> <TextField autoFocus margin="dense" label="Наименование" type="text" fullWidth value={certData.CAPTION} onChange={captionChange}></TextField></div><br />
             <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ruLocale}>

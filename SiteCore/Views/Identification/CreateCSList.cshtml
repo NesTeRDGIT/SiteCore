@@ -167,7 +167,7 @@
 
     <script>
 
-        const Notification = new signalR.HubConnectionBuilder().withUrl(" /Notification").build();
+        const Notification = new signalR.HubConnectionBuilder().withUrl("../notification").build();
         Notification.on("NewListState",
             function (ID) {
             const sc = angular.element(document.getElementById('GRID1')).scope();

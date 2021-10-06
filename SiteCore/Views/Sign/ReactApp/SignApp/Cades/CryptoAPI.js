@@ -6,7 +6,9 @@ var CADESCOM_HASH_ALGORITHM_CP_GOST_3411_2012_256 = 101;
 var CADESCOM_CADES_BES = 1;
 var CADESCOM_BASE64_TO_BINARY = 1;
 
-var ProviderSupport = [{ FriendlyName: "ГОСТ Р 34.10-2012 256 бит", Value: "1.2.643.7.1.1.1.1", algorithm: cadesplugin.CADESCOM_HASH_ALGORITHM_CP_GOST_3411_2012_256 }];
+var ProviderSupport = [
+    { FriendlyName: "ГОСТ Р 34.10-2012 256 бит", Value: "1.2.643.7.1.1.1.1", algorithm: cadesplugin.CADESCOM_HASH_ALGORITHM_CP_GOST_3411_2012_256 },
+    { FriendlyName: "ГОСТ Р 34.10-2012 512 бит", Value: "1.2.643.7.1.1.1.2", algorithm: cadesplugin.CADESCOM_HASH_ALGORITHM_CP_GOST_3411_2012_512 }];
 
 
 export async function activatePluginAsync() {

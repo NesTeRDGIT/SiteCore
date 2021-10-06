@@ -18,6 +18,7 @@ namespace SiteCore.Models
         public List<SMO> CODE_SMO { get; set; }
         public List<NMIC_VID_NHISTORY> NMIC_VID_NHISTORY { get; set; }
         public List<NMIC_OPLATA> NMIC_OPLATA { get; set; }
+
         //public TMKFillter Fillter { get; set; }
     }
 

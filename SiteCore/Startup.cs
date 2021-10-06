@@ -17,6 +17,7 @@ using DocumentFormat.OpenXml.Drawing;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ServiceLoaderMedpomData;
 using SiteCore.Class;
@@ -24,13 +25,19 @@ using SiteCore.Controllers;
 using SiteCore.Hubs;
 using Path = System.IO.Path;
 
+
 namespace SiteCore
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder().SetBasePath(env.ContentRootPath)
+      .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+      .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+      .AddEnvironmentVariables();
+
+            Configuration = builder.Build();
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         }
 
@@ -60,7 +67,8 @@ namespace SiteCore
             services.AddSignalR();
             services.AddSession();
 
-           
+
+            services.AddBase(Configuration);
             services.AddMedpom(Configuration);
             services.AddIdentiCS(Configuration);
             services.AddTMK(Configuration);
@@ -84,10 +92,25 @@ namespace SiteCore
             {
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                //app.UseHsts();
             }
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
+
+
+            // Set up custom content types - associating file extension to MIME type
+            var provider = new FileExtensionContentTypeProvider
+            {
+                Mappings =
+                {
+                    // Add new mappings
+                    [".xpi"] = "application/x-xpinstall",
+                    [".crx"] = "application/x-chrome-extension"
+                }
+            };
+          
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                ContentTypeProvider = provider
+            });
 
           
             app.UseRouting();
@@ -110,27 +133,35 @@ namespace SiteCore
 
     public static class ExtIServiceCollection
     {
+
+
+        public static IServiceCollection AddBase(this IServiceCollection services, IConfiguration Configuration)
+        {
+            services.AddTransient(x => new UserInfoHelper(x.GetService<ApplicationUserManager>()));
+            services.AddTransient<IHasher>(provider => new GostHasher());
+            services.AddTransient<IZipArchiver>(provider => new ZipArchiver());
+            services.AddTransient<ILogger>(provider => new LoggerEventLog("SiteCore"));
+            return services;
+        }
+
+
+
         public static IServiceCollection AddMedpom(this IServiceCollection services, IConfiguration Configuration)
         {
             services.AddDbContext<MyOracleSet>(options => options.UseOracle(Configuration.GetConnectionString("DefaultConnection"), b => b.UseOracleSQLCompatibility("11")));
-            services.AddTransient<ILogger>(provider => new LoggerEventLog("SiteCore"));
             var host = Configuration.GetSection("WCFParam").GetValue("HOST", "");
             var login = Configuration.GetSection("WCFParam").GetValue("LOGIN", "");
             var password = Configuration.GetSection("WCFParam").GetValue("PASSWORD", "");
             services.AddSingleton(provider => new WCFConnect(host, login, password, provider.GetService<ILogger>(), provider.GetService<IHubContext<NotificationHub>>()));
-            services.AddTransient<IZipArchiver>(provider => new ZipArchiver());
             var SharedFolder = Configuration.GetValue<string>("SharedFolder");
-            services.AddTransient<IMedpomRepository>(provider => new MedpomFileManager(SharedFolder));
-            services.AddTransient<IHasher>(provider => new GostHasher());
+            services.AddTransient<IMedpomRepository>(provider => new MedpomFileManager(SharedFolder));          
             return services;
         }
         public static IServiceCollection AddIdentiCS(this IServiceCollection services, IConfiguration Configuration)
         {
             services.AddDbContext<CSOracleSet>(options => options.UseLazyLoadingProxies().UseOracle(Configuration.GetConnectionString("DefaultConnection"), b => b.UseOracleSQLCompatibility("11")));
-            var host = Configuration.GetSection("WCFIdentiCSParam").GetValue("HOST", "");
-            var login = Configuration.GetSection("WCFIdentiCSParam").GetValue("LOGIN", "");
-            var password = Configuration.GetSection("WCFIdentiCSParam").GetValue("PASSWORD", "");
-            services.AddSingleton(provider => new WCFIdentiScaner(host, login, password, provider.GetService<ILogger>(), provider.GetService<IHubContext<NotificationHub>>(), services.BuildServiceProvider().GetService<CSOracleSet>()));
+            var host = Configuration.GetSection("WCFIdentiCSParam").GetValue("HOST", "");          
+            services.AddSingleton(provider => new WCFIdentiScaner(host, provider.GetService<ILogger>(), provider.GetService<IHubContext<NotificationHub>>(), services.BuildServiceProvider().GetService<CSOracleSet>()));
             return services;
         }
 
@@ -185,8 +216,7 @@ namespace SiteCore
         {
             services.AddTransient<IX509CertificateManager>(provider => new X509CertificateManager(provider.GetService<MyOracleSet>()));
             var host = Configuration.GetSection("WCFCrypto").GetValue("HOST", "");
-            services.AddSingleton(provider => new WCFCryptoConnect(host, provider.GetService<ILogger>()));
-            
+            services.AddSingleton(provider => new WCFCryptoConnect(host, provider.GetService<ILogger>()));            
             return services;
         }
 

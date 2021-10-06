@@ -15,9 +15,24 @@ namespace SiteCore.Controllers
     public class ONKReestrController : Controller
     {
         private ONKOracleSet db { get; }
-        public ONKReestrController(ONKOracleSet _db)
+        private UserInfoHelper userInfoHelper;
+        private UserInfo _userInfo;
+        private UserInfo userInfo
+        {
+            get
+            {
+                if (_userInfo == null)
+                {
+                    _userInfo = userInfoHelper.GetInfo(User.Identity.Name);
+                }
+                return _userInfo;
+            }
+        }
+
+        public ONKReestrController(ONKOracleSet _db, UserInfoHelper userInfoHelper)
         {
             db = _db;
+            this.userInfoHelper = userInfoHelper;
         }
         public IActionResult ONKReestr()
         {
@@ -45,7 +60,7 @@ namespace SiteCore.Controllers
 
         private IQueryable<ONKReestr> GetONKReestr(int? filter = null)
         {
-            var nodes = CODE_SMO != "75" ? db.ONKReestr.Where(x => !string.IsNullOrEmpty(x.SMO) && x.SMO == CODE_SMO) : db.ONKReestr;
+            var nodes = userInfo.CODE_SMO != "75" ? db.ONKReestr.Where(x => !string.IsNullOrEmpty(x.SMO) && x.SMO == userInfo.CODE_SMO) : db.ONKReestr;
             return nodes.OrderByDescending(x => x.ONK_REESTR_ID);
         }
 
@@ -77,7 +92,7 @@ namespace SiteCore.Controllers
             var nodes = db.ONKReestr
                 .Include(x => x.SL)
                 .ThenInclude(x => x.V_SL_MINI)
-                .FirstOrDefault(x => (!string.IsNullOrEmpty(x.SMO) && x.SMO == CODE_SMO || CODE_SMO == "75") && x.ONK_REESTR_ID == ONK_REESTR_ID);
+                .FirstOrDefault(x => (!string.IsNullOrEmpty(x.SMO) && x.SMO == userInfo.CODE_SMO || userInfo.CODE_SMO == "75") && x.ONK_REESTR_ID == ONK_REESTR_ID);
                 
               
             return nodes?.SL ?? new List<ONK_REESTR_SL>();
@@ -89,39 +104,6 @@ namespace SiteCore.Controllers
             return View(zSl);
         }
 
-        #region Private
-        private string _CODE_MO;
-        private string CODE_MO
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_CODE_MO))
-                    _CODE_MO = User.CODE_MO();
-                return _CODE_MO;
-            }
-        }
-
-        private string _CODE_SMO;
-        private string CODE_SMO
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_CODE_SMO))
-                    _CODE_SMO = User.CODE_SMO();
-                return _CODE_SMO;
-            }
-        }
-
-        private string _USER_ID;
-        private string USER_ID
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_USER_ID))
-                    _USER_ID = User.ID();
-                return _USER_ID;
-            }
-        }
-        #endregion
+       
     }
 }

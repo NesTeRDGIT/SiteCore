@@ -674,6 +674,7 @@ myApp.controller("Grid1", ["$scope", "$http","$q", "uiGridConstants", "i18nServi
         }
 
         function GetExpertize(EXPERTIZE_ID) {
+
             $http.get(`GetExpertize?EXPERTIZE_ID=${EXPERTIZE_ID}`)
                 .then(function(response) {
                         const data = response.data;
@@ -715,6 +716,7 @@ myApp.controller("Grid1", ["$scope", "$http","$q", "uiGridConstants", "i18nServi
         }
 
         $scope.SaveExpertize = function (form) {
+            
             if (form.$valid) {
                 $http.post(`EditExpertize`, $scope.CurrentExpertize )
                     .then(function (response) {

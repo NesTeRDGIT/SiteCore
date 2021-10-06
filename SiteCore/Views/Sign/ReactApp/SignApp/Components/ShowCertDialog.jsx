@@ -28,7 +28,7 @@ export default function ShowCertDialog(props) {
             <Dialog open={isOpen} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} maxWidth={"lg"}>
                 <DialogContent>
                     <DialogContentText>
-                        <div>Просмотр данных сертификата</div>
+                        Просмотр данных сертификата
                     </DialogContentText>
                     <div>
                         {certInfo != null ? <CertList items={certInfo.Data} /> : <div></div>}

@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Castle.Components.DictionaryAdapter;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using SiteCore.Class;
 using SiteCore.Data;
+using SiteCore.Hubs;
 using SiteCore.Models;
 
 namespace SiteCore.Controllers
@@ -21,12 +24,30 @@ namespace SiteCore.Controllers
         private IX509CertificateManager x509CertificateManager;
         private WCFCryptoConnect wcfCryptoConnect;
         private IZipArchiver ZipArchiver;
-        public SignController(MyOracleSet myOracleSet, IX509CertificateManager x509CertificateManager, WCFCryptoConnect wcfCryptoConnect, IZipArchiver ZipArchiver)
+        private IHubContext<NotificationHub> notificationHub;
+      
+        private UserInfoHelper userInfoHelper;
+        private UserInfo _userInfo;
+        private UserInfo userInfo {
+            get
+            {
+                if(_userInfo==null)
+                {
+                    _userInfo = userInfoHelper.GetInfo(User.Identity.Name);
+                }
+                return _userInfo;
+            }
+        }
+        public SignController(MyOracleSet myOracleSet, IX509CertificateManager x509CertificateManager, WCFCryptoConnect wcfCryptoConnect, IZipArchiver ZipArchiver, IHubContext<NotificationHub> notificationHub, UserInfoHelper userInfoHelper)
         {
             this.myOracleSet = myOracleSet;
             this.x509CertificateManager = x509CertificateManager;
             this.wcfCryptoConnect = wcfCryptoConnect;
             this.ZipArchiver = ZipArchiver;
+            this.notificationHub = notificationHub;
+            this.userInfoHelper = userInfoHelper;
+
+
         }
         public IActionResult SignSPR()
         {
@@ -395,21 +416,20 @@ namespace SiteCore.Controllers
 
    
         [HttpGet]
-        public async Task<CustomJsonResult> GetDoc()
+        public async Task<CustomJsonResult> GetDoc(int THEME_ID)
         {
             try
             {
                 var items = await myOracleSet.DOC_FOR_SIGN
                     .Include(x => x.CODE_MO_NAME)
                     .Include(x => x.SIGNs).ThenInclude(x => x.ROLE)
-                    .Where(x=> isSignAdmin || x.CODE_MO == CODE_MO)
+                    .Where(x=> (isSignAdmin || x.CODE_MO == userInfo.CODE_MO) && x.THEME_ID == THEME_ID)
                     .Select(x => new DOCViewModel()
                     {
                         FILENAME = x.FILENAME,
                         MO_NAME = $"{x.CODE_MO_NAME.NAM_MOK}({x.CODE_MO})",
                         DateCreate = x.DATE_CREATE,
                         DOC_FOR_SIGN_ID = x.DOC_FOR_SIGN_ID,
-                        Theme = x.THEME,
                         SIGNS = x.SIGNs.Select(s => new DOCSignViewModel()
                         {
                             ROLE_ID = s.SIGN_ROLE_ID,
@@ -424,16 +444,78 @@ namespace SiteCore.Controllers
                 return CustomJsonResult.Create(new List<string> { ex.Message }, false);
             }
         }
+        [HttpGet]
+        public async Task<CustomJsonResult> GetTheme()
+        {
+            try
+            {
+                List<DOC_THEME> items;
+                if(User.IsInRole("SignAdmin"))
+                {
+                     items = await myOracleSet.DOC_THEME.OrderByDescending(x=>x.THEME_ID).ToListAsync();
+                }
+                else
+                {
+                    items = await myOracleSet.DOC_FOR_SIGN.Include(x => x.THEME).Where(x => x.CODE_MO == userInfo.CODE_MO).Select(x => x.THEME).Distinct().ToListAsync();
+                }
+            
+                return CustomJsonResult.Create(items);
+            }
+            catch (Exception ex)
+            {
+                return CustomJsonResult.Create(new List<string> { ex.Message }, false);
+            }
+        }
+
+        [HttpPost]
+        public async Task<CustomJsonResult> AddTheme(string THEME)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(THEME))
+                    throw new Exception("Не возможно добавить пустую тему");
+                myOracleSet.DOC_THEME.Add(new DOC_THEME() { CAPTION = THEME });
+                await myOracleSet.SaveChangesAsync();
+                return CustomJsonResult.Create(true);
+            }
+            catch (Exception ex)
+            {
+                return CustomJsonResult.Create(ex.Message, false);
+            }
+        }
+        [HttpPost]
+        public async Task<CustomJsonResult> RemoveTheme(int THEME_ID)
+        {
+            try
+            {
+                var item = await myOracleSet.DOC_THEME.FirstOrDefaultAsync(x => x.THEME_ID == THEME_ID);
+                if (item != null)
+                {
+                    myOracleSet.DOC_THEME.Remove(item);
+                    await myOracleSet.SaveChangesAsync();
+                    return CustomJsonResult.Create(true);
+                }
+
+                throw new Exception($"Не удалось найти тему с THEME_ID={THEME_ID}");
+            }
+            catch (Exception ex)
+            {
+                return CustomJsonResult.Create(ex.Message, false);
+            }
+        }
+
         [Authorize(Roles = "SignAdmin")]
         [HttpPost]
         public async Task<CustomJsonResult> AddFileForSign(AddFilesModel model)
         {
             try
             {
-           
-
                 if (ModelState.IsValid)
                 {
+                    var themeItem = await myOracleSet.DOC_THEME.FirstOrDefaultAsync(x => x.THEME_ID == model.THEME_ID);
+                    if (themeItem == null)
+                        throw new Exception($"Тема с кодом {model.THEME_ID} не найдена на сервере");
+
                     byte[] data;
                     await using (var st = model.FILE.OpenReadStream())
                     {
@@ -446,7 +528,7 @@ namespace SiteCore.Controllers
                         CODE_MO = model.CODE_MO,
                         DATA = data,
                         FILENAME = model.FILE.FileName,
-                        THEME = model.Theme,
+                        THEME = themeItem,
                         SIGNs = new List<DOC_SIGN>(model.ROLE_ID.Select(x => new DOC_SIGN() { SIGN_ROLE_ID = x }))
                     });
 
@@ -468,7 +550,7 @@ namespace SiteCore.Controllers
         {
             try
             {
-                var doc =await myOracleSet.DOC_FOR_SIGN.FirstOrDefaultAsync(x => x.DOC_FOR_SIGN_ID == DOC_FOR_SIGN_ID && (isSignAdmin || x.CODE_MO == CODE_MO));
+                var doc =await myOracleSet.DOC_FOR_SIGN.FirstOrDefaultAsync(x => x.DOC_FOR_SIGN_ID == DOC_FOR_SIGN_ID && (isSignAdmin || x.CODE_MO == userInfo.CODE_MO));
                 if (doc != null)
                 {
                     var file = File(doc.DATA,System.Net.Mime.MediaTypeNames.Application.Octet, doc.FILENAME);
@@ -489,7 +571,7 @@ namespace SiteCore.Controllers
         {
             try
             {
-                var doc = await myOracleSet.DOC_FOR_SIGN.Include(x=>x.SIGNs).ThenInclude(x=>x.ROLE).FirstOrDefaultAsync(x => x.DOC_FOR_SIGN_ID == DOC_FOR_SIGN_ID && (isSignAdmin || x.CODE_MO == CODE_MO));
+                var doc = await myOracleSet.DOC_FOR_SIGN.Include(x=>x.SIGNs).ThenInclude(x=>x.ROLE).FirstOrDefaultAsync(x => x.DOC_FOR_SIGN_ID == DOC_FOR_SIGN_ID && (isSignAdmin || x.CODE_MO == userInfo.CODE_MO));
                 if (doc != null)
                 {
                     var files = new List<ZipArchiverEntry>();
@@ -507,6 +589,52 @@ namespace SiteCore.Controllers
                 return CustomJsonResult.Create(ex.Message, false);
             }
         }
+
+        [Authorize(Roles = "SignAdmin")]
+        [HttpGet]
+        public async Task<CustomJsonResult> DownloadAllFileTheme(int THEME_ID,string ConnectionId)
+        {
+            try
+            {
+                
+                notificationHub.Progress(ConnectionId, 0, 0, "Запрос файлов из БД");
+                 var docTheme = await myOracleSet.DOC_THEME.Include(x => x.DOCs).ThenInclude(x => x.SIGNs).ThenInclude(x => x.ROLE).Where(x => x.THEME_ID == THEME_ID).FirstOrDefaultAsync();
+                if (docTheme == null)
+                    throw new Exception($"Не удалось найти THEME_ID={THEME_ID}");
+                var entry = new List<ZipArchiverEntry>();
+                var filenameDictionary = new Dictionary<string, string>();
+                var i = 0;
+                foreach (var doc in docTheme.DOCs)
+                {
+                    i++;
+                    notificationHub.Progress(ConnectionId, i, docTheme.DOCs.Count, $"Упаковка файла в архив: {doc.FILENAME}");
+                    var docEntry = new List<ZipArchiverEntry>();
+                    docEntry.Add(new ZipArchiverEntry(doc.FILENAME, doc.DATA));
+                    docEntry.AddRange(doc.SIGNs.Where(x => x.DATE_SIGN.HasValue).Select(docSign => new ZipArchiverEntry($"{doc.FILENAME}_{docSign.ROLE.PREFIX}.sig", docSign.SIGN)));
+                    var basefilename = $"{System.IO.Path.GetFileNameWithoutExtension(doc.FILENAME)}";
+                    var filename = basefilename;
+                    var suf = 0;
+                    while (filenameDictionary.ContainsKey(filename))
+                    {
+                        suf++;
+                        filename = $"{basefilename}({suf})";
+                    }
+                    filenameDictionary.Add(filename, filename);
+                    filename = $"{filename}.zip";
+                    entry.Add(new ZipArchiverEntry(filename, ZipArchiver.Zip(docEntry.ToArray())));
+
+                }
+                notificationHub.Progress(ConnectionId, i, docTheme.DOCs.Count, $"Передача файла");
+                var file = File(ZipArchiver.Zip(entry.ToArray()), System.Net.Mime.MediaTypeNames.Application.Zip, $"{docTheme.CAPTION}.zip");
+                return CustomJsonResult.Create(file);
+
+            }
+            catch (Exception ex)
+            {
+                return CustomJsonResult.Create(ex.Message, false);
+            }
+        }
+
 
         [Authorize(Roles = "SignAdmin")]
         [HttpPost]
@@ -530,35 +658,40 @@ namespace SiteCore.Controllers
             }
         }
 
+        private async Task SignValidateAndSave(int docForSignId, string sign)
+        {
+            var doc = await myOracleSet.DOC_FOR_SIGN.Include(x => x.SIGNs).FirstOrDefaultAsync(x => x.DOC_FOR_SIGN_ID == docForSignId);
+            if (doc == null)
+                throw new Exception("Файл не найден на сервере");
+            var signature = await wcfCryptoConnect.CheckSignatureBase64Async(doc.DATA, sign);
+            if (signature.IsValidate)
+            {
+                if (!signature.DateSign.HasValue)
+                    throw new Exception("Не найдена дата подписи");
+                var signListItem = await myOracleSet.SIGN_LIST.FirstOrDefaultAsync(x => (x.CODE_MO == doc.CODE_MO || x.CODE_MO == "75") && x.PUBLICKEY == signature.PublicKey && signature.DateSign >= x.DATE_B && signature.DateSign <= (x.DATE_E ?? DateTime.Now));
+                if (signListItem == null)
+                    throw new Exception("Не найден владелец подписи");
+                var docSign = doc.SIGNs.FirstOrDefault(x => x.SIGN_ROLE_ID == signListItem.SIGN_ROLE_ID);
+                if (docSign == null)
+                    throw new Exception("Данная подпись не ожидается для данного документа");
+                if (docSign.DATE_SIGN.HasValue)
+                    throw new Exception("Документ уже подписан данной подписью");
+                docSign.DATE_SIGN = signature.DateSign;
+                docSign.SIGN_LIST_ID = signListItem.ID;
+                docSign.SIGN = Convert.FromBase64String(sign);
+                await myOracleSet.SaveChangesAsync();
+                return;
+            }
+            throw new Exception(string.Join(",", signature.ErrorList));
+        }
+
         [HttpPost]
         public async Task<CustomJsonResult> SendSign(AddSignModel model)
         {
             try
             {
-                var doc = await myOracleSet.DOC_FOR_SIGN.Include(x=>x.SIGNs).FirstOrDefaultAsync(x => x.DOC_FOR_SIGN_ID == model.DOC_FOR_SIGN_ID);
-                if (doc == null)
-                    throw new Exception("Файл не найден на сервере");
-                var signature =await wcfCryptoConnect.CheckSignatureBase64Async(doc.DATA, model.SIGN);
-                if (signature.IsValidate)
-                {
-                    if (!signature.DateSign.HasValue)
-                        throw new Exception("Не найдена дата подписи");
-                    var signListItem = await myOracleSet.SIGN_LIST.FirstOrDefaultAsync(x => (x.CODE_MO == doc.CODE_MO || x.CODE_MO=="75") && x.PUBLICKEY == signature.PublicKey && signature.DateSign >= x.DATE_B && signature.DateSign <= (x.DATE_E??DateTime.Now));
-                    if(signListItem==null)
-                        throw new Exception("Не найден владелец подписи");
-                    var docSign = doc.SIGNs.FirstOrDefault(x => x.SIGN_ROLE_ID == signListItem.SIGN_ROLE_ID);
-                    if (docSign == null)
-                        throw new Exception("Данная подпись не ожидается для данного документа");
-                    if(docSign.DATE_SIGN.HasValue)
-                        throw new Exception("Документ уже подписан данной подписью");
-                    docSign.DATE_SIGN = signature.DateSign;
-                    docSign.SIGN_LIST_ID = signListItem.ID;
-                    docSign.SIGN =Convert.FromBase64String(model.SIGN);
-                    await myOracleSet.SaveChangesAsync();
-                    return CustomJsonResult.Create(true);
-                }
-
-                return CustomJsonResult.Create(string.Join(",", signature.ErrorList), false);
+                await SignValidateAndSave(model.DOC_FOR_SIGN_ID, model.SIGN);
+                return CustomJsonResult.Create(true);
             }
             catch (Exception ex)
             {
@@ -567,40 +700,41 @@ namespace SiteCore.Controllers
         }
 
 
+        private string FindSignInString(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+                return value;
+            return value.Replace("-----BEGIN CMS-----\r\n", "").Replace("\r\n-----END CMS-----\r\n", "");
+        }
+        [HttpPost]
+        public async Task<CustomJsonResult> UploadFileSig(AddSigFileModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    await using var st = model.File.OpenReadStream();
+                    var data = st.ReadFull();
+                    var fileStringData = Encoding.UTF8.GetString(data);
+                    var sign = FindSignInString(fileStringData);
+                    await SignValidateAndSave(model.DOC_FOR_SIGN_ID, sign);
+                    return CustomJsonResult.Create(true);
+                }
+                return CustomJsonResult.Create(string.Join(Environment.NewLine, ModelState.GetErrors()), false);
+           
+            }
+            catch (Exception ex)
+            {
+                return CustomJsonResult.Create(ex.Message, false);
+            }
+        }
+
+
+     
+
+
         #region Private
-        private string _CODE_MO;
-        private string CODE_MO
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_CODE_MO))
-                    _CODE_MO = User.CODE_MO();
-                return _CODE_MO;
-            }
-        }
-
-        private string _CODE_SMO;
-        private string CODE_SMO
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_CODE_SMO))
-                    _CODE_SMO = User.CODE_SMO();
-                return _CODE_SMO;
-            }
-        }
-
-        private string _USER_ID;
-        private string USER_ID
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_USER_ID))
-                    _USER_ID = User.ID();
-                return _USER_ID;
-            }
-        }
-
+      
         private bool? _isSignAdmin;
         private bool isSignAdmin
         {

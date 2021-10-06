@@ -20,8 +20,8 @@ namespace SiteCore.Class
     {
         public ZipArchiverItem(string filePath, string error)
         {
-            this.FilePath = FilePath;
-            this.Error = Error;
+            this.FilePath = filePath;
+            this.Error = error;
         }
         public string FilePath { get; set; }
         public string Error { get; set; }
@@ -72,10 +72,14 @@ namespace SiteCore.Class
                     continue;
                 }
                 var newpath = FilesHelper.MoveFileTo(f1, Path.Combine(DirFile, Path.GetFileName(f1)));
-                if (!string.Equals(newpath, Path.Combine(filepath, Path.GetFileName(f1)), StringComparison.CurrentCultureIgnoreCase))
+                var newName  = Path.GetFileName(newpath);
+                var oldName = Path.GetFileName(f1);
+                zai.FilePath = newpath;
+                if (!string.Equals(newName, oldName, StringComparison.CurrentCultureIgnoreCase))
                 {
-                    zai.Error = $"Файл {Path.GetFileName(f1)} переименован в {Path.GetFileName(newpath)}";
+                    zai.Error = $"Файл {oldName} переименован в {Path.GetFileName(newName)}";
                 }
+               
             }
             Directory.Delete(tmp, true);
             return ErrList;
@@ -84,7 +88,7 @@ namespace SiteCore.Class
         public byte[] Zip(params ZipArchiverEntry[] files)
         {
             using var st = new MemoryStream();
-            var zip = new ZipArchive(st, ZipArchiveMode.Create);
+            var zip = new ZipArchive(st, ZipArchiveMode.Create,true, Encoding.GetEncoding(866));
             foreach (var file in files)
             {
                 var entry = zip.CreateEntry(file.FileName);
