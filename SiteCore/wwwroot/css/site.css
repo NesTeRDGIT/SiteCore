@@ -892,3 +892,22 @@ input[type=checkbox] {
     color: #fff !important;
     background: #449d48 !important;
 }
+
+.p-datatable-resizable .p-datatable-tbody > tr > td, .p-datatable-resizable .p-datatable-tfoot > tr > td, .p-datatable-resizable .p-datatable-thead > tr > th {
+    white-space: normal !important;
+}
+
+.p-datatable .p-sortable-column.p-highlight .p-sortable-column-icon {
+    color: white !important;
+}
+
+.p-datatable .p-sortable-column.p-highlight .p-sortable-column-icon:hover {
+    color: white !important;
+}
+
+
+.p-listbox .p-listbox-list .p-listbox-item.p-highlight {
+    color: #495057;
+    background: #449d48 !important;
+    font-weight: bold !important;
+}

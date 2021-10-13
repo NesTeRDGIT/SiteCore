@@ -99083,8 +99083,8 @@ function ShowCertDialog(props) {
     "aria-labelledby": "form-dialog-title",
     fullWidth: true,
     maxWidth: "lg"
-  }, /*#__PURE__*/react.createElement(DialogContent/* default */.Z, null, /*#__PURE__*/react.createElement(DialogContentText/* default */.Z, null, "\u041F\u0440\u043E\u0441\u043C\u043E\u0442\u0440 \u0434\u0430\u043D\u043D\u044B\u0445 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u0430"), /*#__PURE__*/react.createElement("div", null, certInfo != null ? /*#__PURE__*/react.createElement(CertList, {
-    items: certInfo.Data
+  }, /*#__PURE__*/react.createElement(DialogContent/* default */.Z, null, /*#__PURE__*/react.createElement(DialogContentText/* default */.Z, null, "\u041F\u0440\u043E\u0441\u043C\u043E\u0442\u0440 \u0434\u0430\u043D\u043D\u044B\u0445 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u0430"), /*#__PURE__*/react.createElement("div", null), /*#__PURE__*/react.createElement("div", null, certInfo != null ? /*#__PURE__*/react.createElement(CertList, {
+    certInfo: certInfo
   }) : /*#__PURE__*/react.createElement("div", null)), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Button/* default */.Z, {
     className: classes.button,
     variant: "contained",

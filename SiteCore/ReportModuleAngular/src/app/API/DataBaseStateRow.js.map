@@ -1,0 +1,1 @@
+{"version":3,"file":"DataBaseStateRow.js","sourceRoot":"","sources":["DataBaseStateRow.ts"],"names":[],"mappings":"AAAA,MAAM,OAAO,gBAAgB;IAGzB,YAAY,GAAQ;QAChB,IAAI,GAAG,IAAI,IAAI,EAAE;YACb,IAAI,CAAC,GAAG,GAAG,GAAG,CAAC,GAAG,CAAC;YACnB,IAAI,CAAC,KAAK,GAAG,GAAG,CAAC,KAAK,CAAC;SAC1B;IACL,CAAC;CAGJ"}

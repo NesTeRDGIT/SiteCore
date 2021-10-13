@@ -199,7 +199,7 @@ namespace SiteCore
             services.AddTransient<IZPZExcelCreator>(provider =>
             {
                 var pathTemplate = Path.Combine(provider.GetService<IWebHostEnvironment>().WebRootPath, "Template", "ZPZ");
-                return new ZPZExcelCreator(Path.Combine(pathTemplate, "Template1.xlsx"));
+                return new ZPZExcelCreator(Path.Combine(pathTemplate, "Template1.xlsx"), Path.Combine(pathTemplate, "ResultControlTemplate.xlsx"));
             });
             return services;
         }

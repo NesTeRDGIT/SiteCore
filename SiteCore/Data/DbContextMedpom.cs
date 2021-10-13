@@ -6,7 +6,9 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.TagHelpers.Cache;
 using Microsoft.EntityFrameworkCore;
+using Oracle.EntityFrameworkCore.Infrastructure.Internal;
 using Oracle.ManagedDataAccess.Client;
 using SiteCore.Class;
 
@@ -14,15 +16,16 @@ namespace SiteCore.Data
 {
     public class MyOracleSet : DbContext
     {
+        private string ConnectionString = "";
         public MyOracleSet(DbContextOptions<MyOracleSet> options) : base(options)
         {
-
+            ConnectionString = options?.GetExtension<OracleOptionsExtension>().ConnectionString;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("SITE");
-            // modelBuilder.Entity<FILES>().HasOne(x=>x.FILE_L).WithOne(x=>x.ID_FILEL).HasForeignKey(x=>x.ID_FILEL);
+     
             modelBuilder.Entity<FILES>().HasOne(x => x.PARENT).WithOne(x => x.FILE_L).HasForeignKey<FILES>(x => x.ID_FILEL);
 
             modelBuilder.Entity<FILES>().HasOne(x => x.FILEPACK).WithMany(x => x.FILES).HasForeignKey(x => x.ID_PACK);
@@ -52,7 +55,9 @@ namespace SiteCore.Data
         public virtual DbSet<FILEPACK> FILEPACK { get; set; }
         public virtual DbSet<FILES> FILES { get; set; }
         public virtual DbSet<MESSAGE> MESSAGE { get; set; }
-        public virtual DbSet<CURRENT_VMP_OOMS> CURRENT_VMP_OOMS { get; set; }
+     
+
+        
         public virtual DbSet<SNILS_SIGN> SNILS_SIGN { get; set; }
         public virtual DbSet<NEWS> NEWS { get; set; }
         public virtual DbSet<ErrorSPRSection> ErrorSPRSection { get; set; }
@@ -76,21 +81,31 @@ namespace SiteCore.Data
             return Abort_Row.Get(tbl.Select());
         }
 
+        public Task<List<Abort_Row>> GetReportAbortAsync(int YEAR)
+        {
+            return Task.Run(() => GetReportAbort(YEAR));
+
+        }
 
         public List<ECO_MP_Row> GetEKO_MP(int YEAR, int MONTH)
         {
-            var oda = new OracleDataAdapter($"select* from table(OOMS_REPORT.GET_ECO_MP(:YEAR,:MONTH))", Database.GetDbConnection().ConnectionString);
+            using var con = new OracleConnection(ConnectionString);
+            using var oda = new OracleDataAdapter($"select* from table(OOMS_REPORT.GET_ECO_MP(:YEAR,:MONTH))", con);
             oda.SelectCommand.Parameters.Add("YEAR", YEAR);
             oda.SelectCommand.Parameters.Add("MONTH", MONTH);
             var tbl = new DataTable();
             oda.Fill(tbl);
             return ECO_MP_Row.Get(tbl.Select());
         }
-
+        public Task<List<ECO_MP_Row>> GetEKO_MPAsync(int YEAR, int MONTH)
+        {
+            return Task.Run(() => GetEKO_MP(YEAR, MONTH));
+        }
 
         public List<ECO_MTR_Row> GetEKO_MTR(int YEAR, int MONTH)
         {
-            var oda = new OracleDataAdapter($"select* from table(OOMS_REPORT.GET_ECO_MTR(:YEAR,:MONTH))", Database.GetDbConnection().ConnectionString);
+            using var con = new OracleConnection(ConnectionString);
+            var oda = new OracleDataAdapter($"select* from table(OOMS_REPORT.GET_ECO_MTR(:YEAR,:MONTH))", con);
             oda.SelectCommand.Parameters.Add("YEAR", YEAR);
             oda.SelectCommand.Parameters.Add("MONTH", MONTH);
             var tbl = new DataTable();
@@ -98,15 +113,26 @@ namespace SiteCore.Data
             return ECO_MTR_Row.Get(tbl.Select());
         }
 
+        public Task<List<ECO_MTR_Row>> GetEKO_MTRAsync(int YEAR, int MONTH)
+        {
+            return Task.Run(() => GetEKO_MTR(YEAR, MONTH));
+        }
+
 
         public List<KOHL_Row> GetKOHL(DateTime dt1, DateTime dt2)
         {
-            var oda = new OracleDataAdapter($"select* from table(OOMS_REPORT.GET_KOHL(:dt1,:dt2))", Database.GetDbConnection().ConnectionString);
+            using var con = new OracleConnection(ConnectionString);
+            var oda = new OracleDataAdapter($"select* from table(OOMS_REPORT.GET_KOHL(:dt1,:dt2))", con);
             oda.SelectCommand.Parameters.Add("dt1", dt1);
             oda.SelectCommand.Parameters.Add("dt2", dt2);
             var tbl = new DataTable();
             oda.Fill(tbl);
             return KOHL_Row.Get(tbl.Select());
+        }
+
+        public Task<List<KOHL_Row>> GetKOHLAsync(DateTime dt1, DateTime dt2)
+        {
+            return Task.Run(()=>GetKOHL(dt1, dt2));
         }
 
         public List<OKS_ONMK_Row> GetOKS_ONMK(int YEAR)
@@ -118,14 +144,25 @@ namespace SiteCore.Data
             return OKS_ONMK_Row.Get(tbl.Select());
         }
 
+        public Task<List<OKS_ONMK_Row>> GetOKS_ONMKAsync(int YEAR)
+        {
+            return Task.Run(() => GetOKS_ONMK(YEAR));
+        }
+
         public List<ZPZ_EFFECTIVENESS> Get_ZPZ_EFFECTIVENESS(DateTime dt1, DateTime dt2)
         {
-            var oda = new OracleDataAdapter("select * from table(zpz_otchet.Get_RESULT(:dt1,:dt2))", Database.GetDbConnection().ConnectionString);
+            using var con = new OracleConnection(ConnectionString);
+            using var oda = new OracleDataAdapter("select * from table(zpz_otchet.Get_RESULT(:dt1,:dt2))", con);
             oda.SelectCommand.Parameters.Add("dt1", dt1);
             oda.SelectCommand.Parameters.Add("dt2", dt2);
             var tbl = new DataTable();
             oda.Fill(tbl);
             return ZPZ_EFFECTIVENESS.Get(tbl.Select());
+        }
+
+        public Task<List<ZPZ_EFFECTIVENESS>> Get_ZPZ_EFFECTIVENESSAsync(DateTime dt1, DateTime dt2)
+        {
+            return Task.Run(()=>Get_ZPZ_EFFECTIVENESS(dt1, dt2));
         }
 
 
@@ -205,6 +242,117 @@ namespace SiteCore.Data
             cmd.Connection.Close();
         }
 
+    
+        public async Task<IEnumerable<CURRENT_VMP_OOMS2>> GetVMPReportAsync()
+        {
+            await using var con = new OracleConnection(Database.GetDbConnection().ConnectionString);
+            await using var cmd = new OracleCommand("select * from table(OOMS_REPORT.GET_VMP)", con);
+            await con.OpenAsync();
+            var reader = await cmd.ExecuteReaderAsync();
+            return CURRENT_VMP_OOMS2.GetRows(reader);
+        }
+
+
+
+        public List<ResultControlVZR> GetResultControlVZR(DateTime dt1, DateTime dt2)
+        {
+            using var con = new OracleConnection(ConnectionString);
+            using var cmd = new OracleCommand("select * from table(zpz_otchet.GETResultControlVZR(:dt1,:dt2))", con);
+            cmd.Parameters.Add("dt1", dt1);
+            cmd.Parameters.Add("dt2", dt2);
+            con.Open();
+            var reader = cmd.ExecuteReader();
+            return ResultControlVZR.GetList(reader);
+        }
+
+        public Task<List<ResultControlVZR>> GetResultControlVZRAsync(DateTime dt1, DateTime dt2)
+        {
+            return Task.Run(() => GetResultControlVZR(dt1, dt2));
+        }
+
+        public List<ResultControlDET> GetResultControlDET(DateTime dt1, DateTime dt2)
+        {
+            using var con = new OracleConnection(ConnectionString);
+            using var cmd = new OracleCommand("select * from table(zpz_otchet.GETResultControlDET(:dt1,:dt2))", con);
+            cmd.Parameters.Add("dt1", dt1);
+            cmd.Parameters.Add("dt2", dt2);
+            con.Open();
+            var reader = cmd.ExecuteReader();
+            return ResultControlDET.GetList(reader);
+        }
+
+        public Task<List<ResultControlDET>> GetResultControlDETAsync(DateTime dt1, DateTime dt2)
+        {
+            return Task.Run(() => GetResultControlDET(dt1, dt2));
+        }
+
+
+        public List<SMPRow> GetSMP(DateTime dt1, DateTime dt2)
+        {
+            using var con = new OracleConnection(ConnectionString);
+            using var cmd = new OracleCommand("select * from table(OOMS_REPORT.GetSMP(:dt1,:dt2))", con);
+            cmd.Parameters.Add("dt1", dt1);
+            cmd.Parameters.Add("dt2", dt2);
+            con.Open();
+            var reader = cmd.ExecuteReader();
+            return SMPRow.GetList(reader);
+        }
+
+        public Task<List<SMPRow>> GetSMPAsync(DateTime dt1, DateTime dt2)
+        {
+            return Task.Run(() => GetSMP(dt1, dt2));
+        }
+
+
+        public List<DataBaseStateRow> GetDataBaseState()
+        {
+            using var con = new OracleConnection(ConnectionString);
+            using var cmd = new OracleCommand("select * from table(REPORT.GetDBState)", con);
+           
+            con.Open();
+            var reader = cmd.ExecuteReader();
+            return DataBaseStateRow.GetList(reader);
+        }
+
+        public Task<List<DataBaseStateRow>> GetDataBaseStateAsync()
+        {
+            return Task.Run(() => GetDataBaseState());
+        }
+
+
+        public List<PENSRow> GetPENS(int YEAR)
+        {
+            using var con = new OracleConnection(ConnectionString);
+            using var cmd = new OracleCommand("select * from table(OOMS_REPORT.GetPENS(:YEAR))", con);
+            cmd.Parameters.Add("YEAR", YEAR);
+            con.Open();
+            var reader = cmd.ExecuteReader();
+            return PENSRow.GetList(reader);
+        }
+
+        public Task<List<PENSRow>> GetPENSAsync(int YEAR)
+        {
+            return Task.Run(() => GetPENS(YEAR));
+        }
+        public List<VMP_OOMS> GetVMP_PERIOD(DateTime dt1,DateTime dt2)
+        {
+            using var con = new OracleConnection(ConnectionString);
+            using var cmd = new OracleCommand("select * from table(OOMS_REPORT.GetVMP_PERIOD(:dt1,:dt2))", con);
+            cmd.Parameters.Add("dt1", dt1);
+            cmd.Parameters.Add("dt1", dt1);
+            con.Open();
+            var reader = cmd.ExecuteReader();
+            return VMP_OOMS.GetList(reader);
+        }
+
+        public Task<List<VMP_OOMS>> GetVMP_PERIODAsync(DateTime dt1, DateTime dt2)
+        {
+            return Task.Run(() => GetVMP_PERIOD(dt1,dt2));
+        }
+
+
+        
+
     }
 
     [Table("MESSAGE")]
@@ -216,11 +364,51 @@ namespace SiteCore.Data
         public string TEXT { get; set; }
         public LEV_MESSAGE? LEV { get; set; }
     }
-    [Table("CURRENT_VMP_OOMS")]
-    public class CURRENT_VMP_OOMS
+
+
+    public class CURRENT_VMP_OOMS2
     {
-        [Key]
-        public int ID { get; set; }
+        public static List<CURRENT_VMP_OOMS2> GetRows(IDataReader reader)
+        {
+            var result = new List<CURRENT_VMP_OOMS2>();
+            while (reader.Read())
+            {
+                result.Add(GetRow(reader));
+            }
+            return result;
+        }
+        public static CURRENT_VMP_OOMS2 GetRow(IDataReader reader)
+        {
+            try
+            {
+                var item = new CURRENT_VMP_OOMS2();
+                item.CODE_MO = Convert.ToString(reader[nameof(CODE_MO)]);
+                item.SMO = Convert.ToString(reader[nameof(SMO)]);
+                item.FIO = Convert.ToString(reader[nameof(FIO)]);
+                item.VID_HMP = Convert.ToString(reader[nameof(VID_HMP)]);
+                item.METOD_HMP = Convert.ToString(reader[nameof(METOD_HMP)]);
+                item.GRP = Convert.ToString(reader[nameof(GRP)]);
+                item.DS1 = Convert.ToString(reader[nameof(DS1)]);
+                if(reader[nameof(DATE_1)]!=DBNull.Value)
+                    item.DATE_1 = Convert.ToDateTime(reader[nameof(DATE_1)]);
+                if (reader[nameof(DATE_2)] != DBNull.Value)
+                    item.DATE_2 = Convert.ToDateTime(reader[nameof(DATE_2)]);
+                if (reader[nameof(TAL_P)] != DBNull.Value)
+                    item.TAL_P = Convert.ToDateTime(reader[nameof(TAL_P)]);
+                if (reader[nameof(TAL_D)] != DBNull.Value)
+                    item.TAL_D = Convert.ToDateTime(reader[nameof(TAL_D)]);
+                item.OS_SLUCH = Convert.ToString(reader[nameof(OS_SLUCH)]);
+                if (reader[nameof(SUMM)] != DBNull.Value)
+                    item.SUMM = Convert.ToDecimal(reader[nameof(SUMM)]);
+                return item;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ошибка получения CURRENT_VMP_OOMS2: {ex.Message}", ex);
+            }
+
+        }
+  
         public string CODE_MO { get; set; }
         public string SMO { get; set; }
         public string FIO { get; set; }
@@ -233,9 +421,71 @@ namespace SiteCore.Data
         public DateTime? TAL_P { get; set; }
         public DateTime? TAL_D { get; set; }
         public string OS_SLUCH { get; set; }
-        [Column(TypeName = "decimal(18, 2)")]
         public decimal? SUMM { get; set; }
     }
+    public class VMP_OOMS
+    {
+        public static List<VMP_OOMS> GetList(IDataReader reader)
+        {
+            var result = new List<VMP_OOMS>();
+            while (reader.Read())
+            {
+                result.Add(GetRow(reader));
+            }
+            return result;
+        }
+        public static VMP_OOMS GetRow(IDataReader reader)
+        {
+            try
+            {
+                var item = new VMP_OOMS();
+                item.SLUCH_ID = Convert.ToInt64(reader[nameof(SLUCH_ID)]);
+                item.SMO = Convert.ToString(reader[nameof(SMO)]);
+                item.CODE_MO = Convert.ToString(reader[nameof(CODE_MO)]);
+                item.NAME_MO = Convert.ToString(reader[nameof(NAME_MO)]);
+                item.YEAR = Convert.ToInt32(reader[nameof(YEAR)]);
+                item.MONTH = Convert.ToInt32(reader[nameof(MONTH)]);
+                item.FIO = Convert.ToString(reader[nameof(FIO)]); 
+                item.W = Convert.ToInt32(reader[nameof(W)]);
+                item.VPOLIS = Convert.ToInt32(reader[nameof(VPOLIS)]);
+                item.SPOLIS = Convert.ToString(reader[nameof(SPOLIS)]);
+                item.NPOLIS = Convert.ToString(reader[nameof(NPOLIS)]);
+                item.AGE = Convert.ToInt32(reader[nameof(AGE)]);
+                item.VID_HMP = Convert.ToString(reader[nameof(VID_HMP)]);
+                item.METOD_HMP = Convert.ToString(reader[nameof(METOD_HMP)]);
+                item.GRP_HMP = Convert.ToString(reader[nameof(GRP_HMP)]);
+                item.DAYS = Convert.ToInt32(reader[nameof(DAYS)]);
+                item.MKB = Convert.ToString(reader[nameof(MKB)]);
+                item.SUMP = Convert.ToDecimal(reader[nameof(SUMP)]);
+                return item;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ошибка получения VMP_OOMS: {ex.Message}", ex);
+            }
+
+        }
+        public long SLUCH_ID { get; set; }
+        public string SMO { get; set; }
+        public string CODE_MO { get; set; }
+        public string NAME_MO { get; set; }
+        public int YEAR { get; set; }
+        public int MONTH { get; set; }
+        public string FIO { get; set; }
+        public int W { get; set; }
+        public int VPOLIS { get; set; }
+        public string SPOLIS { get; set; }
+        public string NPOLIS { get; set; }
+        public int AGE { get; set; }
+        public string VID_HMP { get; set; }
+        public string METOD_HMP { get; set; }
+        public string GRP_HMP { get; set; }
+        public int DAYS { get; set; }
+        public string MKB { get; set; }
+        public decimal SUMP { get; set; }
+    }
+
+
     [Serializable]
     public class Abort_Row
     {
@@ -546,6 +796,129 @@ namespace SiteCore.Data
     }
 
 
+   
+
+    public class SMPRow
+    {
+        public static List<SMPRow> GetList(IDataReader reader)
+        {
+            var result = new List<SMPRow>();
+            while (reader.Read())
+            {
+                result.Add(Get(reader));
+            }
+            return result;
+        }
+        public static SMPRow Get(IDataReader reader)
+        {
+            try
+            {
+                var item = new SMPRow();
+                item.POK = Convert.ToString(reader[nameof(POK)]);
+                item.NN = Convert.ToString(reader[nameof(NN)]);
+                item.KOL = Convert.ToInt32(reader[nameof(KOL)]);
+                item.SUM = Convert.ToDecimal(reader[nameof(SUM)]);
+                item.KOL_DET = Convert.ToInt32(reader[nameof(KOL_DET)]);
+                item.SUM_DET = Convert.ToDecimal(reader[nameof(SUM_DET)]);
+                return item;
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Ошибка получения SMPRow: {e.Message}", e);
+            }
+        }
+
+
+        public string POK { get; set; }
+        public string NN { get; set; }
+        public int KOL { get; set; }
+        public decimal SUM { get; set; }
+        public int KOL_DET { get; set; }
+        public decimal SUM_DET { get; set; }
+
+    }
+
+    public class DataBaseStateRow
+    {
+        public static List<DataBaseStateRow> GetList(IDataReader reader)
+        {
+            var result = new List<DataBaseStateRow>();
+            while (reader.Read())
+            {
+                result.Add(Get(reader));
+            }
+            return result;
+        }
+        public static DataBaseStateRow Get(IDataReader reader)
+        {
+            try
+            {
+                var item = new DataBaseStateRow();
+                item.POK = Convert.ToString(reader[nameof(POK)]);
+                item.VALUE = Convert.ToString(reader[nameof(VALUE)]);
+                return item;
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Ошибка получения DataBaseStateRow: {e.Message}", e);
+            }
+        }
+
+
+        public string POK { get; set; }
+        public string VALUE { get; set; }
+    }
+
+    public class PENSRow
+    {
+        public static List<PENSRow> GetList(IDataReader reader)
+        {
+            var result = new List<PENSRow>();
+            while (reader.Read())
+            {
+                result.Add(Get(reader));
+            }
+            return result;
+        }
+        public static PENSRow Get(IDataReader reader)
+        {
+            try
+            {
+                var item = new PENSRow();
+                item.CODE_MO = Convert.ToString(reader[nameof(CODE_MO)]);
+                item.NAME = Convert.ToString(reader[nameof(NAME)]);
+                item.DISP_M_GR1 = Convert.ToInt32(reader[nameof(DISP_M_GR1)]);
+                item.DISP_G_GR1 = Convert.ToInt32(reader[nameof(DISP_G_GR1)]);
+                item.PROF_M_GR1 = Convert.ToInt32(reader[nameof(PROF_M_GR1)]);
+                item.PROF_G_GR1 = Convert.ToInt32(reader[nameof(PROF_G_GR1)]);
+
+                item.DISP_M_GR2 = Convert.ToInt32(reader[nameof(DISP_M_GR2)]);
+                item.DISP_G_GR2 = Convert.ToInt32(reader[nameof(DISP_G_GR2)]);
+                item.PROF_M_GR2 = Convert.ToInt32(reader[nameof(PROF_M_GR2)]);
+                item.PROF_G_GR2 = Convert.ToInt32(reader[nameof(PROF_G_GR2)]);
+                return item;
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Ошибка получения PENSRow: {e.Message}", e);
+            }
+        }
+
+
+        public string CODE_MO { get; set; }
+        public string NAME { get; set; }
+        public int DISP_M_GR1 { get; set; }
+        public int DISP_G_GR1 { get; set; }
+        public int PROF_M_GR1 { get; set; }
+        public int PROF_G_GR1 { get; set; }
+
+        public int DISP_M_GR2 { get; set; }
+        public int DISP_G_GR2 { get; set; }
+        public int PROF_M_GR2 { get; set; }
+        public int PROF_G_GR2 { get; set; }
+
+
+    }
 
     [Table("FILEPACK")]
     public class FILEPACK

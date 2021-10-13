@@ -1195,6 +1195,17 @@ namespace ExcelManager
                 cell.StyleIndex = styleid.Value;
             cell.CellValue = new CellValue() { Text = value.ToString().Replace(",", ".") };
         }
+      
+        public void PrintCell(MRow Row, string Cell, long value, uint? styleid)
+        {
+            var cell = InsertCellInWorksheet(Row.r, Cell + Row.r.RowIndex);
+            cell.DataType = CellValues.Number;
+            if (styleid.HasValue)
+                cell.StyleIndex = styleid.Value;
+            cell.CellValue = new CellValue() { Text = value.ToString().Replace(",", ".") };
+        }
+
+      
 
 
         /// <summary>
@@ -1276,6 +1287,10 @@ namespace ExcelManager
         {
             PrintCell(GetRow(Row), Cell, value, styleid);
         }
+        public void PrintCell(uint Row, uint Cell, long? value, uint? styleid)
+        {
+            PrintCell(GetRow(Row), Cell, value, styleid);
+        }
         /// <summary>
         /// Вставить значение
         /// </summary>
@@ -1337,6 +1352,15 @@ namespace ExcelManager
             else
                 PrintCell(Row, GetColumnAddr(Cell), "", styleid);
         }
+
+        public void PrintCell(MRow Row, uint Cell, long? value, uint? styleid)
+        {
+            if (value.HasValue)
+                PrintCell(Row, GetColumnAddr(Cell), value.Value, styleid);
+            else
+                PrintCell(Row, GetColumnAddr(Cell), "", styleid);
+        }
+
         /// <summary>
         /// Вставить значение
         /// </summary>

@@ -373,6 +373,7 @@ namespace SiteCore.Controllers
         {
             try
             {
+
                 var item = await getCsItem(CS_LIST_IN_ID);
                 foreach (var smo in item.CS_LIST_IN_RESULT.SelectMany(x => x.CS_LIST_IN_RESULT_SMO))
                 {

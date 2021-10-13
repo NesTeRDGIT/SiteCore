@@ -26,12 +26,16 @@ export default function ShowCertDialog(props) {
     return (
         <div>
             <Dialog open={isOpen} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} maxWidth={"lg"}>
+
                 <DialogContent>
                     <DialogContentText>
                         Просмотр данных сертификата
                     </DialogContentText>
                     <div>
-                        {certInfo != null ? <CertList items={certInfo.Data} /> : <div></div>}
+
+                    </div>
+                    <div>
+                        {certInfo != null ? <CertList certInfo={certInfo} /> : <div></div>}
                     </div>
                     <div>
                         <Button className={classes.button} variant="contained" color="primary" onClick={handleClose}>Закрыть</Button>

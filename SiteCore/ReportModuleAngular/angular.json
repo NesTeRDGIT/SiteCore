@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "projects": {
+    "ReportModuleAngular": {
+      "projectType": "application",
+      "root": "",
+      "sourceRoot": "src",
+      "i18n": {
+        "sourceLocale": "ru-RU"
+      },
+
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "../wwwroot/js/AngularApp/Report",
+            "main": "src/main.ts",
+            "index": "",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.json",
+            "aot": true,
+            "styles": [
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/saga-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css"
+            ],
+            "scripts": [
+              
+            ]
+          },
+          "configurations": {
+            "prod": {
+              "optimization": true,
+              "sourceMap": false,
+              "namedChunks": false,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "aot": true,
+              "deleteOutputPath": true
+            },
+            "dev": {
+              "optimization": false,
+              "sourceMap": true,
+              "namedChunks": false,
+              "vendorChunk": false,
+              "buildOptimizer": false
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "ReportModuleAngular:build"
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "ReportModuleAngular",
+  "cli": {
+    "analytics": false
+  }
+}

@@ -14,6 +14,42 @@ myApp.controller("Grid1", ["$scope", "$http", "uiGridConstants", "i18nService", 
             sort: null
         };
 
+        $scope.SPR = {
+            PROFIL: [],
+            MKB: []
+        };
+        var FillSPR = false;
+
+        function FILL_SPR() {
+            var q = Promise.resolve();
+            if (!FillSPR) {
+                q = $http.get(`GetSPR`);
+                q.then(function (response) {
+                    const data = response.data;
+                    const Result = data.Result;
+                    const Value = data.Value;
+                    if (Result === true) {
+                        Value.F014.forEach((item) => {
+                            item.DATEBEG = item.DATEBEG !== null ? new Date(item.DATEBEG) : null;
+                            item.DATEEND = item.DATEEND !== null ? new Date(item.DATEEND) : null;
+                        });
+                        $scope.SPR = Value;
+                        FillSPR = true;
+                    } else {
+                        alert(`Ошибка получения справочников:${Value}`);
+                    }
+                },
+                    function (response) {
+                        alert(`Ошибка получения справочников:${response.status}:${response.statusText}`);
+                    })
+                    .finally(function () {
+                    });;
+            }
+            return q;
+        }
+
+        FILL_SPR();
+
         $scope.IsTFOMS = function () {
             return  $scope.CurrentTMK.SMO === "75";
         }
@@ -254,11 +290,26 @@ myApp.controller("Grid1", ["$scope", "$http", "uiGridConstants", "i18nService", 
             }
         };
 
+        const prePost = (obj) => {
+            const copy = angular.copy(obj);
+
+            for (let prop in copy) {
+                if (Object.prototype.hasOwnProperty.call(copy, prop)) {
+                    if (copy[prop] instanceof Date) {
+                        copy[prop] = copy[prop].yyyymmdd();
+                    }
+                }
+            }
+            return copy;
+        };
+
+
         Date.prototype.yyyymmdd = function () {
             const mm = this.getMonth() + 1; // getMonth() is zero-based
             const dd = this.getDate();
             return [this.getFullYear(),(mm > 9 ? "" : "0") + mm,(dd > 9 ? "" : "0") + dd].join("-");
         };
+
         function serialize(obj, prefix) {
                
             var str = [],
@@ -483,9 +534,9 @@ myApp.controller("Grid1", ["$scope", "$http", "uiGridConstants", "i18nService", 
         }
 
         $scope.SaveExpertize = function () {
-            debugger;
+            
             var win = "custom-modal-2";
-            $http.post("EditExpertize", $scope.CurrentExpertize)
+            $http.post("EditExpertize", prePost($scope.CurrentExpertize))
                 .then(function (response) {
                     const data = response.data;
                     const Result = data.Result;
@@ -502,9 +553,12 @@ myApp.controller("Grid1", ["$scope", "$http", "uiGridConstants", "i18nService", 
                 .finally(function () {
                 });;
         }
+
+       
         $scope.SaveTMK = function () {
             var win = "custom-modal-1";
-            $http.post("EditTmkReestr", $scope.CurrentTMK)
+          
+            $http.post("EditTmkReestr", prePost($scope.CurrentTMK))
                 .then(function (response) {
                     const data = response.data;
                     const Result = data.Result;
@@ -544,6 +598,7 @@ myApp.controller("Grid1", ["$scope", "$http", "uiGridConstants", "i18nService", 
 
 
         $scope.EditExpertizeDialog = function (EXPERTIZE_ID) {
+
             var win = "custom-modal-2";
             ModalService.Caption(win, `Редактирование экспертизы №${EXPERTIZE_ID}`);
             ModalService.Content(win, "Загрузка...");
@@ -588,8 +643,7 @@ myApp.controller("Grid1", ["$scope", "$http", "uiGridConstants", "i18nService", 
         $scope.SMODataStatus = null;
         $scope.SaveSMOData = function() {
             const url = `SetOPLATAandVID_NHISTORY`;
-            debugger;
-            const json = JSON.stringify({
+          const json = JSON.stringify({
                 TMK_ID: $scope.CurrentTMK.TMK_ID,
                 VID_NHISTORY: $scope.CurrentTMK.VID_NHISTORY,
                 OPLATA: $scope.CurrentTMK.OPLATA,
@@ -637,6 +691,10 @@ myApp.controller("Grid1", ["$scope", "$http", "uiGridConstants", "i18nService", 
                 });;
         }
 
+       
+
+      
+
         function GetTMK(TMK_ID) {
             const url = `GetTmkReestr?TMK_ID=${TMK_ID}`;
             $scope.ErrTMK = {};
@@ -659,6 +717,7 @@ myApp.controller("Grid1", ["$scope", "$http", "uiGridConstants", "i18nService", 
                         item.DR = item.DR!==null ? new Date(item.DR):null;
                         item.DR_P = item.DR_P !== null ? new Date(item.DR_P) : null;
                         $scope.CurrentTMK = item;
+                        
                     } else {
                         alert(Value);
                     }
@@ -670,6 +729,8 @@ myApp.controller("Grid1", ["$scope", "$http", "uiGridConstants", "i18nService", 
                     $scope.IsLoadTMK = false;
                 });;
         }
+
+      
 
         function ClearTMK() {
             $scope.IsLoadTMK = true;
@@ -869,3 +930,12 @@ myApp.directive("select2", function ($timeout, $parse) {
     };
 });
 
+
+myApp.filter("F014Actual", function () {
+    return function (input, DT) {
+        if (Array.isArray(input)) {
+            return input.filter(val => val.DATEBEG <= DT && (val.DATEEND >= DT || val.DATEEND === null));
+        }
+        return null;
+    };
+});

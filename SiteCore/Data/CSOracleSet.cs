@@ -119,9 +119,9 @@ namespace SiteCore.Data
             if (string.IsNullOrEmpty(SMO_COD)) return "";
             return TS switch
             {
-                TypeSMO.OGRN => (await F002.FirstOrDefaultAsync(x => x.OGRN == SMO_COD && x.TF_OKATO == SMO_OK)).NAM_SMOK,
-                TypeSMO.RNumber => (await F002.FirstOrDefaultAsync(x => x.SMOCOD == SMO_COD)).NAM_SMOK,
-                TypeSMO.TFOMS => (await TFOMS_P.FirstOrDefaultAsync(x => x.TF_OKATO == SMO_COD)).NAME_TFK,
+                TypeSMO.OGRN => (await F002.FirstOrDefaultAsync(x => x.OGRN == SMO_COD && x.TF_OKATO == SMO_OK))?.NAM_SMOK,
+                TypeSMO.RNumber => (await F002.FirstOrDefaultAsync(x => x.SMOCOD == SMO_COD))?.NAM_SMOK,
+                TypeSMO.TFOMS => (await TFOMS_P.FirstOrDefaultAsync(x => x.TF_OKATO == SMO_COD))?.NAME_TFK,
                 _ => ""
             };
         }

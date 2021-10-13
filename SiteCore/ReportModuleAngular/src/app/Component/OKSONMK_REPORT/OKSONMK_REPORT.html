@@ -1,0 +1,99 @@
+﻿<h2>Острый коронарный синдром (ОКС) и Острые нарушения мозгового кровообращения(ОНМК)</h2>
+<h5>Выборка по отчетному году</h5>
+<label>Отчетный год: </label>
+<input type="number"  value="{{year}}" required [disabled]="isLoad" />
+<input type="button" value="Запрос" class="ActionButton" (click)="getReport()" style="margin-left: 10px;" [disabled]="isLoad"/>
+<hr />
+
+
+
+<div style="overflow: auto">
+    <p-table [value]="report" [scrollable]="true" scrollHeight="70vh" [resizableColumns]="true" [autoLayout]="true" styleClass="p-datatable-gridlines" columnResizeMode="expand" [loading]="isLoad">
+        <ng-template pTemplate="colgroup">
+            <colgroup>
+                <col style="width: 100px">
+                <col style="width: 100px">
+                <col style="width: 100px">
+                <col style="width: 300px">
+                <col style="width: 200px">
+                <col style="width: 200px">
+                <col style="width: 200px">
+                <col style="width: 200px">
+                <col style="width: 200px">
+                <col style="width: 200px">
+                <col style="width: 150px">
+                <col style="width: 150px">
+                <col style="width: 150px">
+                <col style="width: 150px">
+                <col style="width: 150px">
+                <col style="width: 100px">
+                <col style="width: 200px">
+                <col style="width: 100px">
+                <col style="width: 200px">
+                <col style="width: 200px">
+                <col style="width: 200px">
+                <col style="width: 100px">
+                <col style="width: 100px">
+            </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pResizableColumn>Случай</th>
+                <th pResizableColumn>СМО</th>
+                <th pResizableColumn>Код МО</th>
+                <th pResizableColumn>Наименование МО</th>
+                <th pResizableColumn>Уровень</th>
+                <th pResizableColumn>Профиль</th>
+                <th pResizableColumn>Форма</th>
+                <th pResizableColumn>Фамилия</th>
+                <th pResizableColumn>Имя</th>
+                <th pResizableColumn>Отчество</th>
+                <th pResizableColumn>Дата рождения</th>
+                <th pResizableColumn>Серия полиса</th>
+                <th pResizableColumn>№ полиса</th>
+                <th pResizableColumn>Дата начала</th>
+                <th pResizableColumn>Дата окончания</th>
+                <th pResizableColumn>МКБ</th>
+                <th pResizableColumn>Диагноз</th>
+                <th pResizableColumn>КСГ</th>
+                <th pResizableColumn>Наименование КСГ</th>
+                <th pResizableColumn>Результат</th>
+                <th pResizableColumn>Исход</th>
+                <th pResizableColumn>Сумма</th>
+                <th pResizableColumn>Принято</th>
+            </tr>
+
+
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+            <tr>
+                <td style="text-align: center">{{item.SLUCH_ID}}</td>
+                <td style="text-align: center">{{item.SMO}}</td>
+                <td style="text-align: center">{{item.CODE_MO}}</td>
+                <td style="text-align: center">{{item.NAM_MOK}}</td>
+                <td style="text-align: center">{{item.LEV}}</td>
+                <td style="text-align: center">{{item.PROFIL}}</td>
+                <td style="text-align: center">{{item.FORMA}}</td>
+                <td style="text-align: center">{{item.FAM}}</td>
+                <td style="text-align: center">{{item.IM}}</td>
+                <td style="text-align: center">{{item.OT}}</td>
+                <td style="text-align: center">{{item.DR|date:'dd-MM-yyyy'}}</td>
+                <td style="text-align: center">{{item.SPOLIS}}</td>
+                <td style="text-align: center">{{item.NPOLIS}}</td>
+                <td style="text-align: center">{{item.DATE_1|date:'dd-MM-yyyy'}}</td>
+                <td style="text-align: center">{{item.DATE_2|date:'dd-MM-yyyy'}}</td>
+                <td style="text-align: center">{{item.DS1}}</td>
+                <td style="text-align: center">{{item.DS1_NAME}}</td>
+                <td style="text-align: center">{{item.N_KSG}}</td>
+                <td style="text-align: center">{{item.NAME_KSG}}</td>
+                <td style="text-align: center">{{item.RSLT}}</td>
+                <td style="text-align: center">{{item.ISHOD}}</td>
+                <td style="text-align: right">{{item.SUMV| number:'.2':'ru-RU'}}</td>
+                <td style="text-align: right">{{item.SUMP| number:'.2':'ru-RU'}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<hr />
+<button class="ActionButton" (click)="getXls()" [disabled]="isLoad || report.length===0">Скачать Excel</button>

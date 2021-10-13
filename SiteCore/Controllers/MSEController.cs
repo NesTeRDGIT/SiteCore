@@ -54,6 +54,9 @@ namespace SiteCore.Controllers
         private string FindF014(IEnumerable<F014> F014, DateTime? DATEACT, int? S_OSN)
         {
             var dateB = DATEACT ?? DateTime.Now.Date;
+
+           
+           
             var v2 = F014.FirstOrDefault(x => x.KOD == S_OSN && dateB >= x.DATEBEG && dateB <= (x.DATEEND ?? DateTime.Now));
             return v2 != null ? v2.FullName : $"Нет значения из справочника F014, код = {S_OSN}";
         }

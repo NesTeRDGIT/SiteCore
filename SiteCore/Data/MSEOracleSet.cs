@@ -29,6 +29,7 @@ namespace SiteCore.Data
             modelBuilder.Entity<MSEExpertize>().HasMany(x => x.OSN).WithOne(x => x.Expertize).HasForeignKey(x => x.EXPERTIZE_ID);
 
             modelBuilder.Entity<MSE_TF01>().Property(x => x.SMO_IDENT).IsUnicode(false);
+            modelBuilder.Entity<F014>().HasKey(x => new { x.KOD, x.DATEBEG });
         }
        
         public virtual DbSet<MSE_TF01> MSE_TF01 { get; set; }

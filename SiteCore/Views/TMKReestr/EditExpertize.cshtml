@@ -102,12 +102,9 @@
                 </tr>
                 <tr ng-repeat="osn in CurrentExpertize.OSN">
                     <td>
-                        <select style="width: 100%;" ng-model="osn.S_OSN" class="select-select2" convert-to-number select-2>
-                            <option disabled value="">------</option>
-                            @foreach (var item in Model.F014)
-                            {
-                                <option value="@item.KOD">@item.FullName</option>
-                            }
+                        <select style="width: 100%;" class="select-select2" ng-model="osn.S_OSN"  select-2 convert-to-number>
+                            <option disabled selected>------</option>
+                            <option ng-repeat="item in SPR.F014|F014Actual:CurrentExpertize.DATEACT" value="{{item.KOD}}"> {{item.FullName}}</option>
                         </select>
                     </td>
                     <td><textarea type="text" style="width: 100%; box-sizing: border-box;" maxlength="1500" ng-model="osn.S_COM"></textarea></td>

@@ -94,6 +94,7 @@ export default  function SIGN_LIST() {
             if (data.Result === false) {
                 alert(data.Value);
             } else {
+             
                 setShowCertInfo(data.Value);
                 setIsOpenShowSignDialog(true);
             }

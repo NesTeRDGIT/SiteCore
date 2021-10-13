@@ -17,6 +17,8 @@ using ServiceLoaderMedpomData;
 using SiteCore.Controllers;
 using SiteCore.Data;
 using System.Data;
+using System.Runtime.CompilerServices;
+
 namespace SiteCore.Class
 {
     public static class ServiceLoaderMedpomDataExtensions
@@ -150,7 +152,7 @@ namespace SiteCore.Class
                 }
 
 
-                var viewContext = new  ViewContext(controller.ControllerContext, viewResult.View, controller.ViewData, controller.TempData, writer, new HtmlHelperOptions());
+                var viewContext = new ViewContext(controller.ControllerContext, viewResult.View, controller.ViewData, controller.TempData, writer, new HtmlHelperOptions());
                 await viewResult.View.RenderAsync(viewContext);
             }
             return writer.GetStringBuilder().ToString();
@@ -199,17 +201,17 @@ namespace SiteCore.Class
         {
             return value.HasValue ? ToOSN(value.Value) : "";
         }
-      /*  public static string ToStr(this ExpertTip ex)
-        {
-            switch (ex)
-            {
-                case ExpertTip.EKMP: return "ЭКМП";
-                case ExpertTip.MEE: return "МЭЭ";
-                case ExpertTip.MEK: return "МЭК";
-                default: return "";
-            }
+        /*  public static string ToStr(this ExpertTip ex)
+          {
+              switch (ex)
+              {
+                  case ExpertTip.EKMP: return "ЭКМП";
+                  case ExpertTip.MEE: return "МЭЭ";
+                  case ExpertTip.MEK: return "МЭК";
+                  default: return "";
+              }
 
-        }*/
+          }*/
 
         public static void RemoveRange<T>(this ICollection<T> list, int From, int To)
         {
@@ -235,7 +237,7 @@ namespace SiteCore.Class
         public static bool Between(this DateTime? value, DateTime dt1, DateTime dt2)
         {
             if (!value.HasValue) return false;
-            return value.Value.Between(dt1,dt2);
+            return value.Value.Between(dt1, dt2);
         }
 
         public static bool Between(this DateTime value, DateTime dt1, DateTime dt2)
@@ -257,7 +259,7 @@ namespace SiteCore.Class
         }
     }
 
-    public static  class SerializationExtensions
+    public static class SerializationExtensions
     {
         public static string ObjectToXml(this object obj)
         {
@@ -276,10 +278,18 @@ namespace SiteCore.Class
         {
             var ser = new XmlSerializer(typeof(T));
             using var xmlreader = XmlReader.Create(new StringReader(val));
-            return (T) ser.Deserialize(xmlreader);
+            return (T)ser.Deserialize(xmlreader);
         }
     }
 
+    public static class ExtILogger
+    {
+        
+        public static void LogErrExtention(this ILogger logger, Exception ex, [CallerMemberName]string method = "")
+        {
+            logger.AddLog($"Ошибка в {method}: {ex.FullError()}{Environment.NewLine}StackTrace:{ex.StackTrace}", LogType.Error);
+        }
+    }
 
    
 

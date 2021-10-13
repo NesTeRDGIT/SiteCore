@@ -1,0 +1,28 @@
+﻿<h2>
+    Текущее состояние базы данных оказанной медицинской помощи
+</h2>
+
+<input type="button" value="Запрос" class="ActionButton" (click)="getReport()" [disabled]="isLoad" style="margin-left: 10px;" />
+<hr />
+
+<div style="overflow: auto">
+    <p-table [value]="report" [scrollable]="true" scrollHeight="70vh" [resizableColumns]="true" [autoLayout]="true" styleClass="p-datatable-gridlines" columnResizeMode="expand" [loading]="isLoad">
+        <ng-template pTemplate="colgroup">
+            <colgroup>
+                <col style="width:300px">
+            </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th rowspan="2" pResizableColumn>Показатель</th>
+                <th rowspan="2" pResizableColumn>Значение</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+            <tr>
+                <td style="text-align:left">{{item.POK}}</td>
+                <td style="text-align:center">{{item.VALUE}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

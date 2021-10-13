@@ -1,0 +1,61 @@
+﻿<h2>ВМП за последний принятый месяц</h2>
+<button class="ActionButton" (click)="getReport()"  [disabled]="isLoad">Обновить</button>
+<hr />
+<div style="overflow: auto">
+    <p-table [value]="report" [scrollable]="true" scrollHeight="70vh" [resizableColumns]="true" [autoLayout]="true" styleClass="p-datatable-gridlines" columnResizeMode="expand" [loading]="isLoad">
+        <ng-template pTemplate="colgroup">
+            <colgroup>
+                <col style="width:150px">
+                <col style="width: 150px ">
+                <col style="width: 300px ">
+                <col style="width: 150px ">
+                <col style="width: 160px ">
+                <col style="width: 170px ">
+                <col style="width: 140px ">
+                <col style="width: 170px ">
+                <col style="width: 190px ">
+                <col style="width: 330px ">
+                <col style="width: 160px ">
+                <col style="width: 190px ">
+                <col style="width: 160px ">
+
+            </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="CODE_MO" pResizableColumn>Код МО <p-sortIcon field="CODE_MO"></p-sortIcon></th>
+                <th pSortableColumn="SMO" pResizableColumn>Код СМО <p-sortIcon field="SMO"></p-sortIcon></th>
+                <th pSortableColumn="FIO" pResizableColumn>ФИО <p-sortIcon field="FIO"></p-sortIcon></th>
+                <th pSortableColumn="VID_HMP" pResizableColumn>Вид ВМП <p-sortIcon field="VID_HMP"></p-sortIcon></th>
+                <th pSortableColumn="METOD_HMP" pResizableColumn>Метод ВМП <p-sortIcon field="METOD_HMP"></p-sortIcon></th>
+                <th pSortableColumn="GRP" pResizableColumn>Группа ВМП <p-sortIcon field="GRP"></p-sortIcon></th>
+                <th pSortableColumn="DS1" pResizableColumn>Диагноз <p-sortIcon field="DS1"></p-sortIcon></th>
+                <th pSortableColumn="DATE_1" pResizableColumn>Дата начала <p-sortIcon field="DATE_1"></p-sortIcon></th>
+                <th pSortableColumn="DATE_2" pResizableColumn>Дата окончание <p-sortIcon field="DATE_2"></p-sortIcon></th>
+                <th pSortableColumn="TAL_P" pResizableColumn>Дата планируемой госпитализации <p-sortIcon field="TAL_P"></p-sortIcon></th>
+                <th pSortableColumn="TAL_D" pResizableColumn>Дата талона <p-sortIcon field="TAL_D"></p-sortIcon></th>
+                <th pSortableColumn="OS_SLUCH" pResizableColumn>Особый случай <p-sortIcon field="OS_SLUCH"></p-sortIcon></th>
+                <th pSortableColumn="SUMM" pResizableColumn>Сумма <p-sortIcon field="SUMM"></p-sortIcon></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+            <tr>
+                <td>{{item.CODE_MO}}</td>
+                <td>{{item.SMO}}</td>
+                <td>{{item.FIO}}</td>
+                <td>{{item.VID_HMP}}</td>
+                <td>{{item.METOD_HMP}}</td>
+                <td>{{item.GRP}}</td>
+                <td>{{item.DS1}}</td>
+                <td>{{item.DATE_1| date: 'MM.dd.yyyy'}}</td>
+                <td>{{item.DATE_2| date: 'MM.dd.yyyy'}}</td>
+                <td>{{item.TAL_P| date: 'MM.dd.yyyy'}}</td>
+                <td>{{item.TAL_D| date: 'MM.dd.yyyy'}}</td>
+                <td>{{item.OS_SLUCH}}</td>
+                <td  style="text-align:right">{{item.SUMM| number:'.2':'ru-RU'}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<hr />
+<button class="ActionButton" (click)="getXls()"  [disabled]="isLoad || report.length===0" >Скачать Excel</button>

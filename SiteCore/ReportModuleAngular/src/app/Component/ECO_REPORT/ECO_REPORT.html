@@ -1,0 +1,188 @@
+﻿<h2>ЭКО за отчетный период</h2>
+<h5>Выборка по отчетному месяцу</h5>
+<label>Отчетный период </label>
+<p-calendar [(ngModel)]="period" view="month" dateFormat="MM yy" [yearNavigator]="true" yearRange="2000:2030" [readonlyInput]="true" [disabled]="isLoad"></p-calendar>
+<input type="button" value="Запрос" class="ActionButton" (click)="getReport()" [disabled]="isLoad" style="margin-left: 10px;"/>
+<hr />
+
+<p-tabView>
+    <p-tabPanel header="На территории Забайкальского края">
+        <div style="overflow: auto">
+            <p-table [value]="report.ecoMp" [scrollable]="true" scrollHeight="35vh" [resizableColumns]="true" [autoLayout]="true" styleClass="p-datatable-gridlines" columnResizeMode="expand" [loading]="isLoad">
+                <ng-template pTemplate="colgroup">
+                    <colgroup>
+                        <col style="width: 100px">
+                        <col style="width: 100px ">
+                        <col style="width: 100px ">
+                        <col style="width: 100px ">
+                        <col style="width: 100px ">
+                        <col style="width: 200px ">
+                        <col style="width: 200px ">
+                        <col style="width: 200px ">
+                        <col style="width: 150px ">
+                        <col style="width: 150px ">
+                        <col style="width: 150px ">
+                        <col style="width: 100px ">
+                        <col style="width: 200px ">
+                        <col style="width: 100px ">
+                        <col style="width: 100px ">
+                        <col style="width: 100px ">
+                        <col style="width: 300px ">
+
+                    </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pResizableColumn>Случай</th>
+                        <th pResizableColumn>СМО</th>
+                        <th pResizableColumn>Год</th>
+                        <th pResizableColumn>Месяц</th>
+                        <th pResizableColumn>Код МО</th>
+                        <th pResizableColumn>Фамилия</th>
+                        <th pResizableColumn>Имя</th>
+                        <th pResizableColumn>Отчество</th>
+                        <th pResizableColumn>Дата рождения</th>
+                        <th pResizableColumn>Дата начала</th>
+                        <th pResizableColumn>Дата окончания</th>
+                        <th pResizableColumn>КСГ</th>
+                        <th pResizableColumn>Наименование</th>
+                        <th pResizableColumn>Сумма</th>
+                        <th pResizableColumn>Принято</th>
+                        <th pResizableColumn>КСЛП</th>
+                        <th pResizableColumn>Наименование</th>
+                    </tr>
+
+
+                </ng-template>
+                <ng-template pTemplate="body" let-item>
+                    <tr>
+                        <td style="text-align:center">{{item.SLUCH_ID}}</td>
+                        <td style="text-align:center">{{item.SMO}}</td>
+                        <td style="text-align:center">{{item.YEAR}}</td>
+                        <td style="text-align:center">{{item.MONTH}}</td>
+                        <td style="text-align:center">{{item.CODE_MO}}</td>
+                        <td style="text-align:center">{{item.FAM}}</td>
+                        <td style="text-align:center">{{item.IM}}</td>
+                        <td style="text-align:center">{{item.OT}}</td>
+                        <td style="text-align:center">{{item.DR|date:'dd-MM-yyyy'}}</td>
+                        <td style="text-align:center">{{item.DATE_1|date:'dd-MM-yyyy'}}</td>
+                        <td style="text-align:center">{{item.DATE_2|date:'dd-MM-yyyy'}}</td>
+                        <td style="text-align:center">{{item.N_KSG}}</td>
+                        <td style="text-align:center">{{item.NAME_KSG}}</td>
+                        <td style="text-align:right">{{item.SUMV| number:'.2':'ru-RU'}}</td>
+                        <td style="text-align:right">{{item.SUMP| number:'.2':'ru-RU'}}</td>
+                        <td style="text-align:center">{{item.KSLP}}</td>
+                        <td style="text-align:center">{{item.KSLP_NAME}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <h3>Сводная таблица</h3>
+            <p-table [value]="report.svodEcoMo" [scrollable]="true" scrollHeight="35vh" [resizableColumns]="true" [autoLayout]="true" styleClass="p-datatable-gridlines" columnResizeMode="expand" [loading]="isLoad">
+                <ng-template pTemplate="colgroup">
+                    <colgroup>
+                        <col style="width: 100px">
+                        <col style="width: 100px ">
+                        <col style="width: 200px ">
+                        <col style="width: 100px ">
+                        <col style="width: 100px ">
+                        <col style="width: 100px ">
+
+                    </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pResizableColumn>СМО</th>
+                        <th pResizableColumn>КСЛП</th>
+                        <th pResizableColumn>Наименование</th>
+                        <th pResizableColumn>Кол-во</th>
+                        <th pResizableColumn>Сумма</th>
+                        <th pResizableColumn>Принято</th>
+                    </tr>
+
+
+                </ng-template>
+                <ng-template pTemplate="body" let-item>
+                    <tr>
+                        <td style="text-align:center">{{item.SMO}}</td>
+                        <td style="text-align:center">{{item.KSLP}}</td>
+                        <td style="text-align:center">{{item.KSLP_NAME}}</td>
+                        <td style="text-align:center">{{item.SLUCH_ID| number:'.0':'ru-RU'}}</td>
+                        <td style="text-align:right">{{item.SUMV| number:'.2':'ru-RU'}}</td>
+                        <td style="text-align:right">{{item.SUMP| number:'.2':'ru-RU'}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </p-tabPanel>
+    <p-tabPanel header="На другой территории">
+        <div style="overflow: auto">
+            <p-table [value]="report.ecoMtr" [scrollable]="true" scrollHeight="70vh" [resizableColumns]="true" [autoLayout]="true" styleClass="p-datatable-gridlines" columnResizeMode="expand" [loading]="isLoad">
+                <ng-template pTemplate="colgroup">
+                    <colgroup>
+                        <col style="width: 100px">
+                        <col style="width: 200px ">
+                        <col style="width: 200px ">
+                        <col style="width: 200px ">
+                        <col style="width: 150px ">
+                        <col style="width: 150px ">
+                        <col style="width: 150px ">
+                        <col style="width: 100px ">
+                        <col style="width: 100px ">
+                        <col style="width: 100px ">
+                        <col style="width: 200px ">
+                        <col style="width: 150px ">
+                        <col style="width: 100px ">
+                        <col style="width: 100px ">
+                        <col style="width: 300px ">
+
+                    </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pResizableColumn>Случай</th>
+                        <th pResizableColumn>Фамилия</th>
+                        <th pResizableColumn>Имя</th>
+                        <th pResizableColumn>Отчество</th>
+                        <th pResizableColumn>Дата рождения</th>
+                        <th pResizableColumn>Дата начала</th>
+                        <th pResizableColumn>Дата окончания</th>
+                        <th pResizableColumn>Сумма</th>
+                        <th pResizableColumn>Принято</th>
+                        <th pResizableColumn>МКБ</th>
+                        <th pResizableColumn>Диагноз</th>
+                        <th pResizableColumn>Дата платежа</th>
+                        <th pResizableColumn>№ платежа</th>
+                        <th pResizableColumn>Код МО</th>
+                        <th pResizableColumn>Наименование</th>
+                    </tr>
+
+
+                </ng-template>
+                <ng-template pTemplate="body" let-item>
+                    <tr>
+                        <td style="text-align:center">{{item.SLUCH_ID}}</td>
+                        <td style="text-align:center">{{item.FAM}}</td>
+                        <td style="text-align:center">{{item.IM}}</td>
+                        <td style="text-align:center">{{item.OT}}</td>
+                        <td style="text-align:center">{{item.DR|date:'dd-MM-yyyy'}}</td>
+                        <td style="text-align:center">{{item.DATE_1|date:'dd-MM-yyyy'}}</td>
+                        <td style="text-align:center">{{item.DATE_2|date:'dd-MM-yyyy'}}</td>
+                        <td style="text-align:right">{{item.SUMV| number:'.2':'ru-RU'}}</td>
+                        <td style="text-align:right">{{item.SUMP| number:'.2':'ru-RU'}}</td>
+                        <td style="text-align:center">{{item.MKB}}</td>
+                        <td style="text-align:center">{{item.DS_NAME}}</td>
+                        <td style="text-align:center">{{item.DPLAT|date:'dd-MM-yyyy'}}</td>
+                        <td style="text-align:center">{{item.NPLAT}}</td>
+                        <td style="text-align:center">{{item.LPU}}</td>
+                        <td style="text-align:center">{{item.LPU_NAME}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+           
+        </div>
+    </p-tabPanel>
+</p-tabView>
+
+
+<hr />
+<button class="ActionButton" (click)="getXls()" [disabled]="isLoad || report.length===0">Скачать Excel</button>

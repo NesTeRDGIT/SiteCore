@@ -603,7 +603,7 @@ namespace SiteCore.Controllers
                 model.NMIC_CELL =await dbo.NMIC_CELL.ToListAsync();
                 model.NMIC_FULL = await dbo.NMIC_FULL.ToListAsync();
                 model.EXPERTS = await dbo.EXPERTS.OrderBy(x => x.N_EXPERT).ToListAsync();
-                model.F014 = await dbo.F014.Where(x => !x.DATEEND.HasValue).OrderBy(x => x.OSN).ToListAsync();
+                model.F014 = await dbo.F014.OrderBy(x => x.OSN).ToListAsync();
                 return PartialView(model);
             }
             catch (Exception ex)
@@ -611,6 +611,20 @@ namespace SiteCore.Controllers
                 logger?.AddLog($"Ошибка в {nameof(EditExpertize)}:{ex.Message}:{ex.StackTrace}", LogType.Error);
                 ModelState.AddModelError("", "Внутренняя ошибка сервиса");
                 return PartialView(model);
+            }
+        }
+        [HttpGet]
+        public async Task<CustomJsonResult> GetSPR()
+        {
+            try
+            {
+                var F014 = await dbo.F014.OrderBy(x => x.OSN).ToListAsync();
+                return CustomJsonResult.Create(new { F014 });
+            }
+            catch (Exception ex)
+            {
+                logger?.AddLog($"Ошибка в {nameof(GetSPR)}: {ex.Message}", LogType.Error);
+                return await CreateInternalError(false);
             }
         }
 

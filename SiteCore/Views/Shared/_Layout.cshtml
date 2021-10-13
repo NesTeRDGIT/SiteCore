@@ -31,7 +31,7 @@
     <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
 
     @await RenderSectionAsync("Lib", required: false)
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link href="~/css/font-awesome.min.css" rel="stylesheet" />
     <link href="~/css/navMenu.css?1" rel="stylesheet" />
     <link href="~/css/circularGMain.css" rel="stylesheet" />
@@ -135,7 +135,7 @@
                             <li>
                                 <a class="submenu-link">Отчеты</a>
                                 <ul class="submenu">
-                                    @if (isOMS)
+                                  @*  @if (isOMS)
                                     {
                                         <li><a asp-action="CURRENT_VMP_VIEW" asp-controller="OOMS">Текущее ВМП</a></li>
                                         <li><a asp-action="AbortView" asp-controller="OOMS">Аборты</a></li>
@@ -146,10 +146,14 @@
                                     @if (isOZPZ)
                                     {
                                         <li><a asp-action="ZPZ_EFFECTIVENESS" asp-controller="OZPZ">Результативность</a></li>
-                                    }
+                                    }*@
                                     @if (isSTAT_STAC)
                                     {
                                         <li><a asp-action="STAC_PLAN" asp-controller="STAC_PLAN">Планирование</a></li>
+                                    }
+                                    @if (isAdmin || isOMS || isOZPZ)
+                                    {
+                                        <li><a asp-action="Reports" asp-controller="Reports">Отчеты</a></li>
                                     }
                                 </ul>
                             </li>

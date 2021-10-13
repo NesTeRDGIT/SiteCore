@@ -44,6 +44,7 @@ namespace SiteCore.Data
             modelBuilder.Entity<TMKReestRExpertize>().HasOne(x => x.TMKReestr).WithMany(x=>x.Expertizes).HasForeignKey(x => x.TMK_ID);
 
 
+            modelBuilder.Entity<F014>().HasKey(x=>new {x.KOD,x.DATEBEG});
 
 
 
@@ -464,7 +465,7 @@ namespace SiteCore.Data
         /// <summary>
         /// Код ошибки
         /// </summary>
-        [Key]
+      
        
         public int KOD { get; set; }
 
@@ -482,6 +483,7 @@ namespace SiteCore.Data
         /// Дата начала действия записи
         /// </summary>
         ///
+       
         public DateTime DATEBEG { get; set; }
 
         /// <summary>

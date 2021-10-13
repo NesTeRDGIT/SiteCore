@@ -1,0 +1,56 @@
+﻿<div style="display: flex; width: 100%;">
+    <div style="width: 20%">
+        <p-listbox [options]="reportList" optionLabel="Name"  [(ngModel)]="selectedReport" ></p-listbox>
+    </div>
+    <hr style="margin: 10px" />
+    
+    <div *ngIf="selectedReport!=null" [ngSwitch]="selectedReport.Type" style="width: 80%;">
+        <div *ngSwitchCase="ReportType.DB_State" style="width: 100%">
+            <DB-State></DB-State>
+        </div>
+
+        <div *ngSwitchCase="ReportType.HMP" style="width: 100%">
+            <hmp-report></hmp-report>
+        </div>
+        <div *ngSwitchCase="ReportType.HMP_PERIOD" style="width: 100%">
+            <hmp-period-report></hmp-period-report>
+        </div>
+        <div *ngSwitchCase="ReportType.ABORT" style="width: 100%">
+            <abort-report></abort-report>
+        </div>
+        <div *ngSwitchCase="ReportType.ECO" style="width: 100%">
+            <eco-report></eco-report>
+        </div>
+        <div *ngSwitchCase="ReportType.KOHL" style="width: 100%">
+            <kohl-report></kohl-report>
+        </div>
+        <div *ngSwitchCase="ReportType.OKS_ONMK" style="width: 100%">
+            <oksonmk-report></oksonmk-report>
+        </div>
+        <div *ngSwitchCase="ReportType.RESULT" style="width: 100%">
+            <result-pok-report></result-pok-report>
+        </div>
+        <div *ngSwitchCase="ReportType.RESULT_CONTROL" style="width: 100%">
+            <result-control-report></result-control-report>
+        </div>
+        <div *ngSwitchCase="ReportType.SMP" style="width: 100%">
+            <smp-report></smp-report>
+        </div>
+        <div *ngSwitchCase="ReportType.PENS" style="width: 100%">
+            <pens-report></pens-report>
+        </div>
+        <div  *ngSwitchDefault style="width: 100%">
+            <h1>Функционал не реализован</h1>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+
+
+
+

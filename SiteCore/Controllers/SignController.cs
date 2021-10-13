@@ -28,16 +28,8 @@ namespace SiteCore.Controllers
       
         private UserInfoHelper userInfoHelper;
         private UserInfo _userInfo;
-        private UserInfo userInfo {
-            get
-            {
-                if(_userInfo==null)
-                {
-                    _userInfo = userInfoHelper.GetInfo(User.Identity.Name);
-                }
-                return _userInfo;
-            }
-        }
+        private UserInfo userInfo => _userInfo ?? (_userInfo = userInfoHelper.GetInfo(User.Identity.Name));
+
         public SignController(MyOracleSet myOracleSet, IX509CertificateManager x509CertificateManager, WCFCryptoConnect wcfCryptoConnect, IZipArchiver ZipArchiver, IHubContext<NotificationHub> notificationHub, UserInfoHelper userInfoHelper)
         {
             this.myOracleSet = myOracleSet;

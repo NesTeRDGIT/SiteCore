@@ -284,10 +284,24 @@ myApp.controller("Grid1", ["$scope", "$http","$q", "uiGridConstants", "i18nServi
             }
         };
 
+        const prePost = (obj) => {
+            const copy = angular.copy(obj);
+
+            for (let prop in copy) {
+                if (Object.prototype.hasOwnProperty.call(copy, prop)) {
+                    if (copy[prop] instanceof Date) {
+                        copy[prop] = copy[prop].yyyymmdd();
+                    }
+                }
+            }
+            return copy;
+        };
+
+
         Date.prototype.yyyymmdd = function () {
             const mm = this.getMonth() + 1; // getMonth() is zero-based
             const dd = this.getDate();
-            return [this.getFullYear(),(mm > 9 ? "" : "0") + mm,(dd > 9 ? "" : "0") + dd].join("-");
+            return [this.getFullYear(), (mm > 9 ? "" : "0") + mm, (dd > 9 ? "" : "0") + dd].join("-");
         };
         function serialize(obj, prefix) {
                
@@ -580,7 +594,7 @@ myApp.controller("Grid1", ["$scope", "$http","$q", "uiGridConstants", "i18nServi
             const url = `SetSMO_DATA`;
            
 
-            $http.post(url, $scope.CurrentMSE.SMO_DATA)
+            $http.post(url, prePost($scope.CurrentMSE.SMO_DATA))
                 .then(function (response) {
                         const data = response.data;
                         const Result = data.Result;
@@ -718,7 +732,7 @@ myApp.controller("Grid1", ["$scope", "$http","$q", "uiGridConstants", "i18nServi
         $scope.SaveExpertize = function (form) {
             
             if (form.$valid) {
-                $http.post(`EditExpertize`, $scope.CurrentExpertize )
+                $http.post(`EditExpertize`, prePost($scope.CurrentExpertize) )
                     .then(function (response) {
                             
                             const data = response.data;

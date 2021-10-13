@@ -2,6 +2,26 @@
 var myApp = angular.module("myApp", ["ngTouch", "ui.grid", "ui.grid.pagination", "ui.grid.selection", "ui.grid.cellNav", "ui.grid.resizeColumns", "ui.bootstrap", "ui.bootstrap.contextMenu", "ui.grid.loader"]);
 myApp.controller("Grid1", ["$scope", "$http", "uiGridConstants", "i18nService", "$templateCache",
     function ($scope, $http, uiGridConstants, i18nService, $templateCache) {
+
+        const prePost = (obj) => {
+            const copy = angular.copy(obj);
+
+            for (let prop in copy) {
+                if (Object.prototype.hasOwnProperty.call(copy, prop)) {
+                    if (copy[prop] instanceof Date) {
+                        copy[prop] = copy[prop].yyyymmdd();
+                    }
+                }
+            }
+            return copy;
+        };
+
+
+        Date.prototype.yyyymmdd = function () {
+            const mm = this.getMonth() + 1; // getMonth() is zero-based
+            const dd = this.getDate();
+            return [this.getFullYear(), (mm > 9 ? "" : "0") + mm, (dd > 9 ? "" : "0") + dd].join("-");
+        };
         //Локализация
         const vm = this;
         vm.langs = i18nService.getAllLangs();
@@ -627,8 +647,7 @@ myApp.controller("Grid2", ["$scope", "$http", "uiGridConstants", "i18nService","
         }
         //получение данных
         $scope.getPage = function() {
-            debugger;
-            $scope.gridOptions.data = [];
+         $scope.gridOptions.data = [];
             ShowLoader();
             if ($scope.currentCSListItem) {
                 const CS_LIST_ID = $scope.currentCSListItem.CS_LIST_ID;
