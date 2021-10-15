@@ -28,6 +28,9 @@ import { DBStateComponent } from "./Component/DBState/DBState";
 import { PensReportComponent } from "./Component/PENS_REPORT/PENS_REPORT";
 import { HmpReportPeriodComponent } from "./Component/HMP_PERIOD_REPORT/HMP_PERIOD_REPORT";
 
+import { DispReportComponent } from "./Component/DISP_REPORT/DISP_REPORT";
+
+
 
 
 
@@ -35,7 +38,7 @@ registerLocaleData(localeRu);
 
 @NgModule({
     imports: [BrowserModule, FormsModule, BrowserAnimationsModule, TableModule, TabViewModule, HttpClientModule, SplitterModule, ListboxModule, DividerModule, CalendarModule],
-    declarations: [MainComponent, YesNoPipe, HmpReportComponent, AbortReportComponent, EcoReportComponent, KohlReportComponent, OksOnmkReportComponent, ResultPokReportComponent, ResultControlComponent, SmpReportComponent, DBStateComponent, PensReportComponent, HmpReportPeriodComponent],
+    declarations: [MainComponent, YesNoPipe, HmpReportComponent, AbortReportComponent, EcoReportComponent, KohlReportComponent, OksOnmkReportComponent, ResultPokReportComponent, ResultControlComponent, SmpReportComponent, DBStateComponent, PensReportComponent, HmpReportPeriodComponent, DispReportComponent],
     providers: [{ provide: IRepository, useClass: Repository },
                 { provide: LOCALE_ID, useValue: 'ru' }],
     bootstrap: [MainComponent]

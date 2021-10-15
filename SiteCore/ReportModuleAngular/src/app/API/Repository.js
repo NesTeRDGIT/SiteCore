@@ -16,6 +16,7 @@ import { ResultControlDET, ResultControlVZR, ResultControl } from "./ResultContr
 import { SMPRow } from "./SMPRow";
 import { DataBaseStateRow } from "./DataBaseStateRow";
 import { PensRow } from "./PensRow";
+import { DispRecord } from "./DispEntity";
 let IRepository = class IRepository {
 };
 IRepository = __decorate([
@@ -23,8 +24,33 @@ IRepository = __decorate([
 ], IRepository);
 export { IRepository };
 let Repository = class Repository {
+    constructor() {
+        this.defaultFetchParam = { credentials: "same-origin" };
+    }
+    async getDispReport(year, month) {
+        const response = await fetch(`GetDispReport?year=${year}&month=${month}`, this.defaultFetchParam);
+        if (response.ok) {
+            const data = await response.json();
+            if (data.Result) {
+                return new DispRecord(data.Value);
+            }
+            throw new Error(data.Value);
+        }
+        throw new Error(`${response.status}: ${response.statusText}`);
+    }
+    async getDispXlsAsync() {
+        const response = await fetch("GetDispXls", this.defaultFetchParam);
+        if (response.ok) {
+            const data = await response.json();
+            if (data.Result) {
+                return new FileASP(data.Value);
+            }
+            throw new Error(data.Value);
+        }
+        throw new Error(`${response.status}: ${response.statusText}`);
+    }
     async getPensReportAsync(year) {
-        const response = await fetch(`GetPensReport?year=${year}`);
+        const response = await fetch(`GetPensReport?year=${year}`, this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -36,7 +62,7 @@ let Repository = class Repository {
         throw new Error(`${response.status}: ${response.statusText}`);
     }
     async getPensXlsAsync() {
-        const response = await fetch("GetPensXls");
+        const response = await fetch("GetPensXls", this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -47,7 +73,7 @@ let Repository = class Repository {
         throw new Error(`${response.status}: ${response.statusText}`);
     }
     async getDBState() {
-        const response = await fetch(`getDBState`);
+        const response = await fetch(`getDBState`, this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -59,7 +85,7 @@ let Repository = class Repository {
         throw new Error(`${response.status}: ${response.statusText}`);
     }
     async getSmpReportAsync(dt1, dt2) {
-        const response = await fetch(`GetSmpReport?dt1=${this.convertToString(dt1)}&dt2=${this.convertToString(dt2)}`);
+        const response = await fetch(`GetSmpReport?dt1=${this.convertToString(dt1)}&dt2=${this.convertToString(dt2)}`, this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -71,7 +97,7 @@ let Repository = class Repository {
         throw new Error(`${response.status}: ${response.statusText}`);
     }
     async getSmpXlsAsync() {
-        const response = await fetch("GetSmpXls");
+        const response = await fetch("GetSmpXls", this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -82,7 +108,7 @@ let Repository = class Repository {
         throw new Error(`${response.status}: ${response.statusText}`);
     }
     async GetResultControlReport(dt1, dt2) {
-        const response = await fetch(`GetResultControlReport?dt1=${this.convertToString(dt1)}&dt2=${this.convertToString(dt2)}`);
+        const response = await fetch(`GetResultControlReport?dt1=${this.convertToString(dt1)}&dt2=${this.convertToString(dt2)}`, this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -97,7 +123,7 @@ let Repository = class Repository {
     }
     async GetResultControlXls() {
         debugger;
-        const response = await fetch("GetResultControlXls");
+        const response = await fetch("GetResultControlXls", this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -108,7 +134,7 @@ let Repository = class Repository {
         throw new Error(`${response.status}: ${response.statusText}`);
     }
     async getVmpPeriodReportAsync(dt1, dt2) {
-        const response = await fetch(`GetVMPPeriodReport?dt1=${this.convertToString(dt1)}&&dt2=${this.convertToString(dt2)}`);
+        const response = await fetch(`GetVMPPeriodReport?dt1=${this.convertToString(dt1)}&dt2=${this.convertToString(dt2)}`, this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -119,7 +145,7 @@ let Repository = class Repository {
         throw new Error(`${response.status}: ${response.statusText}`);
     }
     async getVmpPeriodReportXlsAsync() {
-        const response = await fetch("GetVMPPeriodXls");
+        const response = await fetch("GetVMPPeriodXls", this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -130,7 +156,7 @@ let Repository = class Repository {
         throw new Error(`${response.status}: ${response.statusText}`);
     }
     async getVmpReportAsync() {
-        const response = await fetch("GetVMPReport");
+        const response = await fetch("GetVMPReport", this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -141,7 +167,7 @@ let Repository = class Repository {
         throw new Error(`${response.status}: ${response.statusText}`);
     }
     async getVmpReportXlsAsync() {
-        const response = await fetch("GetVmpReportXls");
+        const response = await fetch("GetVmpReportXls", this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -152,7 +178,7 @@ let Repository = class Repository {
         throw new Error(`${response.status}: ${response.statusText}`);
     }
     async getGetAbortReportAsync(year) {
-        const response = await fetch(`GetAbortReport?YEAR=${year}`);
+        const response = await fetch(`GetAbortReport?YEAR=${year}`, this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -163,7 +189,7 @@ let Repository = class Repository {
         throw new Error(`${response.status}: ${response.statusText}`);
     }
     async getAbortXlsAsync() {
-        const response = await fetch("GetAbortXls");
+        const response = await fetch("GetAbortXls", this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -174,7 +200,7 @@ let Repository = class Repository {
         throw new Error(`${response.status}: ${response.statusText}`);
     }
     async getEcoReport(year, month) {
-        const response = await fetch(`GetEcoReport?year=${year}&&month=${month}`);
+        const response = await fetch(`GetEcoReport?year=${year}&month=${month}`, this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -185,7 +211,7 @@ let Repository = class Repository {
         throw new Error(`${response.status}: ${response.statusText}`);
     }
     async getEcoXlsAsync() {
-        const response = await fetch("GetEcoXls");
+        const response = await fetch("GetEcoXls", this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -196,7 +222,7 @@ let Repository = class Repository {
         throw new Error(`${response.status}: ${response.statusText}`);
     }
     async getKohlReport(dt1, dt2) {
-        const response = await fetch(`GetKohlReport?dt1=${this.convertToString(dt1)}&dt2=${this.convertToString(dt2)}`);
+        const response = await fetch(`GetKohlReport?dt1=${this.convertToString(dt1)}&dt2=${this.convertToString(dt2)}`, this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -207,7 +233,7 @@ let Repository = class Repository {
         throw new Error(`${response.status}: ${response.statusText}`);
     }
     async getKohlXlsAsync() {
-        const response = await fetch("GetKohlXls");
+        const response = await fetch("GetKohlXls", this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -221,7 +247,7 @@ let Repository = class Repository {
         return `${val.getFullYear()}-${(val.getMonth() + 1).toString().padStart(2, "0")}-${val.getDate().toString().padStart(2, "0")}`;
     }
     async getOksOnmkReport(year) {
-        const response = await fetch(`GetOksOnmkReport?year=${year}`);
+        const response = await fetch(`GetOksOnmkReport?year=${year}`, this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -232,7 +258,7 @@ let Repository = class Repository {
         throw new Error(`${response.status}: ${response.statusText}`);
     }
     async getOksOnmkXlsAsync() {
-        const response = await fetch("GetOksOnmkXls");
+        const response = await fetch("GetOksOnmkXls", this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -243,7 +269,7 @@ let Repository = class Repository {
         throw new Error(`${response.status}: ${response.statusText}`);
     }
     async GetEffectivenessReport(dt1, dt2) {
-        const response = await fetch(`GetEffectivenessReport?dt1=${this.convertToString(dt1)}&dt2=${this.convertToString(dt2)}`);
+        const response = await fetch(`GetEffectivenessReport?dt1=${this.convertToString(dt1)}&dt2=${this.convertToString(dt2)}`, this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -254,7 +280,7 @@ let Repository = class Repository {
         throw new Error(`${response.status}: ${response.statusText}`);
     }
     async GetEffectivenessXls() {
-        const response = await fetch("GetEffectivenessXls");
+        const response = await fetch("GetEffectivenessXls", this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {

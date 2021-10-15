@@ -38,6 +38,7 @@
     <None Remove="ReportModuleAngular\src\app\API\zpzEffectiveness.ts" />
     <None Remove="ReportModuleAngular\src\app\Component\ABORT_REPORT\ABORT_REPORT.ts" />
     <None Remove="ReportModuleAngular\src\app\Component\DBState\DBState.ts" />
+    <None Remove="ReportModuleAngular\src\app\Component\DISP_REPORT\DISP_REPORT.ts" />
     <None Remove="ReportModuleAngular\src\app\Component\ECO_REPORT\ECO_REPORT.ts" />
     <None Remove="ReportModuleAngular\src\app\Component\HMP_PERIOD_REPORT\HMP_PERIOD_REPORT.ts" />
     <None Remove="ReportModuleAngular\src\app\Component\HMP_REPORT\HMP_REPORT.ts" />
@@ -132,6 +133,9 @@
     <TypeScriptCompile Include="ReportModuleAngular\src\app\API\SMPRow.ts" />
     <TypeScriptCompile Include="ReportModuleAngular\src\app\API\zpzEffectiveness.ts" />
     <TypeScriptCompile Include="ReportModuleAngular\src\app\Component\DBState\DBState.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ReportModuleAngular\src\app\Component\DISP_REPORT\DISP_REPORT.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ReportModuleAngular\src\app\Component\HMP_PERIOD_REPORT\HMP_PERIOD_REPORT.ts">

@@ -154,6 +154,7 @@ namespace SiteCore
             var password = Configuration.GetSection("WCFParam").GetValue("PASSWORD", "");
             services.AddSingleton(provider => new WCFConnect(host, login, password, provider.GetService<ILogger>(), provider.GetService<IHubContext<NotificationHub>>()));
             var SharedFolder = Configuration.GetValue<string>("SharedFolder");
+           
             services.AddTransient<IMedpomRepository>(provider => new MedpomFileManager(SharedFolder));          
             return services;
         }

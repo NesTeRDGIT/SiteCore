@@ -29,19 +29,9 @@ namespace SiteCore.Controllers
 
         private UserInfoHelper userInfoHelper;
         private UserInfo _userInfo;
-        private UserInfo userInfo
-        {
-            get
-            {
-                if (_userInfo == null)
-                {
-                    _userInfo = userInfoHelper.GetInfo(User.Identity.Name);
-                }
-                return _userInfo;
-            }
-        }
+        private UserInfo userInfo => _userInfo ?? (_userInfo = userInfoHelper.GetInfo(User.Identity.Name));
 
-      
+
         public MedpomReestrController(WCFConnect WcfConnect, UserManager<ApplicationUser> userManager, MyOracleSet myOracleSet, ILogger logger, IZipArchiver zipArchiver, IMedpomRepository medpomFileManager, IHasher hasher, UserInfoHelper userInfoHelper)
         {
             this.WcfConnect = WcfConnect;
@@ -108,7 +98,7 @@ namespace SiteCore.Controllers
         {
             try
             {
-                var p = await MyOracleSet.FILEPACK.Include(x => x.FILES).FirstOrDefaultAsync(x => x.CODE_MO == userInfo.CODE_MO && x.STATUS == STATUS_FILEPACK.CURRENT);
+                var p = await MyOracleSet.FILEPACK.Include(x => x.FILES).ThenInclude(x=>x.FILE_L).FirstOrDefaultAsync(x => x.CODE_MO == userInfo.CODE_MO && x.STATUS == STATUS_FILEPACK.CURRENT);
                 //Если нет до вставляем
                 if (p != null) return p;
                 p = new FILEPACK { CODE_MO = userInfo.CODE_MO, STATUS = STATUS_FILEPACK.CURRENT };
@@ -128,7 +118,10 @@ namespace SiteCore.Controllers
 
         public async Task<IActionResult> LoadReestrData()
         {
-            return PartialView("_LoadReestrPartial", await getLoadReestViewModel());
+            List<ErrorItem> Error = null;
+            if (TempData.ContainsKey("ListError"))
+                Error = TempData["ListError"].ToString().XmlToObject<List<ErrorItem>>();
+            return PartialView("_LoadReestrPartial", await getLoadReestViewModel(Error));
         }
 
         async Task<LoadReestViewModel> getLoadReestViewModel(List<ErrorItem> Error = null)
@@ -385,9 +378,6 @@ namespace SiteCore.Controllers
                 return View("LoadReestr", await getLoadReestViewModel(new List<ErrorItem> { new ErrorItem(ErrorT.TextRed, ex.FullError()) }));
             }
         }
-
-   
-
         [HttpPost]
         public async Task<IActionResult> DeleteFile(decimal id)
         {
@@ -407,10 +397,6 @@ namespace SiteCore.Controllers
             return PartialView("_LoadReestrFileListPartial", await getLoadReestViewModel());
 
         }
-
-
-
-
         [HttpPost]
         public async Task<IActionResult> Clear()
         {
@@ -513,6 +499,124 @@ namespace SiteCore.Controllers
             return valid;
         }
 
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> Send()
+        {
+            try
+            {
+                var usInfo = userInfoHelper.GetInfo(User.Identity.Name);
+                var folderPath = medpomFileManager.GetDir(usInfo.CODE_MO);
+                var err = new List<ErrorItem>();
+
+                //Отправить реестры на сервер
+                if (WcfConnect.Ping() && WcfConnect.ReestrEnabled())
+                {
+                    var typePriem = WcfConnect.GetTypePriem();
+                    var fp = new FilePacket
+                    {
+                        Status = StatusFilePack.Close,
+                        StopTime = true,
+                        Priory = 0,
+                        CodeMO = usInfo.CODE_MO,
+                        Files = new List<FileItem>()
+                    };
+                    var pac = await GetFile();
+                    var files = pac.FILES.Where(x => x.PARENT == null).ToList();
+                    fp.ID = pac.ID;
+                    if (files.Count == 0)
+                    {
+                        err.Add(new ErrorItem(ErrorT.TextRed, $"Отсутствуют файлы на отправку!"));
+                    }
+                    foreach (var f in files)
+                    {
+                        if (f.STATUS != STATUS_FILE.INVITE)
+                        {
+                            err.Add(new ErrorItem(ErrorT.TextRed, $"Файл {f.FILENAME} не принят к загрузке. Исключите его из посылки!"));
+                            continue;
+                        }
+
+                        if (f.FILE_L?.STATUS != STATUS_FILE.INVITE)
+                        {
+                            err.Add(new ErrorItem(ErrorT.TextRed, $"Файл {f.FILE_L.FILENAME} не принят к загрузке. Исключите его из посылки!"));
+                            continue;
+                        }
+
+                        if (usInfo.WithSing == false)
+                        {
+                            if ((f.SIGN_ISP_VALID && f.SIGN_BUH_VALID && f.SIGN_DIR_VALID) != true && typePriem)
+                            {
+                                err.Add(new ErrorItem(ErrorT.TextRed, $"Файл {f.FILENAME} не подписан. Исключите его из посылки!"));
+                                continue;
+                            }
+
+                            if (f.FILE_L != null)
+                            {
+                                if ((f.FILE_L.SIGN_ISP_VALID && f.FILE_L.SIGN_BUH_VALID && f.FILE_L.SIGN_DIR_VALID) != true && typePriem)
+                                {
+                                    err.Add(new ErrorItem(ErrorT.TextRed, $"Файл {f.FILE_L.FILENAME} не подписан. Исключите его из посылки!"));
+                                    continue;
+                                }
+                            }
+                           
+                        }
+
+
+                        var fi = new FileItem
+                        {
+                            FileName = f.FILENAME,
+                            FilePach = Path.Combine(folderPath, f.FILENAME),
+                            Process = StepsProcess.Invite,
+                            Type = f.TYPE_FILE.ToFileType(),
+                            DateCreate = DateTime.Now,
+                            SIGN_ISP = f.SIGN_ISP_STR,
+                            SIGN_DIR = f.SIGN_DIR_STR,
+                            SIGN_BUH = f.SIGN_BUH_STR
+                        };
+
+                        var fl = new FileL();
+                        fl.FileName = f.FILE_L.FILENAME;
+
+                        fl.SIGN_ISP = f.FILE_L.SIGN_ISP_STR;
+                        fl.SIGN_DIR = f.FILE_L.SIGN_DIR_STR;
+                        fl.SIGN_BUH = f.FILE_L.SIGN_BUH_STR;
+
+
+                        fl.FilePach = Path.Combine(folderPath, f.FILE_L.FILENAME);
+                        fl.Process = StepsProcess.Invite;
+                        fl.Type = (FileType)(f.FILE_L.TYPE_FILE);
+                        fl.DateCreate = DateTime.Now;
+
+                        fi.filel = fl;
+                        fp.Files.Add(fi);
+                    }
+
+                    if (err.Count == 0)
+                    {
+                        WcfConnect.AddFilePacketForMO(fp);
+                        pac.STATUS = STATUS_FILEPACK.SEND;
+                        await MyOracleSet.SaveChangesAsync();
+                        return RedirectToAction("ViewReestr");
+                    }
+
+                    TempData.Add("ListError", err.ObjectToXml());
+                    return RedirectToAction("LoadReestr");
+                }
+
+                err.Add(new ErrorItem(ErrorT.TextRed, "Прием реестров неактивен"));
+                TempData.Add("ListError", err.ObjectToXml());
+                return RedirectToAction("LoadReestr");
+            }
+            catch (Exception ex)
+            {
+                logger.AddLog("Ошибка при отправке файлов: " + ex.FullError(), LogType.Error);
+                TempData.Add("ListError", (new List<ErrorItem> { new(ErrorT.TextRed, "Ошибка при отправке файлов: попробуйте еще раз или обратитесь в тех. поддержку") }).ObjectToXml());
+                return RedirectToAction("LoadReestr");
+            }
+
+        }
 
         #endregion
         #region Инструкция

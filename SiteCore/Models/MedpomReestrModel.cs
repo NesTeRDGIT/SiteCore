@@ -29,6 +29,10 @@ namespace SiteCore.Models
     }
     public class ErrorItem
     {
+        public ErrorItem()
+        {
+
+        }
         public ErrorItem(ErrorT _ErrorT, string _Error)
         {
             this.Error = _Error;

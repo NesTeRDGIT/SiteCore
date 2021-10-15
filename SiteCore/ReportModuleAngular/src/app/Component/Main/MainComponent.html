@@ -8,7 +8,6 @@
         <div *ngSwitchCase="ReportType.DB_State" style="width: 100%">
             <DB-State></DB-State>
         </div>
-
         <div *ngSwitchCase="ReportType.HMP" style="width: 100%">
             <hmp-report></hmp-report>
         </div>
@@ -39,7 +38,11 @@
         <div *ngSwitchCase="ReportType.PENS" style="width: 100%">
             <pens-report></pens-report>
         </div>
-        <div  *ngSwitchDefault style="width: 100%">
+        <div *ngSwitchCase="ReportType.DISP" style="width: 100%">
+            <disp-report></disp-report>
+        </div>
+
+        <div *ngSwitchDefault style="width: 100%">
             <h1>Функционал не реализован</h1>
         </div>
 

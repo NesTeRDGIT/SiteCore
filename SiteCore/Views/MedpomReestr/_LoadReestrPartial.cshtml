@@ -114,7 +114,7 @@ else
     <script src="~/js/Sign.js"></script>
 }
 
-<form method="get" asp-action="Send">
+<form method="post" asp-action="Send">
     <input id="button" clickCount="0" @(isActive ? "" : "disabled") class="ActionButton" type="submit" value="Отправить на обработку" onclick="@("return confirm('Вы уверены?')")" />
 </form>
 

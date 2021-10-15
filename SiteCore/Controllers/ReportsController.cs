@@ -178,7 +178,7 @@ namespace SiteCore.Controllers
             var boldHeadStyle = ex.CreateType(new FontOpenXML { Bold = true, HorizontalAlignment = HorizontalAlignmentV.Center, VerticalAlignment = VerticalAlignmentV.Center}, new BorderOpenXML(), null);
             var TextCenterStyle = ex.CreateType(new FontOpenXML{HorizontalAlignment = HorizontalAlignmentV.Center}, new BorderOpenXML(), null);
             var TextRightStyle = ex.CreateType(new FontOpenXML() { HorizontalAlignment = HorizontalAlignmentV.Right }, new BorderOpenXML(), null);
-            var FloatStyle = ex.CreateType(new FontOpenXML { Format = (uint)DefaultNumFormat.F4 }, new BorderOpenXML(), null);
+            var FloatStyle = ex.CreateType(new FontOpenXML { Format = (uint)DefaultNumFormat.F4, HorizontalAlignment = HorizontalAlignmentV.Right}, new BorderOpenXML(), null);
           
 
             uint rowindex = 1;
@@ -199,7 +199,8 @@ namespace SiteCore.Controllers
             ex.PrintCell(rowindex, 15, "Группа ВМП", boldHeadStyle);
             ex.PrintCell(rowindex, 16, "Длительность", boldHeadStyle);
             ex.PrintCell(rowindex, 17, "Диагноз", boldHeadStyle);
-            ex.PrintCell(rowindex, 18, "Сумма", boldHeadStyle);
+            ex.PrintCell(rowindex, 18, "Сумма выставленная", boldHeadStyle);
+            ex.PrintCell(rowindex, 19, "Сумма принятая", boldHeadStyle);
             rowindex++;
             foreach (var row in item)
             {
@@ -220,10 +221,11 @@ namespace SiteCore.Controllers
                 ex.PrintCell(rowindex, 15, row.GRP_HMP, TextRightStyle);
                 ex.PrintCell(rowindex, 16, row.DAYS, TextCenterStyle);
                 ex.PrintCell(rowindex, 17, row.MKB, TextCenterStyle);
-                ex.PrintCell(rowindex, 18, row.SUMP, FloatStyle);
+                ex.PrintCell(rowindex, 18, row.SUMV, FloatStyle);
+                ex.PrintCell(rowindex, 19, row.SUMP, FloatStyle);
                 rowindex++;
             }
-            ex.AutoSizeColumns(1,18);
+            ex.AutoSizeColumns(1,19);
             ex.Save();
             return ms.ToArray();
         }

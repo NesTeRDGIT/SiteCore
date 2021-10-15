@@ -11,6 +11,7 @@ import { ResultControlDET, ResultControlVZR, ResultControl } from "./ResultContr
 import { SMPRow } from "./SMPRow";
 import { DataBaseStateRow } from "./DataBaseStateRow";
 import { PensRow } from "./PensRow";
+import { DispRecord } from "./DispEntity";
 @Injectable()
 export abstract class IRepository {
     abstract getVmpReportAsync(): Promise<CURRENT_VMP_OOMS[]>;
@@ -39,15 +40,43 @@ export abstract class IRepository {
 
     abstract getVmpPeriodReportAsync(dt1: Date, dt2: Date): Promise<VMP_OOMS[]>;
     abstract getVmpPeriodReportXlsAsync(): Promise<FileASP>;
+
+    abstract getDispReport(year: number, month: number): Promise<DispRecord>;
+    abstract getDispXlsAsync(): Promise<FileASP>;
     
 
 
 }
 @Injectable()
 export class Repository implements IRepository {
+    defaultFetchParam: RequestInit = {  credentials: "same-origin" };
+    async getDispReport(year: number, month: number): Promise<DispRecord> {
+
+        const response = await fetch(`GetDispReport?year=${year}&month=${month}`, this.defaultFetchParam);
+        if (response.ok) {
+            const data = await response.json();
+            if (data.Result) {
+                return new DispRecord(data.Value);
+            }
+            throw new Error(data.Value);
+        }
+        throw new Error(`${response.status}: ${response.statusText}`);
+    }
+    async getDispXlsAsync(): Promise<FileASP> {
+        const response = await fetch("GetDispXls", this.defaultFetchParam);
+        if (response.ok) {
+            const data = await response.json();
+            if (data.Result) {
+                return new FileASP(data.Value);
+            }
+            throw new Error(data.Value);
+        }
+        throw new Error(`${response.status}: ${response.statusText}`);
+    }
+
     async getPensReportAsync(year: number): Promise<PensRow[]> {
        
-        const response = await fetch(`GetPensReport?year=${year}`);
+        const response = await fetch(`GetPensReport?year=${year}`, this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -58,7 +87,7 @@ export class Repository implements IRepository {
         throw new Error(`${response.status}: ${response.statusText}`);
     }
     async getPensXlsAsync(): Promise<FileASP> {
-        const response = await fetch("GetPensXls");
+        const response = await fetch("GetPensXls", this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -69,7 +98,7 @@ export class Repository implements IRepository {
         throw new Error(`${response.status}: ${response.statusText}`);
     }
     async getDBState(): Promise<DataBaseStateRow[]> {
-        const response = await fetch(`getDBState`);
+        const response = await fetch(`getDBState`, this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -81,7 +110,7 @@ export class Repository implements IRepository {
         throw new Error(`${response.status}: ${response.statusText}`);
     }
     async getSmpReportAsync(dt1: Date, dt2: Date): Promise<SMPRow[]> {
-        const response = await fetch(`GetSmpReport?dt1=${this.convertToString(dt1)}&dt2=${this.convertToString(dt2)}`);
+        const response = await fetch(`GetSmpReport?dt1=${this.convertToString(dt1)}&dt2=${this.convertToString(dt2)}`, this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -92,7 +121,7 @@ export class Repository implements IRepository {
         throw new Error(`${response.status}: ${response.statusText}`);
     }
     async getSmpXlsAsync(): Promise<FileASP> {
-        const response = await fetch("GetSmpXls");
+        const response = await fetch("GetSmpXls", this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -103,7 +132,7 @@ export class Repository implements IRepository {
         throw new Error(`${response.status}: ${response.statusText}`);
     }
     async GetResultControlReport(dt1: Date, dt2: Date): Promise<ResultControl> {
-        const response = await fetch(`GetResultControlReport?dt1=${this.convertToString(dt1)}&dt2=${this.convertToString(dt2)}`);
+        const response = await fetch(`GetResultControlReport?dt1=${this.convertToString(dt1)}&dt2=${this.convertToString(dt2)}`, this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -118,7 +147,7 @@ export class Repository implements IRepository {
     }
     async GetResultControlXls(): Promise<FileASP> {
         debugger;
-        const response = await fetch("GetResultControlXls");
+        const response = await fetch("GetResultControlXls", this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -130,7 +159,7 @@ export class Repository implements IRepository {
     }
     async getVmpPeriodReportAsync(dt1: Date, dt2: Date): Promise<VMP_OOMS[]> {
 
-        const response = await fetch(`GetVMPPeriodReport?dt1=${this.convertToString(dt1)}&&dt2=${this.convertToString(dt2)}`);
+        const response = await fetch(`GetVMPPeriodReport?dt1=${this.convertToString(dt1)}&dt2=${this.convertToString(dt2)}`, this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -141,7 +170,7 @@ export class Repository implements IRepository {
         throw new Error(`${response.status}: ${response.statusText}`);
     }
     async getVmpPeriodReportXlsAsync(): Promise<FileASP> {
-        const response = await fetch("GetVMPPeriodXls");
+        const response = await fetch("GetVMPPeriodXls", this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -154,7 +183,7 @@ export class Repository implements IRepository {
 
     async getVmpReportAsync(): Promise<CURRENT_VMP_OOMS[]> {
       
-        const response = await fetch("GetVMPReport");
+        const response = await fetch("GetVMPReport", this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -165,7 +194,7 @@ export class Repository implements IRepository {
         throw new Error(`${response.status}: ${response.statusText}`);
     }
     async getVmpReportXlsAsync(): Promise<FileASP> {
-        const response = await fetch("GetVmpReportXls");
+        const response = await fetch("GetVmpReportXls", this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -178,7 +207,7 @@ export class Repository implements IRepository {
 
 
     async getGetAbortReportAsync(year: number): Promise<AbortRow[]> {
-        const response = await fetch(`GetAbortReport?YEAR=${year}`);
+        const response = await fetch(`GetAbortReport?YEAR=${year}`, this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -190,7 +219,7 @@ export class Repository implements IRepository {
     }
 
     async getAbortXlsAsync(): Promise<FileASP> {
-        const response = await fetch("GetAbortXls");
+        const response = await fetch("GetAbortXls", this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -203,7 +232,7 @@ export class Repository implements IRepository {
 
  
     async getEcoReport(year: number, month: number): Promise<EcoRecord> {
-        const response = await fetch(`GetEcoReport?year=${year}&&month=${month}`);
+        const response = await fetch(`GetEcoReport?year=${year}&month=${month}`, this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -216,7 +245,7 @@ export class Repository implements IRepository {
     }
 
     async getEcoXlsAsync(): Promise<FileASP> {
-        const response = await fetch("GetEcoXls");
+        const response = await fetch("GetEcoXls", this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -229,7 +258,7 @@ export class Repository implements IRepository {
 
 
     async getKohlReport(dt1: Date, dt2: Date): Promise<KohlRow[]> {
-        const response = await fetch(`GetKohlReport?dt1=${this.convertToString(dt1)}&dt2=${this.convertToString(dt2)}`);
+        const response = await fetch(`GetKohlReport?dt1=${this.convertToString(dt1)}&dt2=${this.convertToString(dt2)}`, this.defaultFetchParam);
      
         if (response.ok) {
             const data = await response.json();
@@ -243,7 +272,7 @@ export class Repository implements IRepository {
     }
 
     async getKohlXlsAsync(): Promise<FileASP> {
-        const response = await fetch("GetKohlXls");
+        const response = await fetch("GetKohlXls", this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -260,7 +289,7 @@ export class Repository implements IRepository {
 
    
     async getOksOnmkReport(year: number): Promise<oksOnmkRow[]> {
-        const response = await fetch(`GetOksOnmkReport?year=${year}`);
+        const response = await fetch(`GetOksOnmkReport?year=${year}`, this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -273,7 +302,7 @@ export class Repository implements IRepository {
     }
 
     async getOksOnmkXlsAsync(): Promise<FileASP> {
-        const response = await fetch("GetOksOnmkXls");
+        const response = await fetch("GetOksOnmkXls", this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -287,7 +316,7 @@ export class Repository implements IRepository {
 
 
     async GetEffectivenessReport(dt1: Date, dt2: Date): Promise<ZpzEffectiveness[]> {
-        const response = await fetch(`GetEffectivenessReport?dt1=${this.convertToString(dt1)}&dt2=${this.convertToString(dt2)}`);
+        const response = await fetch(`GetEffectivenessReport?dt1=${this.convertToString(dt1)}&dt2=${this.convertToString(dt2)}`, this.defaultFetchParam);
 
         if (response.ok) {
             const data = await response.json();
@@ -300,7 +329,7 @@ export class Repository implements IRepository {
     }
 
     async GetEffectivenessXls(): Promise<FileASP> {
-        const response = await fetch("GetEffectivenessXls");
+        const response = await fetch("GetEffectivenessXls", this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {

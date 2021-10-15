@@ -1,0 +1,398 @@
+﻿<h2>Отчет по диспансеризации нарастающим итогом</h2>
+<h5>Бардак в отчетах</h5>
+<label>Отчетный период </label>
+<p-calendar [(ngModel)]="period" view="month" dateFormat="MM yy" [yearNavigator]="true" yearRange="2000:2030" [readonlyInput]="true" [disabled]="isLoad"></p-calendar>
+<input type="button" value="Запрос" class="ActionButton" (click)="getReport()" [disabled]="isLoad" style="margin-left: 10px;"/>
+<hr />
+
+<p-tabView>
+<p-tabPanel header="Диспансеризация взрослых">
+    <div style="overflow: auto">
+        <p-table [value]="report.DispVzr" [scrollable]="true" scrollHeight="35vh" [resizableColumns]="true" [autoLayout]="true" styleClass="p-datatable-gridlines" columnResizeMode="expand" [loading]="isLoad">
+            <ng-template pTemplate="colgroup">
+                <colgroup>
+                    <col style="width: 150px">
+                    <col style="width: 300px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pResizableColumn rowspan="4">СМО</th>
+                    <th pResizableColumn rowspan="4">Показатель</th>
+                    <th pResizableColumn rowspan="4">Всего предъявлено к оплате в рамках диспансеризации за отчетный период, тыс. рублей</th>
+                    <th pResizableColumn colspan="8">в том числе:</th>
+                    <th pResizableColumn rowspan="4">Всего оплачено в рамках диспансеризации за отчетный период, тыс. рублей</th>
+                    <th pResizableColumn colspan="10">в том числе:</th>
+                    <th pResizableColumn rowspan="2" colspan="2">Количество граждан, направленных на II этап диспансеризации по результатам I этапа, человек</th>
+                    <th pResizableColumn rowspan="2" colspan="4">Группы состояния здоровья застрахованных лиц, прошедших диспансеризацию</th>
+                    <th pResizableColumn rowspan="2" colspan="8">Количество граждан, направленных  по результатам  I и II этапа, в том числе на:</th>
+                </tr>
+                <tr>
+                    <th pResizableColumn colspan="3">в рамках I этапа</th>
+                    <th pResizableColumn colspan="3">в рамках II этапа</th>
+                    <th pResizableColumn rowspan="3">в том числе из гр. 9: количество законченных случаев в рамках I этапа диспансеризации, проводимой мобильными медицинскими бригадами</th>
+                    <th pResizableColumn rowspan="3">в том числе: тыс. рублей</th>
+                    <th pResizableColumn colspan="4">в рамках I этапа</th>
+                    <th pResizableColumn colspan="4">в рамках II этапа</th>
+                    <th pResizableColumn rowspan="3">в том числе из гр. 18: количество законченных  случаев  в рамках I этапа диспансеризации, проводимой мобильными медицинскими бригадами</th>
+                    <th pResizableColumn rowspan="3">в том числе: тыс. рублей</th>
+                </tr>
+                <tr>
+                    <th pResizableColumn rowspan="2">кол-во случаев ВСЕГО</th>
+                    <th pResizableColumn rowspan="2">кол-во случаев согласно утвержденному плану-графику</th>
+                    <th pResizableColumn rowspan="2">тыс. рублей</th>
+                    <th pResizableColumn rowspan="2">людей</th>
+                    <th pResizableColumn rowspan="2">кол-во случаев</th>
+                    <th pResizableColumn rowspan="2">тыс. рублей</th>
+                    <th pResizableColumn rowspan="2">кол-во случаев  ВСЕГО</th>
+                    <th pResizableColumn rowspan="2">кол-во случаев согласно утвержденному плану-графику</th>
+                    <th pResizableColumn rowspan="2">из них: прошедшие I этап диспансеризации из числа проинформированных о возможности прохождения I этапа</th>
+                    <th pResizableColumn rowspan="2">тыс. рублей</th>
+                    <th pResizableColumn rowspan="2">людей</th>
+                    <th pResizableColumn rowspan="2">кол-во случаев</th>
+                    <th pResizableColumn rowspan="2">из них: прошедшие II этап диспансеризации из числа проинформированных о возможности прохождения II этапа</th>
+                    <th pResizableColumn rowspan="2">тыс. рублей</th>
+                    <th pResizableColumn rowspan="2">Всего</th>
+                    <th pResizableColumn rowspan="2">Всего отказавшихся от прохождения II этапа диспансеризации</th>
+                    <th pResizableColumn rowspan="2">I группа состояния здоровья, человек</th>
+                    <th pResizableColumn rowspan="2">II группа состояния здоровья, человек</th>
+                    <th pResizableColumn rowspan="2">IIIа группа состояния здоровья, человек</th>
+                    <th pResizableColumn rowspan="2">IIIб группа состояния здоровья, человек направленных на консультацию</th>
+                    <th pResizableColumn rowspan="2">направленных на консультацию</th>
+                    <th pResizableColumn>их них:</th>
+                    <th pResizableColumn rowspan="2">направленных на обследование</th>
+                    <th pResizableColumn rowspan="2">направленных в дневной стационар</th>
+                    <th pResizableColumn rowspan="2">направленных на госпитализацию</th>
+                    <th pResizableColumn rowspan="2">направленных в реабилитационное отделение</th>
+                    <th pResizableColumn rowspan="2">установлено диспансерное наблюдение врачом-терапевтом, врачами-специалистами</th>
+                    <th pResizableColumn>их них:</th>
+                </tr>
+                <tr>
+                    <th pResizableColumn>в том числе: при подозрении на установление диагноза злокачественного новообразования</th>
+                    <th pResizableColumn>в том числе: при подозрении на установление диагноза злокачественного новообразования</th>
+                </tr>
+                <tr>
+                    <th pResizableColumn>1</th>
+                    <th pResizableColumn>2</th>
+                    <th pResizableColumn>3</th>
+                    <th pResizableColumn>4</th>
+                    <th pResizableColumn>5</th>
+                    <th pResizableColumn>6</th>
+                    <th pResizableColumn>7</th>
+                    <th pResizableColumn>8</th>
+                    <th pResizableColumn>9</th>
+                    <th pResizableColumn>10</th>
+                    <th pResizableColumn>11</th>
+                    <th pResizableColumn>12</th>
+                    <th pResizableColumn>13</th>
+                    <th pResizableColumn>14</th>
+                    <th pResizableColumn>15</th>
+                    <th pResizableColumn>16</th>
+                    <th pResizableColumn>17</th>
+                    <th pResizableColumn>18</th>
+                    <th pResizableColumn>19</th>
+                    <th pResizableColumn>20</th>
+                    <th pResizableColumn>21</th>
+                    <th pResizableColumn>22</th>
+                    <th pResizableColumn>23</th>
+                    <th pResizableColumn>24</th>
+                    <th pResizableColumn>25</th>
+                    <th pResizableColumn>26</th>
+                    <th pResizableColumn>27</th>
+                    <th pResizableColumn>28</th>
+                    <th pResizableColumn>29</th>
+                    <th pResizableColumn>30</th>
+                    <th pResizableColumn>31</th>
+                    <th pResizableColumn>32</th>
+                    <th pResizableColumn>33</th>
+                    <th pResizableColumn>34</th>
+                    <th pResizableColumn>35</th>
+                    <th pResizableColumn>36</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+                <tr>
+                    <td style="text-align:center">{{item.SMO}}</td>
+                    <td style="text-align:center">{{item.POK}}</td>
+                    <td style="text-align:center">{{item.ST3| number:'.2':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST4| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST5| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST6| number:'.2':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST7| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST8| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST9| number:'.2':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST10| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST11| number:'.2':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST12| number:'.2':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST13| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST14| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST15| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST16| number:'.2':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST17| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST18| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST19| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST20| number:'.2':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST21| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST22| number:'.2':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST23| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST24| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST25| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST26| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST27| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST28| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST29| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST30| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST31| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST32| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST33| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST34| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST35| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.ST36| number:'.0':'ru-RU'}}</td>
+
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</p-tabPanel>
+<p-tabPanel header="Диспансеризация детей">
+    <div style="overflow: auto">
+        <p-table [value]="report.DispDet" [scrollable]="true" scrollHeight="35vh" [resizableColumns]="true" [autoLayout]="true" styleClass="p-datatable-gridlines" columnResizeMode="expand" [loading]="isLoad">
+            <ng-template pTemplate="colgroup">
+                <colgroup>
+                    <col style="width: 150px">
+                    <col style="width: 300px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pResizableColumn rowspan="3">СМО</th>
+                    <th pResizableColumn rowspan="3">Показатель</th>
+                    <th pResizableColumn rowspan="3">Объем средств предъявленных к оплате  в рамках диспансеризации за отчетный период, тыс.рублей</th>
+                    <th pResizableColumn colspan="4">в том числе:</th>
+                    <th pResizableColumn rowspan="3">Объем средств направленный за проведенную диспансеризацию, за отчетный период, тыс. рублей</th>
+                    <th pResizableColumn colspan="4">в том числе:</th>
+                    <th pResizableColumn colspan="5" rowspan="2">Группы состояния здоровья несовершеннолетних, прошедших диспансеризацию</th>
+                </tr>
+                <tr>
+                    <th pResizableColumn colspan="2">в рамках законченного случая, состоящего из одного этапа  диспансеризации</th>
+                    <th pResizableColumn rowspan="2">количество законченных случаев, состоящего из одного этапа диспансеризации (I этап), проведенных мобильными медицинскими бригадами</th>
+                    <th pResizableColumn rowspan="2">тыс. рублей</th>
+                    <th pResizableColumn colspan="2">в рамках законченного случая, состоящего из одного этапа  диспансеризации</th>
+                    <th pResizableColumn rowspan="2">количество законченных случаев, состоящего из одного этапа диспансеризации (I этап), проведенных мобильными медицинскими бригадами</th>
+                    <th pResizableColumn rowspan="2">тыс. рублей</th>
+                </tr>
+                <tr>
+                    <th pResizableColumn>кол-во человек</th>
+                    <th pResizableColumn>тыс. рублей</th>
+                    <th pResizableColumn>кол-во человек</th>
+                    <th pResizableColumn>тыс. рублей</th>
+                    <th pResizableColumn>I группа состояния здоровья, человек</th>
+                    <th pResizableColumn>II группа состояния здоровья, человек</th>
+                    <th pResizableColumn>III группа состояния здоровья, человек</th>
+                    <th pResizableColumn>IV группа состояния здоровья, человек</th>
+                    <th pResizableColumn>V группа состояния здоровья, человек</th>
+                </tr>
+                <tr>
+                    <th pResizableColumn>1</th>
+                    <th pResizableColumn>2</th>
+                    <th pResizableColumn>3</th>
+                    <th pResizableColumn>4</th>
+                    <th pResizableColumn>5</th>
+                    <th pResizableColumn>6</th>
+                    <th pResizableColumn>7</th>
+                    <th pResizableColumn>8</th>
+                    <th pResizableColumn>9</th>
+                    <th pResizableColumn>10</th>
+                    <th pResizableColumn>11</th>
+                    <th pResizableColumn>12</th>
+                    <th pResizableColumn>13</th>
+                    <th pResizableColumn>14</th>
+                    <th pResizableColumn>15</th>
+                    <th pResizableColumn>16</th>
+                    <th pResizableColumn>17</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+                <tr>
+                    <td style="text-align: center">{{item.SMO}}</td>
+                    <td style="text-align: center">{{item.POK}}</td>
+                    <td style="text-align: center">{{item.SUMV| number:'.2':'ru-RU'}}</td>
+                    <td style="text-align: center">{{item.KOL| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: center">{{item.SUM| number:'.2':'ru-RU'}}</td>
+                    <td style="text-align: center">{{item.KOL_VBR| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: center">{{item.SUM_VBR| number:'.2':'ru-RU'}}</td>
+                    <td style="text-align: center">{{item.SUMP| number:'.2':'ru-RU'}}</td>
+                    <td style="text-align: center">{{item.KOL_P| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: center">{{item.SUM_P| number:'.2':'ru-RU'}}</td>
+                    <td style="text-align: center">{{item.KOL_VBR_P| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: center">{{item.SUM_VBR_P| number:'.2':'ru-RU'}}</td>
+                    <td style="text-align: center">{{item.C_GRP_1| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: center">{{item.C_GRP_1| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: center">{{item.C_GRP_1| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: center">{{item.C_GRP_1| number:'.2':'ru-RU'}}</td>
+                    <td style="text-align: center">{{item.C_GRP_1| number:'.0':'ru-RU'}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</p-tabPanel>
+<p-tabPanel header="Проф. осмотры взрослых">
+    <div style="overflow: auto">
+        <p-table [value]="report.ProfVzr" [scrollable]="true" scrollHeight="35vh" [resizableColumns]="true" [autoLayout]="true" styleClass="p-datatable-gridlines" columnResizeMode="expand" [loading]="isLoad">
+            <ng-template pTemplate="colgroup">
+                <colgroup>
+                    <col style="width: 150px">
+                    <col style="width: 300px ">
+                    <col style="width: 150px ">
+                    <col style="width: 150px ">
+                    <col style="width: 150px ">
+                    <col style="width: 150px ">
+                    <col style="width: 150px ">
+                    <col style="width: 150px ">
+
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pResizableColumn rowspan="2">Код СМО</th>
+                    <th pResizableColumn rowspan="2">Наименование СМО</th>
+                    <th pResizableColumn rowspan="2">№ строки</th>
+                    <th pResizableColumn rowspan="2">Группа</th>
+                    <th pResizableColumn colspan="2">Всего предъявленных к оплате реестров счетов в рамках профилактических медицинских осмотров за отчетный период</th>
+                    <th pResizableColumn colspan="2">Всего оплачено реестров счетов в рамках профилактических медицинских осмотров за отчетный период</th>
+
+                </tr>
+                <tr>
+                    <th pResizableColumn>Кол-во</th>
+                    <th pResizableColumn>Сумма</th>
+                    <th pResizableColumn>Кол-во</th>
+                    <th pResizableColumn>Сумма</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+                <tr>
+                    <td style="text-align:center">{{item.SMO}}</td>
+                    <td style="text-align:center">{{item.NAM_SMO}}</td>
+                    <td style="text-align:center">{{item.NN}}</td>
+                    <td style="text-align:center">{{item.GRP}}</td>
+                    <td style="text-align: center">{{item.KOL| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: center">{{item.SUM| number:'.2':'ru-RU'}}</td>
+                    <td style="text-align: center">{{item.KOL_P| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: center">{{item.SUM_P| number:'.2':'ru-RU'}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</p-tabPanel>
+<p-tabPanel header="Проф. осмотры детей">
+    <div style="overflow: auto">
+        <p-table [value]="report.ProfDet" [scrollable]="true" scrollHeight="70vh" [resizableColumns]="true" [autoLayout]="true" styleClass="p-datatable-gridlines" columnResizeMode="expand" [loading]="isLoad">
+            <ng-template pTemplate="colgroup">
+                <colgroup>
+                    <col style="width: 100px">
+                    <col style="width: 200px ">
+                    <col style="width: 200px ">
+                    <col style="width: 200px ">
+                    <col style="width: 150px ">
+                    <col style="width: 150px ">
+                    <col style="width: 150px ">
+                    <col style="width: 100px ">
+                    <col style="width: 100px ">
+                    <col style="width: 100px ">
+                    <col style="width: 200px ">
+                    <col style="width: 150px ">
+                    <col style="width: 100px ">
+                    <col style="width: 100px ">
+                    <col style="width: 300px ">
+
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pResizableColumn rowspan="2">Код СМО</th>
+                    <th pResizableColumn rowspan="2">Наименование СМО</th>
+                    <th pResizableColumn rowspan="2">№ строки</th>
+                    <th pResizableColumn rowspan="2">Группа</th>
+                    <th pResizableColumn colspan="2">Всего предъявленных к оплате реестров счетов в рамках профилактических медицинских осмотров за отчетный период</th>
+                    <th pResizableColumn colspan="2">Всего оплачено реестров счетов в рамках профилактических медицинских осмотров за отчетный период</th>
+
+                </tr>
+
+
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+                <tr>
+                    <td style="text-align:center">{{item.SLUCH_ID}}</td>
+                    <td style="text-align:center">{{item.FAM}}</td>
+                    <td style="text-align:center">{{item.IM}}</td>
+                    <td style="text-align:center">{{item.OT}}</td>
+                    <td style="text-align:center">{{item.DR|date:'dd-MM-yyyy'}}</td>
+                    <td style="text-align:center">{{item.DATE_1|date:'dd-MM-yyyy'}}</td>
+                    <td style="text-align:center">{{item.DATE_2|date:'dd-MM-yyyy'}}</td>
+                    <td style="text-align:right">{{item.SUMV| number:'.2':'ru-RU'}}</td>
+                    <td style="text-align:right">{{item.SUMP| number:'.2':'ru-RU'}}</td>
+                    <td style="text-align:center">{{item.MKB}}</td>
+                    <td style="text-align:center">{{item.DS_NAME}}</td>
+                    <td style="text-align:center">{{item.DPLAT|date:'dd-MM-yyyy'}}</td>
+                    <td style="text-align:center">{{item.NPLAT}}</td>
+                    <td style="text-align:center">{{item.LPU}}</td>
+                    <td style="text-align:center">{{item.LPU_NAME}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+    </div>
+</p-tabPanel>
+</p-tabView>
+
+<hr />
+<button class="ActionButton" (click)="getXls()" [disabled]="isLoad || report.length===0">Скачать Excel</button>

@@ -166,7 +166,7 @@ else
 
 <form asp-action="DownloadProtocol" method="get">
     @{
-        var isProtocol = !Model.ConnectWCFon && !string.IsNullOrEmpty(Model?.FP?.PATH_ZIP);
+        var isProtocol = Model.ConnectWCFon && !string.IsNullOrEmpty(Model?.FP?.PATH_ZIP) && (Model?.FP?.Status == StatusFilePack.FLKOK  || Model?.FP?.Status == StatusFilePack.FLKERR);
     } 
-    <input class="ActionButton" type="submit" value="Скачать протокол"  @(isProtocol? "disabled" : "")    />
+    <input class="ActionButton" type="submit" value="Скачать протокол"  @(!isProtocol? "disabled" : "")    />
 </form>

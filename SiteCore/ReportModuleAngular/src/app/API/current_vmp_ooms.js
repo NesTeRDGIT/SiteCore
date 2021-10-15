@@ -39,6 +39,7 @@ export class VMP_OOMS {
             this.DAYS = obj.DAYS;
             this.MKB = obj.MKB;
             this.SUMP = obj.SUMP;
+            this.SUMV = obj.SUMV;
         }
     }
 }

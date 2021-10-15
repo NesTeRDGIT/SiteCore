@@ -130,6 +130,41 @@ namespace SiteCore.Class
 
         }
 
+        public static FileType? ToFileType(this TYPEFILE? t)
+        {
+            if (!t.HasValue) return null;
+            return t switch
+            {
+                TYPEFILE.DD => FileType.DD,
+                TYPEFILE.DF => FileType.DF,
+                TYPEFILE.DO => FileType.DO,
+                TYPEFILE.DP => FileType.DP,
+                TYPEFILE.DR => FileType.DR,
+                TYPEFILE.DS => FileType.DS,
+                TYPEFILE.DU => FileType.DU,
+                TYPEFILE.DV => FileType.DV,
+                TYPEFILE.DA => FileType.DA,
+                TYPEFILE.DB => FileType.DB,
+                TYPEFILE.H => FileType.H,
+                TYPEFILE.LD => FileType.LD,
+                TYPEFILE.LF => FileType.LF,
+                TYPEFILE.LH => FileType.LH,
+                TYPEFILE.LO => FileType.LO,
+                TYPEFILE.LP => FileType.LP,
+                TYPEFILE.LR => FileType.LR,
+                TYPEFILE.LS => FileType.LS,
+                TYPEFILE.LT => FileType.LT,
+                TYPEFILE.LU => FileType.LU,
+                TYPEFILE.LV => FileType.LV,
+                TYPEFILE.T => FileType.T,
+                TYPEFILE.C => FileType.C,
+                TYPEFILE.LC => FileType.LC,
+                TYPEFILE.LA => FileType.LA,
+                TYPEFILE.LB => FileType.LB,
+                _ => throw new ArgumentOutOfRangeException(nameof(t), t, null)
+            };
+        }
+
     }
     public static class ControllerContextEx
     {

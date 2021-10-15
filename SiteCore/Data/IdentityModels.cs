@@ -197,7 +197,7 @@ namespace SiteCore.Data
         public string CODE_SMO { get; set; }
         public string USER_ID { get; set; }
         public string NAME { get; set; }
-
+        public bool WithSing { get; set; }
         public string Password { get; set; }
     }
 
@@ -219,6 +219,7 @@ namespace SiteCore.Data
                 CODE_SMO = user.CODE_SMO,
                 USER_ID = user.Id,
                 NAME = user.UserName,
+                WithSing = user.WithSing,
                 Password = user.PasswordClaim()?.ClaimValue
             };
         }

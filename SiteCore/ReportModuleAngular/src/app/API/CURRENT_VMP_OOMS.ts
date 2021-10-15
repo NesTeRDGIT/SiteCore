@@ -52,6 +52,7 @@ export class VMP_OOMS {
     DAYS: number;
     MKB: string;
     SUMP: number;
+    SUMV: number;
 
     constructor(obj: any) {
         if (obj != null) {
@@ -73,6 +74,7 @@ export class VMP_OOMS {
             this.DAYS = obj.DAYS;
             this.MKB = obj.MKB;
             this.SUMP = obj.SUMP;
+            this.SUMV = obj.SUMV;
 
         }
     }

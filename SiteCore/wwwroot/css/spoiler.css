@@ -28,6 +28,7 @@
 .spoiler .box {
     display: none;
     opacity: 0;
+    overflow: auto;
 }
 
 

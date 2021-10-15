@@ -339,7 +339,7 @@ namespace SiteCore.Data
             using var con = new OracleConnection(ConnectionString);
             using var cmd = new OracleCommand("select * from table(OOMS_REPORT.GetVMP_PERIOD(:dt1,:dt2))", con);
             cmd.Parameters.Add("dt1", dt1);
-            cmd.Parameters.Add("dt1", dt1);
+            cmd.Parameters.Add("dt2", dt2);
             con.Open();
             var reader = cmd.ExecuteReader();
             return VMP_OOMS.GetList(reader);
@@ -456,7 +456,10 @@ namespace SiteCore.Data
                 item.GRP_HMP = Convert.ToString(reader[nameof(GRP_HMP)]);
                 item.DAYS = Convert.ToInt32(reader[nameof(DAYS)]);
                 item.MKB = Convert.ToString(reader[nameof(MKB)]);
-                item.SUMP = Convert.ToDecimal(reader[nameof(SUMP)]);
+             
+                item.SUMV = Convert.ToDecimal(reader[nameof(SUMV)]);
+                if(reader[nameof(SUMP)]!=DBNull.Value)
+                    item.SUMP = Convert.ToDecimal(reader[nameof(SUMP)]);
                 return item;
             }
             catch (Exception ex)
@@ -482,7 +485,8 @@ namespace SiteCore.Data
         public string GRP_HMP { get; set; }
         public int DAYS { get; set; }
         public string MKB { get; set; }
-        public decimal SUMP { get; set; }
+        public decimal SUMV { get; set; }
+        public decimal? SUMP { get; set; }
     }
 
 

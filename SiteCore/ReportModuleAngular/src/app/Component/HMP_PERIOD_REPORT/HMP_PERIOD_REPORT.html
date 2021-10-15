@@ -28,7 +28,7 @@
                 <col style="width: 130px ">
                 <col style="width: 130px ">
                 <col style="width: 130px ">
-
+                <col style="width: 130px ">
             </colgroup>
         </ng-template>
         <ng-template pTemplate="header">
@@ -50,6 +50,7 @@
                 <th pResizableColumn>Группа ВМП</th>
                 <th pResizableColumn>Длительность</th>
                 <th pResizableColumn>Диагноз</th>
+                <th pResizableColumn>Сумма выставленная</th>
                 <th pResizableColumn>Сумма принятая</th>
 
             </tr>
@@ -73,6 +74,7 @@
                 <td>{{item.GRP_HMP}}</td>
                 <td>{{item.DAYS}}</td>
                 <td>{{item.MKB}}</td>
+                <td style="text-align:right">{{item.SUMV| number:'.2':'ru-RU'}}</td>
                 <td style="text-align:right">{{item.SUMP| number:'.2':'ru-RU'}}</td>
             </tr>
         </ng-template>
