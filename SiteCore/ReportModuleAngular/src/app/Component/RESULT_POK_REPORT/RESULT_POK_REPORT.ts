@@ -1,17 +1,18 @@
 ﻿import { Component, ViewChild, ElementRef, AfterViewInit } from "@angular/core";
-
+import { BaseReportComponent } from '../../Component/BaseReportComponent'
 import { IRepository } from "../../API/Repository";
 import { ZpzEffectiveness } from "../../API/zpzEffectiveness";
 import { FileAPI } from "../../API/FileAPI";
 @Component({ selector: "result-pok-report", templateUrl: "RESULT_POK_REPORT.html" })
-export class ResultPokReportComponent {
+export class ResultPokReportComponent extends BaseReportComponent {
     report: ZpzEffectiveness[] = [];
     dateB: Date;
     dateE:Date;
-    isLoad=false;
+   
     
     constructor(public repo: IRepository) {
-        this.dateB = this.dateE = new Date();
+        super();
+        this.dateB = this.dateE = new Date().addMonths(-1);
     }
 
 

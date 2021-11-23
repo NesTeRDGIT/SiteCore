@@ -1,16 +1,15 @@
 ﻿import { Component, ViewChild, ElementRef, AfterViewInit } from "@angular/core";
-
+import { BaseReportComponent } from '../../Component/BaseReportComponent'
 import { IRepository } from "../../API/Repository";
 import { EcoRecord} from "../../API/EcoRow";
 import { FileAPI } from "../../API/FileAPI";
 @Component({ selector: "eco-report", templateUrl: "ECO_REPORT.html" })
-export class EcoReportComponent {
+export class EcoReportComponent extends BaseReportComponent{
     report = new EcoRecord(null);
     period:Date;
-    isLoad=false;
-
     constructor(public repo: IRepository) {
-        this.period = new Date();
+        super();
+        this.period = new Date().addMonths(-1);
     }
 
 

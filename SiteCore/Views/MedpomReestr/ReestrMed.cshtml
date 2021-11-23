@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Отчеты";
+    var isAdmin = User.IsInRole("Admin");
+    var isOOMS = User.IsInRole("OOMS");
+    var isZPZ = User.IsInRole("OZPZ");
+}
+
+<app [isadmin]="@(isAdmin? "true": "false")" [isZpz]="@(isZPZ? "true": "false")" [isOms]="@(isOOMS? "true": "false")"></app>
+
+@section Scripts
+{
+    <script src="~/js/AngularApp/Reestr/main-es2018.js" asp-append-version="true"></script>
+    <script src="~/js/AngularApp/Reestr/polyfills-es2018.js" asp-append-version="true"></script>
+    <script src="~/js/AngularApp/Reestr/runtime-es2018.js" asp-append-version="true"></script>
+}
+@section Style
+{
+    <link href="~/js/AngularApp/Report/styles.css" rel="stylesheet"  asp-append-version="true" />
+}

@@ -1,0 +1,74 @@
+﻿<div style="display: flex; justify-content: space-between">
+    <input type="button" value="Обновить" class="ActionButton" (click)="getModel()" />
+    <input type="button" (click)="ShowInstruction()" class="ActionButton" value="Инструкция" />
+</div>
+<Instruction-Dialog [(display)]="displayDialog"></Instruction-Dialog>
+
+
+<hr />
+<Content-Load [isLoad]="isLoad">
+    <div *ngIf="!model.ConnectWCFon"><p style="text-align:left; color:red">Нет связи с сервисом приема</p></div>
+    <div *ngIf="model.ConnectWCFon">
+        <h2 *ngIf="model.FP===null">Нет текущих пакетов</h2>
+        <div *ngIf="model.FP!==null">
+            <table>
+                <tr><td width="200px">Код МО</td><td><b>{{model.FP.CodeMO}}</b></td></tr>
+                <tr><td>Наименование МО</td><td><b>{{model.FP.CaptionMO}}</b></td></tr>
+                <tr><td>Дата создания</td><td><b>{{model.FP.Date|date:'dd.MM.yyyy HH:mm'}}</b></td></tr>
+                <tr><td>Источник</td><td><span><b>{{model.FP.IST|ISTEnumRus}}</b></span></td></tr>
+                <tr><td>Статус</td><td><span [class.GreenText]="model.FP.Status=== StatusFilePack.FLKOK" [class.RedText]="model.FP.Status=== StatusFilePack.FLKERR" [class.YellowText]="model.FP.Status !== StatusFilePack.FLKERR && model.FP.Status !== StatusFilePack.FLKOK"><b>{{model.FP.Status|StatusFilePackRus}}</b></span></td></tr>
+                <tr><td>Комментарий</td><td><b>{{model.FP.CommentSite}}</b></td></tr>
+                <tr *ngIf="model.FP.Order>0"><td>Позиция в очереди</td><td><b><span>{{model.FP.Order}}</span></b></td></tr>
+                <tr *ngIf="model.FP.HasWarning"><td>Предупреждение</td><td><b><span class="YellowText">{{model.FP.WARNNING}}</span></b></td></tr>
+            </table>
+            <div style="padding-top:10px">
+                <div>
+                    <table class="customers">
+                        <thead>
+                            <tr>
+                                <th width="2%"></th>
+                                <th width="20%">Имя файла</th>
+                                <th width="20%">Тип файла</th>
+                                <th width="20%">Статус</th>
+                                <th width="35%">Комментарий</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let item of model.FP.FileList">
+                                <tr>
+                                    <td>
+                                        <img src="../../Image/IconOK.png" width="16" height="16" alt="Ok" *ngIf="item.Process ===  StepsProcess.FlkOk" />
+                                        <img src="../../Image/IconWarning.png" width="16" height="16" alt="Warning" *ngIf="item.Process ===  StepsProcess.Invite || item.Process ===  StepsProcess.XMLxsd" />
+                                        <img src="../../Image/IconERROR.png" width="16" height="16" alt="Error" *ngIf="item.Process ===  StepsProcess.ErrorXMLxsd || item.Process ===  StepsProcess.FlkErr|| item.Process ===  StepsProcess.NotInvite" />
+                                    </td>
+                                    <td>{{item.FileName}}</td>
+                                    <td>{{item.Type|ENUMasString:TYPEFILE}} - {{item.TYPE_NAME}}</td>
+                                    <td style="font-size:12px;">{{item.Process|StepsProcessRus}}</td>
+                                    <td style="font-size:12px;"><span>{{item.Comment}}</span></td>
+                                </tr>
+
+                                <tr *ngIf="item.FILE_L!=null" style="text-align: left;font-size: 10px;">
+                                    <td>
+                                        <img src="../../Image/IconOK.png" width="16" height="16" alt="Ok" *ngIf="item.FILE_L.Process ===  StepsProcess.FlkOk" />
+                                        <img src="../../Image/IconWarning.png" width="16" height="16" alt="Warning" *ngIf="item.FILE_L.Process ===  StepsProcess.Invite || item.FILE_L.Process ===  StepsProcess.XMLxsd" />
+                                        <img src="../../Image/IconERROR.png" width="16" height="16" alt="Error" *ngIf="item.FILE_L.Process ===  StepsProcess.ErrorXMLxsd || item.FILE_L.Process ===  StepsProcess.FlkErr|| item.FILE_L.Process ===  StepsProcess.NotInvite" />
+                                    </td>
+                                    <td>{{item.FILE_L.FileName}}</td>
+                                    <td>{{item.FILE_L.Type|ENUMasString:TYPEFILE}} - {{item.FILE_L.TYPE_NAME}}</td>
+                                    <td>{{item.FILE_L.Process|StepsProcessRus}}</td>
+                                    <td>{{item.FILE_L.Comment}}</td>
+                                </tr>
+
+                            </ng-container>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
+                <input class="ActionButton" type="submit" value="Скачать протокол" [disabled]="!model.FP.isResult || isLoadFile" (click)="getProtocol()" />
+            </div>
+        </div>
+    </div>
+</Content-Load>

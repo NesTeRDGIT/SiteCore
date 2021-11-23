@@ -1,0 +1,37 @@
+﻿<div style="display: flex; width: 100%;">
+    <div style="width: 23%">
+        <p-listbox [options]="reportList" optionLabel="Name" [(ngModel)]="selectedReport">
+            <ng-template let-item pTemplate="item">
+                <div style="display: flex; align-items: center; justify-content: space-between;width: 100%">
+                    <span class="ng-star-inserted">{{item.Name}}</span>
+                      <p-progressSpinner *ngIf="item.IsLoad" [style]="{width: '20px', height: '20px', marginLeft:'5px'}"></p-progressSpinner>
+                </div>
+            </ng-template>
+        </p-listbox>
+    </div>
+    <hr style="margin: 10px" />
+
+  
+
+
+    <div *ngIf="selectedReport!=null" style="width: 80%;">
+
+        <div *ngIf="selectedReport.Type===ReportType.LoadMedpom" style="width: 100%">
+            <load-reestr (onLoading)="onLoading($event,ReportType.LoadMedpom)" (onSend)="onSendReestr();"></load-reestr>
+        </div>
+        <div *ngIf="selectedReport.Type==ReportType.ViewMedpom" style="width: 100%">
+            <view-reestr (onLoading)="onLoading($event,ReportType.ViewMedpom)"></view-reestr>
+        </div>
+        <div *ngIf="selectedReport.Type==ReportType.ErrorSPR" style="width: 100%" >
+            <ERROR_SPR (onLoading)="onLoading($event,ReportType.ErrorSPR)" [AdminMode]="isAdmin"></ERROR_SPR>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+

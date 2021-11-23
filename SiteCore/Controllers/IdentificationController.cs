@@ -435,7 +435,10 @@ namespace SiteCore.Controllers
         public ModelException()
         {
         }
-
+        public ModelException( string message) : base(message)
+        {
+            Key = "";
+        }
         public ModelException(string key, string message) : base(message)
         {
             Key = key;

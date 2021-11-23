@@ -6,7 +6,7 @@
       "root": "",
       "sourceRoot": "src",
       "i18n": {
-        "sourceLocale": "ru-RU"
+        "sourceLocale": "ru"
       },
 
       "architect": {

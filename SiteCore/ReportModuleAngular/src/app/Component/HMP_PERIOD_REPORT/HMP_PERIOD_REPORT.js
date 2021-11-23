@@ -5,12 +5,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { Component } from "@angular/core";
+import { BaseReportComponent } from '../../Component/BaseReportComponent';
 import { FileAPI } from "../../API/FileAPI";
-let HmpReportPeriodComponent = class HmpReportPeriodComponent {
+let HmpReportPeriodComponent = class HmpReportPeriodComponent extends BaseReportComponent {
     constructor(repo) {
+        super();
         this.repo = repo;
         this.report = [];
-        this.isLoad = false;
         this.getReport = async () => {
             try {
                 this.isLoad = true;
@@ -32,7 +33,7 @@ let HmpReportPeriodComponent = class HmpReportPeriodComponent {
                 alert(err.toString());
             }
         };
-        this.dateB = this.dateE = new Date();
+        this.dateB = this.dateE = new Date().addMonths(-1);
     }
 };
 HmpReportPeriodComponent = __decorate([

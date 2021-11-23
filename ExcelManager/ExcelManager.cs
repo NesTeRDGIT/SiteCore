@@ -1549,7 +1549,7 @@ namespace ExcelManager
                                     new PatternFill(
                                          new ForegroundColor
                                          {
-                                             Rgb = new HexBinaryValue { Value = fill.color.ToString().Replace("#", "") }
+                                             Rgb = new HexBinaryValue { Value = fill.color.ToHexString().Replace("#", "") }
                                          }
                                                    )
                                     { PatternType = PatternValues.Solid }
@@ -2796,6 +2796,10 @@ namespace ExcelManager
             }
         }
 
+        public static string ToHexString(this System.Drawing.Color c) => $"#{c.R:X2}{c.G:X2}{c.B:X2}";
+
+        public static string ToRgbString(this System.Drawing.Color c) => $"RGB({c.R}, {c.G}, {c.B})";
+       
 
 
 

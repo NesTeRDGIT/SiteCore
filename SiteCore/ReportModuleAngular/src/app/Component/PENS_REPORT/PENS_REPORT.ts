@@ -1,16 +1,17 @@
 ﻿import { Component, ViewChild, ElementRef, AfterViewInit } from "@angular/core";
-
+import { BaseReportComponent } from '../../Component/BaseReportComponent'
 import { IRepository } from "../../API/Repository";
 import { PensRow } from "../../API/PensRow";
 import { FileAPI } from "../../API/FileAPI";
 @Component({ selector: "pens-report", templateUrl: "PENS_REPORT.html" })
-export class PensReportComponent {
+export class PensReportComponent extends BaseReportComponent {
     report: PensRow[] = [];
     year: number;
-    isLoad=false;
+    
     
     constructor(public repo: IRepository) {
-        this.year = new Date().getFullYear();
+        super();
+        this.year = new Date().addMonths(-1).getFullYear();
     }
 
 

@@ -13,13 +13,7 @@ namespace SiteCore.Hubs
     {
         UserInfoHelper userInfoHelper;
         private UserInfo _userInfo;
-        private UserInfo userInfo
-        {
-            get
-            {
-                return userInfoHelper.GetInfo(Context.User?.Identity.Name);
-            }
-        }
+        private UserInfo userInfo => userInfoHelper.GetInfo(Context.User?.Identity.Name);
 
         public NotificationHub(UserInfoHelper userInfoHelper)
         {
@@ -43,6 +37,13 @@ namespace SiteCore.Hubs
             await Groups.AddToGroupAsync(Context.ConnectionId, Context.ConnectionId);
         }
 
+        public override Task OnDisconnectedAsync(Exception? exception)
+        {
+            var CODE_MO = userInfo.CODE_MO;
+            Groups.RemoveFromGroupAsync(Context.ConnectionId, CODE_MO);
+            Groups.RemoveFromGroupAsync(Context.ConnectionId, "Admin");
+            return base.OnDisconnectedAsync(exception);
+        }
 
     }
 

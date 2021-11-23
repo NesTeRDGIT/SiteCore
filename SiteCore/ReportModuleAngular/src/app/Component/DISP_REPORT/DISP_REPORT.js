@@ -5,21 +5,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { Component } from "@angular/core";
-import { DispRecord, DispVzrRow, DispDetRow, ProfDet, ProfVzr } from "../../API/DispEntity";
+import { BaseReportComponent } from '../../Component/BaseReportComponent';
+import { DispRecord } from "../../API/DispEntity";
 import { FileAPI } from "../../API/FileAPI";
-let DispReportComponent = class DispReportComponent {
+let DispReportComponent = class DispReportComponent extends BaseReportComponent {
     constructor(repo) {
+        super();
         this.repo = repo;
         this.report = new DispRecord(null);
-        this.isLoad = false;
         this.getReport = async () => {
             try {
                 this.isLoad = true;
-                this.report.DispVzr.push(new DispVzrRow(null));
-                this.report.DispDet.push(new DispDetRow(null));
-                this.report.ProfVzr.push(new ProfVzr(null));
-                this.report.ProfDet.push(new ProfDet(null));
-                // this.report = await this.repo.getDispReport(this.period.getFullYear(), this.period.getMonth()+1);
+                this.report = await this.repo.getDispReport(this.period.getFullYear(), this.period.getMonth() + 1);
             }
             catch (err) {
                 alert(err.toString());
@@ -30,14 +27,14 @@ let DispReportComponent = class DispReportComponent {
         };
         this.getXls = async () => {
             try {
-                const file = await this.repo.getEcoXlsAsync();
+                const file = await this.repo.getDispXlsAsync();
                 FileAPI.downloadBase64File(file.FileContents, file.ContentType, file.FileDownloadName);
             }
             catch (err) {
                 alert(err.toString());
             }
         };
-        this.period = new Date();
+        this.period = new Date().addMonths(-1);
     }
 };
 DispReportComponent = __decorate([

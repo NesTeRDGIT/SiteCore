@@ -1,0 +1,210 @@
+﻿<h2>Отчет ДЛИ</h2>
+<h5>нарастающим итогом</h5>
+<label>Отчетный период </label>
+<input type="number" value="{{year}}" required [disabled]="isLoad" />
+<input type="button" value="Запрос" class="ActionButton" (click)="getReport()" [disabled]="isLoad" style="margin-left: 10px;"/>
+<hr />
+
+<p-tabView>
+<p-tabPanel header="Таблица 1">
+    <div style="overflow: auto">
+        <p-table [value]="report.tbl1" [scrollable]="true" scrollHeight="35vh" [resizableColumns]="true" [autoLayout]="true" styleClass="p-datatable-gridlines" columnResizeMode="expand" [loading]="isLoad">
+            <ng-template pTemplate="colgroup">
+                <colgroup>
+                    <col style="width: 150px">
+                    <col style="width: 300px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pResizableColumn rowspan="2">СМО</th>
+                    <th pResizableColumn rowspan="2">Наименование показателя</th>
+                    <th pResizableColumn rowspan="2">№ стр.</th>
+                    <th pResizableColumn colspan="2">Количество исследований, распределенных Комиссией по разработке территориальной программы ОМС(далее - комиссия), ед.</th>
+                    <th pResizableColumn colspan="2">Размер финансового обеспечения распределенных Комиссией исследований, тыс. руб.</th>
+                    <th pResizableColumn rowspan="2">Количество проведенных исследований ед.</th>
+                    <th pResizableColumn rowspan="2">Численность застрахованных лиц, которым проведены исследования, чел.</th>
+                    <th pResizableColumn rowspan="2">Размер финансового обеспечения проведенных исследований, тыс.руб.</th>
+                    <th pResizableColumn rowspan="2">Количество проведенных исследований застрахованным лицам за пределами территории субъекта РФ, в котором выдан полис ОМС , ед.</th>
+                    <th pResizableColumn rowspan="2">Численность застрахованных лиц за пределами территории субъекта РФ, в котором выдан полис ОМС, которым проведены исследования, чел.</th>
+                    <th pResizableColumn rowspan="2">Размер финансового обеспечения проведенных исследований застрахованным лицам за пределами территории субъекта РФ, в котором выдан полис ОМС, тыс. руб.</th>
+                </tr>
+                <tr>
+                    <th pResizableColumn>На год</th>
+                    <th pResizableColumn>На квартал</th>
+                    <th pResizableColumn>На год</th>
+                    <th pResizableColumn>На квартал</th>
+                </tr>
+                <tr>
+                    <th pResizableColumn>А</th>
+                    <th pResizableColumn>Б</th>
+                    <th pResizableColumn>1</th>
+                    <th pResizableColumn>2</th>
+                    <th pResizableColumn>3</th>
+                    <th pResizableColumn>4</th>
+                    <th pResizableColumn>5</th>
+                    <th pResizableColumn>6</th>
+                    <th pResizableColumn>7</th>
+                    <th pResizableColumn>8</th>
+                    <th pResizableColumn>9</th>
+                    <th pResizableColumn>10</th>
+                    <th pResizableColumn>11</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+                <tr>
+                    <td style="text-align: center">{{item.SMO}}</td>
+                    <td style="text-align: center">{{item.NAME}}</td>
+                    <td style="text-align: right">{{rowIndex+1}}</td>
+                    <td style="text-align: right; background-color: silver">{{0| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: right; background-color: silver">{{0| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: right; background-color: silver">{{0| number:'.2':'ru-RU'}}</td>
+                    <td style="text-align: right; background-color: silver">{{0| number:'.2':'ru-RU'}}</td>
+                    <td style="text-align: right">{{item.K| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: right">{{item.ENP| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: right">{{item.S| number:'.2':'ru-RU'}}</td>
+                    <td style="text-align: right">{{item.K_MTR| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: right">{{item.ENP_MTR| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: right">{{item.S_MTR| number:'.2':'ru-RU'}}</td>
+
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</p-tabPanel>
+<p-tabPanel header="Таблица 2">
+    <div style="overflow: auto">
+        <p-table [value]="report.tbl2" [scrollable]="true" scrollHeight="35vh" [resizableColumns]="true" [autoLayout]="true" styleClass="p-datatable-gridlines" columnResizeMode="expand" [loading]="isLoad">
+            <ng-template pTemplate="colgroup">
+                <colgroup>
+                    <col style="width: 150px">
+                    <col style="width: 300px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
+
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pResizableColumn rowspan="2">Субъект Российской Федерации</th>
+                    <th pResizableColumn rowspan="2">№ строки</th>
+                    <th pResizableColumn colspan="3">Компьютерная томография</th>
+                    <th pResizableColumn colspan="3">Магнитно-резонансная томография</th>
+                    <th pResizableColumn colspan="3">Ультразвуковое исследование сердечно-сосудистой системы</th>
+                    <th pResizableColumn colspan="3">Эндоскопические диагностические исследования</th>
+                    <th pResizableColumn colspan="3">Молекулярно-генетические исследования с целью выявления онкологических заболеваний</th>
+                    <th pResizableColumn colspan="3">Гистологические исследования с целью выявления онкологических заболеваний</th>
+                </tr>
+                <tr>
+                    <th pResizableColumn>Количество проведенных исследований застрахованным лицам за пределами территории субъекта РФ, в котором выдан полис ОМС, ед.</th>
+                    <th pResizableColumn>Численность застрахованных лиц за пределами территории субъекта РФ, в котором выдан полис ОМС, которым проведены исследования, чел.</th>
+                    <th pResizableColumn>Размер финансового обеспечения проведенных исследований застрахованным лицам за пределами территории субъекта РФ, в котором выдан полис ОМС, тыс.рублей</th>
+
+                    <th pResizableColumn>Количество проведенных исследований застрахованным лицам за пределами территории субъекта РФ, в котором выдан полис ОМС, ед.</th>
+                    <th pResizableColumn>Численность застрахованных лиц за пределами территории субъекта РФ, в котором выдан полис ОМС, которым проведены исследования, чел.</th>
+                    <th pResizableColumn>Размер финансового обеспечения проведенных исследований застрахованным лицам за пределами территории субъекта РФ, в котором выдан полис ОМС, тыс.рублей</th>
+
+                    <th pResizableColumn>Количество проведенных исследований застрахованным лицам за пределами территории субъекта РФ, в котором выдан полис ОМС, ед.</th>
+                    <th pResizableColumn>Численность застрахованных лиц за пределами территории субъекта РФ, в котором выдан полис ОМС, которым проведены исследования, чел.</th>
+                    <th pResizableColumn>Размер финансового обеспечения проведенных исследований застрахованным лицам за пределами территории субъекта РФ, в котором выдан полис ОМС, тыс.рублей</th>
+
+                    <th pResizableColumn>Количество проведенных исследований застрахованным лицам за пределами территории субъекта РФ, в котором выдан полис ОМС, ед.</th>
+                    <th pResizableColumn>Численность застрахованных лиц за пределами территории субъекта РФ, в котором выдан полис ОМС, которым проведены исследования, чел.</th>
+                    <th pResizableColumn>Размер финансового обеспечения проведенных исследований застрахованным лицам за пределами территории субъекта РФ, в котором выдан полис ОМС, тыс.рублей</th>
+
+                    <th pResizableColumn>Количество проведенных исследований застрахованным лицам за пределами территории субъекта РФ, в котором выдан полис ОМС, ед.</th>
+                    <th pResizableColumn>Численность застрахованных лиц за пределами территории субъекта РФ, в котором выдан полис ОМС, которым проведены исследования, чел.</th>
+                    <th pResizableColumn>Размер финансового обеспечения проведенных исследований застрахованным лицам за пределами территории субъекта РФ, в котором выдан полис ОМС, тыс.рублей</th>
+
+                    <th pResizableColumn>Количество проведенных исследований застрахованным лицам за пределами территории субъекта РФ, в котором выдан полис ОМС, ед.</th>
+                    <th pResizableColumn>Численность застрахованных лиц за пределами территории субъекта РФ, в котором выдан полис ОМС, которым проведены исследования, чел.</th>
+                    <th pResizableColumn>Размер финансового обеспечения проведенных исследований застрахованным лицам за пределами территории субъекта РФ, в котором выдан полис ОМС, тыс.рублей</th>
+
+                </tr>
+                <tr>
+                    <th pResizableColumn>А</th>
+                    <th pResizableColumn>Б</th>
+                    <th pResizableColumn>1</th>
+                    <th pResizableColumn>2</th>
+                    <th pResizableColumn>3</th>
+                    <th pResizableColumn>4</th>
+                    <th pResizableColumn>5</th>
+                    <th pResizableColumn>6</th>
+                    <th pResizableColumn>7</th>
+                    <th pResizableColumn>8</th>
+                    <th pResizableColumn>9</th>
+                    <th pResizableColumn>10</th>
+                    <th pResizableColumn>11</th>
+                    <th pResizableColumn>12</th>
+                    <th pResizableColumn>13</th>
+                    <th pResizableColumn>14</th>
+                    <th pResizableColumn>15</th>
+                    <th pResizableColumn>16</th>
+                    <th pResizableColumn>17</th>
+                    <th pResizableColumn>18</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+                <tr>
+                    <td style="text-align: center">{{item.NAME_TFK}}</td>
+                    <td style="text-align: center">{{item.OKRUG}}</td>
+                    <td style="text-align: right">{{item.C_KT| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: right">{{item.E_KT| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: right">{{item.S_KT| number:'.2':'ru-RU'}}</td>
+
+                    <td style="text-align: right">{{item.C_MRT| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: right">{{item.E_MRT| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: right">{{item.S_MRT| number:'.2':'ru-RU'}}</td>
+
+                    <td style="text-align: right">{{item.C_USI| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: right">{{item.E_USI| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: right">{{item.S_USI| number:'.2':'ru-RU'}}</td>
+
+                    <td style="text-align: right">{{item.C_ENDO| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: right">{{item.E_ENDO| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: right">{{item.S_ENDO| number:'.2':'ru-RU'}}</td>
+
+                    <td style="text-align: right">{{item.C_MOL| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: right">{{item.E_MOL| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: right">{{item.S_MOL| number:'.2':'ru-RU'}}</td>
+
+                    <td style="text-align: right">{{item.C_GIST| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: right">{{item.E_GIST| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: right">{{item.S_GIST| number:'.2':'ru-RU'}}</td>
+                    
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</p-tabPanel>
+</p-tabView>
+
+<hr />
+<button class="ActionButton" (click)="getXls()" [disabled]="isLoad || report.length===0">Скачать Excel</button>

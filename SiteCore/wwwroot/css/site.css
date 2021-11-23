@@ -122,6 +122,17 @@
     outline: none;
 }
 
+.showButtonICO {
+    background: url(../Image/Loupe.PNG) no-repeat;
+    background-size: 100%;
+    background-position: center;
+    cursor: pointer;
+    width: 45px;
+    height: 45px;
+    border: none;
+    outline: none;
+}
+
     .editButtonICO:active {
         background-size: 90%;
     }

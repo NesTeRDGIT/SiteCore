@@ -1,18 +1,19 @@
 ﻿import { Component, ViewChild, ElementRef, AfterViewInit } from "@angular/core";
-
+import { BaseReportComponent } from '../../Component/BaseReportComponent'
 import { IRepository } from "../../API/Repository";
 import { ResultControlDET, ResultControlVZR } from "../../API/ResultControlReportRows";
 import { FileAPI } from "../../API/FileAPI";
 @Component({ selector: "result-control-report", templateUrl: "ResultControlReport.html" })
-export class ResultControlComponent {
+export class ResultControlComponent extends BaseReportComponent {
     reportVZR: ResultControlVZR[] = [];
     reportDET: ResultControlDET[] = [];
     dateB: Date;
     dateE:Date;
-    isLoad=false;
+  
     
     constructor(public repo: IRepository) {
-        this.dateB = this.dateE = new Date();
+        super();
+        this.dateB = this.dateE = new Date().addMonths(-1);
     }
 
 

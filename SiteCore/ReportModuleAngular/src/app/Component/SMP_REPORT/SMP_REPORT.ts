@@ -1,17 +1,18 @@
 ﻿import { Component, ViewChild, ElementRef, AfterViewInit } from "@angular/core";
-
+import { BaseReportComponent } from '../../Component/BaseReportComponent'
 import { IRepository } from "../../API/Repository";
 import { SMPRow } from "../../API/SMPRow";
 import { FileAPI } from "../../API/FileAPI";
 @Component({ selector: "smp-report", templateUrl: "SMP_REPORT.html" })
-export class SmpReportComponent {
+export class SmpReportComponent extends BaseReportComponent {
     report: SMPRow[] = [];
     dateB: Date;
     dateE: Date;
-    isLoad=false;
+   
     
     constructor(public repo: IRepository) {
-        this.dateB = this.dateE  = new Date();
+        super();
+        this.dateB = this.dateE  = new Date().addMonths(-1);
     }
 
 

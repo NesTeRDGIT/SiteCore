@@ -12,6 +12,8 @@ import { SMPRow } from "./SMPRow";
 import { DataBaseStateRow } from "./DataBaseStateRow";
 import { PensRow } from "./PensRow";
 import { DispRecord } from "./DispEntity";
+import { Kv2MtrRow } from "./Kv2MtrRow";
+import { DliRecord } from "./DliRow";
 @Injectable()
 export abstract class IRepository {
     abstract getVmpReportAsync(): Promise<CURRENT_VMP_OOMS[]>;
@@ -43,13 +45,73 @@ export abstract class IRepository {
 
     abstract getDispReport(year: number, month: number): Promise<DispRecord>;
     abstract getDispXlsAsync(): Promise<FileASP>;
-    
+
+    abstract getKv2MtrReportAsync(year: number, month: number): Promise<Kv2MtrRow[]>;
+    abstract getKv2MtrXlsAsync(): Promise<FileASP>;
+
+    abstract getDliReportAsync(year: number): Promise<DliRecord>;
+    abstract getDliXlsAsync(): Promise<FileASP>;
 
 
 }
+
+
+
 @Injectable()
 export class Repository implements IRepository {
-    defaultFetchParam: RequestInit = {  credentials: "same-origin" };
+    defaultFetchParam: RequestInit = { credentials: "same-origin" };
+
+
+    async getDliReportAsync(year: number): Promise<DliRecord> {
+
+        const response = await fetch(`GetDliReport?year=${year}`, this.defaultFetchParam);
+        if (response.ok) {
+            const data = await response.json();
+            if (data.Result) {
+                return new DliRecord(data.Value);
+            }
+            throw new Error(data.Value);
+        }
+        throw new Error(`${response.status}: ${response.statusText}`);
+    }
+    async getDliXlsAsync(): Promise<FileASP> {
+        const response = await fetch("GetDliXls", this.defaultFetchParam);
+        if (response.ok) {
+            const data = await response.json();
+            if (data.Result) {
+                return new FileASP(data.Value);
+            }
+            throw new Error(data.Value);
+        }
+        throw new Error(`${response.status}: ${response.statusText}`);
+    }
+
+
+    async getKv2MtrReportAsync(year: number, month: number): Promise<Kv2MtrRow[]> {
+
+        const response = await fetch(`GetKv2MtrReport?year=${year}&month=${month}`, this.defaultFetchParam);
+        if (response.ok) {
+            const data = await response.json();
+            if (data.Result) {
+                return data.Value.map((value) => new Kv2MtrRow(value));
+            }
+            throw new Error(data.Value);
+        }
+        throw new Error(`${response.status}: ${response.statusText}`);
+    }
+    async getKv2MtrXlsAsync(): Promise<FileASP> {
+        const response = await fetch("GetKv2MtrXls", this.defaultFetchParam);
+        if (response.ok) {
+            const data = await response.json();
+            if (data.Result) {
+                return new FileASP(data.Value);
+            }
+            throw new Error(data.Value);
+        }
+        throw new Error(`${response.status}: ${response.statusText}`);
+    }
+
+
     async getDispReport(year: number, month: number): Promise<DispRecord> {
 
         const response = await fetch(`GetDispReport?year=${year}&month=${month}`, this.defaultFetchParam);

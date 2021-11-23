@@ -32,10 +32,8 @@ namespace SiteCore
     {
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
-            var builder = new ConfigurationBuilder().SetBasePath(env.ContentRootPath)
-      .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-      .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-      .AddEnvironmentVariables();
+            var builder = new ConfigurationBuilder().SetBasePath(env.ContentRootPath).AddJsonFile("appsettings.json", optional: true, reloadOnChange: true).AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
 
             Configuration = builder.Build();
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -77,7 +75,7 @@ namespace SiteCore
             services.AddZPZ(Configuration);
             services.AddSTAC(Configuration);
             services.AddSIGN(Configuration);
-            
+            services.AddReport(Configuration);
 
         }
 
@@ -221,8 +219,18 @@ namespace SiteCore
             return services;
         }
 
+        public static IServiceCollection AddReport(this IServiceCollection services, IConfiguration Configuration)
+        {
+            services.AddTransient<IOMSXLSCreator>(provider =>
+            {
+                var pathTemplate = Path.Combine(provider.GetService<IWebHostEnvironment>().WebRootPath, "Template", "OOMS");
+                return new OMSXLSCreator(Path.Combine(pathTemplate, "DISP_TEMPLATE.xlsx"), Path.Combine(pathTemplate, "KV2_MTR_TEMPLATE.xlsx"), Path.Combine(pathTemplate, "DLI_TEMPLATE.xlsx"));
 
-        
+            });
+            return services;
+        }
+
+
     }
 
 

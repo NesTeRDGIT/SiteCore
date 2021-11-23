@@ -5,12 +5,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { Component } from "@angular/core";
+import { BaseReportComponent } from '../../Component/BaseReportComponent';
 import { FileAPI } from "../../API/FileAPI";
-let KohlReportComponent = class KohlReportComponent {
+let KohlReportComponent = class KohlReportComponent extends BaseReportComponent {
     constructor(repo) {
+        super();
         this.repo = repo;
         this.report = [];
-        this.isLoad = false;
         this.getReport = async () => {
             try {
                 this.isLoad = true;
@@ -32,7 +33,7 @@ let KohlReportComponent = class KohlReportComponent {
                 alert(err.toString());
             }
         };
-        const now = new Date();
+        const now = new Date().addMonths(-1);
         this.dateB = new Date(now.getFullYear(), 0, 1);
         this.dateE = new Date(now.getFullYear(), 11, 31);
     }

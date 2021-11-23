@@ -5,13 +5,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { Component } from "@angular/core";
+import { BaseReportComponent } from '../../Component/BaseReportComponent';
 import { EcoRecord } from "../../API/EcoRow";
 import { FileAPI } from "../../API/FileAPI";
-let EcoReportComponent = class EcoReportComponent {
+let EcoReportComponent = class EcoReportComponent extends BaseReportComponent {
     constructor(repo) {
+        super();
         this.repo = repo;
         this.report = new EcoRecord(null);
-        this.isLoad = false;
         this.getReport = async () => {
             try {
                 this.isLoad = true;
@@ -33,7 +34,7 @@ let EcoReportComponent = class EcoReportComponent {
                 alert(err.toString());
             }
         };
-        this.period = new Date();
+        this.period = new Date().addMonths(-1);
     }
 };
 EcoReportComponent = __decorate([

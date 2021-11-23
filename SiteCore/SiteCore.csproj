@@ -26,6 +26,13 @@
     <None Remove="Angular\src\app\YesNoPIPE.ts" />
     <None Remove="Angular\src\main.ts" />
     <None Remove="Angular\src\polyfills.ts" />
+    <None Remove="MedpomReestrAngular\src\app\API\URLHelper.ts" />
+    <None Remove="MedpomReestrAngular\src\app\Component\ContentLoad\ContentLoad.css" />
+    <None Remove="MedpomReestrAngular\src\app\Component\ERROR_EDIT\ERROR_EDIT.css" />
+    <None Remove="MedpomReestrAngular\src\app\Component\ERROR_SPR\ERROR_SPR.css" />
+    <None Remove="MedpomReestrAngular\src\app\Component\FileLoader\FileLoader.css" />
+    <None Remove="MedpomReestrAngular\src\app\Component\LoadReestrComponent\LoadReestrComponent.css" />
+    <None Remove="MedpomReestrAngular\src\app\Component\ProgressBar\ProgressBar.css" />
     <None Remove="ReportModuleAngular\src\app\API\DataBaseStateRow.ts" />
     <None Remove="ReportModuleAngular\src\app\API\DispEntity.ts" />
     <None Remove="ReportModuleAngular\src\app\API\FileASP.ts" />
@@ -39,15 +46,46 @@
     <None Remove="ReportModuleAngular\src\app\Component\ABORT_REPORT\ABORT_REPORT.ts" />
     <None Remove="ReportModuleAngular\src\app\Component\DBState\DBState.ts" />
     <None Remove="ReportModuleAngular\src\app\Component\DISP_REPORT\DISP_REPORT.ts" />
+    <None Remove="ReportModuleAngular\src\app\Component\DLI_REPORT\DLI_REPORT.ts" />
     <None Remove="ReportModuleAngular\src\app\Component\ECO_REPORT\ECO_REPORT.ts" />
     <None Remove="ReportModuleAngular\src\app\Component\HMP_PERIOD_REPORT\HMP_PERIOD_REPORT.ts" />
     <None Remove="ReportModuleAngular\src\app\Component\HMP_REPORT\HMP_REPORT.ts" />
     <None Remove="ReportModuleAngular\src\app\Component\KOHL_REPORT\KOHL_REPORT.ts" />
+    <None Remove="ReportModuleAngular\src\app\Component\KV2_MTR_REPORT\KV2_MTR_REPORT.ts" />
     <None Remove="ReportModuleAngular\src\app\Component\OKSONMK_REPORT\OKSONMK_REPORT.ts" />
     <None Remove="ReportModuleAngular\src\app\Component\PENS_REPORT\PENS_REPORT.ts" />
     <None Remove="ReportModuleAngular\src\app\Component\ResultContrReport\ResultControlReport.ts" />
     <None Remove="ReportModuleAngular\src\app\Component\RESULT_POK_REPORT\RESULT_POK_REPORT.ts" />
     <None Remove="ReportModuleAngular\src\app\Component\SMP_REPORT\SMP_REPORT.ts" />
+    <None Remove="ReportModuleAngular\src\app\Extensions\Date.extensions.ts" />
+    <None Remove="ReportModuleAngular\src\app\Extensions\Extensions.d.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="MedpomReestrAngular\src\app\Component\ContentLoad\ContentLoad.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="MedpomReestrAngular\src\app\Component\ERROR_EDIT\ERROR_EDIT.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="MedpomReestrAngular\src\app\Component\ERROR_SPR\ERROR_SPR.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="MedpomReestrAngular\src\app\Component\LoadReestrComponent\LoadReestrComponent.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="MedpomReestrAngular\src\app\Component\ProgressBar\ProgressBar.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="MedpomReestrAngular\src\app\Component\FileLoader\FileLoader.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 
@@ -86,9 +124,11 @@
     <Folder Include="Angular\src\app\Новая папка\" />
     <Folder Include="Areas\" />
     <Folder Include="Connected Services\" />
+    <Folder Include="MedpomReestrAngular\src\app\ClassicEditor\" />
     <Folder Include="wwwroot\js\ReactApp\" />
     <Folder Include="wwwroot\CryptoPROSoft\" />
     <Folder Include="wwwroot\SignInstunction\" />
+    <Folder Include="AngularComponent\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -122,6 +162,7 @@
     <TypeScriptCompile Include="Angular\src\app\YesNoPIPE.ts" />
     <TypeScriptCompile Include="Angular\src\main.ts" />
     <TypeScriptCompile Include="Angular\src\polyfills.ts" />
+    <TypeScriptCompile Include="MedpomReestrAngular\src\app\API\URLHelper.ts" />
     <TypeScriptCompile Include="ReportModuleAngular\src\app\API\DataBaseStateRow.ts" />
     <TypeScriptCompile Include="ReportModuleAngular\src\app\API\DispEntity.ts" />
     <TypeScriptCompile Include="ReportModuleAngular\src\app\API\FileASP.ts" />
@@ -135,10 +176,16 @@
     <TypeScriptCompile Include="ReportModuleAngular\src\app\Component\DBState\DBState.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="ReportModuleAngular\src\app\Component\DLI_REPORT\DLI_REPORT.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="ReportModuleAngular\src\app\Component\DISP_REPORT\DISP_REPORT.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ReportModuleAngular\src\app\Component\HMP_PERIOD_REPORT\HMP_PERIOD_REPORT.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ReportModuleAngular\src\app\Component\KV2_MTR_REPORT\KV2_MTR_REPORT.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ReportModuleAngular\src\app\Component\PENS_REPORT\PENS_REPORT.ts">
@@ -166,10 +213,23 @@
     <TypeScriptCompile Include="ReportModuleAngular\src\app\Component\ResultContrReport\ResultControlReport.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="ReportModuleAngular\src\app\Extensions\date.extensions.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ReportModuleAngular\src\app\Extensions\Extensions.d.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <WCFMetadata Include="Connected Services" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ReportModuleAngular\src\app\Extensions\DateExtensions - Копировать.js">
+      <DependentUpon>Extensions.d.js</DependentUpon>
+    </None>
+    <None Update="ReportModuleAngular\src\app\Extensions\DateExtensions - Копировать.js.map">
+      <DependentUpon>Extensions.d.js.map</DependentUpon>
+    </None>
   </ItemGroup>
 
 </Project>

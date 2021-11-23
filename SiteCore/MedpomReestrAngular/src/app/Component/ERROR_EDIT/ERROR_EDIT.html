@@ -1,0 +1,41 @@
+﻿<p-dialog [header]="ReadOnly? 'Просмотр': ID_ERR===null ? 'Новый' :'Редактор'" [(visible)]="display" [style]="{width: '90vw'}">
+    <Content-Load [isLoad]="isLoad">
+        <div class="ErrorLi">
+            <ul>
+                <li *ngFor="let err of errorList"  >{{err}}</li>
+            </ul>
+        </div>
+
+        <table style="width: 100%;">
+            <tr>
+                <td style="width: 20%;">Секция</td>
+                <td>
+                    <span *ngIf="ReadOnly">{{SelectedSection?.SECTION_NAME}}</span>
+                    <p-autoComplete *ngIf="!ReadOnly" [(ngModel)]="SelectedSection" [suggestions]="SectionSprFiltered" field="SECTION_NAME" [dropdown]="true" (completeMethod)="filterSectionSpr($event)"></p-autoComplete>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Код ошибки</td>
+                <td>
+                    <span *ngIf="ReadOnly">{{model.OSN_TFOMS}}</span>
+                    <input *ngIf="!ReadOnly" type="text" pInputText [(ngModel)]="model.OSN_TFOMS" style="width: 100%;">
+                </td>
+            </tr>
+            <tr>
+                <td>Пример текста ошибки</td>
+                <td>
+                    <span *ngIf="ReadOnly">{{model.EXAMPLE}}</span>
+                    <input *ngIf="!ReadOnly" type="text" pInputText [(ngModel)]="model.EXAMPLE" style="width: 100%;">
+                </td>
+            </tr>
+        </table>
+        <p></p>
+      
+        <ckeditor [editor]="Editor" readOnly="true" [(ngModel)]="model.TEXT" [disabled]="ReadOnly" (ready)="onReady($event)"></ckeditor>
+        <p></p>
+        <div>
+            <input *ngIf="!ReadOnly" type="submit" value="Сохранить" class="ActionButton" (click)="SaveError()"  />
+        </div>
+    </Content-Load>
+</p-dialog>

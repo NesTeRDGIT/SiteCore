@@ -13,7 +13,9 @@ using SiteCore.Class;
 using SiteCore.Data;
 using SiteCore.Models;
 using System.Text;
-
+using Castle.Components.DictionaryAdapter;
+using FileItem = ServiceLoaderMedpomData.FileItem;
+using SiteCore.Class;
 namespace SiteCore.Controllers
 {
     [Authorize(Roles = "MO, Admin")]
@@ -44,51 +46,91 @@ namespace SiteCore.Controllers
             this.userInfoHelper = userInfoHelper;
         }
 
-        #region Просмотр реестров
-        public IActionResult ViewReestr()
+        public IActionResult ReestrMed()
         {
             return View();
         }
 
-        public IActionResult ViewReestrAjax()
+        private CustomJsonResult InternalError(Exception e,bool toList=false)
         {
-            return PartialView("_ViewReestrPartial", GetViewReestrModel);
-        }
-        ViewReestrViewModel GetViewReestrModel
-        {
-            get
+            object err;
+            if (e is ModelException)
             {
-                var VRVM = new ViewReestrViewModel { ConnectWCFon = WcfConnect.Ping() };
-                if (!VRVM.ConnectWCFon) return VRVM;             
-                if (!string.IsNullOrEmpty(userInfo.CODE_MO))
-                {
-                    var t = WcfConnect.GetPackForMO(userInfo.CODE_MO);
-                    VRVM.FP = t.FP;
-                    VRVM.Order = t.ORDER;
-                }
-                return VRVM;
+                err = toList ? new List<string> { e.Message } : e.Message;
             }
-            
+            else
+            {
+                err = toList ? new List<string> { "Внутренняя ошибка сервиса!" } : "Внутренняя ошибка сервиса!";
+                logger?.AddLogExtension(e);
+            }
+            return CustomJsonResult.Create(err, false);
+        }
+        private CustomJsonResult UserError(Exception e)
+        {
+            return CustomJsonResult.Create(e.Message, false);
+        }
+
+        #region Просмотр реестров
+        [HttpGet]
+        public async Task<CustomJsonResult>  GetViewReestrModel()
+        {
+            try
+            {
+                var VRVM = new ViewReestrModel { ConnectWCFon = await WcfConnect.PingAsync() };
+                if (!string.IsNullOrEmpty(userInfo.CODE_MO) && VRVM.ConnectWCFon)
+                {
+                    var pac = WcfConnect.GetPackForMO(userInfo.CODE_MO);
+                    VRVM.FP = new FilePacketNew
+                    {
+                        CaptionMO = pac.FP.CaptionMO,
+                        CodeMO = pac.FP.CodeMO,
+                        CommentSite = pac.FP.CommentSite,
+                        Date = pac.FP.Date,
+                        IST = pac.FP.IST,
+                        Order = pac.ORDER,
+                        Status = pac.FP.Status,
+                        WARNNING = pac.FP.WARNNING,
+                        isResult = !string.IsNullOrEmpty(pac.FP.PATH_ZIP) && (pac.FP.Status == StatusFilePack.FLKOK || pac.FP.Status == StatusFilePack.FLKERR),
+                        FileList = pac.FP.Files.Select(x=>new FileView()
+                        {
+                            Comment = x.Comment,
+                            FileName = x.FileName,
+                            Process = x.Process,
+                            Type = x.Type,
+                            FILE_L = x.filel==null ? null: new FileViewBase()
+                            {
+                                Type = x.filel.Type,
+                                Comment = x.filel.Comment,
+                                FileName = x.filel.FileName,
+                                Process = x.filel.Process
+                            }
+                        }).ToList()
+                    };
+                  
+                }
+                return CustomJsonResult.Create(VRVM);
+            }
+            catch (Exception e)
+            {
+                return InternalError(e);
+            }
+           
         }
         [HttpGet]
-        public async Task<IActionResult> DownloadProtocol()
+        public async Task<CustomJsonResult> DownloadProtocol()
         {
             try
             {
                 var pack = await MyPACK();
                 var pserv = WcfConnect.GetPackForMO(userInfo.CODE_MO);
-
                 var file = File(WcfConnect.GetProtocol(userInfo.CODE_MO), System.Net.Mime.MediaTypeNames.Application.Zip, Path.GetFileName(pserv.FP.PATH_ZIP));
                 pack.DOWNPROT_LAST = DateTime.Now;
                 await MyOracleSet.SaveChangesAsync();
-                return file;
+                return CustomJsonResult.Create(file);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                var t = new List<string> { ex.Message };
-                TempData["Error"] = t;
-                TempData["ReturnURL"] = Url.Action(nameof(ViewReestr));
-                return RedirectToAction("Error", "Manage");
+                return InternalError(e);
             }
         }
 
@@ -111,35 +153,52 @@ namespace SiteCore.Controllers
                 throw new Exception($"Ошибка в MyPACK:{ex.Message}", ex);
             }
         }
-        public IActionResult LoadReestr()
-        {
-            return View();
-        }
 
-        public async Task<IActionResult> LoadReestrData()
-        {
-            List<ErrorItem> Error = null;
-            if (TempData.ContainsKey("ListError"))
-                Error = TempData["ListError"].ToString().XmlToObject<List<ErrorItem>>();
-            return PartialView("_LoadReestrPartial", await getLoadReestViewModel(Error));
-        }
-
-        async Task<LoadReestViewModel> getLoadReestViewModel(List<ErrorItem> Error = null)
+        public async Task<CustomJsonResult> GetLoadReestrModel()
         {
             try
             {
-                var user = await userManager.FindByNameAsync(User.Identity.Name);
+                return CustomJsonResult.Create(await getLoadReestViewModel());
+            }
+            catch (Exception e)
+            {
+                return InternalError(e);
+            }
+        }
+        /// <summary>
+        /// Новая
+        /// </summary>
+        /// <param name="Error"></param>
+        /// <returns></returns>
+        async Task<LoadReestViewModel> getLoadReestViewModel()
+        {
+            try
+            {
+                var pack = await GetFile();
+                var files = pack.FILES.Where(x => x.PARENT == null).Select(x=> new Models.FileItem
+                {
+                    ID = x.ID,
+                    STATUS = x.STATUS,
+                    COMENT = x.COMENT,
+                    FILENAME = x.FILENAME,
+                    TYPE_FILE = x.TYPE_FILE,
+                    FILE_L = x.FILE_L!=null?new Models.FileItemBase()
+                    {
+                        ID=x.FILE_L.ID,
+                        STATUS = x.FILE_L.STATUS,
+                        COMENT = x.FILE_L.COMENT,
+                        FILENAME = x.FILE_L.FILENAME,
+                        TYPE_FILE = x.FILE_L.TYPE_FILE
+                    } : null
+                }).ToList();
                 var lvm = new LoadReestViewModel
                 {
-                    PACKET = await GetFile(),
+                    FileList = files,
                     ConnectWCFon = WcfConnect.Ping(),
-                    SNILS_SIGN = await GetListSIGN(),
+                    SNILS_SIGN = new EditableList<SNILS_SIGN>(),
                     CODE_MO = userInfo.CODE_MO,
-                    NAME_OK = user.CODE_MO_NAME?.NAM_MOK
+                    NAME_OK = userInfo.CODE_MO_NAME
                 };
-                if (Error != null)
-                    lvm.ListError = Error;
-
                 if (lvm.ConnectWCFon)
                 {
                     lvm.ReestrEnabled = WcfConnect.ReestrEnabled();
@@ -161,8 +220,8 @@ namespace SiteCore.Controllers
 
         private async Task<FILEPACK> GetFile()
         {
-            var CurrentPack = await MyPACK();
-            foreach (var f in CurrentPack.FILES)
+            var currentPack = await MyPACK();
+            foreach (var f in currentPack.FILES)
             {
                 var path = medpomFileManager.GetPath(userInfo.CODE_MO, f.FILENAME);
                 if (System.IO.File.Exists(path)) continue;
@@ -170,12 +229,9 @@ namespace SiteCore.Controllers
                 f.COMENT = "Файл не найден на сервере!";
             }
             await MyOracleSet.SaveChangesAsync();
-            return CurrentPack;
+            return currentPack;
         }
-        private Task<List<SNILS_SIGN>> GetListSIGN()
-        {
-            return Task.Run(() => { return MyOracleSet.SNILS_SIGN.Where(x => x.CODE_MO == userInfo.CODE_MO).ToList(); });
-        }
+       
 
 
         /// <summary>
@@ -183,63 +239,58 @@ namespace SiteCore.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Upload()
+        public async Task<CustomJsonResult> Upload()
         {
-            var Error = new List<ErrorItem>();
+            var error = new List<ErrorItem>();
             try
             {
-                var PACK = await MyPACK();
-
+                var pack = await MyPACK();
                 if (Request.Form.Files.Count > 0)
                 {
-
                     foreach (var file in Request.Form.Files)
                     {
                         var ext = Path.GetExtension(file.FileName).ToUpper();
-                        var FileName = Path.GetFileName(file.FileName).ToUpper();
+                        var fileName = Path.GetFileName(file.FileName).ToUpper();
                         if (ext != ".ZIP" && ext != ".XML")
                         {
-                            Error.Add(new ErrorItem(ErrorT.TextRed, $"Файл {Path.GetFileName(file.FileName)} имеет неверный формат. Файл не загружен!"));
+                            error.Add(new ErrorItem(ErrorT.TextRed, $"Файл {Path.GetFileName(file.FileName)} имеет неверный формат. Файл не загружен!"));
                             continue;
                         }
 
-                        if (PACK.FILES.Any(x => x.FILENAME == FileName))
+                        if (pack.FILES.Any(x => x.FILENAME == fileName))
                         {
-                            Error.Add(new ErrorItem(ErrorT.TextRed, $"Файл {Path.GetFileName(file.FileName)} уже присутствует в списке. Файл не загружен!"));
+                            error.Add(new ErrorItem(ErrorT.TextRed, $"Файл {Path.GetFileName(file.FileName)} уже присутствует в списке. Файл не загружен!"));
                             continue;
                         }
 
-                        var PathInRepo = await medpomFileManager.AddFile(userInfo.CODE_MO, FileName, file.OpenReadStream());
+                        var pathInRepo = await medpomFileManager.AddFile(userInfo.CODE_MO, fileName, file.OpenReadStream());
                         //Разархивировать
                         if (ext == ".ZIP")
                         {
-                            var files = await zipArchiver.UnZip(PathInRepo);
+                            var files = await zipArchiver.UnZip(pathInRepo);
                             foreach (var zipArchiverItem in files)
                             {
                                 if (!string.IsNullOrEmpty(zipArchiverItem.FilePath))
-                                    PACK.FILES.Add(NewFile(zipArchiverItem.FilePath));
+                                    pack.FILES.Add(NewFile(zipArchiverItem.FilePath));
                                 if (!string.IsNullOrEmpty(zipArchiverItem.Error))
-                                    Error.Add(new ErrorItem(ErrorT.TextRed, zipArchiverItem.Error));
+                                    error.Add(new ErrorItem(ErrorT.TextRed, zipArchiverItem.Error));
                             }
                         }
                         else
                         {
-                            PACK.FILES.Add(NewFile(PathInRepo));
+                            pack.FILES.Add(NewFile(pathInRepo));
                         }
                     }
-                    FindL(PACK);
-                    checkPack(PACK);
+                    FindL(pack);
+                    checkPack(pack);
                     await MyOracleSet.SaveChangesAsync();
                 }
-                CheckCatalog(PACK);
-                Error.Add(new ErrorItem(ErrorT.TextGreen, "Файлы загружены успешно"));
-                return PartialView("_LoadReestrFileListPartial", await getLoadReestViewModel(Error));
+                CheckCatalog(pack);
+                return CustomJsonResult.Create(error);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                logger?.AddLog($"Upload: {ex.FullError()}", LogType.Error);
-                return PartialView("_LoadReestrFileListPartial", await getLoadReestViewModel(new List<ErrorItem> { new ErrorItem(ErrorT.TextRed, "Внутренняя ошибка сервиса!") }));
-
+                return InternalError(e);
             }
         }
         private FILES NewFile(string FilePath)
@@ -260,8 +311,8 @@ namespace SiteCore.Controllers
         {
             try
             {
-                var dir_path = medpomFileManager.GetDir(PAC.CODE_MO);
-                var dir = new DirectoryInfo(dir_path);
+                var dirPath = medpomFileManager.GetDir(PAC.CODE_MO);
+                var dir = new DirectoryInfo(dirPath);
                 foreach (var dirin in dir.GetDirectories())
                     Directory.Delete(dirin.FullName, true);
 
@@ -332,8 +383,8 @@ namespace SiteCore.Controllers
             {
                 foreach (var fs in FP.FILES.Where(x => x.STATUS == STATUS_FILE.INVITE && !x.TYPE_FILE.Contains(TYPEFILE.LD, TYPEFILE.LF, TYPEFILE.LH, TYPEFILE.LO, TYPEFILE.LP, TYPEFILE.LR, TYPEFILE.LS, TYPEFILE.LT, TYPEFILE.LU, TYPEFILE.LV, TYPEFILE.LC, TYPEFILE.LA, TYPEFILE.LB)))
                 {
-                    var code_mo = SchemaChecking.GetELEMENT(medpomFileManager.GetPath(FP.CODE_MO, fs.FILENAME), "CODE_MO");
-                    if (code_mo != userInfo.CODE_MO)
+                    var codeMo = SchemaChecking.GetELEMENT(medpomFileManager.GetPath(FP.CODE_MO, fs.FILENAME), "CODE_MO");
+                    if (codeMo != userInfo.CODE_MO)
                     {
                         fs.STATUS = STATUS_FILE.NOT_INVITE;
                         fs.COMENT = "Код МО в файле(CODE_MO) не соответствует Вашей организации";
@@ -346,164 +397,55 @@ namespace SiteCore.Controllers
             }
         }
 
-
-
-        [HttpGet]
-        public async Task<IActionResult> GetFileSig(string FileName)
+        [HttpPost]
+        public async Task<CustomJsonResult> DeleteFile(int id)
         {
             try
             {
-                var p = await MyPACK();
-                var file = p.FILES.FirstOrDefault(x => x.FILENAME == FileName);
-                if (file != null)
+                var pac = await MyPACK();
+                var item = pac.FILES.FirstOrDefault(x => x.ID == id);
+                if (item == null)
+                    throw new ModelException("",$"Файл с ID = {id} не найден");
+                if (item.FILE_L != null)
                 {
-                    await using var st = System.IO.File.OpenRead(medpomFileManager.GetPath(userInfo.CODE_MO, file.FILENAME));
-
-                    var bufISP = Encoding.UTF8.GetBytes(file.SIGN_ISP_STR);
-                    var bufBUH = Encoding.UTF8.GetBytes(file.SIGN_BUH_STR);
-                    var bufDIR = Encoding.UTF8.GetBytes(file.SIGN_DIR_STR);
-                    var zip = zipArchiver.Zip(
-                        new ZipArchiverEntry(file.FILENAME, st.ReadFull()),
-                        new ZipArchiverEntry(Path.GetFileNameWithoutExtension(file.FILENAME) + ".ISP.SIG", bufISP),
-                        new ZipArchiverEntry(Path.GetFileNameWithoutExtension(file.FILENAME) + ".DIR.SIG", bufDIR),
-                        new ZipArchiverEntry(Path.GetFileNameWithoutExtension(file.FILENAME) + ".BUH.SIG", bufBUH));
-
-                    var file_r = File(zip.ToArray(), System.Net.Mime.MediaTypeNames.Application.Zip, $"{Path.GetFileNameWithoutExtension(file.FILENAME)}.zip");
-                    return file_r;
+                    medpomFileManager.DeleteFile(userInfo.CODE_MO, item.FILE_L.FILENAME);
+                    MyOracleSet.FILES.Remove(item.FILE_L);
                 }
-                return View("LoadReestr", await getLoadReestViewModel(new List<ErrorItem> { new ErrorItem(ErrorT.TextRed, $"Не удалось найти файл {FileName}") }));
-            }
-            catch (Exception ex)
-            {
-                return View("LoadReestr", await getLoadReestViewModel(new List<ErrorItem> { new ErrorItem(ErrorT.TextRed, ex.FullError()) }));
-            }
-        }
-        [HttpPost]
-        public async Task<IActionResult> DeleteFile(decimal id)
-        {
-            var pac = await MyPACK();
-            var t = pac.FILES.FirstOrDefault(x => x.ID == id);
-            if (t != null)
-            {
-                if (t.FILE_L != null)
-                {
-                    pac.FILES.Remove(t.FILE_L);
-                    medpomFileManager.DeleteFile(userInfo.CODE_MO, t.FILE_L.FILENAME);
-                }
-                pac.FILES.Remove(t);
-                medpomFileManager.DeleteFile(userInfo.CODE_MO, t.FILENAME);
-                await MyOracleSet.SaveChangesAsync();
-            }
-            return PartialView("_LoadReestrFileListPartial", await getLoadReestViewModel());
 
-        }
-        [HttpPost]
-        public async Task<IActionResult> Clear()
-        {
-            var pac = await MyPACK();
-            if (pac != null)
-            {
-                pac.FILES.Clear();
-                medpomFileManager.Clear(userInfo.CODE_MO);
-                await MyOracleSet.SaveChangesAsync();
-            }
-            return PartialView("_LoadReestrFileListPartial", await getLoadReestViewModel());
-        }
+                if (item.PARENT != null)
+                    item.PARENT.FILE_L = null;
 
+                MyOracleSet.FILES.Remove(item);
+                medpomFileManager.DeleteFile(userInfo.CODE_MO, item.FILENAME);
+                await MyOracleSet.SaveChangesAsync();
+                return CustomJsonResult.Create(true);
+            }
+            catch (Exception e)
+            {
+                return InternalError(e);
+            }
+        }
         [HttpPost]
-        public async Task<IActionResult> SignData(Dictionary<string, string> SIGN)
+        public async Task<CustomJsonResult> Clear()
         {
             try
             {
-                var PACK = await MyPACK();
-                var err = new List<ErrorItem>();
-                foreach (var item in SIGN)
+                var pac = await MyPACK();
+                if (pac != null)
                 {
-                    var f = PACK.FILES.FirstOrDefault(x => String.Equals(x.FILENAME, item.Key, StringComparison.CurrentCultureIgnoreCase));
-                    if (f != null)
-                    {
-                        var sign = Convert.FromBase64String(item.Value);
-                        var hash = await System.IO.File.ReadAllBytesAsync(medpomFileManager.GetPath(userInfo.CODE_MO, f.FILENAME));
-                        var check = hasher.Viryfi(sign, hash);
-
-                        if (!check.Valid)
-                        {
-                            err.Add(new ErrorItem(ErrorT.TextRed, $"Для файла {f.FILENAME} подпись не действительна: {check.Comment}"));
-                            continue;
-                        }
-
-                        var certResult = CheckCertificate(check.PublicKey.HexToString(), check.SN);
-                        if (!certResult.Result)
-                        {
-                            err.Add(new ErrorItem(ErrorT.TextRed, $"Для файла {f.FILENAME}: {certResult.Exception}"));
-                            continue;
-                        }
-
-                        if (certResult.Owner.HasFlag(SIGN_OWNER.BUH))
-                        {
-                            f.SIGN_BUH_STR = item.Value;
-                            f.SIGN_BUH_VALID = true;
-                        }
-                        if (certResult.Owner.HasFlag(SIGN_OWNER.DIR))
-                        {
-                            f.SIGN_DIR_STR = item.Value;
-                            f.SIGN_DIR_VALID = true;
-                        }
-                        if (certResult.Owner.HasFlag(SIGN_OWNER.ISP))
-                        {
-                            f.SIGN_ISP_STR = item.Value;
-                            f.SIGN_ISP_VALID = true;
-                        }
-                    }
+                    MyOracleSet.FILES.RemoveRange(MyOracleSet.FILES.Where(x => x.ID_PACK == pac.ID));
+                    medpomFileManager.Clear(userInfo.CODE_MO);
+                    await MyOracleSet.SaveChangesAsync();
                 }
-                await MyOracleSet.SaveChangesAsync();
-                return PartialView("_LoadReestrFileListPartial", await getLoadReestViewModel(err));
+                return CustomJsonResult.Create(true);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                return PartialView("_LoadReestrFileListPartial", await getLoadReestViewModel(new List<ErrorItem> { new ErrorItem(ErrorT.TextRed, ex.FullError()) }));
+                return InternalError(e);
             }
         }
-
-        class CheckCertificateResult
-        {
-            public bool Result { get; set; }
-            public string Exception { get; set; }
-            public SIGN_OWNER Owner { get; set; }
-        }
-
-
-
-
-        private CheckCertificateResult CheckCertificate(string PublicKey, string SN)
-        {
-            var dtnow = DateTime.Now.Date;
-            var valid = new CheckCertificateResult { Result = false };
-            var SNILS_SIGNs = MyOracleSet.SNILS_SIGN.Where(row => row.CODE_MO == userInfo.CODE_MO && (row.DATE_B <= dtnow && (row.DATE_E ?? dtnow) >= dtnow) && row.SN.ToUpper() == SN && row.PUBLICKEY == PublicKey);
-
-            if (!SNILS_SIGNs.Any())
-            {
-                valid.Result = false;
-                valid.Exception = $"Подпись действительна, но подписавший не является уполномоченным лицом для сдачи реестров(SN={SN})";
-            }
-            else
-            {
-                var owner = SIGN_OWNER.NONE;
-                foreach (var t in SNILS_SIGNs.Select(x => x.OWNER).Distinct())
-                {
-                    owner |= t;
-                }
-                valid.Owner = owner;
-                valid.Result = true;
-            }
-            return valid;
-        }
-
-
-
-
         [HttpPost]
-        public async Task<IActionResult> Send()
+        public async Task<CustomJsonResult> Send()
         {
             try
             {
@@ -538,7 +480,7 @@ namespace SiteCore.Controllers
                             continue;
                         }
 
-                        if (f.FILE_L?.STATUS != STATUS_FILE.INVITE)
+                        if (f.FILE_L!=null && f.FILE_L.STATUS != STATUS_FILE.INVITE)
                         {
                             err.Add(new ErrorItem(ErrorT.TextRed, $"Файл {f.FILE_L.FILENAME} не принят к загрузке. Исключите его из посылки!"));
                             continue;
@@ -552,18 +494,12 @@ namespace SiteCore.Controllers
                                 continue;
                             }
 
-                            if (f.FILE_L != null)
+                            if (f.FILE_L != null && (f.FILE_L.SIGN_ISP_VALID && f.FILE_L.SIGN_BUH_VALID && f.FILE_L.SIGN_DIR_VALID) != true && typePriem)
                             {
-                                if ((f.FILE_L.SIGN_ISP_VALID && f.FILE_L.SIGN_BUH_VALID && f.FILE_L.SIGN_DIR_VALID) != true && typePriem)
-                                {
-                                    err.Add(new ErrorItem(ErrorT.TextRed, $"Файл {f.FILE_L.FILENAME} не подписан. Исключите его из посылки!"));
-                                    continue;
-                                }
+                                err.Add(new ErrorItem(ErrorT.TextRed, $"Файл {f.FILE_L.FILENAME} не подписан. Исключите его из посылки!"));
+                                continue;
                             }
-                           
                         }
-
-
                         var fi = new FileItem
                         {
                             FileName = f.FILENAME,
@@ -576,18 +512,18 @@ namespace SiteCore.Controllers
                             SIGN_BUH = f.SIGN_BUH_STR
                         };
 
-                        var fl = new FileL();
-                        fl.FileName = f.FILE_L.FILENAME;
+                        var fl = new FileL
+                        {
+                            FileName = f.FILE_L.FILENAME,
+                            SIGN_ISP = f.FILE_L.SIGN_ISP_STR,
+                            SIGN_DIR = f.FILE_L.SIGN_DIR_STR,
+                            SIGN_BUH = f.FILE_L.SIGN_BUH_STR,
+                            FilePach = Path.Combine(folderPath, f.FILE_L.FILENAME),
+                            Process = StepsProcess.Invite,
+                            Type = (FileType)(f.FILE_L.TYPE_FILE),
+                            DateCreate = DateTime.Now
+                        };
 
-                        fl.SIGN_ISP = f.FILE_L.SIGN_ISP_STR;
-                        fl.SIGN_DIR = f.FILE_L.SIGN_DIR_STR;
-                        fl.SIGN_BUH = f.FILE_L.SIGN_BUH_STR;
-
-
-                        fl.FilePach = Path.Combine(folderPath, f.FILE_L.FILENAME);
-                        fl.Process = StepsProcess.Invite;
-                        fl.Type = (FileType)(f.FILE_L.TYPE_FILE);
-                        fl.DateCreate = DateTime.Now;
 
                         fi.filel = fl;
                         fp.Files.Add(fi);
@@ -598,93 +534,164 @@ namespace SiteCore.Controllers
                         WcfConnect.AddFilePacketForMO(fp);
                         pac.STATUS = STATUS_FILEPACK.SEND;
                         await MyOracleSet.SaveChangesAsync();
-                        return RedirectToAction("ViewReestr");
+                        return CustomJsonResult.Create(true);
                     }
-
-                    TempData.Add("ListError", err.ObjectToXml());
-                    return RedirectToAction("LoadReestr");
+                    return CustomJsonResult.Create(err,false);
                 }
 
                 err.Add(new ErrorItem(ErrorT.TextRed, "Прием реестров неактивен"));
-                TempData.Add("ListError", err.ObjectToXml());
-                return RedirectToAction("LoadReestr");
+                return CustomJsonResult.Create(err, false);
             }
             catch (Exception ex)
             {
-                logger.AddLog("Ошибка при отправке файлов: " + ex.FullError(), LogType.Error);
-                TempData.Add("ListError", (new List<ErrorItem> { new(ErrorT.TextRed, "Ошибка при отправке файлов: попробуйте еще раз или обратитесь в тех. поддержку") }).ObjectToXml());
-                return RedirectToAction("LoadReestr");
+                logger?.AddLog($"Ошибка при отправке файлов: {ex.FullError()}", LogType.Error);
+                return CustomJsonResult.Create(new List<ErrorItem> { new(ErrorT.TextRed, "Ошибка при отправке файлов: попробуйте еще раз или обратитесь в тех. поддержку") }, false);
             }
-
         }
 
         #endregion
-        #region Инструкция
-        public IActionResult InstructionView()
-        {
-            return View();
-        }
-        #endregion
+      
         #region Справочник ошибок
-        public IActionResult ErrorSPR()
+  
+        public async Task<CustomJsonResult> ErrorList()
         {
-            return View("ErrorSPR/ErrorSPR", new EditErrorSPRViewModel { Section = MyOracleSet.ErrorSPRSection.Include(x=>x.Error).ToList() });
-        }
-
-
-
-        [Authorize(Roles = "Admin")]
-        [HttpGet]
-        public IActionResult EditErrorSPR(int? ID_ERR = null)
-        {
-            var model = new EditErrorSPRViewModel()
+            try
             {
-                Section = MyOracleSet.ErrorSPRSection.ToList(),
-                Error = ID_ERR.HasValue ? MyOracleSet.ErrorSPR.Find(ID_ERR) : new ErrorSPR()
-            };
-            return PartialView("ErrorSPR/EditError", model);
-        }
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        public async Task<IActionResult> EditErrorSPR(string TEXT_STR, string EXAMPLE, string OSN_TFOMS, int ID_SECTION, int? ID_ERR = null)
-        {
-            var Err = ID_ERR.HasValue ? await MyOracleSet.ErrorSPR.FirstOrDefaultAsync(x=>x.ID_ERR == ID_ERR.Value) : new ErrorSPR();
-            if (Err != null)
-            {
-                Err.TEXT_STR = TEXT_STR;
-                Err.EXAMPLE = EXAMPLE;
-                Err.OSN_TFOMS = OSN_TFOMS;
-                Err.ID_SECTION = ID_SECTION;
-                Err.D_EDIT = DateTime.Now;
-                if (!Err.ID_ERR.HasValue)
-                    MyOracleSet.ErrorSPR.Add(Err);
-                await MyOracleSet.SaveChangesAsync();
+                var model = new EditErrorSPRViewModel()
+                {
+                    Sections = await MyOracleSet.ErrorSPRSection.Include(x => x.Error).OrderBy(x=>x.ORD).Select(x => new SectionSprModel
+                    {
+                        SECTION_NAME = x.SECTION_NAME,
+                        Errors = x.Error.OrderByDescending(y => y.D_EDIT).ThenByDescending(y => y.ID_ERR).Select(y => new ErrorSprModel
+                        {
+                            D_EDIT = y.D_EDIT,
+                            EXAMPLE = y.EXAMPLE,
+                            OSN_TFOMS = y.OSN_TFOMS,
+                            ID_ERR = y.ID_ERR
+                        }).ToList()
+                    }).ToListAsync()
+                };
+                return CustomJsonResult.Create(model);
             }
-            return ErrorList();
+            catch (Exception e)
+            {
+                return InternalError(e);
+            }
+        }
+
+        public async Task<CustomJsonResult> GetError(int ID_ERR)
+        {
+            try
+            {
+                var model = await MyOracleSet.ErrorSPR.FirstOrDefaultAsync(x => x.ID_ERR == ID_ERR);
+                if (model == null)
+                    throw new ModelException($"Ошибка с кодом ID_ERR={ID_ERR} не найдена!");
+                return CustomJsonResult.Create(new ErrorSprModel()
+                {
+                    D_EDIT = model.D_EDIT,
+                    EXAMPLE = model.EXAMPLE,
+                    ID_ERR = model.ID_ERR,
+                    OSN_TFOMS = model.OSN_TFOMS,
+                    TEXT = model.TEXT_STR,
+                    ID_SECTION = model.ID_SECTION
+                });
+            }
+            catch (Exception e)
+            {
+                return InternalError(e);
+            }
+        }
+
+        public async Task<CustomJsonResult> GetSections()
+        {
+            try
+            {
+                var model = await MyOracleSet.ErrorSPRSection.OrderBy(x=>x.ORD).Select(x=>new SectionSprModel()
+                {
+                    SECTION_NAME = x.SECTION_NAME,
+                    ID_SECTION = x.ID_SECTION
+                }).ToListAsync();
+              
+                return CustomJsonResult.Create(model);
+            }
+            catch (Exception e)
+            {
+                return InternalError(e);
+            }
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<CustomJsonResult> AddErrorSPR(ErrorSprModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    MyOracleSet.ErrorSPR.Add(new ErrorSPR()
+                    {
+                        D_EDIT = DateTime.Now,
+                        ID_SECTION = model.ID_SECTION.Value,
+                        EXAMPLE = model.EXAMPLE,
+                        OSN_TFOMS = model.OSN_TFOMS,
+                        TEXT_STR = model.TEXT
+                    });
+                    await MyOracleSet.SaveChangesAsync();
+                    return CustomJsonResult.Create(true);
+                }
+                return CustomJsonResult.Create(ModelState.GetErrors(), false);
+            }
+            catch (Exception e)
+            {
+                return InternalError(e,true);
+            }
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> DeleteError(int ID_ERR)
+        public async Task<CustomJsonResult> EditErrorSPR(ErrorSprModel model)
         {
-            var item = await MyOracleSet.ErrorSPR.FirstOrDefaultAsync(x => x.ID_ERR == ID_ERR);
-            if(item!=null)
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var item = await MyOracleSet.ErrorSPR.FirstOrDefaultAsync(x => x.ID_ERR == model.ID_ERR);
+                    if (item == null)
+                        throw new ModelException($"Не удалось найти запись с ID_ERR={model.ID_ERR}");
+                    item.D_EDIT = DateTime.Now;
+                    item.ID_SECTION = model.ID_SECTION.Value;
+                    item.EXAMPLE = model.EXAMPLE;
+                    item.OSN_TFOMS = model.OSN_TFOMS;
+                    item.TEXT_STR = model.TEXT;
+                    await MyOracleSet.SaveChangesAsync();
+                    return CustomJsonResult.Create(true);
+                }
+                return CustomJsonResult.Create(ModelState.GetErrors(), false);
+            }
+            catch (Exception e)
+            {
+                return CustomJsonResult.Create(new List<string> { e.Message }, false);
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<CustomJsonResult> RemoveErrorSPR(int ID_ERR)
+        {
+            try
+            {
+                var item = await MyOracleSet.ErrorSPR.FirstOrDefaultAsync(x => x.ID_ERR == ID_ERR);
+                if (item == null)
+                    throw new ModelException($"Не удалось найти запись с ID_ERR={ID_ERR}");
                 MyOracleSet.ErrorSPR.Remove(item);
-            await MyOracleSet.SaveChangesAsync();
-            return ErrorList();
+                await MyOracleSet.SaveChangesAsync();
+                return CustomJsonResult.Create(true);
+            }
+            catch (Exception e)
+            {
+                return InternalError(e, true);
+            }
         }
-
-
-        public IActionResult ErrorList()
-        {
-            return PartialView("ErrorSPR/ErrorList", new EditErrorSPRViewModel { Section = MyOracleSet.ErrorSPRSection.Include(x=>x.Error).ToList() });
-        }
-
-        public IActionResult ViewDetailErrorSPR(int ID_ERR)
-        {
-            var item = MyOracleSet.ErrorSPR.Include(x=>x.Section).FirstOrDefault(x => x.ID_ERR == ID_ERR);
-            return PartialView("ErrorSPR/ViewDetailErrorSPR", item);
-        }
+        
         #endregion
     }
 
@@ -704,8 +711,8 @@ namespace SiteCore.Controllers
         public static string ReadToEnd(this MemoryStream BASE)
         {
             BASE.Position = 0;
-            var R = new StreamReader(BASE);
-            return R.ReadToEnd();
+            var r = new StreamReader(BASE);
+            return r.ReadToEnd();
         }
 
 

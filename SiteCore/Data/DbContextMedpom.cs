@@ -26,7 +26,7 @@ namespace SiteCore.Data
         {
             modelBuilder.HasDefaultSchema("SITE");
      
-            modelBuilder.Entity<FILES>().HasOne(x => x.PARENT).WithOne(x => x.FILE_L).HasForeignKey<FILES>(x => x.ID_FILEL);
+            modelBuilder.Entity<FILES>().HasOne(x => x.FILE_L).WithOne(x=>x.PARENT).HasForeignKey<FILES>(x => x.ID_FILEL);
 
             modelBuilder.Entity<FILES>().HasOne(x => x.FILEPACK).WithMany(x => x.FILES).HasForeignKey(x => x.ID_PACK);
 
@@ -87,7 +87,7 @@ namespace SiteCore.Data
 
         }
 
-        public List<ECO_MP_Row> GetEKO_MP(int YEAR, int MONTH)
+        private List<ECO_MP_Row> GetEKO_MP(int YEAR, int MONTH)
         {
             using var con = new OracleConnection(ConnectionString);
             using var oda = new OracleDataAdapter($"select* from table(OOMS_REPORT.GET_ECO_MP(:YEAR,:MONTH))", con);
@@ -97,12 +97,12 @@ namespace SiteCore.Data
             oda.Fill(tbl);
             return ECO_MP_Row.Get(tbl.Select());
         }
-        public Task<List<ECO_MP_Row>> GetEKO_MPAsync(int YEAR, int MONTH)
+        private Task<List<ECO_MP_Row>> GetEKO_MPAsync(int YEAR, int MONTH)
         {
             return Task.Run(() => GetEKO_MP(YEAR, MONTH));
         }
 
-        public List<ECO_MTR_Row> GetEKO_MTR(int YEAR, int MONTH)
+        private List<ECO_MTR_Row> GetEKO_MTR(int YEAR, int MONTH)
         {
             using var con = new OracleConnection(ConnectionString);
             var oda = new OracleDataAdapter($"select* from table(OOMS_REPORT.GET_ECO_MTR(:YEAR,:MONTH))", con);
@@ -113,11 +113,18 @@ namespace SiteCore.Data
             return ECO_MTR_Row.Get(tbl.Select());
         }
 
-        public Task<List<ECO_MTR_Row>> GetEKO_MTRAsync(int YEAR, int MONTH)
+        private Task<List<ECO_MTR_Row>> GetEKO_MTRAsync(int YEAR, int MONTH)
         {
             return Task.Run(() => GetEKO_MTR(YEAR, MONTH));
         }
 
+
+        public async Task<ECO_RECORD> GetECO_RECORDAsync(int YEAR, int MONTH)
+        {
+            var taskECO_MTR = GetEKO_MTRAsync(YEAR, MONTH);
+            var taskECO_MP = GetEKO_MPAsync(YEAR, MONTH);
+            return new ECO_RECORD { ECO_MTR = await taskECO_MTR, ECO_MP = await taskECO_MP };
+        }
 
         public List<KOHL_Row> GetKOHL(DateTime dt1, DateTime dt2)
         {
@@ -350,8 +357,144 @@ namespace SiteCore.Data
             return Task.Run(() => GetVMP_PERIOD(dt1,dt2));
         }
 
+        #region Отчет по диспансеризации
 
-        
+        private List<DispDetRow> GetDispDetReport(DateTime dt)
+        {
+            using var con = new OracleConnection(ConnectionString);
+            using var cmd = new OracleCommand("select * from table(OOMS_REPORT.GetDispDetReport(:dt))", con);
+            cmd.Parameters.Add("dt", dt.Date);
+            con.Open();
+            var reader = cmd.ExecuteReader();
+            return DispDetRow.GetList(reader);
+        }
+
+        private Task<List<DispDetRow>> GetDispDetReportAsync(DateTime dt)
+        {
+            return Task.Run(() => GetDispDetReport(dt));
+        }
+
+
+        private List<DispVzrRow> GetDispVzrReport(DateTime dt)
+        {
+            using var con = new OracleConnection(ConnectionString);
+            using var cmd = new OracleCommand("select * from table(OOMS_REPORT.GetDispVzrReport(:dt))", con);
+            cmd.Parameters.Add("dt", dt.Date);
+            con.Open();
+            var reader = cmd.ExecuteReader();
+            return DispVzrRow.GetList(reader);
+        }
+
+        private Task<List<DispVzrRow>> GetDispVzrReportAsync(DateTime dt)
+        {
+            return Task.Run(() => GetDispVzrReport(dt));
+        }
+
+        private List<ProfVzrRow> GetProfVzrReport(DateTime dt)
+        {
+            using var con = new OracleConnection(ConnectionString);
+            using var cmd = new OracleCommand("select * from table(OOMS_REPORT.GetProfVzrReport(:dt))", con);
+            cmd.Parameters.Add("dt", dt.Date);
+            con.Open();
+            var reader = cmd.ExecuteReader();
+            return ProfVzrRow.GetList(reader);
+        }
+
+        private Task<List<ProfVzrRow>> GetProfVzrReportAsync(DateTime dt)
+        {
+            return Task.Run(() => GetProfVzrReport(dt));
+        }
+
+        private List<ProfDetRow> GetProfDetReport(DateTime dt)
+        {
+            using var con = new OracleConnection(ConnectionString);
+            using var cmd = new OracleCommand("select * from table(OOMS_REPORT.GetProfDetReport(:dt))", con);
+            cmd.Parameters.Add("dt", dt.Date);
+            con.Open();
+            var reader = cmd.ExecuteReader();
+            return ProfDetRow.GetList(reader);
+        }
+
+        private Task<List<ProfDetRow>> GetProfDetReportAsync(DateTime dt)
+        {
+            return Task.Run(() => GetProfDetReport(dt));
+        }
+
+        public async Task<DispRecord> GetDispReportAsync(DateTime dt)
+        {
+            var record = new DispRecord();
+          
+            var dispDetTask = this.GetDispDetReportAsync(dt);
+            var dispVzrTask = this.GetDispVzrReportAsync(dt);
+            var profDetTask = this.GetProfDetReportAsync(dt);
+            var profVzrTask = this.GetProfVzrReportAsync(dt);
+
+            record.DispDet = await dispDetTask;
+            record.DispVzr = await dispVzrTask;
+            record.ProfDet = await profDetTask;
+            record.ProfVzr = await profVzrTask;
+
+            return record;
+
+        }
+
+        #endregion
+
+        public List<Kv2MtrRow> GetKV2_MTR(DateTime dt)
+        {
+            using var con = new OracleConnection(ConnectionString);
+            using var cmd = new OracleCommand("select * from table(OOMS_REPORT.GetKV2_MTR(:dt))", con);
+            cmd.Parameters.Add("dt", dt.Date);
+            con.Open();
+            var reader = cmd.ExecuteReader();
+            return Kv2MtrRow.GetList(reader);
+        }
+
+        public Task<List<Kv2MtrRow>> GetKV2_MTRAsync(DateTime dt)
+        {
+            return Task.Run(() => GetKV2_MTR(dt));
+        }
+
+
+        #region Отчет ДЛИ
+        private List<DliTbl1Row> GetDliTbl1(int year)
+        {
+            using var con = new OracleConnection(ConnectionString);
+            using var cmd = new OracleCommand("select * from table(OOMS_REPORT.GetDliTbl1(:year))", con);
+            cmd.Parameters.Add("year", year);
+            con.Open();
+            var reader = cmd.ExecuteReader();
+            return DliTbl1Row.GetList(reader);
+        }
+
+        private Task<List<DliTbl1Row>> GetDliTbl1Async(int year)
+        {
+            return Task.Run(() => GetDliTbl1(year));
+        }
+        private List<DliTbl2Row> GetDliTbl2(int year)
+        {
+            using var con = new OracleConnection(ConnectionString);
+            using var cmd = new OracleCommand("select * from table(OOMS_REPORT.GetDliTbl2(:year))", con);
+            cmd.Parameters.Add("year", year);
+            con.Open();
+            var reader = cmd.ExecuteReader();
+            return DliTbl2Row.GetList(reader);
+        }
+
+        private Task<List<DliTbl2Row>> GetDliTbl2Async(int year)
+        {
+            return Task.Run(() => GetDliTbl2(year));
+        }
+
+
+        public async Task<DliRecord> GetDliAsync(int year)
+        {
+            var tbl1task = GetDliTbl1Async(year);
+            var tbl2task = GetDliTbl2Async(year);
+            return new DliRecord { tbl1 = await tbl1task, tbl2 = await tbl2task };
+        }
+
+        #endregion
 
     }
 
@@ -587,7 +730,20 @@ namespace SiteCore.Data
         public string KSLP { get; set; }
         public string KSLP_NAME { get; set; }
     }
+    public class ECO_RECORD
+    {
+        public List<ECO_MTR_Row> ECO_MTR { get; set; }
+        public List<ECO_MP_Row> ECO_MP { get; set; }
+        public List<ECO_MP_Row> SVOD_ECO_MO
+        {
+            get
+            {
+                var groupBy = ECO_MP.GroupBy(x => new { x.SMO, x.KSLP_NAME, x.KSLP });
+                return groupBy.Select(x => new ECO_MP_Row { SMO = x.Key.SMO, KSLP = x.Key.KSLP, KSLP_NAME = x.Key.KSLP_NAME, SUMV = x.Sum(y => y.SUMV), SUMP = x.Sum(y => y.SUMP ?? 0), SLUCH_ID = x.Count() }).ToList();
+            }
 
+        }
+    }
     public class ECO_MTR_Row
     {
         public static List<ECO_MTR_Row> Get(IEnumerable<DataRow> row)
@@ -924,6 +1080,537 @@ namespace SiteCore.Data
 
     }
 
+
+
+    public class DispRecord
+    {
+        public List<DispDetRow> DispDet { get; set; }
+        public List<DispVzrRow> DispVzr { get; set; }
+        public List<ProfVzrRow> ProfVzr { get; set; }
+        public List<ProfDetRow> ProfDet { get; set; }
+
+    }
+    public class DispDetRow
+    {
+        public static List<DispDetRow> GetList(IDataReader reader)
+        {
+            var result = new List<DispDetRow>();
+            while (reader.Read())
+            {
+                result.Add(Get(reader));
+            }
+            return result;
+        }
+        public static DispDetRow Get(IDataReader reader)
+        {
+            try
+            {
+                var item = new DispDetRow();
+                item.SMO = Convert.ToString(reader[nameof(SMO)]);
+                item.POK = Convert.ToString(reader[nameof(POK)]);
+                item.SUMV = Convert.ToDecimal(reader[nameof(SUMV)]);
+                item.SUM = Convert.ToInt32(reader[nameof(SUM)]);
+                item.KOL = Convert.ToInt32(reader[nameof(KOL)]);
+                item.KOL_VBR = Convert.ToInt32(reader[nameof(KOL_VBR)]);
+                item.SUM_VBR = Convert.ToDecimal(reader[nameof(SUM_VBR)]);
+
+                item.SUMP = Convert.ToDecimal(reader[nameof(SUMP)]);
+                item.KOL_P = Convert.ToInt32(reader[nameof(KOL_P)]);
+                item.SUM_P = Convert.ToDecimal(reader[nameof(SUM_P)]);
+                item.KOL_VBR_P = Convert.ToInt32(reader[nameof(KOL_VBR_P)]);
+                item.SUM_VBR_P = Convert.ToDecimal(reader[nameof(SUM_VBR_P)]);
+                item.C_GRP_1 = Convert.ToInt32(reader[nameof(C_GRP_1)]);
+                item.C_GRP_2 = Convert.ToInt32(reader[nameof(C_GRP_2)]);
+                item.C_GRP_3 = Convert.ToInt32(reader[nameof(C_GRP_3)]);
+                item.C_GRP_4 = Convert.ToInt32(reader[nameof(C_GRP_4)]);
+                item.C_GRP_5 = Convert.ToInt32(reader[nameof(C_GRP_5)]);
+
+                return item;
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Ошибка получения DispDetRow: {e.Message}", e);
+            }
+        }
+
+
+        public string SMO { get; set; }
+        public string POK { get; set; }
+        public decimal SUMV { get; set; }
+        public int KOL { get; set; }
+        public decimal SUM { get; set; }
+        public int KOL_VBR { get; set; }
+        public decimal SUM_VBR { get; set; }
+
+        public decimal SUMP { get; set; }
+        public int KOL_P { get; set; }
+        public decimal SUM_P { get; set; }
+        public int KOL_VBR_P { get; set; }
+        public decimal SUM_VBR_P { get; set; }
+
+        public int C_GRP_1 { get; set; }
+        public int C_GRP_2 { get; set; }
+        public int C_GRP_3 { get; set; }
+        public int C_GRP_4 { get; set; }
+        public int C_GRP_5 { get; set; }
+
+    }
+
+    public class DispVzrRow
+    {
+        public static List<DispVzrRow> GetList(IDataReader reader)
+        {
+            var result = new List<DispVzrRow>();
+            while (reader.Read())
+            {
+                result.Add(Get(reader));
+            }
+            return result;
+        }
+        public static DispVzrRow Get(IDataReader reader)
+        {
+            try
+            {
+                var item = new DispVzrRow();
+                item.SMO = Convert.ToString(reader[nameof(SMO)]);
+                item.POK = Convert.ToString(reader[nameof(POK)]);
+                item.ST3 = Convert.ToDecimal(reader[nameof(ST3)]);
+                item.ST4 = Convert.ToDecimal(reader[nameof(ST4)]);
+                item.ST5 = Convert.ToDecimal(reader[nameof(ST5)]);
+                item.ST6 = Convert.ToDecimal(reader[nameof(ST6)]);
+                item.ST7 = Convert.ToDecimal(reader[nameof(ST7)]);
+                item.ST8 = Convert.ToDecimal(reader[nameof(ST8)]);
+                item.ST9 = Convert.ToDecimal(reader[nameof(ST9)]);
+                item.ST10 = Convert.ToDecimal(reader[nameof(ST10)]);
+                item.ST11 = Convert.ToDecimal(reader[nameof(ST11)]);
+                item.ST12 = Convert.ToDecimal(reader[nameof(ST12)]);
+                item.ST13 = Convert.ToDecimal(reader[nameof(ST13)]);
+                item.ST14 = Convert.ToDecimal(reader[nameof(ST14)]);
+                item.ST15 = Convert.ToDecimal(reader[nameof(ST15)]);
+                item.ST16 = Convert.ToDecimal(reader[nameof(ST16)]);
+                item.ST17 = Convert.ToDecimal(reader[nameof(ST17)]);
+                item.ST18 = Convert.ToDecimal(reader[nameof(ST18)]);
+                item.ST19 = Convert.ToDecimal(reader[nameof(ST19)]);
+                item.ST20 = Convert.ToDecimal(reader[nameof(ST20)]);
+                item.ST21 = Convert.ToDecimal(reader[nameof(ST21)]);
+                item.ST22 = Convert.ToDecimal(reader[nameof(ST22)]);
+                item.ST23 = Convert.ToDecimal(reader[nameof(ST23)]);
+                item.ST24 = Convert.ToDecimal(reader[nameof(ST24)]);
+                item.ST25 = Convert.ToDecimal(reader[nameof(ST25)]);
+                item.ST26 = Convert.ToDecimal(reader[nameof(ST26)]);
+                item.ST27 = Convert.ToDecimal(reader[nameof(ST27)]);
+                item.ST28 = Convert.ToDecimal(reader[nameof(ST28)]);
+                item.ST29 = Convert.ToDecimal(reader[nameof(ST29)]);
+                item.ST30 = Convert.ToDecimal(reader[nameof(ST30)]);
+                item.ST31 = Convert.ToDecimal(reader[nameof(ST31)]);
+                item.ST32 = Convert.ToDecimal(reader[nameof(ST32)]);
+                item.ST33 = Convert.ToDecimal(reader[nameof(ST33)]);
+                item.ST34 = Convert.ToDecimal(reader[nameof(ST34)]);
+                item.ST35 = Convert.ToDecimal(reader[nameof(ST35)]);
+                item.ST36 = Convert.ToDecimal(reader[nameof(ST36)]);
+
+                return item;
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Ошибка получения DispVzrRow: {e.Message}", e);
+            }
+        }
+
+
+        public string SMO { get; set; }
+        public string POK { get; set; }
+        public decimal ST3 { get; set; }
+        public decimal ST4 { get; set; }
+        public decimal ST5 { get; set; }
+        public decimal ST6 { get; set; }
+        public decimal ST7 { get; set; }
+        public decimal ST8 { get; set; }
+        public decimal ST9 { get; set; }
+        public decimal ST10 { get; set; }
+        public decimal ST11 { get; set; }
+        public decimal ST12 { get; set; }
+        public decimal ST13 { get; set; }
+        public decimal ST14 { get; set; }
+        public decimal ST15 { get; set; }
+        public decimal ST16 { get; set; }
+        public decimal ST17 { get; set; }
+        public decimal ST18 { get; set; }
+        public decimal ST19 { get; set; }
+        public decimal ST20 { get; set; }
+        public decimal ST21 { get; set; }
+        public decimal ST22 { get; set; }
+        public decimal ST23 { get; set; }
+        public decimal ST24 { get; set; }
+        public decimal ST25 { get; set; }
+        public decimal ST26 { get; set; }
+        public decimal ST27 { get; set; }
+        public decimal ST28 { get; set; }
+        public decimal ST29 { get; set; }
+        public decimal ST30 { get; set; }
+        public decimal ST31 { get; set; }
+        public decimal ST32 { get; set; }
+        public decimal ST33 { get; set; }
+        public decimal ST34 { get; set; }
+        public decimal ST35 { get; set; }
+        public decimal ST36 { get; set; }
+
+    }
+
+    public class ProfVzrRow
+    {
+        public static List<ProfVzrRow> GetList(IDataReader reader)
+        {
+            var result = new List<ProfVzrRow>();
+            while (reader.Read())
+            {
+                result.Add(Get(reader));
+            }
+            return result;
+        }
+        public static ProfVzrRow Get(IDataReader reader)
+        {
+            try
+            {
+                var item = new ProfVzrRow();
+                item.SMO = Convert.ToString(reader[nameof(SMO)]);
+                item.NAM_SMO = Convert.ToString(reader[nameof(NAM_SMO)]);
+                item.NN = Convert.ToString(reader[nameof(NN)]);
+                item.GRP = Convert.ToString(reader[nameof(GRP)]);
+                item.KOL = Convert.ToInt32(reader[nameof(KOL)]);
+                item.SUM = Convert.ToDecimal(reader[nameof(SUM)]);
+                item.KOL_P = Convert.ToInt32(reader[nameof(KOL_P)]);
+                item.SUM_P = Convert.ToDecimal(reader[nameof(SUM_P)]);
+
+                return item;
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Ошибка получения ProfVzrRow: {e.Message}", e);
+            }
+        }
+
+
+        public string SMO { get; set; }
+        public string NAM_SMO { get; set; }
+        public string NN { get; set; }
+        public string GRP { get; set; }
+        public int KOL { get; set; }
+        public decimal SUM { get; set; }
+        public int KOL_P { get; set; }
+        public decimal SUM_P { get; set; }
+
+    }
+    public class ProfDetRow
+    {
+        public static List<ProfDetRow> GetList(IDataReader reader)
+        {
+            var result = new List<ProfDetRow>();
+            while (reader.Read())
+            {
+                result.Add(Get(reader));
+            }
+            return result;
+        }
+        public static ProfDetRow Get(IDataReader reader)
+        {
+            try
+            {
+                var item = new ProfDetRow();
+                item.SMO = Convert.ToString(reader[nameof(SMO)]);
+                item.ST2 = Convert.ToDecimal(reader[nameof(ST2)]);
+                item.ST3 = Convert.ToDecimal(reader[nameof(ST3)]);
+                item.ST4 = Convert.ToDecimal(reader[nameof(ST4)]);
+                item.ST5 = Convert.ToDecimal(reader[nameof(ST5)]);
+                item.ST6 = Convert.ToDecimal(reader[nameof(ST6)]);
+                item.ST7 = Convert.ToDecimal(reader[nameof(ST7)]);
+                item.ST8 = Convert.ToDecimal(reader[nameof(ST8)]);
+                item.ST9 = Convert.ToDecimal(reader[nameof(ST9)]);
+                item.ST10 = Convert.ToDecimal(reader[nameof(ST10)]);
+                item.ST11 = Convert.ToDecimal(reader[nameof(ST11)]);
+                item.ST12 = Convert.ToDecimal(reader[nameof(ST12)]);
+                item.ST13 = Convert.ToDecimal(reader[nameof(ST13)]);
+                item.ST14 = Convert.ToDecimal(reader[nameof(ST14)]);
+                item.ST15 = Convert.ToDecimal(reader[nameof(ST15)]);
+                item.ST16 = Convert.ToDecimal(reader[nameof(ST16)]);
+                item.ST17 = Convert.ToDecimal(reader[nameof(ST17)]);
+                item.ST18 = Convert.ToDecimal(reader[nameof(ST18)]);
+                item.ST19 = Convert.ToDecimal(reader[nameof(ST19)]);
+                item.ST20 = Convert.ToDecimal(reader[nameof(ST20)]);
+                item.ST21 = Convert.ToDecimal(reader[nameof(ST21)]);
+                item.ST22 = Convert.ToDecimal(reader[nameof(ST22)]);
+                item.ST23 = Convert.ToDecimal(reader[nameof(ST23)]);
+                item.ST24 = Convert.ToDecimal(reader[nameof(ST24)]);
+                item.ST25 = Convert.ToDecimal(reader[nameof(ST25)]);
+                item.ST26 = Convert.ToDecimal(reader[nameof(ST26)]);
+                item.ST27 = Convert.ToDecimal(reader[nameof(ST27)]);
+                item.ST28 = Convert.ToDecimal(reader[nameof(ST28)]);
+
+                return item;
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Ошибка получения ProfDetRow: {e.Message}", e);
+            }
+        }
+
+
+        public string SMO { get; set; }
+        public decimal ST2 { get; set; }
+        public decimal ST3 { get; set; }
+        public decimal ST4 { get; set; }
+        public decimal ST5 { get; set; }
+        public decimal ST6 { get; set; }
+        public decimal ST7 { get; set; }
+        public decimal ST8 { get; set; }
+        public decimal ST9 { get; set; }
+        public decimal ST10 { get; set; }
+        public decimal ST11 { get; set; }
+        public decimal ST12 { get; set; }
+        public decimal ST13 { get; set; }
+        public decimal ST14 { get; set; }
+        public decimal ST15 { get; set; }
+        public decimal ST16 { get; set; }
+        public decimal ST17 { get; set; }
+        public decimal ST18 { get; set; }
+        public decimal ST19 { get; set; }
+        public decimal ST20 { get; set; }
+        public decimal ST21 { get; set; }
+        public decimal ST22 { get; set; }
+        public decimal ST23 { get; set; }
+        public decimal ST24 { get; set; }
+        public decimal ST25 { get; set; }
+        public decimal ST26 { get; set; }
+        public decimal ST27 { get; set; }
+        public decimal ST28 { get; set; }
+
+    }
+
+
+
+    public class Kv2MtrRow
+    {
+        public static List<Kv2MtrRow> GetList(IDataReader reader)
+        {
+            var result = new List<Kv2MtrRow>();
+            while (reader.Read())
+            {
+                result.Add(Get(reader));
+            }
+            return result;
+        }
+        public static Kv2MtrRow Get(IDataReader reader)
+        {
+            try
+            {
+                var item = new Kv2MtrRow();
+                item.NN = Convert.ToString(reader[nameof(NN)]);
+                item.KOL = Convert.ToInt32(reader[nameof(KOL)]);
+                item.SUM = Convert.ToDecimal(reader[nameof(SUM)]);
+                ReadNNItem(item);
+                return item;
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Ошибка получения Kv2MtrRow: {e.Message}", e);
+            }
+        }
+        private static void ReadNNItem(Kv2MtrRow item)
+        {
+            switch (item.NN)
+            {
+                case "1":
+                    item.ED = "х";
+                    item.NAIM = "Всего на медицинскую помощь, в том числе:"; break;
+                case "1.1":
+                    item.ED = "х";
+                    item.NAIM = "оказание медицинской помощи пациентам с инфекционными заболеваниями органов дыхания, пневмонии, короновирусной инфекции(U07.1, U07.2, Z03.8, Z22.8, Z20.8, Z11.5, B34.2, B33.8, J12-J18), всего, из них:"; break;
+                case "1.1.1":
+                    item.ED = "х";
+                    item.NAIM = "U07.1, U07.2"; break;
+                case "2":
+                    item.ED = "х";
+                    item.NAIM = "медицинская помощь в амбулаторных условиях, всего, в том числе"; break;
+                case "2.1":
+                    item.ED = "исследования";
+                    item.NAIM = "тестирование на новую короновирусную инфекцию"; break;
+                case "2.2":
+                    item.ED = "посещения";
+                    item.NAIM = "неотложная медицинская помощь, всего, в том числе:"; break;
+                case "2.2.1":
+                    item.ED = "посещения";
+                    item.NAIM = "оказание медицинской помощи пациентам с инфекционными заболеваниями органов дыхания, пневмонии, короновирусной инфекции(U07.1, U07.2, Z03.8, Z22.8, Z20.8, Z11.5, B34.2, B33.8, J12-J18), всего, из них:"; break;
+                case "2.2.2":
+                    item.ED = "посещения";
+                    item.NAIM = "U07.1, U07.2"; break;
+                case "3":
+                    item.ED = "случай госпитализации";
+                    item.NAIM = "Медицинская помощь в условиях круглосуточного стационара, всего, в том числе:"; break;
+                case "3.1":
+                    item.ED = "случай госпитализации";
+                    item.NAIM = "госпитализации пациентов с инфекционными заболеваниями органов дыхания, пневмонии, короновирусной инфекции(U07.1, U07.2, Z03.8, Z22.8, Z20.8, Z11.5, B34.2, B33.8, J12-J18), всего, из них:"; break;
+                case "3.1.1":
+                    item.ED = "случай госпитализации";
+                    item.NAIM = "U07.1, U07.2"; break;
+                case "3.1.1.1":
+                    item.ED = "случай госпитализации";
+                    item.NAIM = "количество случаев экстракорпоральной мембранной оксигенации(ЭКМО)"; break;
+                case "4":
+                    item.ED = "вызов";
+                    item.NAIM = "Скорая медицинская помощь, всего,в том числе"; break;
+                case "4.1":
+                    item.ED = "вызов";
+                    item.NAIM = "оказание медицинской помощи пациентам с инфекционными заболеваниями органов дыхания, пневмонии, короновирусной инфекции(U07.1, U07.2, Z03.8, Z22.8, Z20.8, Z11.5, B34.2, B33.8, J12-J18),всего, из них:"; break;
+                case "4.1.1":
+                    item.ED = "вызов";
+                    item.NAIM = "U07.1, U07.2"; break;
+                default:
+                    throw new Exception($"Строка с номером \"{item.NN}\" не ожидается");
+
+            }
+        }
+        public string NAIM { get;  set; }
+        public string ED { get;  set; }
+        public string NN { get;  set; }
+        public int KOL { get; set; }
+        public decimal SUM { get; set; }
+
+    }
+
+    public class DliTbl1Row
+    {
+        public static List<DliTbl1Row> GetList(IDataReader reader)
+        {
+            var result = new List<DliTbl1Row>();
+            while (reader.Read())
+            {
+                result.Add(Get(reader));
+            }
+            return result;
+        }
+        public static DliTbl1Row Get(IDataReader reader)
+        {
+            try
+            {
+                var item = new DliTbl1Row();
+                item.SMO = Convert.ToString(reader[nameof(SMO)]);
+                item.NAME = Convert.ToString(reader[nameof(NAME)]);
+                item.VID = Convert.ToString(reader[nameof(VID)]);
+                item.K = Convert.ToInt32(reader[nameof(K)]);
+                item.ENP = Convert.ToInt32(reader[nameof(ENP)]);
+                item.S = Convert.ToDecimal(reader[nameof(S)]);
+                item.K_MTR = Convert.ToInt32(reader[nameof(K_MTR)]);
+                item.ENP_MTR = Convert.ToInt32(reader[nameof(ENP_MTR)]);
+                item.S_MTR = Convert.ToDecimal(reader[nameof(S_MTR)]);
+                return item;
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Ошибка получения DliTbl1Row: {e.Message}", e);
+            }
+        }
+
+        public string SMO { get; set; }
+        public string NAME { get; set; }
+        public string VID { get; set; }
+        public int K { get; set; }
+        public int ENP { get; set; }
+        public decimal S { get; set; }
+        public int K_MTR { get; set; }
+        public int ENP_MTR { get; set; }
+        public decimal S_MTR { get; set; }
+    }
+
+    public class DliTbl2Row
+    {
+        public static List<DliTbl2Row> GetList(IDataReader reader)
+        {
+            var result = new List<DliTbl2Row>();
+            while (reader.Read())
+            {
+                result.Add(Get(reader));
+            }
+            return result;
+        }
+        public static DliTbl2Row Get(IDataReader reader)
+        {
+            try
+            {
+                var item = new DliTbl2Row();
+                item.NAME_TFK = Convert.ToString(reader[nameof(NAME_TFK)]);
+                item.OKRUG = Convert.ToInt32(reader[nameof(OKRUG)]);
+                item.C_KT = Convert.ToInt32(reader[nameof(C_KT)]);
+                item.E_KT = Convert.ToInt32(reader[nameof(E_KT)]);
+                item.S_KT = Convert.ToDecimal(reader[nameof(S_KT)]);
+
+                item.C_MRT = Convert.ToInt32(reader[nameof(C_MRT)]);
+                item.E_MRT = Convert.ToInt32(reader[nameof(E_MRT)]);
+                item.S_MRT = Convert.ToDecimal(reader[nameof(S_MRT)]);
+
+                item.C_USI = Convert.ToInt32(reader[nameof(C_USI)]);
+                item.E_USI = Convert.ToInt32(reader[nameof(E_USI)]);
+                item.S_USI = Convert.ToDecimal(reader[nameof(S_USI)]);
+
+                item.C_ENDO = Convert.ToInt32(reader[nameof(C_ENDO)]);
+                item.E_ENDO = Convert.ToInt32(reader[nameof(E_ENDO)]);
+                item.S_ENDO = Convert.ToDecimal(reader[nameof(S_ENDO)]);
+
+                item.C_MOL = Convert.ToInt32(reader[nameof(C_MOL)]);
+                item.E_MOL = Convert.ToInt32(reader[nameof(E_MOL)]);
+                item.S_MOL = Convert.ToDecimal(reader[nameof(S_MOL)]);
+
+                item.C_GIST = Convert.ToInt32(reader[nameof(C_GIST)]);
+                item.E_GIST = Convert.ToInt32(reader[nameof(E_GIST)]);
+                item.S_GIST = Convert.ToDecimal(reader[nameof(S_GIST)]);
+
+                return item;
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Ошибка получения DliTbl2Row: {e.Message}", e);
+            }
+        }
+
+        public string NAME_TFK { get; set; }
+        public int OKRUG { get; set; }
+
+        public int C_KT { get; set; }
+        public int E_KT { get; set; }
+        public decimal S_KT { get; set; }
+
+        public int C_MRT { get; set; }
+        public int E_MRT { get; set; }
+        public decimal S_MRT { get; set; }
+
+
+        public int C_USI { get; set; }
+        public int E_USI { get; set; }
+        public decimal S_USI { get; set; }
+
+
+        public int C_ENDO { get; set; }
+        public int E_ENDO { get; set; }
+        public decimal S_ENDO { get; set; }
+
+
+        public int C_MOL { get; set; }
+        public int E_MOL { get; set; }
+        public decimal S_MOL { get; set; }
+
+        public int C_GIST { get; set; }
+        public int E_GIST { get; set; }
+        public decimal S_GIST { get; set; }
+
+    }
+
+    public  class   DliRecord
+    {
+        public List<DliTbl1Row> tbl1 { get; set; } = new();
+        public List<DliTbl2Row> tbl2 { get; set; } = new();
+       
+    }
+
+
     [Table("FILEPACK")]
     public class FILEPACK
     {
@@ -943,7 +1630,7 @@ namespace SiteCore.Data
         public FILES()
         {
         }
-        public FILES(int? iD_FILEL, int? iD_PACK, STATUS_FILE? sTATUS)
+        public FILES(int? iD_FILEL, int iD_PACK, STATUS_FILE sTATUS)
         {
             ID_FILEL = iD_FILEL;
             ID_PACK = iD_PACK;
@@ -955,8 +1642,8 @@ namespace SiteCore.Data
         public string FILENAME { get; set; }
         public DateTime? DATECREATE { get; set; }
         public int? ID_FILEL { get; set; }
-        public int? ID_PACK { get; set; }
-        public STATUS_FILE? STATUS { get; set; }
+        public int ID_PACK { get; set; }
+        public STATUS_FILE STATUS { get; set; }
         public string COMENT { get; set; }
         public string HASH { get; set; } = "";
         public byte[] SIGN_DIR { get; set; }
@@ -1158,7 +1845,7 @@ namespace SiteCore.Data
         public int ID_SECTION { get; set; }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int? ID_ERR { get; set; }
+        public int ID_ERR { get; set; }
         [Required]
         public string EXAMPLE { get; set; }
         public byte[] TEXT { get; set; }

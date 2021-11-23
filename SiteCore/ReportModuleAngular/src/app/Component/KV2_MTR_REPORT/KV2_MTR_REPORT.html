@@ -1,0 +1,50 @@
+﻿<h2>Сведения об оказания медицинской помощи медицинскими организациями в условиях угрозы распространения заболевания, предоставляющего опасность для окружающих, вызванного новой коронавирусной инфекцией</h2>
+<h4>Принято к оплате за отчетный период(период оплаты)</h4>
+<label>Отчетный период </label>
+<p-calendar [(ngModel)]="period" view="month" dateFormat="MM yy" [yearNavigator]="true" yearRange="2000:2030" [readonlyInput]="true" [disabled]="isLoad"></p-calendar>
+<input type="button" value="Запрос" class="ActionButton" (click)="getReport()" [disabled]="isLoad" style="margin-left: 10px;" />
+<hr />
+
+<div style="overflow: auto">
+    <p-table [value]="report" [scrollable]="true" scrollHeight="70vh" [resizableColumns]="true" [autoLayout]="true" styleClass="p-datatable-gridlines" columnResizeMode="expand" [loading]="isLoad">
+        <ng-template pTemplate="colgroup">
+            <colgroup>
+                <col style="width: 300px">
+                <col style="width: 300px ">
+                <col style="width: 130px ">
+                <col style="width: 130px ">
+                <col style="width: 130px ">
+            </colgroup>
+
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pResizableColumn>Наименование вида и условия оказания медицинской помощи по территориальной программе обязательного медицинского страхования</th>
+                <th pResizableColumn>Единицы измерения</th>
+                <th pResizableColumn>№ п.п.</th>
+                <th pResizableColumn>Объем медицинской помощи оказанной медицинскими организациями застрахованным в других субъектах РФ(МТР исходящий)</th>
+                <th pResizableColumn>Размер финансового обеспечения фактически оказанных объемов медицинской помощи,тыс.руб.</th>
+            </tr>
+            <tr>
+                <th pResizableColumn>А</th>
+                <th pResizableColumn>Б</th>
+                <th pResizableColumn>В</th>
+                <th pResizableColumn>1</th>
+                <th pResizableColumn>2</th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-item>
+            <tr  [style.font-weight]="item.isBold?'bold':'normal'" >
+                <td style="text-align: left">{{item.NAIM}}</td>
+                <td style="text-align: left">{{item.ED}}</td>
+                <td style="text-align: left">{{item.NN}}</td>
+                <td style="text-align: right">{{item.KOL| number:'.0':'ru-RU'}}</td>
+                <td style="text-align: right">{{item.SUM| number:'.2':'ru-RU'}}</td>
+
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<hr />
+<button class="ActionButton" (click)="getXls()" [disabled]="isLoad || report.length===0">Скачать Excel</button>

@@ -1,0 +1,88 @@
+﻿<div style="display: flex; justify-content: space-between">
+    <input type="button" value="Обновить" class="ActionButton" (click)="getModel()" />
+    <input type="button" (click)="ShowInstruction()" class="ActionButton" value="Инструкция" />
+</div>
+<Instruction-Dialog [(display)]="displayDialog"></Instruction-Dialog>
+<hr />
+
+<Content-Load [isLoad]="isLoad">
+    <div *ngIf="!model.ConnectWCFon"><p style="text-align: left; color: red">Нет связи с сервисом приема</p></div>
+    <div *ngIf="model.ConnectWCFon">
+        <p>
+            Прием реестров:
+            <span class="RedText BoldText" *ngIf="!model.ReestrEnabled">Не активно</span>
+            <span class="GreenText BoldText" *ngIf="model.ReestrEnabled">Активно</span>
+        </p>
+        <p>
+            Тип приема:
+            <span class="GreenText BoldText" *ngIf="model.TypePriem">Основной</span>
+            <span class="YellowText BoldText" *ngIf="!model.TypePriem">Предварительный</span>
+        </p>
+        <p class="TextCursiv">Ваш Реестровый номер:<span class="BoldText">{{model.CODE_MO}}</span></p>
+        <p class="TextCursiv">Ваша медицинская организация: <span class="BoldText">{{model.NAME_OK}}</span></p>
+    </div>
+    <div>
+        <File-Loader filter=".ZIP,.XML" (onSelect)="LoadFiles($event);"></File-Loader>
+        <ProgressBar *ngIf="ShowProgress" [Caption]="'Процесс загрузки'" [Progress]="ProgressValue"></ProgressBar>
+    </div>
+    <div id="container" style="padding-top: 10px">
+
+        <div>
+            <ul class="ErrorLi">
+                <li *ngFor="let err of ListError" [class.LiTrue]="err.ErrorT === ErrorTypeEnum.Text" [class.ErrorLi]="err.ErrorT ===  ErrorTypeEnum.Error">{{err.Error}}</li>
+            </ul>
+        </div>
+
+        <div style="text-align: right">
+            <input type="submit" value="Очистка" class="ActionButton" (click)="ClearList()" [disabled]="ClearProcess" />
+        </div>
+
+        <div>
+            <table class="customers">
+                <thead>
+                    <tr>
+                        <th width="2%"></th>
+                        <th>Имя файла</th>
+                        <th>Тип файла</th>
+                        <th>Статус</th>
+                        <th>Комментарий</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let item of model.FileList">
+                        <tr>
+                            <td>
+                                <img src="../../Image/IconOK.png" width="16" height="16" alt="Ok" *ngIf="item.STATUS ===  STATUS_FILE.INVITE" />
+                                <img src="../../Image/IconERROR.png" width="16" height="16" alt="Ok" *ngIf="item.STATUS !==  STATUS_FILE.INVITE" />
+                            </td>
+                            <td>{{item.FILENAME}}</td>
+                            <td>{{item.TYPE_FILE|ENUMasString:TYPEFILE}} - {{item.TYPE_FILE_NAME}}</td>
+                            <td>{{item.STATUS_NAME}}</td>
+                            <td>{{item.COMENT}}</td>
+                            <td><input type="submit" value="Удалить файл" class="delButton" (click)="RemoveFile(item)" /></td>
+                            <td *ngIf="model.TypePriem"></td>
+                        </tr>
+                        <tr *ngIf="item.FILE_L!==null" [style.font-size]="'10pt'">
+                            <td>
+                                <img src="../../Image/IconOK.png" width="16" height="16" alt="Ok" *ngIf="item.FILE_L.STATUS ===  STATUS_FILE.INVITE" />
+                                <img src="../../Image/IconERROR.png" width="16" height="16" alt="Ok" *ngIf="item.FILE_L.STATUS !==  STATUS_FILE.INVITE" />
+                            </td>
+                            <td>{{item.FILE_L.FILENAME}}</td>
+                            <td>{{item.FILE_L.TYPE_FILE|ENUMasString:TYPEFILE}} - {{item.FILE_L.TYPE_FILE_NAME}}</td>
+                            <td>{{item.FILE_L.STATUS_NAME}}</td>
+                            <td>{{item.FILE_L.COMENT}}</td>
+                            <td><input type="submit" value="Удалить файл" class="delButton" (click)="RemoveFile(item.FILE_L)" /></td>
+                            <td *ngIf="model.TypePriem"></td>
+                        </tr>
+                    </ng-container>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <input id="button" [disabled]="!model.IsActive || SendToServiceProcess || model.FileList.length===0" class="ActionButton" type="submit" value="Отправить на обработку" (click)="SendToService()" />
+</Content-Load>
+
+

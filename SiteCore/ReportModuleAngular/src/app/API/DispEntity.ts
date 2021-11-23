@@ -1,14 +1,14 @@
 ﻿export class DispRecord {
     DispDet: DispDetRow[] = [];
     DispVzr: DispVzrRow[] = [];
-    ProfVzr: ProfVzr[] = [];
-    ProfDet: ProfDet[] = [];
+    ProfVzr: ProfVzrRow[] = [];
+    ProfDet: ProfDetRow[] = [];
     constructor(obj: any) {
         if (obj !== null) {
             this.DispDet = obj.DispDet.map((v) => new DispDetRow(v));
             this.DispVzr = obj.DispVzr.map((v) => new DispVzrRow(v));
-            this.ProfVzr = obj.ProfVzr.map((v) => new ProfVzr(v));
-            this.ProfDet = obj.ProfDet.map((v) => new ProfDet(v));
+            this.ProfVzr = obj.ProfVzr.map((v) => new ProfVzrRow(v));
+            this.ProfDet = obj.ProfDet.map((v) => new ProfDetRow(v));
         }
     }
 
@@ -135,11 +135,12 @@ export class DispVzrRow {
     ST35: number;
     ST36: number;
 }
-export class ProfVzr {
+export class ProfVzrRow {
     constructor(obj: any) {
         if (obj === null) return;
         this.SMO = obj.SMO;
         this.NAM_SMO = obj.NAM_SMO;
+        this.NN = obj.NN;
         this.GRP = obj.GRP;
         this.KOL = obj.KOL;
         this.SUM = obj.SUM;
@@ -156,7 +157,7 @@ export class ProfVzr {
     KOL_P: number;
     SUM_P: number;
 }
-export class ProfDet {
+export class ProfDetRow {
     constructor(obj: any) {
         if (obj === null) return;
         this.SMO = obj.SMO;

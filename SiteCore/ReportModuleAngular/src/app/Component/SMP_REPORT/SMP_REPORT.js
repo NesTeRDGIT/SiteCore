@@ -5,12 +5,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { Component } from "@angular/core";
+import { BaseReportComponent } from '../../Component/BaseReportComponent';
 import { FileAPI } from "../../API/FileAPI";
-let SmpReportComponent = class SmpReportComponent {
+let SmpReportComponent = class SmpReportComponent extends BaseReportComponent {
     constructor(repo) {
+        super();
         this.repo = repo;
         this.report = [];
-        this.isLoad = false;
         this.getReport = async () => {
             try {
                 this.isLoad = true;
@@ -32,7 +33,7 @@ let SmpReportComponent = class SmpReportComponent {
                 alert(err.toString());
             }
         };
-        this.dateB = this.dateE = new Date();
+        this.dateB = this.dateE = new Date().addMonths(-1);
     }
 };
 SmpReportComponent = __decorate([

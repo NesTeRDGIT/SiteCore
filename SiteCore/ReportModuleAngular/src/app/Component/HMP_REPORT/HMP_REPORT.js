@@ -5,12 +5,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { Component } from "@angular/core";
+import { BaseReportComponent } from '../../Component/BaseReportComponent';
 import { FileAPI } from "../../API/FileAPI";
-let HmpReportComponent = class HmpReportComponent {
+let HmpReportComponent = class HmpReportComponent extends BaseReportComponent {
     constructor(repo) {
+        super();
         this.repo = repo;
         this.report = [];
-        this.isLoad = false;
         this.getReport = async () => {
             try {
                 this.isLoad = true;

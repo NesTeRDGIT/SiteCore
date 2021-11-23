@@ -3,21 +3,32 @@
 import { IRepository } from "../../API/Repository";
 import { PrimeNGConfig } from "primeng/api";
 import { Translation } from "primeng/api";
+
 @Component({ selector: "app", templateUrl: "MainComponent.html" })
 export class MainComponent {
-     isAdmin = false;
-     isZpz = false;
-     isOms = false;
+    isAdmin = false;
+    isZpz = false;
+    isOms = false;
 
     ReportType = ReportType;
     reportList: ReportCaption[] = [];
     selectedReport: ReportCaption;
+
     constructor(public repo: IRepository, private primeNGConfig: PrimeNGConfig, private elementRef: ElementRef) {
-      
-        this.isAdmin =this.elementRef.nativeElement.getAttribute("[isAdmin]") === "true";
+
+        this.isAdmin = this.elementRef.nativeElement.getAttribute("[isAdmin]") === "true";
         this.isZpz = this.elementRef.nativeElement.getAttribute("[isZpz]") === "true";
         this.isOms = this.elementRef.nativeElement.getAttribute("[isOms]") === "true";
     }
+
+    onLoading = (value, type: ReportType) => {
+        var val = this.reportList.find(x => x.Type === type);
+        if (val != null) {
+            val.IsLoad = value;
+           
+        }
+    }
+
 
     ngOnInit(): void {
         this.primeNGConfig.setTranslation(new RusPrime());
@@ -83,6 +94,7 @@ enum ReportType {
 class ReportCaption {
     Name: string;
     Type: ReportType;
+    IsLoad: boolean = false;
     constructor(name: string, type: ReportType) {
         this.Name = name;
         this.Type = type;

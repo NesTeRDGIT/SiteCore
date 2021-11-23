@@ -1,19 +1,20 @@
 ﻿
 import { Component, ViewChild, ElementRef, AfterViewInit } from "@angular/core";
-
+import { BaseReportComponent } from '../../Component/BaseReportComponent'
 import { IRepository } from "../../API/Repository";
 import { VMP_OOMS } from "../../API/CURRENT_VMP_OOMS";
 import { FileAPI } from "../../API/FileAPI";
 
 @Component({ selector: "hmp-period-report", templateUrl: "HMP_PERIOD_REPORT.html" })
-export class HmpReportPeriodComponent {
+export class HmpReportPeriodComponent extends BaseReportComponent {
     report: VMP_OOMS[] = [];
     dateB: Date;
     dateE: Date;
-    isLoad=false;
+   
 
     constructor(public repo: IRepository) {
-        this.dateB = this.dateE = new Date();
+        super();
+        this.dateB = this.dateE = new Date().addMonths(-1);
     }
 
 

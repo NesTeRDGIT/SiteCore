@@ -236,17 +236,7 @@ namespace SiteCore.Class
         {
             return value.HasValue ? ToOSN(value.Value) : "";
         }
-        /*  public static string ToStr(this ExpertTip ex)
-          {
-              switch (ex)
-              {
-                  case ExpertTip.EKMP: return "ЭКМП";
-                  case ExpertTip.MEE: return "МЭЭ";
-                  case ExpertTip.MEK: return "МЭК";
-                  default: return "";
-              }
-
-          }*/
+      
 
         public static void RemoveRange<T>(this ICollection<T> list, int From, int To)
         {
@@ -320,7 +310,7 @@ namespace SiteCore.Class
     public static class ExtILogger
     {
         
-        public static void LogErrExtention(this ILogger logger, Exception ex, [CallerMemberName]string method = "")
+        public static void AddLogExtension(this ILogger logger, Exception ex, [CallerMemberName]string method = "")
         {
             logger.AddLog($"Ошибка в {method}: {ex.FullError()}{Environment.NewLine}StackTrace:{ex.StackTrace}", LogType.Error);
         }

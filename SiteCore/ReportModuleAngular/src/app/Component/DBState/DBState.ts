@@ -1,15 +1,13 @@
 ﻿import { Component, ViewChild, ElementRef, AfterViewInit } from "@angular/core";
-
+import { BaseReportComponent } from '../../Component/BaseReportComponent'
 import { IRepository } from "../../API/Repository";
 import { DataBaseStateRow } from "../../API/DataBaseStateRow";
 
 @Component({ selector: "DB-State", templateUrl: "DBState.html" })
-export class DBStateComponent {
+export class DBStateComponent extends BaseReportComponent {
     report: DataBaseStateRow[] = [];
-    isLoad=false;
-    
     constructor(public repo: IRepository) {
-        
+        super();
     }
 
 

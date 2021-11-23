@@ -1,17 +1,18 @@
 ﻿import { Component, ViewChild, ElementRef, AfterViewInit } from "@angular/core";
-
+import { BaseReportComponent } from '../../Component/BaseReportComponent'
 import { IRepository } from "../../API/Repository";
 import { KohlRow } from "../../API/KOHLRow";
 import { FileAPI } from "../../API/FileAPI";
 @Component({ selector: "kohl-report", templateUrl: "KOHL_REPORT.html" })
-export class KohlReportComponent {
+export class KohlReportComponent extends BaseReportComponent {
     report : KohlRow[] = [];
     dateB: Date;
     dateE: Date;
-    isLoad=false;
+  
 
     constructor(public repo: IRepository) {
-        const now = new Date();
+        super();
+        const now = new Date().addMonths(-1);
         this.dateB = new Date(now.getFullYear(), 0, 1);
         this.dateE = new Date(now.getFullYear(), 11, 31);
     }

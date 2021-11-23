@@ -5,12 +5,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { Component } from "@angular/core";
+import { BaseReportComponent } from '../../Component/BaseReportComponent';
 import { FileAPI } from "../../API/FileAPI";
-let AbortReportComponent = class AbortReportComponent {
+let AbortReportComponent = class AbortReportComponent extends BaseReportComponent {
     constructor(repo) {
+        super();
         this.repo = repo;
         this.report = [];
-        this.isLoad = false;
         this.getReport = async () => {
             try {
                 this.isLoad = true;
@@ -32,7 +33,7 @@ let AbortReportComponent = class AbortReportComponent {
                 alert(err.toString());
             }
         };
-        this.year = new Date().getFullYear();
+        this.year = new Date().addMonths(-1).getFullYear();
     }
 };
 AbortReportComponent = __decorate([

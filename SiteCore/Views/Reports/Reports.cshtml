@@ -12,8 +12,10 @@
     <script src="~/js/AngularApp/Report/main-es2018.js" asp-append-version="true"></script>
     <script src="~/js/AngularApp/Report/polyfills-es2018.js" asp-append-version="true"></script>
     <script src="~/js/AngularApp/Report/runtime-es2018.js" asp-append-version="true"></script>
-
-
+   
 }
 
-<link href="~/js/AngularApp/Report/styles.css" rel="stylesheet" />
+@section Style
+{
+    <link href="~/js/AngularApp/Report/styles.css" rel="stylesheet"  asp-append-version="true" />
+}

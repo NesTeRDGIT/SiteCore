@@ -1,0 +1,91 @@
+﻿<div style="display: flex; justify-content: space-between">
+    <input type="submit" class="ActionButton" value="Обновить" (click)="getModel()" [disabled]="isLoad" />
+    <input *ngIf="AdminMode" type="submit" class="ActionButton" value="Добавить ошибку" (click)="AddError();"/>
+</div>
+<br/><br/>
+<span class="p-input-icon-left" style="width: 100%">
+    <i class="pi pi-search"></i>
+    <input type="text" pInputText [(ngModel)]="filter" (ngModelChange)="FIND();" placeholder="Код или часть текста ошибки" style="width: 100%">
+</span>
+<hr />
+<div *ngIf="FIND_LIST!==null">
+    <h2>Результаты поиска(первые 10 результатов)</h2>
+    <div>
+        <h3 *ngIf="FIND_LIST.length===0">Поиск не дал результатов</h3>
+        <table class="table_report" *ngIf="FIND_LIST.length!==0">
+            <tr>
+                <th style="width: 10%">Дата редактирования</th>
+                <th style="width: 10%">Код</th>
+                <th style="width: 60%">Текст ошибки</th>
+                <th style="width: 20%">Действия</th>
+            </tr>
+            <tr *ngFor="let err of FIND_LIST">
+                <td>{{err.D_EDIT|date:'dd.MM.yyyy'}}</td>
+                <td>{{err.OSN_TFOMS}}</td>
+                <td>{{err.EXAMPLE}}</td>
+                <td>
+                    <input type="button" class="showButtonICO" value=""  (click)="ShowError(err);" />
+                    <input type="button" class="editButtonICO" value=""  (click)="EditError(err);" *ngIf="AdminMode" />
+                    <input type="button" class="delButtonICO" value="" (click)="DeleteError(err);" *ngIf="AdminMode"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <hr />
+</div>
+
+<div>
+    <h2>Последние изменения(за 30 дней)</h2>
+    <div>
+        <table class="table_report">
+            <tr>
+                <th style="width: 10%">Дата редактирования</th>
+                <th style="width: 10%">Код</th>
+                <th style="width: 60%">Текст ошибки</th>
+                <th style="width: 20%">Действия</th>
+            </tr>
+            <tr *ngFor="let err of model.Top30">
+                <td>{{err.D_EDIT|date:'dd.MM.yyyy'}}</td>
+                <td>{{err.OSN_TFOMS}}</td>
+                <td>{{err.EXAMPLE}}</td>
+                <td>
+                    <input type="button" class="showButtonICO" value="" (click)="ShowError(err);" />
+                    <input type="button" class="editButtonICO" value=""  (click)="EditError(err);" *ngIf="AdminMode" />
+                    <input type="button" class="delButtonICO" value="" (click)="DeleteError(err);" *ngIf="AdminMode"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div *ngFor="let section of model.Sections">
+    <h2>{{section.SECTION_NAME}}</h2>
+    <div>
+        <table class="table_report">
+            <tr>
+                <th style="width: 10%">Дата редактирования</th>
+                <th style="width: 10%">Код</th>
+                <th style="width: 60%">Текст ошибки</th>
+                <th style="width: 20%">Действия</th>
+            </tr>
+
+            <tr *ngFor="let err of section.Errors">
+                <td>{{err.D_EDIT|date:'dd.MM.yyyy'}}</td>
+                <td>{{err.OSN_TFOMS}}</td>
+                <td>{{err.EXAMPLE}}</td>
+                <td>
+                    <input type="button" class="showButtonICO" value="" (click)="ShowError(err);"/>
+                    <input type="button" class="editButtonICO" value="" (click)="EditError(err);" *ngIf="AdminMode"/>
+                    <input type="button" class="delButtonICO" value="" (click)="DeleteError(err);" *ngIf="AdminMode"/>
+                </td>
+
+            </tr>
+
+        </table>
+    </div>
+</div>
+
+
+<ERROR_EDIT [ID_ERR]="selectError?.ID_ERR" [(display)]="showEditError" (onSave)="RefreshModel();" [ReadOnly]="readOnlyEditError"></ERROR_EDIT>
+
+

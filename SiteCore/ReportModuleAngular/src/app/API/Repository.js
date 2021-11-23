@@ -17,6 +17,8 @@ import { SMPRow } from "./SMPRow";
 import { DataBaseStateRow } from "./DataBaseStateRow";
 import { PensRow } from "./PensRow";
 import { DispRecord } from "./DispEntity";
+import { Kv2MtrRow } from "./Kv2MtrRow";
+import { DliRecord } from "./DliRow";
 let IRepository = class IRepository {
 };
 IRepository = __decorate([
@@ -26,6 +28,50 @@ export { IRepository };
 let Repository = class Repository {
     constructor() {
         this.defaultFetchParam = { credentials: "same-origin" };
+    }
+    async getDliReportAsync(year) {
+        const response = await fetch(`GetDliReport?year=${year}`, this.defaultFetchParam);
+        if (response.ok) {
+            const data = await response.json();
+            if (data.Result) {
+                return new DliRecord(data.Value);
+            }
+            throw new Error(data.Value);
+        }
+        throw new Error(`${response.status}: ${response.statusText}`);
+    }
+    async getDliXlsAsync() {
+        const response = await fetch("GetDliXls", this.defaultFetchParam);
+        if (response.ok) {
+            const data = await response.json();
+            if (data.Result) {
+                return new FileASP(data.Value);
+            }
+            throw new Error(data.Value);
+        }
+        throw new Error(`${response.status}: ${response.statusText}`);
+    }
+    async getKv2MtrReportAsync(year, month) {
+        const response = await fetch(`GetKv2MtrReport?year=${year}&month=${month}`, this.defaultFetchParam);
+        if (response.ok) {
+            const data = await response.json();
+            if (data.Result) {
+                return data.Value.map((value) => new Kv2MtrRow(value));
+            }
+            throw new Error(data.Value);
+        }
+        throw new Error(`${response.status}: ${response.statusText}`);
+    }
+    async getKv2MtrXlsAsync() {
+        const response = await fetch("GetKv2MtrXls", this.defaultFetchParam);
+        if (response.ok) {
+            const data = await response.json();
+            if (data.Result) {
+                return new FileASP(data.Value);
+            }
+            throw new Error(data.Value);
+        }
+        throw new Error(`${response.status}: ${response.statusText}`);
     }
     async getDispReport(year, month) {
         const response = await fetch(`GetDispReport?year=${year}&month=${month}`, this.defaultFetchParam);

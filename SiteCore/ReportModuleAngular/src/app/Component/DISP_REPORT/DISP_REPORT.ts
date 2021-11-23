@@ -1,16 +1,16 @@
 ﻿import { Component, ViewChild, ElementRef, AfterViewInit } from "@angular/core";
-
+import { BaseReportComponent } from '../../Component/BaseReportComponent'
 import { IRepository } from "../../API/Repository";
-import { DispRecord, DispVzrRow, DispDetRow, ProfDet, ProfVzr} from "../../API/DispEntity";
+import { DispRecord, DispVzrRow, DispDetRow, ProfDetRow, ProfVzrRow} from "../../API/DispEntity";
 import { FileAPI } from "../../API/FileAPI";
 @Component({ selector: "disp-report", templateUrl: "DISP_REPORT.html" })
-export class DispReportComponent {
+export class DispReportComponent extends BaseReportComponent{
     report = new DispRecord(null);
     period:Date;
-    isLoad=false;
 
     constructor(public repo: IRepository) {
-        this.period = new Date();
+        super();
+        this.period = new Date().addMonths(-1);
     }
 
 
@@ -18,12 +18,7 @@ export class DispReportComponent {
     getReport = async () => {
         try {
             this.isLoad = true;
-            this.report.DispVzr.push(new DispVzrRow(null));
-            this.report.DispDet.push(new DispDetRow(null));
-            this.report.ProfVzr.push(new ProfVzr(null));
-            this.report.ProfDet.push(new ProfDet(null));
-
-            // this.report = await this.repo.getDispReport(this.period.getFullYear(), this.period.getMonth()+1);
+            this.report = await this.repo.getDispReport(this.period.getFullYear(), this.period.getMonth()+1);
         } catch (err) {
             alert(err.toString());
         } finally {
@@ -33,7 +28,7 @@ export class DispReportComponent {
 
     getXls = async () => {
         try {
-            const file = await this.repo.getEcoXlsAsync();
+            const file = await this.repo.getDispXlsAsync();
             FileAPI.downloadBase64File(file.FileContents, file.ContentType, file.FileDownloadName);
         } catch (err) {
             alert(err.toString());

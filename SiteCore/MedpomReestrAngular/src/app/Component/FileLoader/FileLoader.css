@@ -1,0 +1,68 @@
+﻿section {
+    position: relative;
+    width: 380px;
+    margin: 40px auto;
+    color: #40444f;
+    border: .2rem dashed #616778;
+    border-radius: 1.5rem;
+    cursor: pointer;
+    -webkit-transition: color 0.2s ease-out, border-color 0.2s ease-out;
+    -moz-transition: color 0.2s ease-out, border-color 0.2s ease-out;
+    transition: color 0.2s ease-out, border-color 0.2s ease-out;
+    overflow: hidden;
+    padding-top: 90px;
+    box-sizing: border-box;
+}
+
+section:hover, section.dd {
+    border-color: #4d90ff;
+    color: #4d90ff;
+    background-color: #e7f0fe;
+}
+
+figure {
+    position: absolute;
+    width: 100%;
+    height: 160px;
+    left: 0;
+    top: 0;
+    display: block;
+}
+
+    figure svg {
+        position: absolute;
+        display: block;
+        height: 80px;
+        width: 80px;
+        margin-left: -40px;
+        left: 40%;
+        
+        background-size: 80px 80px;
+        -webkit-transition: opacity 0.2s ease-out, border-color 0.2s ease-out;
+        -moz-transition: opacity 0.2s ease-out, border-color 0.2s ease-out;
+        transition: opacity 0.2s ease-out, border-color 0.2s ease-out;
+    }
+
+section:hover figure svg, section.dd figure svg {
+    opacity: .65;
+}
+
+p {
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+p small {
+    text-align: center;
+    font-weight: normal;
+    font-size: 12px;
+    opacity: .7;
+}
+
+ [type="file"] {
+    position: absolute;
+    top: -16rem;
+    opacity: 0;
+}

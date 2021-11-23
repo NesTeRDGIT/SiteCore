@@ -15,6 +15,12 @@ let MainComponent = class MainComponent {
         this.isOms = false;
         this.ReportType = ReportType;
         this.reportList = [];
+        this.onLoading = (value, type) => {
+            var val = this.reportList.find(x => x.Type === type);
+            if (val != null) {
+                val.IsLoad = value;
+            }
+        };
         this.isAdmin = this.elementRef.nativeElement.getAttribute("[isAdmin]") === "true";
         this.isZpz = this.elementRef.nativeElement.getAttribute("[isZpz]") === "true";
         this.isOms = this.elementRef.nativeElement.getAttribute("[isOms]") === "true";
@@ -75,6 +81,7 @@ var ReportType;
 })(ReportType || (ReportType = {}));
 class ReportCaption {
     constructor(name, type) {
+        this.IsLoad = false;
         this.Name = name;
         this.Type = type;
     }

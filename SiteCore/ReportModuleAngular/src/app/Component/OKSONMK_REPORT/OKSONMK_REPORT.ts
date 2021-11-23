@@ -1,16 +1,17 @@
 ﻿import { Component, ViewChild, ElementRef, AfterViewInit } from "@angular/core";
-
+import { BaseReportComponent } from '../../Component/BaseReportComponent'
 import { IRepository } from "../../API/Repository";
 import { oksOnmkRow } from "../../API/oksOnmkRow";
 import { FileAPI } from "../../API/FileAPI";
 @Component({ selector: "oksonmk-report", templateUrl: "OKSONMK_REPORT.html" })
-export class OksOnmkReportComponent {
+export class OksOnmkReportComponent extends BaseReportComponent {
     report : oksOnmkRow[] = [];
     year: number;
-    isLoad=false;
+   
 
     constructor(public repo: IRepository) {
-        const now = new Date();
+        super();
+        const now = new Date().addMonths(-1);
         this.year = now.getFullYear();
     }
 

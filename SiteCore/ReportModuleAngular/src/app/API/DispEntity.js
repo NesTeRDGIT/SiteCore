@@ -7,8 +7,8 @@ export class DispRecord {
         if (obj !== null) {
             this.DispDet = obj.DispDet.map((v) => new DispDetRow(v));
             this.DispVzr = obj.DispVzr.map((v) => new DispVzrRow(v));
-            this.ProfVzr = obj.ProfVzr.map((v) => new ProfVzr(v));
-            this.ProfDet = obj.ProfDet.map((v) => new ProfDet(v));
+            this.ProfVzr = obj.ProfVzr.map((v) => new ProfVzrRow(v));
+            this.ProfDet = obj.ProfDet.map((v) => new ProfDetRow(v));
         }
     }
     get length() {
@@ -80,12 +80,13 @@ export class DispVzrRow {
         this.ST36 = obj.ST36;
     }
 }
-export class ProfVzr {
+export class ProfVzrRow {
     constructor(obj) {
         if (obj === null)
             return;
         this.SMO = obj.SMO;
         this.NAM_SMO = obj.NAM_SMO;
+        this.NN = obj.NN;
         this.GRP = obj.GRP;
         this.KOL = obj.KOL;
         this.SUM = obj.SUM;
@@ -93,7 +94,7 @@ export class ProfVzr {
         this.SUM_P = obj.SUM_P;
     }
 }
-export class ProfDet {
+export class ProfDetRow {
     constructor(obj) {
         if (obj === null)
             return;

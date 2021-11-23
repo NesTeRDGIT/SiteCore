@@ -1,23 +1,25 @@
-﻿import { Component, ViewChild, ElementRef, AfterViewInit } from "@angular/core";
-
+﻿import { Component, Output, EventEmitter, OnChanges, SimpleChanges} from "@angular/core";
+import { BaseReportComponent } from '../../Component/BaseReportComponent'
 import { IRepository } from "../../API/Repository";
 import { AbortRow } from "../../API/AbortRow";
 import { FileAPI } from "../../API/FileAPI";
+
 @Component({ selector: "abort-report", templateUrl: "ABORT_REPORT.html" })
-export class AbortReportComponent {
+export class AbortReportComponent extends BaseReportComponent  {
+
+
     report: AbortRow[] = [];
-    year:number;
-    isLoad=false;
-    
+    year: number;
+
     constructor(public repo: IRepository) {
-        this.year = new Date().getFullYear();
+        super();
+        this.year = new Date().addMonths(-1).getFullYear();
     }
-
-
 
     getReport = async () => {
         try {
             this.isLoad = true;
+           
             this.report = await this.repo.getGetAbortReportAsync(this.year);
         } catch (err) {
             alert(err.toString());
@@ -37,3 +39,5 @@ export class AbortReportComponent {
 
 
 }
+
+

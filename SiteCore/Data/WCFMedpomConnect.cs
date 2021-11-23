@@ -127,6 +127,15 @@ namespace SiteCore.Data
             }
         }
 
+        public Task<bool> PingAsync()
+        {
+            return Task.Run(Ping);
+        }
+                    
+                  
+         
+        
+
         public  StatusPriem StatusInvite()
         {
             try
