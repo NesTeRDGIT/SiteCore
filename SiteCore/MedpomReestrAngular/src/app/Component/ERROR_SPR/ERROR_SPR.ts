@@ -1,5 +1,6 @@
-﻿import { Component, Output, Input,EventEmitter, OnChanges, SimpleChanges} from "@angular/core";
+﻿import { Component, Output, Input,EventEmitter, OnChanges, SimpleChanges,ViewChild} from "@angular/core";
 import { BaseReportComponent } from '../../Component/BaseReportComponent'
+import { ERROR_EDIT } from '../../Component/ERROR_EDIT/ERROR_EDIT'
 import { SectionSpr,ErrorSpr, EditErrorSPRViewModel } from '../../API/ErrorSPRModel'
 
 
@@ -12,6 +13,8 @@ export class ERROR_SPR extends BaseReportComponent {
     model: EditErrorSPRViewModel = new EditErrorSPRViewModel(null);
     filter: string;
     FIND_LIST: ErrorSpr[]= null;
+
+   
 
 
     findError = (filter: string): ErrorSpr[] => {
@@ -58,16 +61,12 @@ export class ERROR_SPR extends BaseReportComponent {
 
 
 
-    selectError: ErrorSpr = null;
-    showEditError = false;
-    readOnlyEditError = true;
+  
+    @ViewChild(ERROR_EDIT) errorEditDialog: ERROR_EDIT;
     EditError = (err: ErrorSpr) => {
         try {
-            
             if (err != null) {
-                this.selectError = err;
-                this.readOnlyEditError = false;
-                this.showEditError = true;
+                this.errorEditDialog.ShowDialog(err.ID_ERR, false);
             }
         } catch (err) {
             alert(err.toString());
@@ -76,9 +75,7 @@ export class ERROR_SPR extends BaseReportComponent {
 
     AddError = () => {
         try {
-            this.selectError = null;
-            this.readOnlyEditError = false;
-            this.showEditError = true;
+            this.errorEditDialog.ShowDialog(null, false);
         } catch (err) {
             alert(err.toString());
         }
@@ -86,11 +83,8 @@ export class ERROR_SPR extends BaseReportComponent {
 
     ShowError = (err: ErrorSpr) => {
         try {
-
             if (err != null) {
-                this.selectError = err;
-                this.readOnlyEditError = true;
-                this.showEditError = true;
+                this.errorEditDialog.ShowDialog(err.ID_ERR, true);
             }
         } catch (err) {
             alert(err.toString());
@@ -111,8 +105,8 @@ export class ERROR_SPR extends BaseReportComponent {
             alert(err.toString());
         }
     }
+
     RefreshModel = () => {
-        this.showEditError = false;
         this.getModel();
     }
 }

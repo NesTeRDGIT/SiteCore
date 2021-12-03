@@ -4,6 +4,7 @@
         addMonths(month: number): Date;
         isLeapYear(): boolean;
         getDaysInMonth(): number;
+        toASPstring(): string;
     }
 }
 

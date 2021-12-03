@@ -25,6 +25,9 @@
         <div *ngIf="selectedReport.Type==ReportType.ErrorSPR" style="width: 100%" >
             <ERROR_SPR (onLoading)="onLoading($event,ReportType.ErrorSPR)" [AdminMode]="isAdmin"></ERROR_SPR>
         </div>
+        <div *ngIf="selectedReport.Type==ReportType.FIND_CS" style="width: 100%" >
+            <Find-CS-Main (onLoading)="onLoading($event,ReportType.FIND_CS)" [AdminMode]="isAdmin"></Find-CS-Main>
+        </div>
     </div>
 
 </div>

@@ -2,7 +2,7 @@
     <input type="button" value="Обновить" class="ActionButton" (click)="getModel()" />
     <input type="button" (click)="ShowInstruction()" class="ActionButton" value="Инструкция" />
 </div>
-<Instruction-Dialog [(display)]="displayDialog"></Instruction-Dialog>
+<Instruction-Dialog #instructionDialog></Instruction-Dialog>
 <hr />
 
 <Content-Load [isLoad]="isLoad">

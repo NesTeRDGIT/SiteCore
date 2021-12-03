@@ -4,27 +4,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-import { Component, Output, Input, EventEmitter } from "@angular/core";
+import { Component } from "@angular/core";
 let InstructionDialog = class InstructionDialog {
     constructor() {
-        this._display = false;
-        this.displayChange = new EventEmitter();
+        this.display = false;
     }
-    get display() {
-        return this._display;
-    }
-    set display(value) {
-        if (this._display !== value)
-            this.displayChange.emit(value);
-        this._display = value;
+    ShowDialog() {
+        this.display = true;
     }
 };
-__decorate([
-    Input()
-], InstructionDialog.prototype, "display", null);
-__decorate([
-    Output()
-], InstructionDialog.prototype, "displayChange", void 0);
 InstructionDialog = __decorate([
     Component({ selector: "Instruction-Dialog", templateUrl: "InstructionDialog.html" })
 ], InstructionDialog);

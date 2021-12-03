@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoWCFService", "CryptoW
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoWCFServiceTests", "CryptoWCFServiceTests\CryptoWCFServiceTests.csproj", "{A2ADA1E9-00B0-4028-B520-5D6DEF01DED1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentiModel", "IndentiModel\IdentiModel.csproj", "{D89B232D-665B-4048-9A56-4E07BDB05667}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentiScaner", "IdentiScaner\IdentiScaner.csproj", "{15851606-2212-4B06-BC59-01F733537E79}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{A2ADA1E9-00B0-4028-B520-5D6DEF01DED1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2ADA1E9-00B0-4028-B520-5D6DEF01DED1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2ADA1E9-00B0-4028-B520-5D6DEF01DED1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D89B232D-665B-4048-9A56-4E07BDB05667}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D89B232D-665B-4048-9A56-4E07BDB05667}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D89B232D-665B-4048-9A56-4E07BDB05667}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D89B232D-665B-4048-9A56-4E07BDB05667}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15851606-2212-4B06-BC59-01F733537E79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15851606-2212-4B06-BC59-01F733537E79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15851606-2212-4B06-BC59-01F733537E79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15851606-2212-4B06-BC59-01F733537E79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

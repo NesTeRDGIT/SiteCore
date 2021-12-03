@@ -1,0 +1,64 @@
+﻿
+<div style="display: flex; justify-content: space-between;">
+    <input class="ActionButton" type="button" (click)="showNewItemDialog()" value="Новый"/>
+    <button class="ActionButton" (click)="showInstructionDialogCS()" >Инструкция пользователя</button>
+</div>
+<br/>
+<p-contextMenu #context [model]="contextMenuItems"></p-contextMenu>
+
+<p-table  [value]="ListPerson"  [(contextMenuSelection)]="contextPerson"  (onContextMenuSelect)="onContextMenuSelect($event, context)" [contextMenu]="context"
+selectionMode="multiple" [metaKeySelection]="true" dataKey="CS_LIST_IN_ID" [(selection)]="selectedPersons"
+ responsiveLayout="scroll" styleClass="p-datatable-gridlines"
+[rowsPerPageOptions]="[25,50,75]"  [paginator]="true" [(rows)]="countOnPage" [(first)]="first"
+(onLazyLoad)="loadPerson($event)" [lazy]="true" [totalRecords]="totalRecords" [loading]="loading"
+[scrollable]="true" scrollHeight="55vh" scrollDirection="both" >
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width:90px">Статус отправки</th>
+            <th style="width:90px">Результат поиска</th>
+            <th style="width:200px">Фамилия</th>
+            <th style="width:200px">Имя</th>
+            <th style="width:200px">Отчество</th>
+            <th style="width:150px">Дата рождения</th>
+            <th style="width:400px">Полис</th>
+            <th style="width:400px">Документ</th>
+            <th style="width:200px">Текущая СМО</th>
+            <th style="width:150px" *ngIf="AdminMode">Код МО</th>
+            <th style="width:150px">Дата создания</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-person let-rowIndex="rowIndex">
+        <tr [pContextMenuRow]="person" [pSelectableRow]="person" [pSelectableRowIndex]="rowIndex" (dblclick)="showItemDialog()" >
+            <td style="width:90px; text-align: center" >   
+                <div [ngClass]="{
+                    ImgDocEdit:person.STATUS_SEND==StatusCS_LIST.New,
+                    ImgOnSend:person.STATUS_SEND==StatusCS_LIST.OnSend,
+                    ImgSend:person.STATUS_SEND==StatusCS_LIST.Send,
+                    ImgSendandOK:person.STATUS_SEND==StatusCS_LIST.FLK,
+                    ImgOK:person.STATUS_SEND==StatusCS_LIST.Answer,
+                    ImgError:person.STATUS_SEND==StatusCS_LIST.Error
+                 }" [title]="person.STATUS_SEND_TEXT" style="display: inline-block;">
+                 </div>
+            </td>
+            <td style="width:90px;text-align: center">
+                <div [ngClass]="{
+                    ImgOK:person.STATUS==true,
+                    ImgError:person.STATUS==false,
+                    ImgQuestion:person.STATUS == null
+                 }" [title]="person.STATUS_TEXT" style="display: inline-block;"></div>
+            </td>
+            <td style="width:200px">{{person.FAM}}</td>
+            <td style="width:200px">{{person.IM}}</td>
+            <td style="width:200px">{{person.OT}}</td>
+            <td style="width:150px">{{person.DR|date:'dd.MM.yyyy'}}</td>
+            <td style="width:400px">{{person.POLIS}}</td>
+            <td style="width:400px">{{person.DOC}}</td>
+            <td style="width:200px">{{person.CURRENT_SMO}}</td>
+            <td style="width:150px" *ngIf="AdminMode">{{person.CODE_MO}}</td>
+            <td style="width:150px">{{person.DATE_CREATE|date:'dd.MM.yyyy'}}</td>
+        </tr>
+    </ng-template>
+</p-table>
+<CSItemEdit  (onUpdateData)="onUpdateDataEditDialog(null)" #editDialog></CSItemEdit>
+<CSItemView   #viewDialog></CSItemView>
+<InstructionDialogCS #InstructionDialogCS></InstructionDialogCS>

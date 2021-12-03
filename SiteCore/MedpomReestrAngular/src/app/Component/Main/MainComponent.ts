@@ -8,29 +8,29 @@ import { URLHelper } from '../../API/URLHelper';
 @Component({ selector: "app", templateUrl: "MainComponent.html" })
 export class MainComponent {
     isAdmin = false;
-    isZpz = false;
-    isOms = false;
-
+    isMO = false;
+    isCS = false;
     ReportType = ReportType;
     reportList: ReportCaption[] = [];
     _selectedReport: ReportCaption;
     get selectedReport(): ReportCaption {
         return this._selectedReport;
     };
-    set selectedReport(value:ReportCaption) {
+    set selectedReport(value: ReportCaption) {
         this._selectedReport = value;
-        this.urlHelper.changeParameter('selectIndex', this._selectedReport.Type );
+        this.urlHelper.changeParameter('selectIndex', this._selectedReport.Type);
     };
-  
 
-    constructor(public repo: IRepository, private primeNGConfig: PrimeNGConfig, private elementRef: ElementRef,private urlHelper: URLHelper) {
+
+    constructor(public repo: IRepository, private primeNGConfig: PrimeNGConfig, private elementRef: ElementRef, private urlHelper: URLHelper) {
 
         this.isAdmin = this.elementRef.nativeElement.getAttribute("[isAdmin]") === "true";
-        this.isZpz = this.elementRef.nativeElement.getAttribute("[isZpz]") === "true";
-        this.isOms = this.elementRef.nativeElement.getAttribute("[isOms]") === "true";
+        this.isMO = this.elementRef.nativeElement.getAttribute("[isMO]") === "true";
+        this.isCS = this.elementRef.nativeElement.getAttribute("[isCS]") === "true";
 
 
- }
+
+    }
 
     onLoading = (value, type: ReportType) => {
         var val = this.reportList.find(x => x.Type === type);
@@ -40,16 +40,20 @@ export class MainComponent {
     }
 
     onSendReestr = () => {
-        this.selectedReport = this.reportList.find(x=>x.Type=== ReportType.ViewMedpom);
+        this.selectedReport = this.reportList.find(x => x.Type === ReportType.ViewMedpom);
     }
 
 
     ngOnInit(): void {
         this.primeNGConfig.setTranslation(new RusPrime());
-        
-        this.reportList.push(new ReportCaption("Загрузка реестров", ReportType.LoadMedpom));
-        this.reportList.push(new ReportCaption("Статус проверки", ReportType.ViewMedpom));
-        this.reportList.push(new ReportCaption("Справочник ошибок", ReportType.ErrorSPR));
+        if (this.isMO || this.isAdmin) {
+            this.reportList.push(new ReportCaption("Загрузка реестров", ReportType.LoadMedpom));
+            this.reportList.push(new ReportCaption("Статус проверки", ReportType.ViewMedpom));
+            this.reportList.push(new ReportCaption("Справочник ошибок", ReportType.ErrorSPR));
+        }
+        if (this.isCS || this.isAdmin)
+            this.reportList.push(new ReportCaption("Поиск в ЦС", ReportType.FIND_CS));
+
 
         if (this.reportList.length !== 0) {
             const selectIndex: ReportType = +this.urlHelper.getParameter('selectIndex');
@@ -68,7 +72,8 @@ export class MainComponent {
 enum ReportType {
     LoadMedpom,
     ViewMedpom,
-    ErrorSPR
+    ErrorSPR,
+    FIND_CS
 }
 
 class ReportCaption {

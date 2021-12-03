@@ -9,43 +9,57 @@ using SiteCore.Data;
 namespace SiteCore.Hubs
 {
    
-    public class NotificationHub : Hub
+    public class NotificationHub : Hub<IHubClient>
     {
+
         UserInfoHelper userInfoHelper;
         private UserInfo _userInfo;
         private UserInfo userInfo => userInfoHelper.GetInfo(Context.User?.Identity.Name);
-
+       
         public NotificationHub(UserInfoHelper userInfoHelper)
         {
             this.userInfoHelper = userInfoHelper;
         }
-        public async Task Register()
+
+        public static List<string> GetGroupNamesNewCSListState(string[] CODE_MO, bool isAdmin)
         {
-            var CODE_MO = userInfo.CODE_MO;
-            if (!string.IsNullOrEmpty(CODE_MO))
-            {
-                await Groups.AddToGroupAsync(Context.ConnectionId, CODE_MO);
-            }
-        
-            if(Context.User.IsInRole("Admin"))
-            {
-                await Groups.AddToGroupAsync(Context.ConnectionId, "Admin");
-            }
-        }
-        public async Task RegisterForLoadThemeFile()
-        {
-            await Groups.AddToGroupAsync(Context.ConnectionId, Context.ConnectionId);
+            var result = CODE_MO.Select(x => GetGroupNameNewCSListState(x, false)).ToList();
+            if(isAdmin)
+                result.Add(GetGroupNameNewCSListState("", true));
+            return result;
         }
 
-        public override Task OnDisconnectedAsync(Exception? exception)
+        public static string GetGroupNameNewCSListState(string CODE_MO, bool isAdmin)
         {
-            var CODE_MO = userInfo.CODE_MO;
-            Groups.RemoveFromGroupAsync(Context.ConnectionId, CODE_MO);
-            Groups.RemoveFromGroupAsync(Context.ConnectionId, "Admin");
-            return base.OnDisconnectedAsync(exception);
+            return isAdmin ? $"CSListState:Admin" : $"CSListState{CODE_MO}";
         }
 
+        public static string GetGroupNameNewPackState(string CODE_MO)
+        {
+            return $"NewPackState{CODE_MO}";
+        }
+        public async Task RegisterNewCSListState()
+        {
+            var CODE_MO = userInfo.CODE_MO;
+            var isAdmin = Context.User.IsInRole("Admin");
+            await Groups.AddToGroupAsync(Context.ConnectionId, GetGroupNameNewCSListState(CODE_MO, isAdmin));
+        }
+
+
+
+        public async Task RegisterNewPackState()
+        {
+            var CODE_MO = userInfo.CODE_MO;
+            await Groups.AddToGroupAsync(Context.ConnectionId, GetGroupNameNewPackState(CODE_MO));
+        }
     }
+
+    public interface IHubClient
+    {
+        Task NewCSListState(List<int> ID);
+        Task NewPackState();
+    }
+
 
 
     public static class ExtNotificationHub

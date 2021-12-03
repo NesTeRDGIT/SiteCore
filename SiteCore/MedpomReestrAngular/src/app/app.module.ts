@@ -1,9 +1,12 @@
 ﻿import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
+import {InputMaskModule} from 'primeng/inputmask';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import {DropdownModule} from 'primeng/dropdown';
 
 import { NgModule, LOCALE_ID, Input } from "@angular/core";
+import {SplitButtonModule} from 'primeng/splitbutton';
 
 import { BrowserModule } from "@angular/platform-browser";
 import { FormsModule } from "@angular/forms";
@@ -11,6 +14,8 @@ import { CalendarModule } from 'primeng/calendar';
 import { TableModule } from "primeng/table";
 import { TabViewModule } from 'primeng/tabview';
 import { SplitterModule } from 'primeng/splitter';
+import {ContextMenuModule} from 'primeng/contextmenu';
+import {SelectButtonModule} from 'primeng/selectbutton';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { HttpClientModule } from "@angular/common/http";
 
@@ -19,9 +24,9 @@ import { ENUMPipe } from "./EnumPIPE";
 import { SafeHtmlPipe } from "./SafeHtmlPipe";
 
 
-
 import { MainComponent } from "./Component/Main/MainComponent";
 import { Repository, IRepository } from "./API/Repository";
+import { IRepositoryCS, RepositoryCS } from "./API/IRepositoryCS";
 import { ListboxModule } from 'primeng/listbox';
 import { DividerModule } from 'primeng/divider';
 import { registerLocaleData } from '@angular/common';
@@ -39,15 +44,28 @@ import { ERROR_SPR } from "./Component/ERROR_SPR/ERROR_SPR"
 import { ERROR_EDIT } from "./Component/ERROR_EDIT/ERROR_EDIT"
 import { URLHelper } from './API/URLHelper';
 
+import { FindCSMain } from './Component/FindCS/Component/FindCSMain/FindCSMain'
+import { MainTable } from './Component/FindCS/Component/MainTable/MainTable'
+import { CSItemEdit } from './Component/FindCS/Component/CSItemEdit/CSItemEdit'
+
+import { CSItemView } from './Component/FindCS/Component/CSItemView/CSItemView'
+import { CSServiceStatus } from './Component/FindCS/Component/CSServiceStatus/CSServiceStatus'
+import { InstructionDialogCS } from './Component/FindCS/Component/InstructionDialogCS/InstructionDialogCS'
+
+import {PanelModule} from 'primeng/panel';
 registerLocaleData(localeRu);
 
 
 @NgModule({
-    imports: [BrowserModule, FormsModule, BrowserAnimationsModule, TableModule, TabViewModule, HttpClientModule, SplitterModule, ListboxModule, DividerModule, CalendarModule, ProgressSpinnerModule, DialogModule, InputTextModule, AutoCompleteModule, CKEditorModule],
-    declarations: [MainComponent, YesNoPipe, ENUMPipe, ISTEnumRusPipe, SafeHtmlPipe, StepsProcessRusPipe, StatusFilePackRusPipe, LoadReestrComponent, FileLoader, ProgressBar, ViewReestrComponent, ContentLoad, InstructionDialog, ERROR_SPR, ERROR_EDIT ],
-    providers: [{ provide: IRepository, useClass: Repository },
+    imports: [BrowserModule, FormsModule, BrowserAnimationsModule, TableModule, TabViewModule, HttpClientModule, SplitterModule, ListboxModule, DividerModule, CalendarModule, ProgressSpinnerModule, DialogModule, InputTextModule, AutoCompleteModule, 
+        CKEditorModule, ContextMenuModule,InputMaskModule,DropdownModule,SplitButtonModule,PanelModule,SelectButtonModule],
+    declarations: [MainComponent, YesNoPipe, ENUMPipe, ISTEnumRusPipe, SafeHtmlPipe, StepsProcessRusPipe, StatusFilePackRusPipe, LoadReestrComponent, FileLoader, ProgressBar, ViewReestrComponent, ContentLoad, InstructionDialog, ERROR_SPR, ERROR_EDIT
+        ,FindCSMain,MainTable,CSItemEdit,CSItemView,CSServiceStatus,InstructionDialogCS],
+    providers: [
+        { provide: IRepository, useClass: Repository },
         { provide: LOCALE_ID, useValue: 'ru' },
-        { provide: URLHelper, useClass: URLHelper }
+        { provide: URLHelper, useClass: URLHelper },
+        { provide: IRepositoryCS, useClass: RepositoryCS },
       ],
     bootstrap: [MainComponent]
 })
@@ -76,4 +94,9 @@ Date.prototype.addMonths = function (value) {
     this.setDate(Math.min(n, this.getDaysInMonth()));
     return this;
 };
+
+Date.prototype.toASPstring = function () {
+    return `${this.getFullYear()}-${(this.getMonth()+1).toString().padStart(2, "0")}-${this.getDate().toString().padStart(2, "0")}`;
+};
+
 

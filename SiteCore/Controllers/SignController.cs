@@ -584,13 +584,13 @@ namespace SiteCore.Controllers
 
         [Authorize(Roles = "SignAdmin")]
         [HttpGet]
-        public async Task<CustomJsonResult> DownloadAllFileTheme(int THEME_ID,string ConnectionId)
+        public async Task<IActionResult> DownloadAllFileTheme(int THEME_ID, string ConnectionId)
         {
             try
             {
-                
+
                 notificationHub.Progress(ConnectionId, 0, 0, "Запрос файлов из БД");
-                 var docTheme = await myOracleSet.DOC_THEME.Include(x => x.DOCs).ThenInclude(x => x.SIGNs).ThenInclude(x => x.ROLE).Where(x => x.THEME_ID == THEME_ID).FirstOrDefaultAsync();
+                var docTheme = await myOracleSet.DOC_THEME.Include(x => x.DOCs).ThenInclude(x => x.SIGNs).ThenInclude(x => x.ROLE).Where(x => x.THEME_ID == THEME_ID).FirstOrDefaultAsync();
                 if (docTheme == null)
                     throw new Exception($"Не удалось найти THEME_ID={THEME_ID}");
                 var entry = new List<ZipArchiverEntry>();
@@ -616,9 +616,10 @@ namespace SiteCore.Controllers
                     entry.Add(new ZipArchiverEntry(filename, ZipArchiver.Zip(docEntry.ToArray())));
 
                 }
-                notificationHub.Progress(ConnectionId, i, docTheme.DOCs.Count, $"Передача файла");
+                notificationHub.Progress(ConnectionId, i, docTheme.DOCs.Count, $"Формирование файла");
                 var file = File(ZipArchiver.Zip(entry.ToArray()), System.Net.Mime.MediaTypeNames.Application.Zip, $"{docTheme.CAPTION}.zip");
-                return CustomJsonResult.Create(file);
+                notificationHub.Progress(ConnectionId, i, docTheme.DOCs.Count, $"Передача файла");
+                return file;
 
             }
             catch (Exception ex)

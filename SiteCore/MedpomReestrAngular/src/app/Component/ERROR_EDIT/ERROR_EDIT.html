@@ -1,4 +1,4 @@
-﻿<p-dialog [header]="ReadOnly? 'Просмотр': ID_ERR===null ? 'Новый' :'Редактор'" [(visible)]="display" [style]="{width: '90vw'}">
+﻿<p-dialog [header]="ReadOnly? 'Просмотр': ID_ERR===null ? 'Новый' :'Редактор'" [(visible)]="display" [style]="{width: '90vw'}"  [modal]="true">
     <Content-Load [isLoad]="isLoad">
         <div class="ErrorLi">
             <ul>

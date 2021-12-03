@@ -80,7 +80,7 @@ namespace SiteCore.Controllers
                 if (!string.IsNullOrEmpty(userInfo.CODE_MO) && VRVM.ConnectWCFon)
                 {
                     var pac = WcfConnect.GetPackForMO(userInfo.CODE_MO);
-                    VRVM.FP = new FilePacketNew
+                    VRVM.FP = pac.FP==null? null: new FilePacketNew
                     {
                         CaptionMO = pac.FP.CaptionMO,
                         CodeMO = pac.FP.CodeMO,
@@ -194,20 +194,17 @@ namespace SiteCore.Controllers
                 var lvm = new LoadReestViewModel
                 {
                     FileList = files,
-                    ConnectWCFon = WcfConnect.Ping(),
                     SNILS_SIGN = new EditableList<SNILS_SIGN>(),
                     CODE_MO = userInfo.CODE_MO,
                     NAME_OK = userInfo.CODE_MO_NAME
                 };
-                if (lvm.ConnectWCFon)
-                {
-                    lvm.ReestrEnabled = WcfConnect.ReestrEnabled();
-                    lvm.TypePriem = WcfConnect.GetTypePriem();
-                }
-                else
-                {
-                    lvm.ReestrEnabled = false;
-                }
+                var wcfStatus = await WcfConnect.GetStatusAsync();
+
+                lvm.ReestrEnabled = wcfStatus.ReestrEnabled;
+                lvm.ConnectWCFon = wcfStatus.ConnectWCFon;
+                lvm.TypePriem = wcfStatus.TypePriem;
+
+               
                 return lvm;
             }
             catch (Exception ex)
@@ -452,11 +449,11 @@ namespace SiteCore.Controllers
                 var usInfo = userInfoHelper.GetInfo(User.Identity.Name);
                 var folderPath = medpomFileManager.GetDir(usInfo.CODE_MO);
                 var err = new List<ErrorItem>();
+                var wcfStatus = await WcfConnect.GetStatusAsync();
 
                 //Отправить реестры на сервер
-                if (WcfConnect.Ping() && WcfConnect.ReestrEnabled())
+                if (wcfStatus.ConnectWCFon && wcfStatus.ReestrEnabled)
                 {
-                    var typePriem = WcfConnect.GetTypePriem();
                     var fp = new FilePacket
                     {
                         Status = StatusFilePack.Close,
@@ -488,13 +485,13 @@ namespace SiteCore.Controllers
 
                         if (usInfo.WithSing == false)
                         {
-                            if ((f.SIGN_ISP_VALID && f.SIGN_BUH_VALID && f.SIGN_DIR_VALID) != true && typePriem)
+                            if ((f.SIGN_ISP_VALID && f.SIGN_BUH_VALID && f.SIGN_DIR_VALID) != true && wcfStatus.TypePriem)
                             {
                                 err.Add(new ErrorItem(ErrorT.TextRed, $"Файл {f.FILENAME} не подписан. Исключите его из посылки!"));
                                 continue;
                             }
 
-                            if (f.FILE_L != null && (f.FILE_L.SIGN_ISP_VALID && f.FILE_L.SIGN_BUH_VALID && f.FILE_L.SIGN_DIR_VALID) != true && typePriem)
+                            if (f.FILE_L != null && (f.FILE_L.SIGN_ISP_VALID && f.FILE_L.SIGN_BUH_VALID && f.FILE_L.SIGN_DIR_VALID) != true && wcfStatus.TypePriem)
                             {
                                 err.Add(new ErrorItem(ErrorT.TextRed, $"Файл {f.FILE_L.FILENAME} не подписан. Исключите его из посылки!"));
                                 continue;

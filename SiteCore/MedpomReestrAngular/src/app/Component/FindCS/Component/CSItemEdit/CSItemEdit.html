@@ -1,0 +1,112 @@
+﻿
+<p-dialog [header]="mode === EditMode.New? 'Новый':mode === EditMode.Edit? 'Редактор' : 'Копия'" [(visible)]="display" [style]="{width: '90vw'}"  [modal]="true">
+<Content-Load [isLoad]="isLoad">
+    <span style="font-style: italic">
+        Для поиска обязательно указать: один из компонентов ФИО, пол, дату рождения и минимум 1 из идентификаторов(документ,СНИЛС, полис)<br />
+        Однако чем больше идентификаторов Вы укажете тем больше шансов найти человека в ЦС ЕРЗ
+    </span>
+<br/><br/>
+<div class="ErrorLi" style="font-family: 'Times New Roman', Times, serif;">
+    <ul>
+        <li *ngFor="let err of ErrorModelList">{{err}}</li>
+    </ul>
+</div>
+    <div class="InForm">
+        <fieldset>
+            <legend>Данные пациента</legend>
+            <table>
+               
+                <tr>
+                    <td>Фамилия</td>
+                    <td>
+                        <input type="text" pInputText [(ngModel)]="model.FAM" autofocus maxlength="40"> 
+                    </td>
+                </tr>
+                <tr>
+                    <td>Имя</td>
+                    <td>
+                        <input type="text" pInputText [(ngModel)]="model.IM" maxlength="40"> 
+                    </td>
+                </tr>
+                <tr>
+                    <td>Отчество</td>
+                    <td>
+                        <input type="text" pInputText [(ngModel)]="model.OT" maxlength="40"> 
+                    </td>
+                </tr>
+                <tr>
+                    <td>Дата рождения</td>
+                    <td>
+                        <p-calendar [class.ng-invalid]="model.DR===null" [class.ng-dirty]="true" dateFormat="dd.mm.yy" [style]="{'width':'100%'}" [(ngModel)]="model.DR" appendTo="body" ></p-calendar>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Пол</td>
+                    <td>
+                        <p-dropdown [class.ng-invalid]="model.W===null" [class.ng-dirty]="true" [options]="SPR.W" [(ngModel)]="selectW" optionLabel="NAME"  [style]="{'width':'100%'}" appendTo="body"></p-dropdown>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+
+        <fieldset>
+            <legend>Документ удостоверения личности</legend>
+            <table>
+                <tr>
+                    <td>Тип документа</td>
+                    <td>
+                        <p-dropdown  [options]="SPR.F011" [(ngModel)]="selectF011" optionLabel="NAME"  [style]="{'width':'100%'}"  appendTo="body"></p-dropdown>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Серия</td>
+                    <td>
+                        <input *ngIf="maskDOC_S===''" pInputText [(ngModel)]="model.DOC_SER"  [style]="{'width':'100%'}"  maxlength="40"/>
+                        <p-inputMask *ngIf="maskDOC_S!==''" [mask]="maskDOC_S" [placeholder]="maskDOC_S" [(ngModel)]="model.DOC_SER"  [style]="{'width':'100%'}"></p-inputMask>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Номер</td>
+                    <td>
+                        <input [class.ng-invalid]="model.DOC_NUM ==='' && model.DOC_TYPE" [class.ng-dirty]="true" *ngIf="maskDOC_N===''" pInputText [(ngModel)]="model.DOC_NUM"  [style]="{'width':'100%'}"  maxlength="40"/>
+                        <p-inputMask [class.ng-invalid]="model.DOC_NUM ==='' && model.DOC_TYPE" [class.ng-dirty]="true"  *ngIf="maskDOC_N!==''" [mask]="maskDOC_N" [placeholder]="maskDOC_N" [(ngModel)]="model.DOC_NUM"  [style]="{'width':'100%'}"></p-inputMask>
+                    </td>
+                </tr>
+                <tr>
+                    <td>СНИЛС</td>
+                    <td>
+                        <p-inputMask mask="999-999-999 99" placeholder="999-999-999 99" [(ngModel)]="model.SNILS"  [style]="{'width':'100%'}"></p-inputMask>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+
+        <fieldset>
+            <legend>Документ подтверждающий факт страхования</legend>
+            <table>
+                <tr>
+                    <td>Тип документа</td>
+                    <td>
+                        <p-dropdown  [options]="SPR.VPOLIS" [(ngModel)]="selectVPOLIS" optionLabel="NAME"  [style]="{'width':'100%'}"  appendTo="body"></p-dropdown>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Серия</td>
+                    <td>
+                        <input type="text" pInputText [(ngModel)]="model.SPOLIS"  maxlength="40"> 
+                    </td>
+                </tr>
+                <tr>
+                    <td>Номер</td>
+                    <td>
+                        <input [class.ng-invalid]="model.NPOLIS ==='' && model.VPOLIS" [class.ng-dirty]="true" *ngIf="maskNPOLIS===''" pInputText [(ngModel)]="model.NPOLIS"  [style]="{'width':'100%'}"  maxlength="40"/>
+                        <p-inputMask [class.ng-invalid]="model.NPOLIS ==='' && model.VPOLIS" [class.ng-dirty]="true" *ngIf="maskNPOLIS!==''" [mask]="maskNPOLIS" [placeholder]="maskNPOLIS" [(ngModel)]="model.NPOLIS"  [style]="{'width':'100%'}"></p-inputMask>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+    <br/>
+    <input type="button" class="ActionButton" value="Сохранить" (click)="SaveModel()" />
+</Content-Load>
+</p-dialog>

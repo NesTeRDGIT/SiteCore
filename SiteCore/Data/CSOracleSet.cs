@@ -49,7 +49,7 @@ namespace SiteCore.Data
             return val switch
             {
                 VPOLIS_VALUES.OLD => "Полис ОМС старого образца",
-                VPOLIS_VALUES.TEMP_B => "Временное свидетельство в форме электронного документа",
+                VPOLIS_VALUES.TEMP_B => "Временное свидетельство в форме бумажного документа",
                 VPOLIS_VALUES.TEMP_E => "Временное свидетельство в форме электронного документа",
                 VPOLIS_VALUES.bOMS => "Бумажный полис ОМС единого образца",
                 VPOLIS_VALUES.eOMS => "Электронный полис ОМС единого образца",
@@ -67,10 +67,10 @@ namespace SiteCore.Data
         {
             return val switch
             {
-                StatusCS_LIST.New => "Новый список",
-                StatusCS_LIST.Send => "Список отправлен в ЦС(ожидание ФЛК)",
-                StatusCS_LIST.OnSend => "Список в очереди на отправку в ЦС",
-                StatusCS_LIST.FLK => "Список отправлен в ЦС(ожидание ответа)",
+                StatusCS_LIST.New => "Новый запрос",
+                StatusCS_LIST.Send => "Запрос отправлен в ЦС(ожидание ФЛК)",
+                StatusCS_LIST.OnSend => "Запрос в очереди на отправку в ЦС",
+                StatusCS_LIST.FLK => "Запрос отправлен в ЦС(ожидание ответа)",
                 StatusCS_LIST.Answer => "Ответ получен",
                 StatusCS_LIST.Error => "Ошибка обработки",
                 _ => ""
@@ -99,7 +99,6 @@ namespace SiteCore.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("SITE");
-            modelBuilder.Entity<CS_LIST>().HasMany(x => x.CS_LIST_IN).WithOne(x => x.CS_LIST).HasForeignKey(x => x.CS_LIST_ID).IsRequired();
             modelBuilder.Entity<CS_LIST_IN>().HasMany(ir => ir.CS_LIST_IN_RESULT).WithOne(i => i.CS_LIST_IN).HasForeignKey(x=>x.CS_LIST_IN_ID).IsRequired();
             modelBuilder.Entity<CS_LIST_IN_RESULT>().HasMany(x => x.CS_LIST_IN_RESULT_SMO).WithOne(x => x.CS_LIST_IN_RESULT).HasForeignKey(x=>x.CS_LIST_IN_RES_ID).IsRequired();
             modelBuilder.Entity<CS_LIST_IN>().HasOne(x => x.DocF011).WithOne().HasForeignKey<CS_LIST_IN>(x => x.DOC_TYPE);
@@ -107,14 +106,14 @@ namespace SiteCore.Data
         }
         public virtual DbSet<F011> F011 { get; set; }
         public virtual DbSet<TFOMS_P> TFOMS_P { get; set; }
-        public virtual DbSet<CS_LIST> CS_LIST { get; set; }
+        
         public virtual DbSet<CS_LIST_IN> CS_LIST_IN { get; set; }
         public virtual DbSet<CS_LIST_IN_RESULT> CS_LIST_IN_RESULT { get; set; }
         public virtual DbSet<CS_LIST_IN_RESULT_SMO> CS_LIST_IN_RESULT_SMO { get; set; }
 
         public virtual DbSet<SMO> F002 { get; set; }
 
-        public async Task<string> FindNameSMO(TypeSMO TS, string SMO_COD, string SMO_OK)
+        public async Task<string> FindNameSMOAsync(TypeSMO TS, string SMO_COD, string SMO_OK)
         {
             if (string.IsNullOrEmpty(SMO_COD)) return "";
             return TS switch
@@ -122,6 +121,19 @@ namespace SiteCore.Data
                 TypeSMO.OGRN => (await F002.FirstOrDefaultAsync(x => x.OGRN == SMO_COD && x.TF_OKATO == SMO_OK))?.NAM_SMOK,
                 TypeSMO.RNumber => (await F002.FirstOrDefaultAsync(x => x.SMOCOD == SMO_COD))?.NAM_SMOK,
                 TypeSMO.TFOMS => (await TFOMS_P.FirstOrDefaultAsync(x => x.TF_OKATO == SMO_COD))?.NAME_TFK,
+                _ => ""
+            };
+        }
+
+
+        public  string FindNameSMO(TypeSMO TS, string SMO_COD, string SMO_OK)
+        {
+            if (string.IsNullOrEmpty(SMO_COD)) return "";
+            return TS switch
+            {
+                TypeSMO.OGRN => ( F002.FirstOrDefault(x => x.OGRN == SMO_COD && x.TF_OKATO == SMO_OK))?.NAM_SMOK,
+                TypeSMO.RNumber => ( F002.FirstOrDefault(x => x.SMOCOD == SMO_COD))?.NAM_SMOK,
+                TypeSMO.TFOMS => ( TFOMS_P.FirstOrDefault(x => x.TF_OKATO == SMO_COD))?.NAME_TFK,
                 _ => ""
             };
         }
@@ -179,57 +191,20 @@ namespace SiteCore.Data
         /// </summary>
         Error = 5
     }
-
-    [Table("CS_LIST")]
-    public class CS_LIST
-    {
-        /// <summary>
-        /// Идентификатор
-        /// </summary>
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Key]
-        public int CS_LIST_ID { get; set; }
-
-        /// <summary>
-        /// Код МО
-        /// </summary>
-        public string CODE_MO { get; set; }
-        /// <summary>
-        /// Дата создания
-        /// </summary>
-        public DateTime DATE_CREATE { get; set; }
-
-        /// <summary>
-        /// Статус обработки
-        /// </summary>
-        public StatusCS_LIST STATUS { get; set; } = StatusCS_LIST.New;
-        /// <summary>
-        /// Заголовок
-        /// </summary>
-        public string CAPTION { get; set; }
-        /// <summary>
-        /// Комментарий
-        /// </summary>
-        public string COMM { get; set; }
-
-        public virtual ICollection<CS_LIST_IN> CS_LIST_IN { get; set; }
-
-    }
-
     [Table("CS_LIST_IN")]
     public class CS_LIST_IN
     {
+        public string CODE_MO { get; set; }
+        public DateTime DATE_CREATE { get; set; }
+
+        public StatusCS_LIST STATUS_SEND { get; set; } = StatusCS_LIST.New;
+
         /// <summary>
         /// Идентификатор
         /// </summary>
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int CS_LIST_IN_ID { get; set; }
-        /// <summary>
-        /// Идентификатор
-        /// </summary>
-        [ForeignKey("CS_LIST")]
-        public int CS_LIST_ID { get; set; }
         /// <summary>
         /// Фамилия
         /// </summary>
@@ -245,14 +220,13 @@ namespace SiteCore.Data
         /// <summary>
         /// Дата рождения
         /// </summary>
-        [Required(ErrorMessage = "Поле \"Дата рождения\" обязательно к заполнению")]
-        public DateTime? DR { get; set; }
+        public DateTime DR { get; set; }
         /// <summary>
         /// Пол
         /// </summary>
-        [Required(ErrorMessage = "Поле \"Пол\" обязательно к заполнению")]
+        
         [Range(minimum:1, maximum:2, ErrorMessage = "Поле \"Пол\" должно иметь значение 1 или 2")]
-        public int? W { get; set; }
+        public int W { get; set; }
         /// <summary>
         /// Тип док-та
         /// </summary>
@@ -290,8 +264,6 @@ namespace SiteCore.Data
         public bool? STATUS { get; set; }
 
         public string COMM { get; set; }
-        public virtual CS_LIST CS_LIST { get; set; }
-
         public virtual ICollection<CS_LIST_IN_RESULT> CS_LIST_IN_RESULT { get; set; }
 
         public List<string> IsValid
@@ -323,8 +295,6 @@ namespace SiteCore.Data
         public string FIO => $"{FAM} {IM} {OT}".Trim();
 
         public CS_LIST_IN_RESULT_SMO CurrentSMO => CS_LIST_IN_RESULT?.SelectMany(x => x.CS_LIST_IN_RESULT_SMO).OrderByDescending(x => x.DATE_E ?? DateTime.Now).FirstOrDefault();
-
-
         public void CopyFrom(CS_LIST_IN item)
         {
             FAM = item.FAM;

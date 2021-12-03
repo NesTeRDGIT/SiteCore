@@ -922,3 +922,64 @@ input[type=checkbox] {
     background: #449d48 !important;
     font-weight: bold !important;
 }
+
+
+
+
+
+
+.ImgDocEdit {
+    background-image: url(../Image/documentedit.png);
+    width: 32px;
+    height: 32px;
+}
+
+.ImgOnSend {
+    background-image: url(../Image/Onsend.png);
+    width: 32px;
+    height: 32px;
+}
+
+.ImgSend {
+    background-image: url(../Image/Send.png);
+    width: 32px;
+    height: 32px;
+}
+
+.ImgSendandOK {
+    background-image: url(../Image/sendandOK.png);
+    width: 32px;
+    height: 32px;
+}
+
+
+.ImgOK {
+    background-image: url(../Image/IconOK.png);
+    background-size: 32px;
+    width: 32px;
+    height: 32px;
+}
+
+.ImgError {
+    background-image: url(../Image/IconERROR.png);
+    background-size: 32px;
+    width: 32px;
+    height: 32px;
+}
+
+.ImgQuestion {
+    background-image: url(../Image/question.png);
+    width: 32px;
+    height: 32px;
+}
+
+.ImgWarning {
+    background-image: url(../Image/IconWarning.png);
+    width: 32px;
+    height: 32px;
+}
+
+.img-ridge {
+    border: ridge;
+    margin: 10px;
+}

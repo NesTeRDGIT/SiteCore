@@ -17,14 +17,15 @@ namespace SiteCore.Data
     {
 
         private  IWcfInterface _MyWcfConnection;
-        private  volatile bool InConnect;
+      
+      
         private string HOST { get; }
         private string UserName { get; }
         private string Password { get;}
         private ILogger logger { get; }
-        private IHubContext<NotificationHub> NotificationHubContext { get; }
+        private IHubContext<NotificationHub, IHubClient> NotificationHubContext { get; }
 
-        public WCFConnect(string HOST,string UserName,string Password, ILogger logger, IHubContext<NotificationHub> NotificationHubContext)
+        public WCFConnect(string HOST,string UserName,string Password, ILogger logger, IHubContext<NotificationHub, IHubClient> NotificationHubContext)
         {
             this.HOST = HOST;
             this.UserName = UserName;
@@ -32,85 +33,73 @@ namespace SiteCore.Data
             this.logger = logger;
             this.NotificationHubContext = NotificationHubContext;
         }
-
+        private ICommunicationObject CommunicationObject => _MyWcfConnection as ICommunicationObject;
         private  IWcfInterface MyWcfConnection
         {
             get
             {
-                waitConnect();
-                if (_MyWcfConnection == null)
+                if (_MyWcfConnection == null || !CommunicationObject.State.In(CommunicationState.Opened, CommunicationState.Opening))
                 {
-                    Connect();
-                    return _MyWcfConnection;
+                    _MyWcfConnection = null;
+                    _MyWcfConnection = Connect();
                 }
-
-                if (((ICommunicationObject)_MyWcfConnection).State == CommunicationState.Faulted)
-                {
-                    Connect();
-                    return _MyWcfConnection;
-                }
-
                 return _MyWcfConnection;
             }
         }
 
-        private async void waitConnect()
+        private object InConnect = new();
+        IWcfInterface Connect()
         {
-            while (InConnect)
+            lock (InConnect)
             {
-                await Task.Delay(300);
-            }
-        }
-
-          void Connect()
-        {
-            InConnect = true;
-            try
-            {
-                
-                var addr = $@"net.tcp://{HOST}:12344/TFOMSMEDPOM.svc"; // Адрес сервиса
-                var tcpUri = new Uri(addr);
-                var address = new EndpointAddress(tcpUri, new DnsEndpointIdentity("MSERVICE"));
-
-                var netTcpBinding = new NetTcpBinding(SecurityMode.None)
+                try
                 {
-                    ReaderQuotas = {MaxArrayLength = int.MaxValue, MaxBytesPerRead = int.MaxValue, MaxStringContentLength = int.MaxValue},
-                    MaxBufferPoolSize = 105000000,
-                    MaxReceivedMessageSize = 105000000,
-                    SendTimeout = new TimeSpan(24, 0, 0),
-                    ReceiveTimeout = new TimeSpan(24, 0, 0),
-                    Security = {Mode = SecurityMode.TransportWithMessageCredential, Message = {ClientCredentialType = MessageCredentialType.UserName}, Transport = {ClientCredentialType = TcpClientCredentialType.None}}
-                };
+                    //Если 1 поток ждал лока то вернуть результат
+                    if (_MyWcfConnection != null)
+                        return _MyWcfConnection;
 
-                var callback = new MyServiceCallback();
-                var instanceContext = new InstanceContext(callback);
+                    var addr = $@"net.tcp://{HOST}:12344/TFOMSMEDPOM.svc"; // Адрес сервиса
+                    var tcpUri = new Uri(addr);
+                    var address = new EndpointAddress(tcpUri, new DnsEndpointIdentity("MSERVICE"));
 
-                var factory = new DuplexChannelFactory<IWcfInterface>(instanceContext, netTcpBinding, address);
+                    var netTcpBinding = new NetTcpBinding(SecurityMode.None)
+                    {
+                        ReaderQuotas = { MaxArrayLength = int.MaxValue, MaxBytesPerRead = int.MaxValue, MaxStringContentLength = int.MaxValue },
+                        MaxBufferPoolSize = 105000000,
+                        MaxReceivedMessageSize = 105000000,
+                        SendTimeout = new TimeSpan(24, 0, 0),
+                        ReceiveTimeout = new TimeSpan(24, 0, 0),
+                        Security = { Mode = SecurityMode.TransportWithMessageCredential, Message = { ClientCredentialType = MessageCredentialType.UserName }, Transport = { ClientCredentialType = TcpClientCredentialType.None } }
+                    };
 
-                factory.Credentials.UserName.UserName = UserName;
-                factory.Credentials.UserName.Password = Password;
+                    var callback = new MyServiceCallback();
+                    var instanceContext = new InstanceContext(callback);
 
-                factory.Credentials.ServiceCertificate.Authentication.CertificateValidationMode = System.ServiceModel.Security.X509CertificateValidationMode.None;
+                    var factory = new DuplexChannelFactory<IWcfInterface>(instanceContext, netTcpBinding, address);
+
+                    factory.Credentials.UserName.UserName = UserName;
+                    factory.Credentials.UserName.Password = Password;
+
+                    factory.Credentials.ServiceCertificate.Authentication.CertificateValidationMode = System.ServiceModel.Security.X509CertificateValidationMode.None;
 
 
-                _MyWcfConnection = factory.CreateChannel(); // Создаём само подключение      
-                _MyWcfConnection.Connect();
-                callback.OnNewPackState += OnNewPackState;
-            }
-            catch (Exception ex)
-            {
-                logger?.AddLog($"Ошибка при подключении к WCF: {ex.Message}", LogType.Error);
-            }
-            finally
-            {
-                InConnect = false;
+                    _MyWcfConnection = factory.CreateChannel(); // Создаём само подключение      
+                    _MyWcfConnection.Connect();
+                    callback.OnNewPackState += OnNewPackState;
+                    return _MyWcfConnection;
+                }
+                catch (Exception ex)
+                {
+                    logger?.AddLog($"Ошибка при подключении к WCF: {ex.Message}", LogType.Error);
+                    return null;
+                }
             }
         }
 
         public  void OnNewPackState(string CODE_MO)
         {
             // Получаем контекст хаба
-            NotificationHubContext.Clients.Groups(CODE_MO).SendAsync("NewPackState");
+            NotificationHubContext.Clients.Groups(NotificationHub.GetGroupNameNewPackState(CODE_MO) ).NewPackState();
         }
 
      
@@ -136,7 +125,7 @@ namespace SiteCore.Data
          
         
 
-        public  StatusPriem StatusInvite()
+        private  StatusPriem StatusInvite()
         {
             try
             {
@@ -145,32 +134,6 @@ namespace SiteCore.Data
             catch(Exception)
             {
                 return null;
-            }
-        }
-
-        public  bool ReestrEnabled()
-        {
-            try
-            {
-                var StatusInvite = this.StatusInvite();
-                return StatusInvite is {AutoPriem: true, FLKInviterStatus: true};
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-        public  bool GetTypePriem()
-        {
-            try
-            {
-                var StatusInvite = this.StatusInvite();
-                return StatusInvite is {TypePriem: true};
-            }
-            catch (Exception)
-            {
-                return false;
             }
         }
 
@@ -187,7 +150,7 @@ namespace SiteCore.Data
             }
             catch (Exception ex)
             {
-                throw new Exception("AddFilePacketForMO:" + ex.Message, ex);
+                throw new Exception($"AddFilePacketForMO:{ex.Message}", ex);
             }
 
 
@@ -203,12 +166,51 @@ namespace SiteCore.Data
                 ms.Write(buff, 0, buff.Length);
                 length += buff.Length;
             }
-
             return ms.ToArray();
+        }
 
+
+        public StatusWCFConnect GetStatus()
+        {
+            var status = new StatusWCFConnect();
+            try
+            {
+                var statusInvite = this.StatusInvite();
+                if (statusInvite == null)
+                    return status;
+                status.ReestrEnabled = statusInvite is { AutoPriem: true, FLKInviterStatus: true };
+                status.TypePriem = statusInvite.TypePriem;
+                status.ConnectWCFon = true;
+                return status;
+            }
+            catch (Exception ex)
+            {
+                logger?.AddLog($"Ошибка GetStatus: {ex.FullError()}", LogType.Error);
+                return status.Clear();
+            }
+        }
+
+        public Task<StatusWCFConnect> GetStatusAsync()
+        {
+            return Task.Run(GetStatus);
         }
     }
 
+
+    public class StatusWCFConnect
+    {
+        public bool ConnectWCFon { get; set; } = false;
+        public bool TypePriem { get; set; } = false;
+        public bool ReestrEnabled { get; set; } = false;
+
+        public StatusWCFConnect Clear()
+        {
+            this.ConnectWCFon = false;
+            this.ReestrEnabled = false;
+            this.TypePriem = false;
+            return this;
+        }
+    }
     [CallbackBehavior( UseSynchronizationContext = false)]
     public class MyServiceCallback : IWcfInterfaceCallback
     {

@@ -1,10 +1,10 @@
-﻿import { Component, Output, EventEmitter, OnChanges, SimpleChanges} from "@angular/core";
+﻿import { Component, Output, EventEmitter, ViewChild} from "@angular/core";
 import { BaseReportComponent } from '../../Component/BaseReportComponent'
 import { IRepository } from "../../API/Repository";
 
 import { FileAPI } from "../../API/FileAPI";
 import { LoadReestViewModel, ErrorTypeEnum, STATUS_FILE, TYPEFILE, ErrorItem, FileItemBase } from "../../API/LoadReestViewModel";
-
+import {InstructionDialog} from '../../Component/InstructionDialog/InstructionDialog'
 
 @Component({ selector: "load-reestr", templateUrl: "LoadReestrComponent.html" })
 export class LoadReestrComponent extends BaseReportComponent  {
@@ -146,11 +146,11 @@ export class LoadReestrComponent extends BaseReportComponent  {
 
 
 
+    @ViewChild(InstructionDialog) instructionDialog: InstructionDialog;
 
-
-    displayDialog = false;
+    
     ShowInstruction = () => {
-        this.displayDialog = true;
+        this.instructionDialog.ShowDialog();
     }
 }
 

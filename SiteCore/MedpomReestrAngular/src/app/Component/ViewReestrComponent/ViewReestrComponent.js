@@ -4,11 +4,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { BaseReportComponent } from '../../Component/BaseReportComponent';
 import { FileAPI } from "../../API/FileAPI";
 import { HubConnect } from "../../API/HUBConnect";
 import { ViewReestViewModel, StatusFilePack, StepsProcess, STATUS_FILE, TYPEFILE } from "../../API/LoadReestViewModel";
+import { InstructionDialog } from '../../Component/InstructionDialog/InstructionDialog';
 let ViewReestrComponent = class ViewReestrComponent extends BaseReportComponent {
     constructor(repo) {
         super();
@@ -22,17 +23,18 @@ let ViewReestrComponent = class ViewReestrComponent extends BaseReportComponent 
         this.connectHub = async () => {
             try {
                 await this.hubConnect.Connect();
-                this.hubConnect.NewPackState(() => {
-                    this.getModel();
+                this.hubConnect.RegisterNewPackState(() => {
+                    this.getModel(true);
                 });
             }
             catch (err) {
                 alert(`Ошибка подключения к интерфейсу обратного вызова: ${err.toString()}`);
             }
         };
-        this.getModel = async () => {
+        this.getModel = async (hide_mode = false) => {
             try {
-                this.isLoad = true;
+                if (!hide_mode)
+                    this.isLoad = true;
                 this.model = await this.repo.getViewReestViewModelAsync();
             }
             catch (err) {
@@ -56,17 +58,24 @@ let ViewReestrComponent = class ViewReestrComponent extends BaseReportComponent 
                 this.isLoadFile = false;
             }
         };
-        this.displayDialog = false;
         this.ShowInstruction = () => {
-            this.displayDialog = true;
+            this.instructionDialog.ShowDialog();
         };
         this.getModel();
         this.connectHub();
     }
     ngOnDestroy() {
-        this.hubConnect.Disconnect();
+        try {
+            this.hubConnect.Disconnect();
+        }
+        catch (err) {
+            alert(err.toString());
+        }
     }
 };
+__decorate([
+    ViewChild(InstructionDialog)
+], ViewReestrComponent.prototype, "instructionDialog", void 0);
 ViewReestrComponent = __decorate([
     Component({ selector: "view-reestr", templateUrl: "ViewReestrComponent.html" })
 ], ViewReestrComponent);

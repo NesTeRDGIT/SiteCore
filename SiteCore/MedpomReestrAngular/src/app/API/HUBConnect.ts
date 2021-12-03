@@ -1,23 +1,32 @@
 ﻿import * as signalR from "@microsoft/signalr";
 export  class HubConnect {
     connection: signalR.HubConnection;
-   
+    strin
     async Connect() {
-         this.connection = new signalR.HubConnectionBuilder().withUrl("../../Notification").build();
+        this.connection = new signalR.HubConnectionBuilder().withUrl("../../Notification").build();
         await this.connection.start();
-        await this.connection.invoke('Register');
         return this.connection.connectionId;
     }
 
     async Disconnect() {
         if (this.connection != null) {
-            this.connection.off("NewPackState");
+            this.connection.off("NewCSListState");
             this.connection.stop();
         }
     }
-    NewPackState = (callback) => {
+
+    async RegisterNewCSListState(callback)
+    {
+        await this.connection.invoke("RegisterNewCSListState");
+        this.connection.on("NewCSListState", (data) => {
+            callback(data);
+        });
+    }
+    async RegisterNewPackState(callback)
+    {
+        await this.connection.invoke("RegisterNewPackState");
         this.connection.on("NewPackState", (data) => {
             callback(data);
         });
-    };
+    }
 }

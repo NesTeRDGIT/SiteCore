@@ -4,9 +4,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-import { Component, Output, EventEmitter } from "@angular/core";
+import { Component, Output, EventEmitter, ViewChild } from "@angular/core";
 import { BaseReportComponent } from '../../Component/BaseReportComponent';
 import { LoadReestViewModel, ErrorTypeEnum, STATUS_FILE, TYPEFILE, ErrorItem } from "../../API/LoadReestViewModel";
+import { InstructionDialog } from '../../Component/InstructionDialog/InstructionDialog';
 let LoadReestrComponent = class LoadReestrComponent extends BaseReportComponent {
     constructor(repo) {
         super();
@@ -122,9 +123,8 @@ let LoadReestrComponent = class LoadReestrComponent extends BaseReportComponent 
             }
         };
         this.ListError = [];
-        this.displayDialog = false;
         this.ShowInstruction = () => {
-            this.displayDialog = true;
+            this.instructionDialog.ShowDialog();
         };
         this.getModel();
     }
@@ -147,6 +147,9 @@ let LoadReestrComponent = class LoadReestrComponent extends BaseReportComponent 
 __decorate([
     Output()
 ], LoadReestrComponent.prototype, "onSend", void 0);
+__decorate([
+    ViewChild(InstructionDialog)
+], LoadReestrComponent.prototype, "instructionDialog", void 0);
 LoadReestrComponent = __decorate([
     Component({ selector: "load-reestr", templateUrl: "LoadReestrComponent.html" })
 ], LoadReestrComponent);

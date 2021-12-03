@@ -546,14 +546,6 @@ module.exports["default"] = module.exports, module.exports.__esModule = true;
 
 /***/ }),
 
-/***/ 87757:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__(35666);
-
-
-/***/ }),
-
 /***/ 63259:
 /***/ ((__unused_webpack_module, exports) => {
 
@@ -51619,7 +51611,7 @@ function(t){var e=function(t){for(var e=t.length,n=new Uint8Array(e),r=0;r<e;r++
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * ====================================================================
  */
-function(e){function r(){return(t.canvg?Promise.resolve(t.canvg):__webpack_require__.e(/* import() */ 549).then(__webpack_require__.bind(__webpack_require__, 35549))).catch((function(t){return Promise.reject(new Error("Could not load dompurify: "+t))})).then((function(t){return t.default?t.default:t}))}g.API.addSvgAsImage=function(t,e,i,a,o,s,u,c){if(isNaN(e)||isNaN(i))throw n.error("jsPDF.addSvgAsImage: Invalid coordinates",arguments),new Error("Invalid coordinates passed to jsPDF.addSvgAsImage");if(isNaN(a)||isNaN(o))throw n.error("jsPDF.addSvgAsImage: Invalid measurements",arguments),new Error("Invalid measurements (width and/or height) passed to jsPDF.addSvgAsImage");var h=document.createElement("canvas");h.width=a,h.height=o;var l=h.getContext("2d");l.fillStyle="#fff",l.fillRect(0,0,h.width,h.height);var f={ignoreMouse:!0,ignoreAnimation:!0,ignoreDimensions:!0},d=this;return r().then((function(e){return e.Canvg.fromString(l,t,f)}),(function(){return Promise.reject(new Error("Could not load canvg."))})).then((function(t){return t.render(f)})).then((function(){d.addImage(h.toDataURL("image/jpeg",1),e,i,a,o,u,c)}))}}(),g.API.putTotalPages=function(t){var e,n=0;parseInt(this.internal.getFont().id.substr(1),10)<15?(e=new RegExp(t,"g"),n=this.internal.getNumberOfPages()):(e=new RegExp(this.pdfEscape16(t,this.internal.getFont()),"g"),n=this.pdfEscape16(this.internal.getNumberOfPages()+"",this.internal.getFont()));for(var r=1;r<=this.internal.getNumberOfPages();r++)for(var i=0;i<this.internal.pages[r].length;i++)this.internal.pages[r][i]=this.internal.pages[r][i].replace(e,n);return this},g.API.viewerPreferences=function(t,e){var n;t=t||{},e=e||!1;var r,i,a,o={HideToolbar:{defaultValue:!1,value:!1,type:"boolean",explicitSet:!1,valueSet:[!0,!1],pdfVersion:1.3},HideMenubar:{defaultValue:!1,value:!1,type:"boolean",explicitSet:!1,valueSet:[!0,!1],pdfVersion:1.3},HideWindowUI:{defaultValue:!1,value:!1,type:"boolean",explicitSet:!1,valueSet:[!0,!1],pdfVersion:1.3},FitWindow:{defaultValue:!1,value:!1,type:"boolean",explicitSet:!1,valueSet:[!0,!1],pdfVersion:1.3},CenterWindow:{defaultValue:!1,value:!1,type:"boolean",explicitSet:!1,valueSet:[!0,!1],pdfVersion:1.3},DisplayDocTitle:{defaultValue:!1,value:!1,type:"boolean",explicitSet:!1,valueSet:[!0,!1],pdfVersion:1.4},NonFullScreenPageMode:{defaultValue:"UseNone",value:"UseNone",type:"name",explicitSet:!1,valueSet:["UseNone","UseOutlines","UseThumbs","UseOC"],pdfVersion:1.3},Direction:{defaultValue:"L2R",value:"L2R",type:"name",explicitSet:!1,valueSet:["L2R","R2L"],pdfVersion:1.3},ViewArea:{defaultValue:"CropBox",value:"CropBox",type:"name",explicitSet:!1,valueSet:["MediaBox","CropBox","TrimBox","BleedBox","ArtBox"],pdfVersion:1.4},ViewClip:{defaultValue:"CropBox",value:"CropBox",type:"name",explicitSet:!1,valueSet:["MediaBox","CropBox","TrimBox","BleedBox","ArtBox"],pdfVersion:1.4},PrintArea:{defaultValue:"CropBox",value:"CropBox",type:"name",explicitSet:!1,valueSet:["MediaBox","CropBox","TrimBox","BleedBox","ArtBox"],pdfVersion:1.4},PrintClip:{defaultValue:"CropBox",value:"CropBox",type:"name",explicitSet:!1,valueSet:["MediaBox","CropBox","TrimBox","BleedBox","ArtBox"],pdfVersion:1.4},PrintScaling:{defaultValue:"AppDefault",value:"AppDefault",type:"name",explicitSet:!1,valueSet:["AppDefault","None"],pdfVersion:1.6},Duplex:{defaultValue:"",value:"none",type:"name",explicitSet:!1,valueSet:["Simplex","DuplexFlipShortEdge","DuplexFlipLongEdge","none"],pdfVersion:1.7},PickTrayByPDFSize:{defaultValue:!1,value:!1,type:"boolean",explicitSet:!1,valueSet:[!0,!1],pdfVersion:1.7},PrintPageRange:{defaultValue:"",value:"",type:"array",explicitSet:!1,valueSet:null,pdfVersion:1.7},NumCopies:{defaultValue:1,value:1,type:"integer",explicitSet:!1,valueSet:null,pdfVersion:1.7}},s=Object.keys(o),u=[],c=0,h=0,l=0;function f(t,e){var n,r=!1;for(n=0;n<t.length;n+=1)t[n]===e&&(r=!0);return r}if(void 0===this.internal.viewerpreferences&&(this.internal.viewerpreferences={},this.internal.viewerpreferences.configuration=JSON.parse(JSON.stringify(o)),this.internal.viewerpreferences.isSubscribed=!1),n=this.internal.viewerpreferences.configuration,"reset"===t||!0===e){var d=s.length;for(l=0;l<d;l+=1)n[s[l]].value=n[s[l]].defaultValue,n[s[l]].explicitSet=!1}if("object"==typeof t)for(i in t)if(a=t[i],f(s,i)&&void 0!==a){if("boolean"===n[i].type&&"boolean"==typeof a)n[i].value=a;else if("name"===n[i].type&&f(n[i].valueSet,a))n[i].value=a;else if("integer"===n[i].type&&Number.isInteger(a))n[i].value=a;else if("array"===n[i].type){for(c=0;c<a.length;c+=1)if(r=!0,1===a[c].length&&"number"==typeof a[c][0])u.push(String(a[c]-1));else if(a[c].length>1){for(h=0;h<a[c].length;h+=1)"number"!=typeof a[c][h]&&(r=!1);!0===r&&u.push([a[c][0]-1,a[c][1]-1].join(" "))}n[i].value="["+u.join(" ")+"]"}else n[i].value=n[i].defaultValue;n[i].explicitSet=!0}return!1===this.internal.viewerpreferences.isSubscribed&&(this.internal.events.subscribe("putCatalog",(function(){var t,e=[];for(t in n)!0===n[t].explicitSet&&("name"===n[t].type?e.push("/"+t+" /"+n[t].value):e.push("/"+t+" "+n[t].value));0!==e.length&&this.internal.write("/ViewerPreferences\n<<\n"+e.join("\n")+"\n>>")})),this.internal.viewerpreferences.isSubscribed=!0),this.internal.viewerpreferences.configuration=n,this},
+function(e){function r(){return(t.canvg?Promise.resolve(t.canvg):__webpack_require__.e(/* import() */ 743).then(__webpack_require__.bind(__webpack_require__, 88743))).catch((function(t){return Promise.reject(new Error("Could not load dompurify: "+t))})).then((function(t){return t.default?t.default:t}))}g.API.addSvgAsImage=function(t,e,i,a,o,s,u,c){if(isNaN(e)||isNaN(i))throw n.error("jsPDF.addSvgAsImage: Invalid coordinates",arguments),new Error("Invalid coordinates passed to jsPDF.addSvgAsImage");if(isNaN(a)||isNaN(o))throw n.error("jsPDF.addSvgAsImage: Invalid measurements",arguments),new Error("Invalid measurements (width and/or height) passed to jsPDF.addSvgAsImage");var h=document.createElement("canvas");h.width=a,h.height=o;var l=h.getContext("2d");l.fillStyle="#fff",l.fillRect(0,0,h.width,h.height);var f={ignoreMouse:!0,ignoreAnimation:!0,ignoreDimensions:!0},d=this;return r().then((function(e){return e.Canvg.fromString(l,t,f)}),(function(){return Promise.reject(new Error("Could not load canvg."))})).then((function(t){return t.render(f)})).then((function(){d.addImage(h.toDataURL("image/jpeg",1),e,i,a,o,u,c)}))}}(),g.API.putTotalPages=function(t){var e,n=0;parseInt(this.internal.getFont().id.substr(1),10)<15?(e=new RegExp(t,"g"),n=this.internal.getNumberOfPages()):(e=new RegExp(this.pdfEscape16(t,this.internal.getFont()),"g"),n=this.pdfEscape16(this.internal.getNumberOfPages()+"",this.internal.getFont()));for(var r=1;r<=this.internal.getNumberOfPages();r++)for(var i=0;i<this.internal.pages[r].length;i++)this.internal.pages[r][i]=this.internal.pages[r][i].replace(e,n);return this},g.API.viewerPreferences=function(t,e){var n;t=t||{},e=e||!1;var r,i,a,o={HideToolbar:{defaultValue:!1,value:!1,type:"boolean",explicitSet:!1,valueSet:[!0,!1],pdfVersion:1.3},HideMenubar:{defaultValue:!1,value:!1,type:"boolean",explicitSet:!1,valueSet:[!0,!1],pdfVersion:1.3},HideWindowUI:{defaultValue:!1,value:!1,type:"boolean",explicitSet:!1,valueSet:[!0,!1],pdfVersion:1.3},FitWindow:{defaultValue:!1,value:!1,type:"boolean",explicitSet:!1,valueSet:[!0,!1],pdfVersion:1.3},CenterWindow:{defaultValue:!1,value:!1,type:"boolean",explicitSet:!1,valueSet:[!0,!1],pdfVersion:1.3},DisplayDocTitle:{defaultValue:!1,value:!1,type:"boolean",explicitSet:!1,valueSet:[!0,!1],pdfVersion:1.4},NonFullScreenPageMode:{defaultValue:"UseNone",value:"UseNone",type:"name",explicitSet:!1,valueSet:["UseNone","UseOutlines","UseThumbs","UseOC"],pdfVersion:1.3},Direction:{defaultValue:"L2R",value:"L2R",type:"name",explicitSet:!1,valueSet:["L2R","R2L"],pdfVersion:1.3},ViewArea:{defaultValue:"CropBox",value:"CropBox",type:"name",explicitSet:!1,valueSet:["MediaBox","CropBox","TrimBox","BleedBox","ArtBox"],pdfVersion:1.4},ViewClip:{defaultValue:"CropBox",value:"CropBox",type:"name",explicitSet:!1,valueSet:["MediaBox","CropBox","TrimBox","BleedBox","ArtBox"],pdfVersion:1.4},PrintArea:{defaultValue:"CropBox",value:"CropBox",type:"name",explicitSet:!1,valueSet:["MediaBox","CropBox","TrimBox","BleedBox","ArtBox"],pdfVersion:1.4},PrintClip:{defaultValue:"CropBox",value:"CropBox",type:"name",explicitSet:!1,valueSet:["MediaBox","CropBox","TrimBox","BleedBox","ArtBox"],pdfVersion:1.4},PrintScaling:{defaultValue:"AppDefault",value:"AppDefault",type:"name",explicitSet:!1,valueSet:["AppDefault","None"],pdfVersion:1.6},Duplex:{defaultValue:"",value:"none",type:"name",explicitSet:!1,valueSet:["Simplex","DuplexFlipShortEdge","DuplexFlipLongEdge","none"],pdfVersion:1.7},PickTrayByPDFSize:{defaultValue:!1,value:!1,type:"boolean",explicitSet:!1,valueSet:[!0,!1],pdfVersion:1.7},PrintPageRange:{defaultValue:"",value:"",type:"array",explicitSet:!1,valueSet:null,pdfVersion:1.7},NumCopies:{defaultValue:1,value:1,type:"integer",explicitSet:!1,valueSet:null,pdfVersion:1.7}},s=Object.keys(o),u=[],c=0,h=0,l=0;function f(t,e){var n,r=!1;for(n=0;n<t.length;n+=1)t[n]===e&&(r=!0);return r}if(void 0===this.internal.viewerpreferences&&(this.internal.viewerpreferences={},this.internal.viewerpreferences.configuration=JSON.parse(JSON.stringify(o)),this.internal.viewerpreferences.isSubscribed=!1),n=this.internal.viewerpreferences.configuration,"reset"===t||!0===e){var d=s.length;for(l=0;l<d;l+=1)n[s[l]].value=n[s[l]].defaultValue,n[s[l]].explicitSet=!1}if("object"==typeof t)for(i in t)if(a=t[i],f(s,i)&&void 0!==a){if("boolean"===n[i].type&&"boolean"==typeof a)n[i].value=a;else if("name"===n[i].type&&f(n[i].valueSet,a))n[i].value=a;else if("integer"===n[i].type&&Number.isInteger(a))n[i].value=a;else if("array"===n[i].type){for(c=0;c<a.length;c+=1)if(r=!0,1===a[c].length&&"number"==typeof a[c][0])u.push(String(a[c]-1));else if(a[c].length>1){for(h=0;h<a[c].length;h+=1)"number"!=typeof a[c][h]&&(r=!1);!0===r&&u.push([a[c][0]-1,a[c][1]-1].join(" "))}n[i].value="["+u.join(" ")+"]"}else n[i].value=n[i].defaultValue;n[i].explicitSet=!0}return!1===this.internal.viewerpreferences.isSubscribed&&(this.internal.events.subscribe("putCatalog",(function(){var t,e=[];for(t in n)!0===n[t].explicitSet&&("name"===n[t].type?e.push("/"+t+" /"+n[t].value):e.push("/"+t+" "+n[t].value));0!==e.length&&this.internal.write("/ViewerPreferences\n<<\n"+e.join("\n")+"\n>>")})),this.internal.viewerpreferences.isSubscribed=!0),this.internal.viewerpreferences.configuration=n,this},
 /** ====================================================================
  * @license
  * jsPDF XMP metadata plugin
@@ -85328,6 +85320,319 @@ if (true) {
 
 /***/ }),
 
+/***/ 98390:
+/***/ (function(module) {
+
+/* global chrome location ReadableStream define MessageChannel TransformStream */
+
+;((name, definition) => {
+   true
+    ? module.exports = definition()
+    : 0
+})('streamSaver', () => {
+  'use strict'
+
+  const global = typeof window === 'object' ? window : this
+  if (!global.HTMLElement) console.warn('streamsaver is meant to run on browsers main thread')
+
+  let mitmTransporter = null
+  let supportsTransferable = false
+  const test = fn => { try { fn() } catch (e) {} }
+  const ponyfill = global.WebStreamsPolyfill || {}
+  const isSecureContext = global.isSecureContext
+  // TODO: Must come up with a real detection test (#69)
+  let useBlobFallback = /constructor/i.test(global.HTMLElement) || !!global.safari || !!global.WebKitPoint
+  const downloadStrategy = isSecureContext || 'MozAppearance' in document.documentElement.style
+    ? 'iframe'
+    : 'navigate'
+
+  const streamSaver = {
+    createWriteStream,
+    WritableStream: global.WritableStream || ponyfill.WritableStream,
+    supported: true,
+    version: { full: '2.0.5', major: 2, minor: 0, dot: 5 },
+    mitm: 'https://jimmywarting.github.io/StreamSaver.js/mitm.html?version=2.0.0'
+  }
+
+  /**
+   * create a hidden iframe and append it to the DOM (body)
+   *
+   * @param  {string} src page to load
+   * @return {HTMLIFrameElement} page to load
+   */
+  function makeIframe (src) {
+    if (!src) throw new Error('meh')
+    const iframe = document.createElement('iframe')
+    iframe.hidden = true
+    iframe.src = src
+    iframe.loaded = false
+    iframe.name = 'iframe'
+    iframe.isIframe = true
+    iframe.postMessage = (...args) => iframe.contentWindow.postMessage(...args)
+    iframe.addEventListener('load', () => {
+      iframe.loaded = true
+    }, { once: true })
+    document.body.appendChild(iframe)
+    return iframe
+  }
+
+  /**
+   * create a popup that simulates the basic things
+   * of what a iframe can do
+   *
+   * @param  {string} src page to load
+   * @return {object}     iframe like object
+   */
+  function makePopup (src) {
+    const options = 'width=200,height=100'
+    const delegate = document.createDocumentFragment()
+    const popup = {
+      frame: global.open(src, 'popup', options),
+      loaded: false,
+      isIframe: false,
+      isPopup: true,
+      remove () { popup.frame.close() },
+      addEventListener (...args) { delegate.addEventListener(...args) },
+      dispatchEvent (...args) { delegate.dispatchEvent(...args) },
+      removeEventListener (...args) { delegate.removeEventListener(...args) },
+      postMessage (...args) { popup.frame.postMessage(...args) }
+    }
+
+    const onReady = evt => {
+      if (evt.source === popup.frame) {
+        popup.loaded = true
+        global.removeEventListener('message', onReady)
+        popup.dispatchEvent(new Event('load'))
+      }
+    }
+
+    global.addEventListener('message', onReady)
+
+    return popup
+  }
+
+  try {
+    // We can't look for service worker since it may still work on http
+    new Response(new ReadableStream())
+    if (isSecureContext && !('serviceWorker' in navigator)) {
+      useBlobFallback = true
+    }
+  } catch (err) {
+    useBlobFallback = true
+  }
+
+  test(() => {
+    // Transfariable stream was first enabled in chrome v73 behind a flag
+    const { readable } = new TransformStream()
+    const mc = new MessageChannel()
+    mc.port1.postMessage(readable, [readable])
+    mc.port1.close()
+    mc.port2.close()
+    supportsTransferable = true
+    // Freeze TransformStream object (can only work with native)
+    Object.defineProperty(streamSaver, 'TransformStream', {
+      configurable: false,
+      writable: false,
+      value: TransformStream
+    })
+  })
+
+  function loadTransporter () {
+    if (!mitmTransporter) {
+      mitmTransporter = isSecureContext
+        ? makeIframe(streamSaver.mitm)
+        : makePopup(streamSaver.mitm)
+    }
+  }
+
+  /**
+   * @param  {string} filename filename that should be used
+   * @param  {object} options  [description]
+   * @param  {number} size     depricated
+   * @return {WritableStream<Uint8Array>}
+   */
+  function createWriteStream (filename, options, size) {
+    let opts = {
+      size: null,
+      pathname: null,
+      writableStrategy: undefined,
+      readableStrategy: undefined
+    }
+
+    let bytesWritten = 0 // by StreamSaver.js (not the service worker)
+    let downloadUrl = null
+    let channel = null
+    let ts = null
+
+    // normalize arguments
+    if (Number.isFinite(options)) {
+      [ size, options ] = [ options, size ]
+      console.warn('[StreamSaver] Depricated pass an object as 2nd argument when creating a write stream')
+      opts.size = size
+      opts.writableStrategy = options
+    } else if (options && options.highWaterMark) {
+      console.warn('[StreamSaver] Depricated pass an object as 2nd argument when creating a write stream')
+      opts.size = size
+      opts.writableStrategy = options
+    } else {
+      opts = options || {}
+    }
+    if (!useBlobFallback) {
+      loadTransporter()
+
+      channel = new MessageChannel()
+
+      // Make filename RFC5987 compatible
+      filename = encodeURIComponent(filename.replace(/\//g, ':'))
+        .replace(/['()]/g, escape)
+        .replace(/\*/g, '%2A')
+
+      const response = {
+        transferringReadable: supportsTransferable,
+        pathname: opts.pathname || Math.random().toString().slice(-6) + '/' + filename,
+        headers: {
+          'Content-Type': 'application/octet-stream; charset=utf-8',
+          'Content-Disposition': "attachment; filename*=UTF-8''" + filename
+        }
+      }
+
+      if (opts.size) {
+        response.headers['Content-Length'] = opts.size
+      }
+
+      const args = [ response, '*', [ channel.port2 ] ]
+
+      if (supportsTransferable) {
+        const transformer = downloadStrategy === 'iframe' ? undefined : {
+          // This transformer & flush method is only used by insecure context.
+          transform (chunk, controller) {
+            if (!(chunk instanceof Uint8Array)) {
+              throw new TypeError('Can only wirte Uint8Arrays')
+            }
+            bytesWritten += chunk.length
+            controller.enqueue(chunk)
+
+            if (downloadUrl) {
+              location.href = downloadUrl
+              downloadUrl = null
+            }
+          },
+          flush () {
+            if (downloadUrl) {
+              location.href = downloadUrl
+            }
+          }
+        }
+        ts = new streamSaver.TransformStream(
+          transformer,
+          opts.writableStrategy,
+          opts.readableStrategy
+        )
+        const readableStream = ts.readable
+
+        channel.port1.postMessage({ readableStream }, [ readableStream ])
+      }
+
+      channel.port1.onmessage = evt => {
+        // Service worker sent us a link that we should open.
+        if (evt.data.download) {
+          // Special treatment for popup...
+          if (downloadStrategy === 'navigate') {
+            mitmTransporter.remove()
+            mitmTransporter = null
+            if (bytesWritten) {
+              location.href = evt.data.download
+            } else {
+              downloadUrl = evt.data.download
+            }
+          } else {
+            if (mitmTransporter.isPopup) {
+              mitmTransporter.remove()
+              mitmTransporter = null
+              // Special case for firefox, they can keep sw alive with fetch
+              if (downloadStrategy === 'iframe') {
+                makeIframe(streamSaver.mitm)
+              }
+            }
+
+            // We never remove this iframes b/c it can interrupt saving
+            makeIframe(evt.data.download)
+          }
+        }
+      }
+
+      if (mitmTransporter.loaded) {
+        mitmTransporter.postMessage(...args)
+      } else {
+        mitmTransporter.addEventListener('load', () => {
+          mitmTransporter.postMessage(...args)
+        }, { once: true })
+      }
+    }
+
+    let chunks = []
+
+    return (!useBlobFallback && ts && ts.writable) || new streamSaver.WritableStream({
+      write (chunk) {
+        if (!(chunk instanceof Uint8Array)) {
+          throw new TypeError('Can only wirte Uint8Arrays')
+        }
+        if (useBlobFallback) {
+          // Safari... The new IE6
+          // https://github.com/jimmywarting/StreamSaver.js/issues/69
+          //
+          // even doe it has everything it fails to download anything
+          // that comes from the service worker..!
+          chunks.push(chunk)
+          return
+        }
+
+        // is called when a new chunk of data is ready to be written
+        // to the underlying sink. It can return a promise to signal
+        // success or failure of the write operation. The stream
+        // implementation guarantees that this method will be called
+        // only after previous writes have succeeded, and never after
+        // close or abort is called.
+
+        // TODO: Kind of important that service worker respond back when
+        // it has been written. Otherwise we can't handle backpressure
+        // EDIT: Transfarable streams solvs this...
+        channel.port1.postMessage(chunk)
+        bytesWritten += chunk.length
+
+        if (downloadUrl) {
+          location.href = downloadUrl
+          downloadUrl = null
+        }
+      },
+      close () {
+        if (useBlobFallback) {
+          const blob = new Blob(chunks, { type: 'application/octet-stream; charset=utf-8' })
+          const link = document.createElement('a')
+          link.href = URL.createObjectURL(blob)
+          link.download = filename
+          link.click()
+        } else {
+          channel.port1.postMessage('end')
+        }
+      },
+      abort () {
+        chunks = []
+        channel.port1.postMessage('abort')
+        channel.port1.onmessage = null
+        channel.port1.close()
+        channel.port2.close()
+        channel = null
+      }
+    }, opts.writableStrategy)
+  }
+
+  return streamSaver
+})
+
+
+/***/ }),
+
 /***/ 30907:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -85373,51 +85678,6 @@ function _assertThisInitialized(self) {
   }
 
   return self;
-}
-
-/***/ }),
-
-/***/ 15861:
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Z": () => (/* binding */ _asyncToGenerator)
-/* harmony export */ });
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
-  try {
-    var info = gen[key](arg);
-    var value = info.value;
-  } catch (error) {
-    reject(error);
-    return;
-  }
-
-  if (info.done) {
-    resolve(value);
-  } else {
-    Promise.resolve(value).then(_next, _throw);
-  }
-}
-
-function _asyncToGenerator(fn) {
-  return function () {
-    var self = this,
-        args = arguments;
-    return new Promise(function (resolve, reject) {
-      var gen = fn.apply(self, args);
-
-      function _next(value) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
-      }
-
-      function _throw(err) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
-      }
-
-      _next(undefined);
-    });
-  };
 }
 
 /***/ }),
@@ -86101,7 +86361,7 @@ function _unsupportedIterableToArray(o, minLen) {
 /******/ 		
 /******/ 		}
 /******/ 		
-/******/ 		var chunkLoadingGlobal = self["webpackChunksearchapp"] = self["webpackChunksearchapp"] || [];
+/******/ 		var chunkLoadingGlobal = globalThis["webpackChunksearchapp"] = globalThis["webpackChunksearchapp"] || [];
 /******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
 /******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
 /******/ 	})();
@@ -86114,21 +86374,12 @@ var __webpack_exports__ = {};
 
 // UNUSED EXPORTS: MainTab
 
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/slicedToArray.js + 1 modules
-var slicedToArray = __webpack_require__(29439);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
 var esm_extends = __webpack_require__(87462);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js
-var objectWithoutProperties = __webpack_require__(45987);
 // EXTERNAL MODULE: ./node_modules/react/index.js
 var react = __webpack_require__(67294);
 // EXTERNAL MODULE: ./node_modules/react-dom/index.js
 var react_dom = __webpack_require__(73935);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js
-var asyncToGenerator = __webpack_require__(15861);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/regenerator/index.js
-var regenerator = __webpack_require__(87757);
-var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
 // EXTERNAL MODULE: ./node_modules/material-table/dist/index.js
 var dist = __webpack_require__(26283);
 var dist_default = /*#__PURE__*/__webpack_require__.n(dist);
@@ -86144,1329 +86395,530 @@ var DialogTitle = __webpack_require__(66083);
 var Button = __webpack_require__(282);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/TextField/TextField.js
 var TextField = __webpack_require__(39803);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/classCallCheck.js
-var classCallCheck = __webpack_require__(15671);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/createClass.js
-var createClass = __webpack_require__(43144);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
 var defineProperty = __webpack_require__(4942);
 ;// CONCATENATED MODULE: ./SignApp/API/Repository.js
 
 
-
-
-
-
 function throwResponse(response) {
-  throw new Error("".concat(response.status, "-").concat(response.statusText));
+  throw new Error(`${response.status}-${response.statusText}`);
 }
 
-var Repository = /*#__PURE__*/function () {
-  function Repository() {
-    (0,classCallCheck/* default */.Z)(this, Repository);
+class FileData {
+  constructor(FileName, Data) {
+    (0,defineProperty/* default */.Z)(this, "FileName", null);
 
-    (0,defineProperty/* default */.Z)(this, "AddRole", /*#__PURE__*/function () {
-      var _ref = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee(caption, prefix) {
-        var formData, requestOptions, response, result;
-        return regenerator_default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                formData = new FormData();
-                formData.append("caption", caption);
-                formData.append("prefix", prefix);
-                requestOptions = {
-                  method: "POST",
-                  credentials: "same-origin",
-                  body: formData
-                };
-                _context.next = 6;
-                return window.fetch("AddRole", requestOptions);
+    (0,defineProperty/* default */.Z)(this, "Data", null);
 
-              case 6:
-                response = _context.sent;
-
-                if (!response.ok) {
-                  _context.next = 16;
-                  break;
-                }
-
-                _context.next = 10;
-                return response.json();
-
-              case 10:
-                result = _context.sent;
-
-                if (!result.Result) {
-                  _context.next = 13;
-                  break;
-                }
-
-                return _context.abrupt("return", result.Value);
-
-              case 13:
-                throw new Error(result.Value);
-
-              case 16:
-                throwResponse(response);
-
-              case 17:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }));
-
-      return function (_x, _x2) {
-        return _ref.apply(this, arguments);
-      };
-    }());
-
-    (0,defineProperty/* default */.Z)(this, "AddSignCert", /*#__PURE__*/function () {
-      var _ref2 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee2(file, fileConfirm, signRoleId, mcod, dateB, dateE) {
-        var formData, requestOptions, response, result;
-        return regenerator_default().wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                formData = new FormData();
-                formData.append("File", file, file.name);
-                formData.append("FileConfirm", fileConfirm, fileConfirm.name);
-                formData.append("ROLE_ID", signRoleId);
-                formData.append("CODE_MO", mcod);
-                formData.append("DATE_B", new Date(dateB).toLocaleDateString());
-                if (dateE != null) formData.append("DATE_E", new Date(dateE).toLocaleDateString());
-                requestOptions = {
-                  method: "POST",
-                  credentials: "same-origin",
-                  body: formData
-                };
-                _context2.next = 10;
-                return window.fetch("AddCert", requestOptions);
-
-              case 10:
-                response = _context2.sent;
-
-                if (!response.ok) {
-                  _context2.next = 20;
-                  break;
-                }
-
-                _context2.next = 14;
-                return response.json();
-
-              case 14:
-                result = _context2.sent;
-
-                if (!result.Result) {
-                  _context2.next = 17;
-                  break;
-                }
-
-                return _context2.abrupt("return", result.Value);
-
-              case 17:
-                throw new Error(result.Value);
-
-              case 20:
-                throwResponse(response);
-
-              case 21:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }));
-
-      return function (_x3, _x4, _x5, _x6, _x7, _x8) {
-        return _ref2.apply(this, arguments);
-      };
-    }());
+    this.FileName = FileName;
+    this.Data = Data;
   }
 
-  (0,createClass/* default */.Z)(Repository, [{
-    key: "GetTheme",
-    value: function () {
-      var _GetTheme = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee3() {
-        var response, result;
-        return regenerator_default().wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _context3.next = 2;
-                return window.fetch("GetTheme", {
-                  credentials: "same-origin"
-                });
+}
+class Repository {
+  constructor() {
+    (0,defineProperty/* default */.Z)(this, "AddRole", async (caption, prefix) => {
+      const formData = new FormData();
+      formData.append("caption", caption);
+      formData.append("prefix", prefix);
+      const requestOptions = {
+        method: "POST",
+        credentials: "same-origin",
+        body: formData
+      };
+      const response = await window.fetch("AddRole", requestOptions);
 
-              case 2:
-                response = _context3.sent;
+      if (response.ok) {
+        const result = await response.json();
 
-                if (!response.ok) {
-                  _context3.next = 12;
-                  break;
-                }
+        if (result.Result) {
+          return result.Value;
+        }
 
-                _context3.next = 6;
-                return response.json();
+        throw new Error(result.Value);
+      } else {
+        throwResponse(response);
+      }
+    });
 
-              case 6:
-                result = _context3.sent;
+    (0,defineProperty/* default */.Z)(this, "AddSignCert", async (file, fileConfirm, signRoleId, mcod, dateB, dateE) => {
+      const formData = new FormData();
+      formData.append("File", file, file.name);
+      formData.append("FileConfirm", fileConfirm, fileConfirm.name);
+      formData.append("ROLE_ID", signRoleId);
+      formData.append("CODE_MO", mcod);
+      formData.append("DATE_B", new Date(dateB).toLocaleDateString());
+      if (dateE != null) formData.append("DATE_E", new Date(dateE).toLocaleDateString());
+      const requestOptions = {
+        method: "POST",
+        credentials: "same-origin",
+        body: formData
+      };
+      const response = await window.fetch("AddCert", requestOptions);
 
-                if (!result.Result) {
-                  _context3.next = 9;
-                  break;
-                }
+      if (response.ok) {
+        const result = await response.json();
 
-                return _context3.abrupt("return", result.Value);
+        if (result.Result) {
+          return result.Value;
+        }
 
-              case 9:
-                throw new Error(result.Value);
+        throw new Error(result.Value);
+      } else {
+        throwResponse(response);
+      }
+    });
+  }
 
-              case 12:
-                throwResponse(response);
+  async GetTheme() {
+    const response = await window.fetch("GetTheme", {
+      credentials: "same-origin"
+    });
 
-              case 13:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }));
+    if (response.ok) {
+      const result = await response.json();
 
-      function GetTheme() {
-        return _GetTheme.apply(this, arguments);
+      if (result.Result) {
+        return result.Value;
       }
 
-      return GetTheme;
-    }()
-  }, {
-    key: "AddTheme",
-    value: function () {
-      var _AddTheme = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee4(theme) {
-        var formData, requestOptions, response, result;
-        return regenerator_default().wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                formData = new FormData();
-                formData.append("Theme", theme);
-                requestOptions = {
-                  method: "POST",
-                  credentials: "same-origin",
-                  body: formData
-                };
-                _context4.next = 5;
-                return window.fetch("AddTheme", requestOptions);
+      throw new Error(result.Value);
+    } else {
+      throwResponse(response);
+    }
+  }
 
-              case 5:
-                response = _context4.sent;
+  async AddTheme(theme) {
+    const formData = new FormData();
+    formData.append("Theme", theme);
+    const requestOptions = {
+      method: "POST",
+      credentials: "same-origin",
+      body: formData
+    };
+    const response = await window.fetch("AddTheme", requestOptions);
 
-                if (!response.ok) {
-                  _context4.next = 15;
-                  break;
-                }
+    if (response.ok) {
+      const result = await response.json();
 
-                _context4.next = 9;
-                return response.json();
-
-              case 9:
-                result = _context4.sent;
-
-                if (!result.Result) {
-                  _context4.next = 12;
-                  break;
-                }
-
-                return _context4.abrupt("return", result.Value);
-
-              case 12:
-                throw new Error(result.Value);
-
-              case 15:
-                throwResponse(response);
-
-              case 16:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4);
-      }));
-
-      function AddTheme(_x9) {
-        return _AddTheme.apply(this, arguments);
+      if (result.Result) {
+        return result.Value;
       }
 
-      return AddTheme;
-    }()
-  }, {
-    key: "RemoveTheme",
-    value: function () {
-      var _RemoveTheme = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee5(themeId) {
-        var formData, requestOptions, response, result;
-        return regenerator_default().wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                formData = new FormData();
-                formData.append("THEME_ID", themeId);
-                requestOptions = {
-                  method: "POST",
-                  credentials: "same-origin",
-                  body: formData
-                };
-                _context5.next = 5;
-                return window.fetch("RemoveTheme", requestOptions);
+      throw new Error(result.Value);
+    } else {
+      throwResponse(response);
+    }
+  }
 
-              case 5:
-                response = _context5.sent;
+  async RemoveTheme(themeId) {
+    const formData = new FormData();
+    formData.append("THEME_ID", themeId);
+    const requestOptions = {
+      method: "POST",
+      credentials: "same-origin",
+      body: formData
+    };
+    const response = await window.fetch("RemoveTheme", requestOptions);
 
-                if (!response.ok) {
-                  _context5.next = 15;
-                  break;
-                }
+    if (response.ok) {
+      const result = await response.json();
 
-                _context5.next = 9;
-                return response.json();
-
-              case 9:
-                result = _context5.sent;
-
-                if (!result.Result) {
-                  _context5.next = 12;
-                  break;
-                }
-
-                return _context5.abrupt("return", result.Value);
-
-              case 12:
-                throw new Error(result.Value);
-
-              case 15:
-                throwResponse(response);
-
-              case 16:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5);
-      }));
-
-      function RemoveTheme(_x10) {
-        return _RemoveTheme.apply(this, arguments);
+      if (result.Result) {
+        return result.Value;
       }
 
-      return RemoveTheme;
-    }()
-  }, {
-    key: "GetDocsList",
-    value: function () {
-      var _GetDocsList = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee6(themeId) {
-        var response, result;
-        return regenerator_default().wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                _context6.next = 2;
-                return window.fetch("GetDOC?THEME_ID=".concat(themeId), {
-                  credentials: "same-origin"
-                });
+      throw new Error(result.Value);
+    } else {
+      throwResponse(response);
+    }
+  }
 
-              case 2:
-                response = _context6.sent;
+  async GetDocsList(themeId) {
+    const response = await window.fetch(`GetDOC?THEME_ID=${themeId}`, {
+      credentials: "same-origin"
+    });
 
-                if (!response.ok) {
-                  _context6.next = 12;
-                  break;
-                }
+    if (response.ok) {
+      const result = await response.json();
 
-                _context6.next = 6;
-                return response.json();
-
-              case 6:
-                result = _context6.sent;
-
-                if (!result.Result) {
-                  _context6.next = 9;
-                  break;
-                }
-
-                return _context6.abrupt("return", result.Value);
-
-              case 9:
-                throw new Error(result.Value);
-
-              case 12:
-                throwResponse(response);
-
-              case 13:
-              case "end":
-                return _context6.stop();
-            }
-          }
-        }, _callee6);
-      }));
-
-      function GetDocsList(_x11) {
-        return _GetDocsList.apply(this, arguments);
+      if (result.Result) {
+        return result.Value;
       }
 
-      return GetDocsList;
-    }()
-  }, {
-    key: "DownloadFileForSign",
-    value: function () {
-      var _DownloadFileForSign = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee7(docForSignId) {
-        var requestOptions, response, result;
-        return regenerator_default().wrap(function _callee7$(_context7) {
-          while (1) {
-            switch (_context7.prev = _context7.next) {
-              case 0:
-                requestOptions = {
-                  method: "GET",
-                  headers: {
-                    'Content-Type': "application/json"
-                  },
-                  credentials: "same-origin"
-                };
-                _context7.next = 3;
-                return window.fetch("DownloadFileForSign?DOC_FOR_SIGN_ID=".concat(docForSignId), requestOptions);
+      throw new Error(result.Value);
+    } else {
+      throwResponse(response);
+    }
+  }
 
-              case 3:
-                response = _context7.sent;
+  async DownloadFileForSign(docForSignId) {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        'Content-Type': "application/json"
+      },
+      credentials: "same-origin"
+    };
+    const response = await window.fetch(`DownloadFileForSign?DOC_FOR_SIGN_ID=${docForSignId}`, requestOptions);
 
-                if (!response.ok) {
-                  _context7.next = 13;
-                  break;
-                }
+    if (response.ok) {
+      const result = await response.json();
 
-                _context7.next = 7;
-                return response.json();
-
-              case 7:
-                result = _context7.sent;
-
-                if (!result.Result) {
-                  _context7.next = 10;
-                  break;
-                }
-
-                return _context7.abrupt("return", result.Value);
-
-              case 10:
-                throw new Error(result.Value);
-
-              case 13:
-                throwResponse(response);
-
-              case 14:
-              case "end":
-                return _context7.stop();
-            }
-          }
-        }, _callee7);
-      }));
-
-      function DownloadFileForSign(_x12) {
-        return _DownloadFileForSign.apply(this, arguments);
+      if (result.Result) {
+        return result.Value;
       }
 
-      return DownloadFileForSign;
-    }()
-  }, {
-    key: "DownloadDocAndSign",
-    value: function () {
-      var _DownloadDocAndSign = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee8(docForSignId) {
-        var requestOptions, response, result;
-        return regenerator_default().wrap(function _callee8$(_context8) {
-          while (1) {
-            switch (_context8.prev = _context8.next) {
-              case 0:
-                requestOptions = {
-                  method: "GET",
-                  headers: {
-                    'Content-Type': "application/json"
-                  },
-                  credentials: "same-origin"
-                };
-                _context8.next = 3;
-                return window.fetch("DownloadFileForSignAndSign?DOC_FOR_SIGN_ID=".concat(docForSignId), requestOptions);
+      throw new Error(result.Value);
+    } else {
+      throwResponse(response);
+    }
+  }
 
-              case 3:
-                response = _context8.sent;
+  async DownloadDocAndSign(docForSignId) {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        'Content-Type': "application/json"
+      },
+      credentials: "same-origin"
+    };
+    const response = await window.fetch(`DownloadFileForSignAndSign?DOC_FOR_SIGN_ID=${docForSignId}`, requestOptions);
 
-                if (!response.ok) {
-                  _context8.next = 13;
-                  break;
-                }
+    if (response.ok) {
+      const result = await response.json();
 
-                _context8.next = 7;
-                return response.json();
-
-              case 7:
-                result = _context8.sent;
-
-                if (!result.Result) {
-                  _context8.next = 10;
-                  break;
-                }
-
-                return _context8.abrupt("return", result.Value);
-
-              case 10:
-                throw new Error(result.Value);
-
-              case 13:
-                throwResponse(response);
-
-              case 14:
-              case "end":
-                return _context8.stop();
-            }
-          }
-        }, _callee8);
-      }));
-
-      function DownloadDocAndSign(_x13) {
-        return _DownloadDocAndSign.apply(this, arguments);
+      if (result.Result) {
+        return result.Value;
       }
 
-      return DownloadDocAndSign;
-    }()
-  }, {
-    key: "DownloadAllFileTheme",
-    value: function () {
-      var _DownloadAllFileTheme = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee9(themeId, connectionId) {
-        var requestOptions, response, result;
-        return regenerator_default().wrap(function _callee9$(_context9) {
-          while (1) {
-            switch (_context9.prev = _context9.next) {
-              case 0:
-                requestOptions = {
-                  method: "GET",
-                  headers: {
-                    'Content-Type': "application/json"
-                  },
-                  credentials: "same-origin"
-                };
-                _context9.next = 3;
-                return window.fetch("DownloadAllFileTheme?THEME_ID=".concat(themeId, "&&ConnectionId=").concat(connectionId), requestOptions);
+      throw new Error(result.Value);
+    } else {
+      throwResponse(response);
+    }
+  }
 
-              case 3:
-                response = _context9.sent;
+  getFileNameFromContentDisposition(zglv) {
+    const attr = zglv.split(';');
+    let filename = null;
+    let filenameRFC5987 = null;
 
-                if (!response.ok) {
-                  _context9.next = 13;
-                  break;
-                }
+    for (let element of attr) {
+      let at = element.trim();
+      if (at.startsWith('filename=')) filename = at.replace('filename=', '');
+      if (at.startsWith('filename*=UTF-8\'\'')) filenameRFC5987 = at.replace('filename*=UTF-8\'\'', '');
+    }
 
-                _context9.next = 7;
-                return response.json();
+    var filenameRFC5987decode = decodeURI(filenameRFC5987);
+    return filenameRFC5987decode !== null && filenameRFC5987decode !== void 0 ? filenameRFC5987decode : filename;
+  }
 
-              case 7:
-                result = _context9.sent;
+  async DownloadAllFileTheme(themeId, connectionId) {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        'Content-Type': "application/json"
+      },
+      credentials: "same-origin"
+    };
+    const response = await window.fetch(`DownloadAllFileTheme?THEME_ID=${themeId}&&ConnectionId=${connectionId}`, requestOptions);
 
-                if (!result.Result) {
-                  _context9.next = 10;
-                  break;
-                }
+    if (response.ok) {
+      const zglv = response.headers.get('Content-Disposition');
+      const filename = this.getFileNameFromContentDisposition(zglv);
+      return new FileData(filename, await response.blob());
+    } else {
+      throwResponse(response);
+    }
+  }
 
-                return _context9.abrupt("return", result.Value);
+  async RemoveDoc(docForSignId) {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        'Content-Type': "application/json"
+      },
+      credentials: "same-origin",
+      body: JSON.stringify(docForSignId)
+    };
+    const response = await window.fetch("RemoveFileForSign", requestOptions);
 
-              case 10:
-                throw new Error(result.Value);
+    if (response.ok) {
+      const result = await response.json();
 
-              case 13:
-                throwResponse(response);
-
-              case 14:
-              case "end":
-                return _context9.stop();
-            }
-          }
-        }, _callee9);
-      }));
-
-      function DownloadAllFileTheme(_x14, _x15) {
-        return _DownloadAllFileTheme.apply(this, arguments);
+      if (result.Result) {
+        return result.Value;
       }
 
-      return DownloadAllFileTheme;
-    }()
-  }, {
-    key: "RemoveDoc",
-    value: function () {
-      var _RemoveDoc = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee10(docForSignId) {
-        var requestOptions, response, result;
-        return regenerator_default().wrap(function _callee10$(_context10) {
-          while (1) {
-            switch (_context10.prev = _context10.next) {
-              case 0:
-                requestOptions = {
-                  method: "POST",
-                  headers: {
-                    'Content-Type': "application/json"
-                  },
-                  credentials: "same-origin",
-                  body: JSON.stringify(docForSignId)
-                };
-                _context10.next = 3;
-                return window.fetch("RemoveFileForSign", requestOptions);
+      throw new Error(result.Value);
+    } else {
+      throwResponse(response);
+    }
+  }
 
-              case 3:
-                response = _context10.sent;
+  async GetRoleSPR() {
+    const response = await window.fetch("GetRole", {
+      credentials: "same-origin"
+    });
 
-                if (!response.ok) {
-                  _context10.next = 13;
-                  break;
-                }
+    if (response.ok) {
+      const result = await response.json();
 
-                _context10.next = 7;
-                return response.json();
-
-              case 7:
-                result = _context10.sent;
-
-                if (!result.Result) {
-                  _context10.next = 10;
-                  break;
-                }
-
-                return _context10.abrupt("return", result.Value);
-
-              case 10:
-                throw new Error(result.Value);
-
-              case 13:
-                throwResponse(response);
-
-              case 14:
-              case "end":
-                return _context10.stop();
-            }
-          }
-        }, _callee10);
-      }));
-
-      function RemoveDoc(_x16) {
-        return _RemoveDoc.apply(this, arguments);
+      if (result.Result) {
+        return result.Value;
       }
 
-      return RemoveDoc;
-    }()
-  }, {
-    key: "GetRoleSPR",
-    value: function () {
-      var _GetRoleSPR = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee11() {
-        var response, result;
-        return regenerator_default().wrap(function _callee11$(_context11) {
-          while (1) {
-            switch (_context11.prev = _context11.next) {
-              case 0:
-                _context11.next = 2;
-                return window.fetch("GetRole", {
-                  credentials: "same-origin"
-                });
+      throw new Error(result.Value);
+    } else {
+      throwResponse(response);
+    }
+  }
 
-              case 2:
-                response = _context11.sent;
+  async RemoveRole(signRoleId) {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        'Content-Type': "application/json"
+      },
+      credentials: "same-origin",
+      body: JSON.stringify(signRoleId)
+    };
+    const response = await window.fetch("RemoveRole", requestOptions);
 
-                if (!response.ok) {
-                  _context11.next = 12;
-                  break;
-                }
+    if (response.ok) {
+      const result = await response.json();
 
-                _context11.next = 6;
-                return response.json();
-
-              case 6:
-                result = _context11.sent;
-
-                if (!result.Result) {
-                  _context11.next = 9;
-                  break;
-                }
-
-                return _context11.abrupt("return", result.Value);
-
-              case 9:
-                throw new Error(result.Value);
-
-              case 12:
-                throwResponse(response);
-
-              case 13:
-              case "end":
-                return _context11.stop();
-            }
-          }
-        }, _callee11);
-      }));
-
-      function GetRoleSPR() {
-        return _GetRoleSPR.apply(this, arguments);
+      if (result.Result) {
+        return result.Value;
       }
 
-      return GetRoleSPR;
-    }()
-  }, {
-    key: "RemoveRole",
-    value: function () {
-      var _RemoveRole = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee12(signRoleId) {
-        var requestOptions, response, result;
-        return regenerator_default().wrap(function _callee12$(_context12) {
-          while (1) {
-            switch (_context12.prev = _context12.next) {
-              case 0:
-                requestOptions = {
-                  method: "POST",
-                  headers: {
-                    'Content-Type': "application/json"
-                  },
-                  credentials: "same-origin",
-                  body: JSON.stringify(signRoleId)
-                };
-                _context12.next = 3;
-                return window.fetch("RemoveRole", requestOptions);
+      throw new Error(result.Value);
+    } else {
+      throwResponse(response);
+    }
+  }
 
-              case 3:
-                response = _context12.sent;
+  async GetF003() {
+    const response = await window.fetch("GetF003", {
+      credentials: "same-origin"
+    });
 
-                if (!response.ok) {
-                  _context12.next = 13;
-                  break;
-                }
+    if (response.ok) {
+      const result = await response.json();
 
-                _context12.next = 7;
-                return response.json();
-
-              case 7:
-                result = _context12.sent;
-
-                if (!result.Result) {
-                  _context12.next = 10;
-                  break;
-                }
-
-                return _context12.abrupt("return", result.Value);
-
-              case 10:
-                throw new Error(result.Value);
-
-              case 13:
-                throwResponse(response);
-
-              case 14:
-              case "end":
-                return _context12.stop();
-            }
-          }
-        }, _callee12);
-      }));
-
-      function RemoveRole(_x17) {
-        return _RemoveRole.apply(this, arguments);
+      if (result.Result) {
+        return result.Value;
       }
 
-      return RemoveRole;
-    }()
-  }, {
-    key: "GetF003",
-    value: function () {
-      var _GetF = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee13() {
-        var response, result;
-        return regenerator_default().wrap(function _callee13$(_context13) {
-          while (1) {
-            switch (_context13.prev = _context13.next) {
-              case 0:
-                _context13.next = 2;
-                return window.fetch("GetF003", {
-                  credentials: "same-origin"
-                });
+      throw new Error(result.Value);
+    } else {
+      throwResponse(response);
+    }
+  }
 
-              case 2:
-                response = _context13.sent;
+  async AddFileForSign(file, themeId, mcod, signRoleId) {
+    const formData = new FormData();
+    formData.append("FILE", file, file.name);
+    formData.append("THEME_ID", themeId);
+    formData.append("CODE_MO", mcod);
+    signRoleId.forEach(id => {
+      formData.append("ROLE_ID[]", id);
+    });
+    const requestOptions = {
+      method: "POST",
+      credentials: "same-origin",
+      body: formData
+    };
+    const response = await window.fetch("AddFileForSign", requestOptions);
 
-                if (!response.ok) {
-                  _context13.next = 12;
-                  break;
-                }
+    if (response.ok) {
+      const result = await response.json();
 
-                _context13.next = 6;
-                return response.json();
-
-              case 6:
-                result = _context13.sent;
-
-                if (!result.Result) {
-                  _context13.next = 9;
-                  break;
-                }
-
-                return _context13.abrupt("return", result.Value);
-
-              case 9:
-                throw new Error(result.Value);
-
-              case 12:
-                throwResponse(response);
-
-              case 13:
-              case "end":
-                return _context13.stop();
-            }
-          }
-        }, _callee13);
-      }));
-
-      function GetF003() {
-        return _GetF.apply(this, arguments);
+      if (result.Result) {
+        return result.Value;
       }
 
-      return GetF003;
-    }()
-  }, {
-    key: "AddFileForSign",
-    value: function () {
-      var _AddFileForSign = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee14(file, themeId, mcod, signRoleId) {
-        var formData, requestOptions, response, result;
-        return regenerator_default().wrap(function _callee14$(_context14) {
-          while (1) {
-            switch (_context14.prev = _context14.next) {
-              case 0:
-                formData = new FormData();
-                formData.append("FILE", file, file.name);
-                formData.append("THEME_ID", themeId);
-                formData.append("CODE_MO", mcod);
-                signRoleId.forEach(function (id) {
-                  formData.append("ROLE_ID[]", id);
-                });
-                requestOptions = {
-                  method: "POST",
-                  credentials: "same-origin",
-                  body: formData
-                };
-                _context14.next = 8;
-                return window.fetch("AddFileForSign", requestOptions);
+      throw new Error(result.Value);
+    } else {
+      throwResponse(response);
+    }
+  }
 
-              case 8:
-                response = _context14.sent;
+  async AddSigFile(file, docForSignId) {
+    const formData = new FormData();
+    formData.append("FILE", file, file.name);
+    formData.append("DOC_FOR_SIGN_ID", docForSignId);
+    const requestOptions = {
+      method: "POST",
+      credentials: "same-origin",
+      body: formData
+    };
+    const response = await window.fetch("UploadFileSig", requestOptions);
 
-                if (!response.ok) {
-                  _context14.next = 18;
-                  break;
-                }
+    if (response.ok) {
+      const result = await response.json();
 
-                _context14.next = 12;
-                return response.json();
-
-              case 12:
-                result = _context14.sent;
-
-                if (!result.Result) {
-                  _context14.next = 15;
-                  break;
-                }
-
-                return _context14.abrupt("return", result.Value);
-
-              case 15:
-                throw new Error(result.Value);
-
-              case 18:
-                throwResponse(response);
-
-              case 19:
-              case "end":
-                return _context14.stop();
-            }
-          }
-        }, _callee14);
-      }));
-
-      function AddFileForSign(_x18, _x19, _x20, _x21) {
-        return _AddFileForSign.apply(this, arguments);
+      if (result.Result) {
+        return result.Value;
       }
 
-      return AddFileForSign;
-    }()
-  }, {
-    key: "AddSigFile",
-    value: function () {
-      var _AddSigFile = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee15(file, docForSignId) {
-        var formData, requestOptions, response, result;
-        return regenerator_default().wrap(function _callee15$(_context15) {
-          while (1) {
-            switch (_context15.prev = _context15.next) {
-              case 0:
-                formData = new FormData();
-                formData.append("FILE", file, file.name);
-                formData.append("DOC_FOR_SIGN_ID", docForSignId);
-                requestOptions = {
-                  method: "POST",
-                  credentials: "same-origin",
-                  body: formData
-                };
-                _context15.next = 6;
-                return window.fetch("UploadFileSig", requestOptions);
+      throw new Error(result.Value);
+    } else {
+      throwResponse(response);
+    }
+  }
 
-              case 6:
-                response = _context15.sent;
+  async GetISSUER() {
+    const requestOptions = {
+      method: "GET",
+      credentials: "same-origin"
+    };
+    const response = await window.fetch("GetISSUER", requestOptions);
 
-                if (!response.ok) {
-                  _context15.next = 16;
-                  break;
-                }
+    if (response.ok) {
+      const result = await response.json();
 
-                _context15.next = 10;
-                return response.json();
-
-              case 10:
-                result = _context15.sent;
-
-                if (!result.Result) {
-                  _context15.next = 13;
-                  break;
-                }
-
-                return _context15.abrupt("return", result.Value);
-
-              case 13:
-                throw new Error(result.Value);
-
-              case 16:
-                throwResponse(response);
-
-              case 17:
-              case "end":
-                return _context15.stop();
-            }
-          }
-        }, _callee15);
-      }));
-
-      function AddSigFile(_x22, _x23) {
-        return _AddSigFile.apply(this, arguments);
+      if (result.Result) {
+        return result.Value;
       }
 
-      return AddSigFile;
-    }()
-  }, {
-    key: "GetISSUER",
-    value: function () {
-      var _GetISSUER = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee16() {
-        var requestOptions, response, result;
-        return regenerator_default().wrap(function _callee16$(_context16) {
-          while (1) {
-            switch (_context16.prev = _context16.next) {
-              case 0:
-                requestOptions = {
-                  method: "GET",
-                  credentials: "same-origin"
-                };
-                _context16.next = 3;
-                return window.fetch("GetISSUER", requestOptions);
+      throw new Error(result.Value);
+    } else {
+      throwResponse(response);
+    }
+  }
 
-              case 3:
-                response = _context16.sent;
+  async RemoveISSUER(singIssuerId) {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        'Content-Type': "application/json"
+      },
+      body: JSON.stringify(singIssuerId)
+    };
+    const response = await window.fetch("RemoveISSUER", requestOptions);
 
-                if (!response.ok) {
-                  _context16.next = 13;
-                  break;
-                }
+    if (response.ok) {
+      const result = await response.json();
 
-                _context16.next = 7;
-                return response.json();
-
-              case 7:
-                result = _context16.sent;
-
-                if (!result.Result) {
-                  _context16.next = 10;
-                  break;
-                }
-
-                return _context16.abrupt("return", result.Value);
-
-              case 10:
-                throw new Error(result.Value);
-
-              case 13:
-                throwResponse(response);
-
-              case 14:
-              case "end":
-                return _context16.stop();
-            }
-          }
-        }, _callee16);
-      }));
-
-      function GetISSUER() {
-        return _GetISSUER.apply(this, arguments);
+      if (result.Result) {
+        return result.Value;
       }
 
-      return GetISSUER;
-    }()
-  }, {
-    key: "RemoveISSUER",
-    value: function () {
-      var _RemoveISSUER = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee17(singIssuerId) {
-        var requestOptions, response, result;
-        return regenerator_default().wrap(function _callee17$(_context17) {
-          while (1) {
-            switch (_context17.prev = _context17.next) {
-              case 0:
-                requestOptions = {
-                  method: "POST",
-                  headers: {
-                    'Content-Type': "application/json"
-                  },
-                  body: JSON.stringify(singIssuerId)
-                };
-                _context17.next = 3;
-                return window.fetch("RemoveISSUER", requestOptions);
+      throw new Error(result.Value);
+    } else {
+      throwResponse(response);
+    }
+  }
 
-              case 3:
-                response = _context17.sent;
+  async GetISSUERCertInfo(singIssuerId) {
+    const requestOptions = {
+      method: "GET"
+    };
+    const response = await window.fetch(`GetISSUERCertInfo?ID=${singIssuerId}`, requestOptions);
 
-                if (!response.ok) {
-                  _context17.next = 13;
-                  break;
-                }
+    if (response.ok) {
+      const result = await response.json();
 
-                _context17.next = 7;
-                return response.json();
-
-              case 7:
-                result = _context17.sent;
-
-                if (!result.Result) {
-                  _context17.next = 10;
-                  break;
-                }
-
-                return _context17.abrupt("return", result.Value);
-
-              case 10:
-                throw new Error(result.Value);
-
-              case 13:
-                throwResponse(response);
-
-              case 14:
-              case "end":
-                return _context17.stop();
-            }
-          }
-        }, _callee17);
-      }));
-
-      function RemoveISSUER(_x24) {
-        return _RemoveISSUER.apply(this, arguments);
+      if (result.Result) {
+        return result.Value;
       }
 
-      return RemoveISSUER;
-    }()
-  }, {
-    key: "GetISSUERCertInfo",
-    value: function () {
-      var _GetISSUERCertInfo = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee18(singIssuerId) {
-        var requestOptions, response, result;
-        return regenerator_default().wrap(function _callee18$(_context18) {
-          while (1) {
-            switch (_context18.prev = _context18.next) {
-              case 0:
-                requestOptions = {
-                  method: "GET"
-                };
-                _context18.next = 3;
-                return window.fetch("GetISSUERCertInfo?ID=".concat(singIssuerId), requestOptions);
+      throw new Error(result.Value);
+    } else {
+      throwResponse(response);
+    }
+  }
 
-              case 3:
-                response = _context18.sent;
+  async AddISSUER(file, caption, dateB, dateE) {
+    const formData = new FormData();
+    formData.append("File", file, file.name);
+    formData.append("CAPTION", caption);
+    formData.append("DATE_B", dateB.toLocaleDateString());
+    if (dateE != null) formData.append("DATE_E", dateE.toLocaleDateString());
+    const requestOptions = {
+      method: "POST",
+      body: formData
+    };
+    const response = await window.fetch(`AddISSUER`, requestOptions);
 
-                if (!response.ok) {
-                  _context18.next = 13;
-                  break;
-                }
+    if (response.ok) {
+      const result = await response.json();
 
-                _context18.next = 7;
-                return response.json();
-
-              case 7:
-                result = _context18.sent;
-
-                if (!result.Result) {
-                  _context18.next = 10;
-                  break;
-                }
-
-                return _context18.abrupt("return", result.Value);
-
-              case 10:
-                throw new Error(result.Value);
-
-              case 13:
-                throwResponse(response);
-
-              case 14:
-              case "end":
-                return _context18.stop();
-            }
-          }
-        }, _callee18);
-      }));
-
-      function GetISSUERCertInfo(_x25) {
-        return _GetISSUERCertInfo.apply(this, arguments);
+      if (result.Result) {
+        return result.Value;
       }
 
-      return GetISSUERCertInfo;
-    }()
-  }, {
-    key: "AddISSUER",
-    value: function () {
-      var _AddISSUER = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee19(file, caption, dateB, dateE) {
-        var formData, requestOptions, response, result;
-        return regenerator_default().wrap(function _callee19$(_context19) {
-          while (1) {
-            switch (_context19.prev = _context19.next) {
-              case 0:
-                formData = new FormData();
-                formData.append("File", file, file.name);
-                formData.append("CAPTION", caption);
-                formData.append("DATE_B", dateB.toLocaleDateString());
-                if (dateE != null) formData.append("DATE_E", dateE.toLocaleDateString());
-                requestOptions = {
-                  method: "POST",
-                  body: formData
-                };
-                _context19.next = 8;
-                return window.fetch("AddISSUER", requestOptions);
+      throw new Error(result.Value);
+    } else {
+      throwResponse(response);
+    }
+  }
 
-              case 8:
-                response = _context19.sent;
+  async GetSignList() {
+    const requestOptions = {
+      method: "GET",
+      credentials: "same-origin"
+    };
+    const response = await window.fetch(`GetSignList`, requestOptions);
 
-                if (!response.ok) {
-                  _context19.next = 18;
-                  break;
-                }
+    if (response.ok) {
+      const result = await response.json();
 
-                _context19.next = 12;
-                return response.json();
-
-              case 12:
-                result = _context19.sent;
-
-                if (!result.Result) {
-                  _context19.next = 15;
-                  break;
-                }
-
-                return _context19.abrupt("return", result.Value);
-
-              case 15:
-                throw new Error(result.Value);
-
-              case 18:
-                throwResponse(response);
-
-              case 19:
-              case "end":
-                return _context19.stop();
-            }
-          }
-        }, _callee19);
-      }));
-
-      function AddISSUER(_x26, _x27, _x28, _x29) {
-        return _AddISSUER.apply(this, arguments);
+      if (result.Result) {
+        return result.Value;
       }
 
-      return AddISSUER;
-    }()
-  }, {
-    key: "GetSignList",
-    value: function () {
-      var _GetSignList = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee20() {
-        var requestOptions, response, result;
-        return regenerator_default().wrap(function _callee20$(_context20) {
-          while (1) {
-            switch (_context20.prev = _context20.next) {
-              case 0:
-                requestOptions = {
-                  method: "GET",
-                  credentials: "same-origin"
-                };
-                _context20.next = 3;
-                return window.fetch("GetSignList", requestOptions);
+      throw new Error(result.Value);
+    } else {
+      throwResponse(response);
+    }
+  }
 
-              case 3:
-                response = _context20.sent;
+  async DownloadCert(id) {
+    const requestOptions = {
+      method: "GET",
+      credentials: "same-origin"
+    };
+    const response = await window.fetch(`DownloadCert?id=${id}`, requestOptions);
 
-                if (!response.ok) {
-                  _context20.next = 13;
-                  break;
-                }
+    if (response.ok) {
+      const result = await response.json();
 
-                _context20.next = 7;
-                return response.json();
-
-              case 7:
-                result = _context20.sent;
-
-                if (!result.Result) {
-                  _context20.next = 10;
-                  break;
-                }
-
-                return _context20.abrupt("return", result.Value);
-
-              case 10:
-                throw new Error(result.Value);
-
-              case 13:
-                throwResponse(response);
-
-              case 14:
-              case "end":
-                return _context20.stop();
-            }
-          }
-        }, _callee20);
-      }));
-
-      function GetSignList() {
-        return _GetSignList.apply(this, arguments);
+      if (result.Result) {
+        return result.Value;
       }
 
-      return GetSignList;
-    }()
-  }, {
-    key: "DownloadCert",
-    value: function () {
-      var _DownloadCert = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee21(id) {
-        var requestOptions, response, result;
-        return regenerator_default().wrap(function _callee21$(_context21) {
-          while (1) {
-            switch (_context21.prev = _context21.next) {
-              case 0:
-                requestOptions = {
-                  method: "GET",
-                  credentials: "same-origin"
-                };
-                _context21.next = 3;
-                return window.fetch("DownloadCert?id=".concat(id), requestOptions);
+      throw new Error(result.Value);
+    } else {
+      throwResponse(response);
+    }
+  }
 
-              case 3:
-                response = _context21.sent;
+  async GetCertificateINFO(file) {
+    const formData = new FormData();
+    formData.append("file", file, file.name);
+    const requestOptions = {
+      method: "POST",
+      credentials: "same-origin",
+      body: formData
+    };
+    const response = await window.fetch(`GetCertificateINFO`, requestOptions);
 
-                if (!response.ok) {
-                  _context21.next = 13;
-                  break;
-                }
+    if (response.ok) {
+      const result = await response.json();
 
-                _context21.next = 7;
-                return response.json();
-
-              case 7:
-                result = _context21.sent;
-
-                if (!result.Result) {
-                  _context21.next = 10;
-                  break;
-                }
-
-                return _context21.abrupt("return", result.Value);
-
-              case 10:
-                throw new Error(result.Value);
-
-              case 13:
-                throwResponse(response);
-
-              case 14:
-              case "end":
-                return _context21.stop();
-            }
-          }
-        }, _callee21);
-      }));
-
-      function DownloadCert(_x30) {
-        return _DownloadCert.apply(this, arguments);
+      if (result.Result) {
+        return result.Value;
       }
 
-      return DownloadCert;
-    }()
-  }, {
-    key: "GetCertificateINFO",
-    value: function () {
-      var _GetCertificateINFO = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee22(file) {
-        var formData, requestOptions, response, result;
-        return regenerator_default().wrap(function _callee22$(_context22) {
-          while (1) {
-            switch (_context22.prev = _context22.next) {
-              case 0:
-                formData = new FormData();
-                formData.append("file", file, file.name);
-                requestOptions = {
-                  method: "POST",
-                  credentials: "same-origin",
-                  body: formData
-                };
-                _context22.next = 5;
-                return window.fetch("GetCertificateINFO", requestOptions);
+      throw new Error(result.Value);
+    } else {
+      throwResponse(response);
+    }
+  }
 
-              case 5:
-                response = _context22.sent;
-
-                if (!response.ok) {
-                  _context22.next = 15;
-                  break;
-                }
-
-                _context22.next = 9;
-                return response.json();
-
-              case 9:
-                result = _context22.sent;
-
-                if (!result.Result) {
-                  _context22.next = 12;
-                  break;
-                }
-
-                return _context22.abrupt("return", result.Value);
-
-              case 12:
-                throw new Error(result.Value);
-
-              case 15:
-                throwResponse(response);
-
-              case 16:
-              case "end":
-                return _context22.stop();
-            }
-          }
-        }, _callee22);
-      }));
-
-      function GetCertificateINFO(_x31) {
-        return _GetCertificateINFO.apply(this, arguments);
-      }
-
-      return GetCertificateINFO;
-    }()
-  }]);
-
-  return Repository;
-}();
+}
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/createTheme.js + 6 modules
 var createTheme = __webpack_require__(48904);
 // EXTERNAL MODULE: ./node_modules/@material-ui/styles/esm/ThemeProvider/ThemeProvider.js
@@ -87482,10 +86934,7 @@ var ThemeProvider = __webpack_require__(13457);
 
 
 
-
-
-
-var theme = (0,createTheme/* default */.Z)({
+const theme = (0,createTheme/* default */.Z)({
   palette: {
     primary: {
       main: '#4CAF50'
@@ -87498,105 +86947,40 @@ var theme = (0,createTheme/* default */.Z)({
     }
   }
 });
-var repo = new Repository();
+const repo = new Repository();
 function RoleList() {
-  var tableRef = react.useRef(null);
+  const tableRef = react.useRef(null);
+  const [isOpenRoleDialog, setIsOpenRoleDialog] = react.useState(false);
 
-  var _React$useState = react.useState(false),
-      _React$useState2 = (0,slicedToArray/* default */.Z)(_React$useState, 2),
-      isOpenRoleDialog = _React$useState2[0],
-      setIsOpenRoleDialog = _React$useState2[1];
-
-  var closeRoleDialog = function closeRoleDialog() {
+  const closeRoleDialog = () => {
     setIsOpenRoleDialog(false);
     refresh();
   };
 
-  var _React$useState3 = react.useState([]),
-      _React$useState4 = (0,slicedToArray/* default */.Z)(_React$useState3, 2),
-      roleList = _React$useState4[0],
-      setRoleList = _React$useState4[1];
+  const [roleList, setRoleList] = react.useState([]);
 
-  var refresh = /*#__PURE__*/function () {
-    var _ref = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee() {
-      return regenerator_default().wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.prev = 0;
-              _context.t0 = setRoleList;
-              _context.next = 4;
-              return repo.GetRoleSPR();
+  const refresh = async () => {
+    try {
+      setRoleList(await repo.GetRoleSPR());
+    } catch (err) {
+      alert(err.toString());
+    }
+  };
 
-            case 4:
-              _context.t1 = _context.sent;
-              (0, _context.t0)(_context.t1);
-              _context.next = 11;
-              break;
-
-            case 8:
-              _context.prev = 8;
-              _context.t2 = _context["catch"](0);
-              alert(_context.t2.toString());
-
-            case 11:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee, null, [[0, 8]]);
-    }));
-
-    return function refresh() {
-      return _ref.apply(this, arguments);
-    };
-  }();
-
-  react.useEffect(function () {
+  react.useEffect(() => {
     refresh();
   }, []);
 
-  var removeRole = /*#__PURE__*/function () {
-    var _ref2 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee2(event, rowData) {
-      return regenerator_default().wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              _context2.prev = 0;
-
-              if (!confirm("\u0412\u044B \u0443\u0432\u0435\u0440\u0435\u043D\u044B \u0447\u0442\u043E \u0445\u043E\u0442\u0438\u0442\u0435 \u0443\u0434\u0430\u043B\u0438\u0442\u044C \u0440\u043E\u043B\u044C: ".concat(rowData.CAPTION, "?"))) {
-                _context2.next = 6;
-                break;
-              }
-
-              _context2.next = 4;
-              return repo.RemoveRole(rowData.SIGN_ROLE_ID);
-
-            case 4:
-              _context2.next = 6;
-              return refresh();
-
-            case 6:
-              _context2.next = 11;
-              break;
-
-            case 8:
-              _context2.prev = 8;
-              _context2.t0 = _context2["catch"](0);
-              alert(_context2.t0.toString());
-
-            case 11:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2, null, [[0, 8]]);
-    }));
-
-    return function removeRole(_x, _x2) {
-      return _ref2.apply(this, arguments);
-    };
-  }();
+  const removeRole = async (event, rowData) => {
+    try {
+      if (confirm(`Вы уверены что хотите удалить роль: ${rowData.CAPTION}?`)) {
+        await repo.RemoveRole(rowData.SIGN_ROLE_ID);
+        await refresh();
+      }
+    } catch (error) {
+      alert(error.toString());
+    }
+  };
 
   return /*#__PURE__*/react.createElement("div", {
     style: {
@@ -87624,9 +87008,7 @@ function RoleList() {
       },
       tooltip: "Обновить",
       isFreeAction: true,
-      onClick: function onClick() {
-        return refresh();
-      }
+      onClick: () => refresh()
     }, {
       icon: "add",
       iconProps: {
@@ -87634,7 +87016,7 @@ function RoleList() {
       },
       tooltip: "Добавить роль",
       isFreeAction: true,
-      onClick: function onClick(event) {
+      onClick: event => {
         setIsOpenRoleDialog(true);
       }
     }, {
@@ -87669,83 +87051,44 @@ function RoleList() {
   }));
 }
 function RoleDialog(props) {
-  var onClose = props.onClose,
-      isOpen = props.isOpen;
+  const {
+    onClose,
+    isOpen
+  } = props;
+  const [errorMessage, setErrorMessage] = react.useState("");
+  const [caption, setCaption] = react.useState("");
 
-  var _React$useState5 = react.useState(""),
-      _React$useState6 = (0,slicedToArray/* default */.Z)(_React$useState5, 2),
-      errorMessage = _React$useState6[0],
-      setErrorMessage = _React$useState6[1];
-
-  var _React$useState7 = react.useState(""),
-      _React$useState8 = (0,slicedToArray/* default */.Z)(_React$useState7, 2),
-      caption = _React$useState8[0],
-      setCaption = _React$useState8[1];
-
-  var handleCaptionChange = function handleCaptionChange(event) {
+  const handleCaptionChange = event => {
     setCaption(event.target.value);
   };
 
-  var _React$useState9 = react.useState(""),
-      _React$useState10 = (0,slicedToArray/* default */.Z)(_React$useState9, 2),
-      prefix = _React$useState10[0],
-      setPrefix = _React$useState10[1];
+  const [prefix, setPrefix] = react.useState("");
 
-  var prefixChange = function prefixChange(event) {
+  const prefixChange = event => {
     setPrefix(event.target.value);
   };
 
-  var handleClose = function handleClose() {
+  const handleClose = () => {
     onClose();
     setCaption("");
     setPrefix("");
   };
 
-  var _React$useState11 = react.useState(false),
-      _React$useState12 = (0,slicedToArray/* default */.Z)(_React$useState11, 2),
-      processSaveRole = _React$useState12[0],
-      setProcessSaveRole = _React$useState12[1];
+  const [processSaveRole, setProcessSaveRole] = react.useState(false);
 
-  var saveRole = /*#__PURE__*/function () {
-    var _ref3 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee3() {
-      return regenerator_default().wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              _context3.prev = 0;
-              setProcessSaveRole(true);
-              _context3.next = 4;
-              return repo.AddRole(caption, prefix);
-
-            case 4:
-              setErrorMessage("");
-              setCaption("");
-              handleClose();
-              _context3.next = 12;
-              break;
-
-            case 9:
-              _context3.prev = 9;
-              _context3.t0 = _context3["catch"](0);
-              setErrorMessage(_context3.t0.toString());
-
-            case 12:
-              _context3.prev = 12;
-              setProcessSaveRole(false);
-              return _context3.finish(12);
-
-            case 15:
-            case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3, null, [[0, 9, 12, 15]]);
-    }));
-
-    return function saveRole() {
-      return _ref3.apply(this, arguments);
-    };
-  }();
+  const saveRole = async () => {
+    try {
+      setProcessSaveRole(true);
+      await repo.AddRole(caption, prefix);
+      setErrorMessage("");
+      setCaption("");
+      handleClose();
+    } catch (err) {
+      setErrorMessage(err.toString());
+    } finally {
+      setProcessSaveRole(false);
+    }
+  };
 
   return /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, isOpen), /*#__PURE__*/react.createElement(Dialog/* default */.Z, {
     open: isOpen,
@@ -87753,12 +87096,10 @@ function RoleDialog(props) {
     "aria-labelledby": "form-dialog-title"
   }, /*#__PURE__*/react.createElement(DialogTitle/* default */.Z, {
     id: "form-dialog-title"
-  }, "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u0440\u043E\u043B\u0438"), /*#__PURE__*/react.createElement(DialogContent/* default */.Z, null, /*#__PURE__*/react.createElement("div", null, "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0438\u043C\u0435\u043D\u043E\u0432\u0430\u043D\u0438\u0435 \u0440\u043E\u043B\u0438 \u0438 \u043D\u0430\u0436\u043C\u0438\u0442\u0435 \u043D\u0430 \u043A\u043D\u043E\u043F\u043A\u0443 \"\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C\""), Array.isArray(errorMessage) ? errorMessage.map(function (value, index) {
-    return /*#__PURE__*/react.createElement("div", {
-      key: index,
-      className: "RedText"
-    }, value);
-  }) : /*#__PURE__*/react.createElement("div", {
+  }, "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u0440\u043E\u043B\u0438"), /*#__PURE__*/react.createElement(DialogContent/* default */.Z, null, /*#__PURE__*/react.createElement("div", null, "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0438\u043C\u0435\u043D\u043E\u0432\u0430\u043D\u0438\u0435 \u0440\u043E\u043B\u0438 \u0438 \u043D\u0430\u0436\u043C\u0438\u0442\u0435 \u043D\u0430 \u043A\u043D\u043E\u043F\u043A\u0443 \"\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C\""), Array.isArray(errorMessage) ? errorMessage.map((value, index) => /*#__PURE__*/react.createElement("div", {
+    key: index,
+    className: "RedText"
+  }, value)) : /*#__PURE__*/react.createElement("div", {
     className: "RedText"
   }, errorMessage), /*#__PURE__*/react.createElement(TextField/* default */.Z, {
     autoFocus: true,
@@ -94457,6 +93798,8 @@ function useUtils() {
 var clsx_m = __webpack_require__(86010);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/makeStyles.js
 var makeStyles = __webpack_require__(41120);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js
+var objectWithoutProperties = __webpack_require__(45987);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/Typography/Typography.js
 var Typography = __webpack_require__(22318);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/colorManipulator.js
@@ -94737,8 +94080,14 @@ var InputAdornment = __webpack_require__(7397);
 var rifm_esm = __webpack_require__(48315);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/SvgIcon/SvgIcon.js
 var SvgIcon = __webpack_require__(62087);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/slicedToArray.js + 1 modules
+var slicedToArray = __webpack_require__(29439);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/styles/useTheme.js
 var useTheme = __webpack_require__(8920);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/classCallCheck.js
+var classCallCheck = __webpack_require__(15671);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/createClass.js
+var createClass = __webpack_require__(43144);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js
 var possibleConstructorReturn = __webpack_require__(82963);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js
@@ -98970,27 +98319,22 @@ var ListItemText = __webpack_require__(95757);
 
 
 
-
-var ListItemStyles = (0,makeStyles/* default */.Z)(function (theme) {
-  return {
-    red: {
-      color: 'red !important'
-    },
-    green: {
-      color: 'green !important'
-    }
-  };
-});
+const ListItemStyles = (0,makeStyles/* default */.Z)(theme => ({
+  red: {
+    color: 'red !important'
+  },
+  green: {
+    color: 'green !important'
+  }
+}));
 function CertList(props) {
-  var certInfo = props.certInfo;
-  var classes = ListItemStyles();
+  const {
+    certInfo
+  } = props;
+  const classes = ListItemStyles();
+  const [selectedIndex, setselectedIndex] = react.useState(0);
 
-  var _React$useState = react.useState(0),
-      _React$useState2 = (0,slicedToArray/* default */.Z)(_React$useState, 2),
-      selectedIndex = _React$useState2[0],
-      setselectedIndex = _React$useState2[1];
-
-  var handleListItemClick = function handleListItemClick(event, index) {
+  const handleListItemClick = (event, index) => {
     setselectedIndex(index);
   };
 
@@ -98998,11 +98342,9 @@ function CertList(props) {
     className: "BoldText"
   }, "\u041E\u0448\u0438\u0431\u043A\u0438 \u0446\u0435\u043F\u043E\u0447\u043A\u0438"), /*#__PURE__*/react.createElement("ul", {
     className: "ErrorLi"
-  }, certInfo.Error.map(function (value, index) {
-    return /*#__PURE__*/react.createElement("li", {
-      key: index
-    }, value);
-  }))) : null, /*#__PURE__*/react.createElement(Grid/* default */.Z, {
+  }, certInfo.Error.map((value, index) => /*#__PURE__*/react.createElement("li", {
+    key: index
+  }, value)))) : null, /*#__PURE__*/react.createElement(Grid/* default */.Z, {
     container: true,
     spacing: 1
   }, /*#__PURE__*/react.createElement(Grid/* default */.Z, {
@@ -99012,19 +98354,15 @@ function CertList(props) {
     className: "BoldText"
   }, "\u0421\u043F\u0438\u0441\u043E\u043A \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u043E\u0432"), /*#__PURE__*/react.createElement(List/* default */.Z, {
     "aria-label": "secondary mailbox folder"
-  }, certInfo.Data.map(function (value, index) {
-    return /*#__PURE__*/react.createElement(ListItem/* default */.Z, {
-      key: index,
-      className: value.VALID ? classes.green : classes.red,
-      selected: selectedIndex === index,
-      button: true,
-      onClick: function onClick(event) {
-        return handleListItemClick(event, index);
-      }
-    }, /*#__PURE__*/react.createElement(ListItemText/* default */.Z, {
-      primary: "\u0421\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442:".concat(value.CAPTION)
-    }));
-  }))), /*#__PURE__*/react.createElement(Grid/* default */.Z, {
+  }, certInfo.Data.map((value, index) => /*#__PURE__*/react.createElement(ListItem/* default */.Z, {
+    key: index,
+    className: value.VALID ? classes.green : classes.red,
+    selected: selectedIndex === index,
+    button: true,
+    onClick: event => handleListItemClick(event, index)
+  }, /*#__PURE__*/react.createElement(ListItemText/* default */.Z, {
+    primary: `Сертификат:${value.CAPTION}`
+  }))))), /*#__PURE__*/react.createElement(Grid/* default */.Z, {
     item: true,
     xs: true
   }, /*#__PURE__*/react.createElement(ShowInfoCert, {
@@ -99033,22 +98371,20 @@ function CertList(props) {
 }
 
 function ShowInfoCert(props) {
-  var data = props.data;
+  const {
+    data
+  } = props;
   return data != null ? /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", {
     className: "BoldText"
   }, "\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F \u043E \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u0435"), /*#__PURE__*/react.createElement("ul", {
     className: "ErrorLi"
-  }, data.Error.map(function (err, index) {
-    return /*#__PURE__*/react.createElement("li", {
-      key: index
-    }, err);
-  })), /*#__PURE__*/react.createElement("table", {
+  }, data.Error.map((err, index) => /*#__PURE__*/react.createElement("li", {
+    key: index
+  }, err))), /*#__PURE__*/react.createElement("table", {
     className: "table_report"
-  }, /*#__PURE__*/react.createElement("tbody", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("th", null, "\u041F\u0430\u0440\u0430\u043C\u0435\u0442\u0440"), /*#__PURE__*/react.createElement("th", null, "\u0417\u043D\u0430\u0447\u0435\u043D\u0438\u0435")), data.NAME != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u041E\u0431\u0449\u0435\u0435 \u0438\u043C\u044F(CN)"), /*#__PURE__*/react.createElement("td", null, data.NAME)) : null, data.ORG != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u041E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u044F(O)"), /*#__PURE__*/react.createElement("td", null, data.ORG)) : null, data.PODR != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u041F\u043E\u0434\u0440\u0430\u0437\u0434\u0435\u043B\u0435\u043D\u0438\u0435(OU)"), /*#__PURE__*/react.createElement("td", null, data.PODR)) : null, data.DOLG != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0414\u043E\u043B\u0436\u043D\u043E\u0441\u0442\u044C(T)"), /*#__PURE__*/react.createElement("td", null, data.DOLG)) : null, data.FAM != null || data.IM_OT != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0424\u0418\u041E(SN+GN)"), /*#__PURE__*/react.createElement("td", null, data.FAM, " ", data.IM_OT)) : null, data.Country != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0421\u0442\u0440\u0430\u043D\u0430(C)"), /*#__PURE__*/react.createElement("td", null, data.Country)) : null, data.Region != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0420\u0435\u0433\u0438\u043E\u043D(S)"), /*#__PURE__*/react.createElement("td", null, data.Region)) : null, data.City != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u041D\u0430\u0441\u0435\u043B\u0435\u043D\u043D\u044B\u0439 \u043F\u0443\u043D\u043A\u0442(L)"), /*#__PURE__*/react.createElement("td", null, data.City)) : null, data.Adres != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0410\u0434\u0440\u0435\u0441(Street)"), /*#__PURE__*/react.createElement("td", null, data.Adres)) : null, data.EMAIL != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "Email(E)"), /*#__PURE__*/react.createElement("td", null, data.EMAIL)) : null, data.SNILS != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, " \u0421\u041D\u0418\u041B\u0421(SNILS)"), /*#__PURE__*/react.createElement("td", null, data.SNILS)) : null, data.INN != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0418\u041D\u041D(INN)"), /*#__PURE__*/react.createElement("td", null, data.INN)) : null, data.OGRN != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u041E\u0413\u0420\u041D(OGRN)"), /*#__PURE__*/react.createElement("td", null, data.OGRN)) : null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0414\u0430\u0442\u0430 \u043D\u0430\u0447\u0430\u043B\u0430"), /*#__PURE__*/react.createElement("td", null, format(new Date(data.DATE_B), "dd-MM-yyyy"))), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0414\u0430\u0442\u0430 \u043E\u043A\u043E\u043D\u0447\u0430\u043D\u0438\u044F"), /*#__PURE__*/react.createElement("td", null, format(new Date(data.DATE_E), "dd-MM-yyyy"))), data.OtherAttribute.map(function (value, index) {
-    return /*#__PURE__*/react.createElement("tr", {
-      key: index
-    }, /*#__PURE__*/react.createElement("td", null, value.Name), /*#__PURE__*/react.createElement("td", null, value.Value));
-  })))) : /*#__PURE__*/react.createElement("div", null);
+  }, /*#__PURE__*/react.createElement("tbody", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("th", null, "\u041F\u0430\u0440\u0430\u043C\u0435\u0442\u0440"), /*#__PURE__*/react.createElement("th", null, "\u0417\u043D\u0430\u0447\u0435\u043D\u0438\u0435")), data.NAME != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u041E\u0431\u0449\u0435\u0435 \u0438\u043C\u044F(CN)"), /*#__PURE__*/react.createElement("td", null, data.NAME)) : null, data.ORG != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u041E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u044F(O)"), /*#__PURE__*/react.createElement("td", null, data.ORG)) : null, data.PODR != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u041F\u043E\u0434\u0440\u0430\u0437\u0434\u0435\u043B\u0435\u043D\u0438\u0435(OU)"), /*#__PURE__*/react.createElement("td", null, data.PODR)) : null, data.DOLG != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0414\u043E\u043B\u0436\u043D\u043E\u0441\u0442\u044C(T)"), /*#__PURE__*/react.createElement("td", null, data.DOLG)) : null, data.FAM != null || data.IM_OT != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0424\u0418\u041E(SN+GN)"), /*#__PURE__*/react.createElement("td", null, data.FAM, " ", data.IM_OT)) : null, data.Country != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0421\u0442\u0440\u0430\u043D\u0430(C)"), /*#__PURE__*/react.createElement("td", null, data.Country)) : null, data.Region != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0420\u0435\u0433\u0438\u043E\u043D(S)"), /*#__PURE__*/react.createElement("td", null, data.Region)) : null, data.City != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u041D\u0430\u0441\u0435\u043B\u0435\u043D\u043D\u044B\u0439 \u043F\u0443\u043D\u043A\u0442(L)"), /*#__PURE__*/react.createElement("td", null, data.City)) : null, data.Adres != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0410\u0434\u0440\u0435\u0441(Street)"), /*#__PURE__*/react.createElement("td", null, data.Adres)) : null, data.EMAIL != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "Email(E)"), /*#__PURE__*/react.createElement("td", null, data.EMAIL)) : null, data.SNILS != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, " \u0421\u041D\u0418\u041B\u0421(SNILS)"), /*#__PURE__*/react.createElement("td", null, data.SNILS)) : null, data.INN != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0418\u041D\u041D(INN)"), /*#__PURE__*/react.createElement("td", null, data.INN)) : null, data.OGRN != null ? /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u041E\u0413\u0420\u041D(OGRN)"), /*#__PURE__*/react.createElement("td", null, data.OGRN)) : null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0414\u0430\u0442\u0430 \u043D\u0430\u0447\u0430\u043B\u0430"), /*#__PURE__*/react.createElement("td", null, format(new Date(data.DATE_B), "dd-MM-yyyy"))), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", null, "\u0414\u0430\u0442\u0430 \u043E\u043A\u043E\u043D\u0447\u0430\u043D\u0438\u044F"), /*#__PURE__*/react.createElement("td", null, format(new Date(data.DATE_E), "dd-MM-yyyy"))), data.OtherAttribute.map((value, index) => /*#__PURE__*/react.createElement("tr", {
+    key: index
+  }, /*#__PURE__*/react.createElement("td", null, value.Name), /*#__PURE__*/react.createElement("td", null, value.Value)))))) : /*#__PURE__*/react.createElement("div", null);
 }
 ;// CONCATENATED MODULE: ./SignApp/Components/ShowCertDialog.jsx
 
@@ -99060,20 +98396,20 @@ function ShowInfoCert(props) {
 
 
 
-var ShowCertDialog_useStyles = (0,makeStyles/* default */.Z)(function (theme) {
-  return {
-    button: {
-      marginRight: theme.spacing(1)
-    }
-  };
-});
+const ShowCertDialog_useStyles = (0,makeStyles/* default */.Z)(theme => ({
+  button: {
+    marginRight: theme.spacing(1)
+  }
+}));
 function ShowCertDialog(props) {
-  var classes = ShowCertDialog_useStyles();
-  var isOpen = props.isOpen,
-      certInfo = props.certInfo,
-      onClose = props.onClose;
+  const classes = ShowCertDialog_useStyles();
+  const {
+    isOpen,
+    certInfo,
+    onClose
+  } = props;
 
-  var handleClose = function handleClose() {
+  const handleClose = () => {
     onClose();
   };
 
@@ -99092,44 +98428,64 @@ function ShowCertDialog(props) {
     onClick: handleClose
   }, "\u0417\u0430\u043A\u0440\u044B\u0442\u044C")))));
 }
+// EXTERNAL MODULE: ./node_modules/streamsaver/StreamSaver.js
+var StreamSaver = __webpack_require__(98390);
 ;// CONCATENATED MODULE: ./SignApp/API/FileAPI.js
+
 function saveFile(blob, filename) {
   if (window.navigator.msSaveOrOpenBlob) {
     window.navigator.msSaveOrOpenBlob(blob, filename);
   } else {
-    var a = document.createElement('a');
+    const a = document.createElement('a');
     document.body.appendChild(a);
-    var url = window.URL.createObjectURL(blob);
+    const url = window.URL.createObjectURL(blob);
     a.href = url;
     a.download = filename;
     a.click();
-    setTimeout(function () {
+    setTimeout(() => {
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
     }, 0);
   }
 }
 function downloadBase64File(contentBase64, ContentType, fileName) {
-  var linkSource = "data:".concat(ContentType, ";base64,").concat(contentBase64);
-  var a = document.createElement('a');
+  debugger;
+  const linkSource = `data:${ContentType};base64,${contentBase64}`;
+  const a = document.createElement('a');
   document.body.appendChild(a);
   a.href = linkSource;
   a.download = fileName;
   a.click();
-  setTimeout(function () {
+  setTimeout(() => {
     document.body.removeChild(a);
   }, 0);
 }
+function downloadBase64FileAsync(contentBase64, ContentType, fileName) {
+  return new Promise(() => {
+    downloadBase64File(contentBase64, ContentType, fileName);
+  });
+}
+const downloadFileTest = url => {
+  debugger;
+  const fileStream = StreamSaver.createWriteStream('archive.zip');
+  /*let fileName = "test.zip"; 
+  return window.fetch(url).then(res => {
+      debugger;
+  
+    
+      const fileStream = streamsaver.createWriteStream(fileName);
+      const writer = fileStream.getWriter();
+        
+     
+        const reader = res.body.getReader();
+      const pump = () =>
+          reader
+          .read()
+          .then(({ value, done }) => (done ? writer.close() : writer.write(value).then(pump)));
+        return pump();
+  });*/
+};
 ;// CONCATENATED MODULE: ./SignApp/Components/SIGN_LIST.jsx
-
-
-
-
-
-function SIGN_LIST_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
-
-function SIGN_LIST_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { SIGN_LIST_ownKeys(Object(source), true).forEach(function (key) { (0,defineProperty/* default */.Z)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { SIGN_LIST_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
 
 
 
@@ -99158,7 +98514,7 @@ function SIGN_LIST_objectSpread(target) { for (var i = 1; i < arguments.length; 
 
 
 
-var SIGN_LIST_theme = (0,createTheme/* default */.Z)({
+const SIGN_LIST_theme = (0,createTheme/* default */.Z)({
   palette: {
     primary: {
       main: '#4CAF50'
@@ -99171,230 +98527,95 @@ var SIGN_LIST_theme = (0,createTheme/* default */.Z)({
     }
   }
 });
-var SIGN_LIST_repo = new Repository();
+const SIGN_LIST_repo = new Repository();
 function SIGN_LIST() {
-  var tableRef = react.useRef(null);
+  const tableRef = react.useRef(null);
+  const [signList, setSignList] = react.useState([]);
 
-  var _React$useState = react.useState([]),
-      _React$useState2 = (0,slicedToArray/* default */.Z)(_React$useState, 2),
-      signList = _React$useState2[0],
-      setSignList = _React$useState2[1];
+  const refresh = async () => {
+    try {
+      setSignList(await SIGN_LIST_repo.GetSignList());
+    } catch (err) {
+      alert(err.toString());
+    }
+  };
 
-  var refresh = /*#__PURE__*/function () {
-    var _ref = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee() {
-      return regenerator_default().wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.prev = 0;
-              _context.t0 = setSignList;
-              _context.next = 4;
-              return SIGN_LIST_repo.GetSignList();
-
-            case 4:
-              _context.t1 = _context.sent;
-              (0, _context.t0)(_context.t1);
-              _context.next = 11;
-              break;
-
-            case 8:
-              _context.prev = 8;
-              _context.t2 = _context["catch"](0);
-              alert(_context.t2.toString());
-
-            case 11:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee, null, [[0, 8]]);
-    }));
-
-    return function refresh() {
-      return _ref.apply(this, arguments);
-    };
-  }();
-
-  react.useEffect(function () {
+  react.useEffect(() => {
     refresh();
   }, []);
+  const [isOpenSignDialog, setIsOpenSignDialog] = react.useState(false);
 
-  var _React$useState3 = react.useState(false),
-      _React$useState4 = (0,slicedToArray/* default */.Z)(_React$useState3, 2),
-      isOpenSignDialog = _React$useState4[0],
-      setIsOpenSignDialog = _React$useState4[1];
-
-  var closeSignDialog = function closeSignDialog() {
+  const closeSignDialog = () => {
     setIsOpenSignDialog(false);
   };
 
-  var saveSignDialog = function saveSignDialog() {
+  const saveSignDialog = () => {
     closeSignDialog();
     refresh();
   };
 
-  var _React$useState5 = react.useState(false),
-      _React$useState6 = (0,slicedToArray/* default */.Z)(_React$useState5, 2),
-      isOpenShowSignDialog = _React$useState6[0],
-      setIsOpenShowSignDialog = _React$useState6[1];
+  const [isOpenShowSignDialog, setIsOpenShowSignDialog] = react.useState(false);
+  const [showCertInfo, setShowCertInfo] = react.useState(null);
 
-  var _React$useState7 = react.useState(null),
-      _React$useState8 = (0,slicedToArray/* default */.Z)(_React$useState7, 2),
-      showCertInfo = _React$useState8[0],
-      setShowCertInfo = _React$useState8[1];
-
-  var closeShowDialog = function closeShowDialog() {
+  const closeShowDialog = () => {
     setIsOpenShowSignDialog(false);
     setShowCertInfo(null);
   };
 
-  var showDetail = /*#__PURE__*/function () {
-    var _ref2 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee2(event, rowData) {
-      var requestOptions, response, data;
-      return regenerator_default().wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              _context2.prev = 0;
-              requestOptions = {
-                method: "GET",
-                headers: {
-                  'Content-Type': "application/json"
-                }
-              };
-              _context2.next = 4;
-              return window.fetch("GetSignCertInfo?ID=".concat(rowData.ID), requestOptions);
-
-            case 4:
-              response = _context2.sent;
-              _context2.next = 7;
-              return response.json();
-
-            case 7:
-              data = _context2.sent;
-
-              if (data.Result === false) {
-                alert(data.Value);
-              } else {
-                setShowCertInfo(data.Value);
-                setIsOpenShowSignDialog(true);
-              }
-
-              _context2.next = 14;
-              break;
-
-            case 11:
-              _context2.prev = 11;
-              _context2.t0 = _context2["catch"](0);
-              alert(_context2.t0.toString());
-
-            case 14:
-            case "end":
-              return _context2.stop();
-          }
+  const showDetail = async (event, rowData) => {
+    try {
+      const requestOptions = {
+        method: "GET",
+        headers: {
+          'Content-Type': "application/json"
         }
-      }, _callee2, null, [[0, 11]]);
-    }));
+      };
+      const response = await window.fetch(`GetSignCertInfo?ID=${rowData.ID}`, requestOptions);
+      const data = await response.json();
 
-    return function showDetail(_x, _x2) {
-      return _ref2.apply(this, arguments);
-    };
-  }();
+      if (data.Result === false) {
+        alert(data.Value);
+      } else {
+        setShowCertInfo(data.Value);
+        setIsOpenShowSignDialog(true);
+      }
+    } catch (error) {
+      alert(error.toString());
+    }
+  };
 
-  var removeSign = /*#__PURE__*/function () {
-    var _ref3 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee3(event, rowData) {
-      var requestOptions, response, data;
-      return regenerator_default().wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              _context3.prev = 0;
+  const removeSign = async (event, rowData) => {
+    try {
+      if (confirm(`Вы уверены что хотите удалить подпись: ${rowData.ID}?`)) {
+        const requestOptions = {
+          method: "POST",
+          headers: {
+            'Content-Type': "application/json"
+          },
+          body: JSON.stringify(rowData.ID)
+        };
+        const response = await window.fetch("RemoveSign", requestOptions);
+        const data = await response.json();
 
-              if (!confirm("\u0412\u044B \u0443\u0432\u0435\u0440\u0435\u043D\u044B \u0447\u0442\u043E \u0445\u043E\u0442\u0438\u0442\u0435 \u0443\u0434\u0430\u043B\u0438\u0442\u044C \u043F\u043E\u0434\u043F\u0438\u0441\u044C: ".concat(rowData.ID, "?"))) {
-                _context3.next = 10;
-                break;
-              }
-
-              requestOptions = {
-                method: "POST",
-                headers: {
-                  'Content-Type': "application/json"
-                },
-                body: JSON.stringify(rowData.ID)
-              };
-              _context3.next = 5;
-              return window.fetch("RemoveSign", requestOptions);
-
-            case 5:
-              response = _context3.sent;
-              _context3.next = 8;
-              return response.json();
-
-            case 8:
-              data = _context3.sent;
-
-              if (data.Result === false) {
-                alert(data.Value);
-              } else {
-                refresh();
-              }
-
-            case 10:
-              _context3.next = 15;
-              break;
-
-            case 12:
-              _context3.prev = 12;
-              _context3.t0 = _context3["catch"](0);
-              alert(_context3.t0.toString());
-
-            case 15:
-            case "end":
-              return _context3.stop();
-          }
+        if (data.Result === false) {
+          alert(data.Value);
+        } else {
+          refresh();
         }
-      }, _callee3, null, [[0, 12]]);
-    }));
+      }
+    } catch (error) {
+      alert(error.toString());
+    }
+  };
 
-    return function removeSign(_x3, _x4) {
-      return _ref3.apply(this, arguments);
-    };
-  }();
-
-  var downloadFile = /*#__PURE__*/function () {
-    var _ref4 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee4(event, rowData) {
-      var file;
-      return regenerator_default().wrap(function _callee4$(_context4) {
-        while (1) {
-          switch (_context4.prev = _context4.next) {
-            case 0:
-              _context4.prev = 0;
-              _context4.next = 3;
-              return SIGN_LIST_repo.DownloadCert(rowData.ID);
-
-            case 3:
-              file = _context4.sent;
-              downloadBase64File(file.FileContents, file.ContentType, file.FileDownloadName);
-              _context4.next = 10;
-              break;
-
-            case 7:
-              _context4.prev = 7;
-              _context4.t0 = _context4["catch"](0);
-              alert(_context4.t0.toString());
-
-            case 10:
-            case "end":
-              return _context4.stop();
-          }
-        }
-      }, _callee4, null, [[0, 7]]);
-    }));
-
-    return function downloadFile(_x5, _x6) {
-      return _ref4.apply(this, arguments);
-    };
-  }();
+  const downloadFile = async (event, rowData) => {
+    try {
+      const file = await SIGN_LIST_repo.DownloadCert(rowData.ID);
+      downloadBase64File(file.FileContents, file.ContentType, file.FileDownloadName);
+    } catch (err) {
+      alert(err.toString());
+    }
+  };
 
   return /*#__PURE__*/react.createElement("div", {
     style: {
@@ -99430,9 +98651,7 @@ function SIGN_LIST() {
       },
       tooltip: "Обновить",
       isFreeAction: true,
-      onClick: function onClick() {
-        return refresh();
-      }
+      onClick: () => refresh()
     }, {
       icon: "add",
       iconProps: {
@@ -99440,7 +98659,7 @@ function SIGN_LIST() {
       },
       tooltip: "Добавить подпись",
       isFreeAction: true,
-      onClick: function onClick(event) {
+      onClick: event => {
         setIsOpenSignDialog(true);
       }
     }, {
@@ -99497,108 +98716,59 @@ function SIGN_LIST() {
     certInfo: showCertInfo
   }));
 }
-var SIGN_LIST_useStyles = (0,makeStyles/* default */.Z)(function (theme) {
-  return {
-    button: {
-      marginRight: theme.spacing(1)
-    }
-  };
-});
+const SIGN_LIST_useStyles = (0,makeStyles/* default */.Z)(theme => ({
+  button: {
+    marginRight: theme.spacing(1)
+  }
+}));
 function AddSingDialog(props) {
-  var classes = SIGN_LIST_useStyles();
-  var onClose = props.onClose,
-      isOpen = props.isOpen,
-      onSave = props.onSave;
+  const classes = SIGN_LIST_useStyles();
+  const {
+    onClose,
+    isOpen,
+    onSave
+  } = props;
+  const [errorMessage, setErrorMessage] = react.useState("");
+  const [file, setFile] = react.useState(null);
+  const [certInfo, setCertInfo] = react.useState(null);
 
-  var _React$useState9 = react.useState(""),
-      _React$useState10 = (0,slicedToArray/* default */.Z)(_React$useState9, 2),
-      errorMessage = _React$useState10[0],
-      setErrorMessage = _React$useState10[1];
-
-  var _React$useState11 = react.useState(null),
-      _React$useState12 = (0,slicedToArray/* default */.Z)(_React$useState11, 2),
-      file = _React$useState12[0],
-      setFile = _React$useState12[1];
-
-  var _React$useState13 = react.useState(null),
-      _React$useState14 = (0,slicedToArray/* default */.Z)(_React$useState13, 2),
-      certInfo = _React$useState14[0],
-      setCertInfo = _React$useState14[1];
-
-  var selectFile = function selectFile(e) {
+  const selectFile = e => {
     var file = e.target.files[0];
     setFile(file);
   };
 
-  var _React$useState15 = react.useState(false),
-      _React$useState16 = (0,slicedToArray/* default */.Z)(_React$useState15, 2),
-      processReadCertificate = _React$useState16[0],
-      setProcessReadCertificate = _React$useState16[1];
+  const [processReadCertificate, setProcessReadCertificate] = react.useState(false);
 
-  var readCertificate = /*#__PURE__*/function () {
-    var _ref5 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee5() {
-      var info;
-      return regenerator_default().wrap(function _callee5$(_context5) {
-        while (1) {
-          switch (_context5.prev = _context5.next) {
-            case 0:
-              _context5.prev = 0;
-              setProcessReadCertificate(true);
-              _context5.next = 4;
-              return SIGN_LIST_repo.GetCertificateINFO(file);
-
-            case 4:
-              info = _context5.sent;
-              setCertInfo(info);
-              _context5.next = 11;
-              break;
-
-            case 8:
-              _context5.prev = 8;
-              _context5.t0 = _context5["catch"](0);
-              setErrorMessage(_context5.t0.toString());
-
-            case 11:
-              _context5.prev = 11;
-              setProcessReadCertificate(false);
-              return _context5.finish(11);
-
-            case 14:
-            case "end":
-              return _context5.stop();
-          }
-        }
-      }, _callee5, null, [[0, 8, 11, 14]]);
-    }));
-
-    return function readCertificate() {
-      return _ref5.apply(this, arguments);
-    };
-  }();
-
-  var _React$useState17 = react.useState(0),
-      _React$useState18 = (0,slicedToArray/* default */.Z)(_React$useState17, 2),
-      activeStep = _React$useState18[0],
-      setActiveStep = _React$useState18[1];
-
-  var handleNext = function handleNext() {
-    setActiveStep(function (prevActiveStep) {
-      return prevActiveStep + 1;
-    });
+  const readCertificate = async () => {
+    try {
+      setProcessReadCertificate(true);
+      const info = await SIGN_LIST_repo.GetCertificateINFO(file);
+      setCertInfo(info);
+    } catch (error) {
+      setErrorMessage(error.toString());
+    } finally {
+      setProcessReadCertificate(false);
+    }
   };
 
-  var handleReset = function handleReset() {
+  const [activeStep, setActiveStep] = react.useState(0);
+
+  const handleNext = () => {
+    setActiveStep(prevActiveStep => prevActiveStep + 1);
+  };
+
+  const handleReset = () => {
     setCertInfo(null);
     setFile(null);
     setActiveStep(0);
   };
 
-  var handleSave = function handleSave() {
+  const handleSave = () => {
     onSave();
     handleReset();
   };
 
-  var handleClose = function handleClose() {
+  const handleClose = () => {
     onClose();
     handleReset();
   };
@@ -99667,39 +98837,25 @@ function AddSingDialog(props) {
 }
 
 function AddCert(props) {
-  var file = props.file,
-      onSave = props.onSave,
-      dateB = props.dateB,
-      dateE = props.dateE;
-
-  var _React$useState19 = react.useState([]),
-      _React$useState20 = (0,slicedToArray/* default */.Z)(_React$useState19, 2),
-      roles = _React$useState20[0],
-      setRoles = _React$useState20[1];
-
-  var _React$useState21 = react.useState([]),
-      _React$useState22 = (0,slicedToArray/* default */.Z)(_React$useState21, 2),
-      lpu = _React$useState22[0],
-      setLpu = _React$useState22[1];
-
-  var _React$useState23 = react.useState({
+  const {
+    file,
+    onSave,
+    dateB,
+    dateE
+  } = props;
+  const [roles, setRoles] = react.useState([]);
+  const [lpu, setLpu] = react.useState([]);
+  const [certData, setCertData] = react.useState({
     DATE_B: new Date(),
     DATE_E: null,
     MO: null,
     ROLE: null,
     fileConfirm: null
-  }),
-      _React$useState24 = (0,slicedToArray/* default */.Z)(_React$useState23, 2),
-      certData = _React$useState24[0],
-      setCertData = _React$useState24[1];
+  });
+  const [validationErr, setValidationErr] = react.useState([]);
 
-  var _React$useState25 = react.useState([]),
-      _React$useState26 = (0,slicedToArray/* default */.Z)(_React$useState25, 2),
-      validationErr = _React$useState26[0],
-      setValidationErr = _React$useState26[1];
-
-  var validate = function validate() {
-    var err = [];
+  const validate = () => {
+    const err = [];
     if (file === null) err.push('Укажите файл для загрузки');
     if (certData.MO === null) err.push('Укажите медицинскую организацию');
     if (certData.ROLE === null) err.push('Укажите роль');
@@ -99709,174 +98865,98 @@ function AddCert(props) {
     setValidationErr(err);
   };
 
-  (0,react.useEffect)( /*#__PURE__*/(0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee6() {
-    var rol, f003;
-    return regenerator_default().wrap(function _callee6$(_context6) {
-      while (1) {
-        switch (_context6.prev = _context6.next) {
-          case 0:
-            _context6.prev = 0;
-            _context6.next = 3;
-            return SIGN_LIST_repo.GetRoleSPR();
-
-          case 3:
-            rol = _context6.sent;
-            _context6.next = 6;
-            return SIGN_LIST_repo.GetF003();
-
-          case 6:
-            f003 = _context6.sent;
-            setLpu(f003);
-            setRoles(rol);
-            SIGN_LIST_repo.GetF003();
-            setCertData(function (certData) {
-              return SIGN_LIST_objectSpread(SIGN_LIST_objectSpread({}, certData), {}, {
-                DATE_B: dateB,
-                DATE_E: dateE
-              });
-            });
-            _context6.next = 16;
-            break;
-
-          case 13:
-            _context6.prev = 13;
-            _context6.t0 = _context6["catch"](0);
-            alert(_context6.t0.toString());
-
-          case 16:
-          case "end":
-            return _context6.stop();
-        }
-      }
-    }, _callee6, null, [[0, 13]]);
-  })), []);
-  (0,react.useEffect)(function () {
+  (0,react.useEffect)(async () => {
+    try {
+      const rol = await SIGN_LIST_repo.GetRoleSPR();
+      const f003 = await SIGN_LIST_repo.GetF003();
+      setLpu(f003);
+      setRoles(rol);
+      SIGN_LIST_repo.GetF003();
+      setCertData(certData => ({ ...certData,
+        DATE_B: dateB,
+        DATE_E: dateE
+      }));
+    } catch (err) {
+      alert(err.toString());
+    }
+  }, []);
+  (0,react.useEffect)(() => {
     validate();
   }, [certData, file]);
 
-  var dateBChange = function dateBChange(date) {
-    setCertData(function (certData) {
-      return SIGN_LIST_objectSpread(SIGN_LIST_objectSpread({}, certData), {}, {
-        DATE_B: date
-      });
-    });
-  };
-
-  var dateEChange = function dateEChange(date) {
-    setCertData(function (certData) {
-      return SIGN_LIST_objectSpread(SIGN_LIST_objectSpread({}, certData), {}, {
-        DATE_E: date
-      });
-    });
-  };
-
-  var codeMoChange = function codeMoChange(event, newValue) {
-    setCertData(function (certData) {
-      return SIGN_LIST_objectSpread(SIGN_LIST_objectSpread({}, certData), {}, {
-        MO: newValue
-      });
-    });
-  };
-
-  var roleIdChange = function roleIdChange(event, newValue) {
-    setCertData(function (certData) {
-      return SIGN_LIST_objectSpread(SIGN_LIST_objectSpread({}, certData), {}, {
-        ROLE: newValue
-      });
-    });
-  };
-
-  var fileConfirmChange = function fileConfirmChange(event, newValue) {
-    var file = event.target.files[0];
-    setCertData(function (certData) {
-      return SIGN_LIST_objectSpread(SIGN_LIST_objectSpread({}, certData), {}, {
-        fileConfirm: file
-      });
-    });
-  };
-
-  var _React$useState27 = react.useState(false),
-      _React$useState28 = (0,slicedToArray/* default */.Z)(_React$useState27, 2),
-      processSaveCert = _React$useState28[0],
-      setProcessSaveCert = _React$useState28[1];
-
-  var saveCert = /*#__PURE__*/function () {
-    var _ref7 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee7() {
-      return regenerator_default().wrap(function _callee7$(_context7) {
-        while (1) {
-          switch (_context7.prev = _context7.next) {
-            case 0:
-              _context7.prev = 0;
-              setProcessSaveCert(true);
-              _context7.next = 4;
-              return SIGN_LIST_repo.AddSignCert(file, certData.fileConfirm, certData.ROLE.SIGN_ROLE_ID, certData.MO.MCOD, certData.DATE_B, certData.DATE_E);
-
-            case 4:
-              onSave();
-              _context7.next = 10;
-              break;
-
-            case 7:
-              _context7.prev = 7;
-              _context7.t0 = _context7["catch"](0);
-              setValidationErr(_context7.t0);
-
-            case 10:
-              _context7.prev = 10;
-              setProcessSaveCert(false);
-              return _context7.finish(10);
-
-            case 13:
-            case "end":
-              return _context7.stop();
-          }
-        }
-      }, _callee7, null, [[0, 7, 10, 13]]);
+  const dateBChange = date => {
+    setCertData(certData => ({ ...certData,
+      DATE_B: date
     }));
+  };
 
-    return function saveCert() {
-      return _ref7.apply(this, arguments);
-    };
-  }();
+  const dateEChange = date => {
+    setCertData(certData => ({ ...certData,
+      DATE_E: date
+    }));
+  };
+
+  const codeMoChange = (event, newValue) => {
+    setCertData(certData => ({ ...certData,
+      MO: newValue
+    }));
+  };
+
+  const roleIdChange = (event, newValue) => {
+    setCertData(certData => ({ ...certData,
+      ROLE: newValue
+    }));
+  };
+
+  const fileConfirmChange = (event, newValue) => {
+    var file = event.target.files[0];
+    setCertData(certData => ({ ...certData,
+      fileConfirm: file
+    }));
+  };
+
+  const [processSaveCert, setProcessSaveCert] = react.useState(false);
+
+  const saveCert = async () => {
+    try {
+      setProcessSaveCert(true);
+      await SIGN_LIST_repo.AddSignCert(file, certData.fileConfirm, certData.ROLE.SIGN_ROLE_ID, certData.MO.MCOD, certData.DATE_B, certData.DATE_E);
+      onSave();
+    } catch (err) {
+      setValidationErr(err);
+    } finally {
+      setProcessSaveCert(false);
+    }
+  };
 
   return /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, validationErr != null ? Array.isArray(validationErr) ? /*#__PURE__*/react.createElement("ul", {
     className: "ErrorLi"
-  }, validationErr.map(function (value, index) {
-    return /*#__PURE__*/react.createElement("li", {
-      key: index
-    }, value);
-  })) : validationErr : null), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Autocomplete_Autocomplete, {
+  }, validationErr.map((value, index) => /*#__PURE__*/react.createElement("li", {
+    key: index
+  }, value))) : validationErr : null), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Autocomplete_Autocomplete, {
     options: roles,
-    getOptionLabel: function getOptionLabel(option) {
-      return option.CAPTION;
-    },
+    getOptionLabel: option => option.CAPTION,
     style: {
       width: 400
     },
     value: certData.ROLE,
     onChange: roleIdChange,
-    renderInput: function renderInput(params) {
-      return /*#__PURE__*/react.createElement(TextField/* default */.Z, (0,esm_extends/* default */.Z)({}, params, {
-        label: "\u0420\u043E\u043B\u044C",
-        variant: "outlined"
-      }));
-    }
+    renderInput: params => /*#__PURE__*/react.createElement(TextField/* default */.Z, (0,esm_extends/* default */.Z)({}, params, {
+      label: "\u0420\u043E\u043B\u044C",
+      variant: "outlined"
+    }))
   })), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Autocomplete_Autocomplete, {
     options: lpu,
-    getOptionLabel: function getOptionLabel(option) {
-      return option.NAME;
-    },
+    getOptionLabel: option => option.NAME,
     style: {
       width: 400
     },
     value: certData.MO,
     onChange: codeMoChange,
-    renderInput: function renderInput(params) {
-      return /*#__PURE__*/react.createElement(TextField/* default */.Z, (0,esm_extends/* default */.Z)({}, params, {
-        label: "\u041C\u0435\u0434\u0438\u0446\u0438\u043D\u0441\u043A\u0430\u044F \u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u044F",
-        variant: "outlined"
-      }));
-    }
+    renderInput: params => /*#__PURE__*/react.createElement(TextField/* default */.Z, (0,esm_extends/* default */.Z)({}, params, {
+      label: "\u041C\u0435\u0434\u0438\u0446\u0438\u043D\u0441\u043A\u0430\u044F \u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u044F",
+      variant: "outlined"
+    }))
   })), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Typography/* default */.Z, null, "\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442 \u043D\u0430 \u043E\u0441\u043D\u043E\u0432\u0430\u043D\u0438\u0438 \u043A\u043E\u0442\u043E\u0440\u043E\u0433\u043E \u0432\u043D\u043E\u0441\u0438\u0442\u0441\u044F \u043F\u043E\u0434\u043F\u0438\u0441\u044C"), /*#__PURE__*/react.createElement("input", {
     type: "file",
     onChange: fileConfirmChange
@@ -99893,9 +98973,7 @@ function AddCert(props) {
     InputAdornmentProps: {
       position: "start"
     },
-    onChange: function onChange(date) {
-      return dateBChange(date);
-    }
+    onChange: date => dateBChange(date)
   }), /*#__PURE__*/react.createElement(KeyboardDatePicker, {
     autoOk: true,
     variant: "inline",
@@ -99906,9 +98984,7 @@ function AddCert(props) {
     InputAdornmentProps: {
       position: "start"
     },
-    onChange: function onChange(date) {
-      return dateEChange(date);
-    }
+    onChange: date => dateEChange(date)
   })), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement(Button/* default */.Z, {
     variant: "contained",
     color: "primary",
@@ -99917,15 +98993,6 @@ function AddCert(props) {
   }, "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"));
 }
 ;// CONCATENATED MODULE: ./SignApp/Components/IssuerList.jsx
-
-
-
-
-function IssuerList_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
-
-function IssuerList_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { IssuerList_ownKeys(Object(source), true).forEach(function (key) { (0,defineProperty/* default */.Z)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { IssuerList_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-
 
 
 
@@ -99949,162 +99016,64 @@ function IssuerList_objectSpread(target) { for (var i = 1; i < arguments.length;
 
 
 
-var IssuerList_repo = new Repository();
+const IssuerList_repo = new Repository();
 function IssuerList() {
-  var tableRef = react.useRef(null);
+  const tableRef = react.useRef(null);
+  const [isOpenRoleDialog, setisOpenRoleDialog] = react.useState(false);
+  const [issuerList, setIssuerList] = react.useState([]);
 
-  var _React$useState = react.useState(false),
-      _React$useState2 = (0,slicedToArray/* default */.Z)(_React$useState, 2),
-      isOpenRoleDialog = _React$useState2[0],
-      setisOpenRoleDialog = _React$useState2[1];
+  const refresh = async () => {
+    try {
+      setIssuerList(await IssuerList_repo.GetISSUER());
+    } catch (err) {
+      alert(err.toString());
+    }
+  };
 
-  var _React$useState3 = react.useState([]),
-      _React$useState4 = (0,slicedToArray/* default */.Z)(_React$useState3, 2),
-      issuerList = _React$useState4[0],
-      setIssuerList = _React$useState4[1];
-
-  var refresh = /*#__PURE__*/function () {
-    var _ref = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee() {
-      return regenerator_default().wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.prev = 0;
-              _context.t0 = setIssuerList;
-              _context.next = 4;
-              return IssuerList_repo.GetISSUER();
-
-            case 4:
-              _context.t1 = _context.sent;
-              (0, _context.t0)(_context.t1);
-              _context.next = 11;
-              break;
-
-            case 8:
-              _context.prev = 8;
-              _context.t2 = _context["catch"](0);
-              alert(_context.t2.toString());
-
-            case 11:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee, null, [[0, 8]]);
-    }));
-
-    return function refresh() {
-      return _ref.apply(this, arguments);
-    };
-  }();
-
-  react.useEffect(function () {
+  react.useEffect(() => {
     refresh();
   }, []);
 
-  var closeIssuerDialog = function closeIssuerDialog() {
+  const closeIssuerDialog = () => {
     setisOpenRoleDialog(false);
     refresh();
   };
 
-  var saveIssuerDialog = function saveIssuerDialog() {
+  const saveIssuerDialog = () => {
     closeIssuerDialog();
     refresh();
   };
 
-  var removeIssuer = /*#__PURE__*/function () {
-    var _ref2 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee2(event, rowData) {
-      return regenerator_default().wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              _context2.prev = 0;
+  const removeIssuer = async (event, rowData) => {
+    try {
+      if (confirm(`Вы уверены что хотите удалить издателя: ${rowData.CAPTION}?`)) {
+        await IssuerList_repo.RemoveISSUER(rowData.SING_ISSUER_ID);
+        refresh();
+      }
+    } catch (error) {
+      alert(error.toString());
+    }
+  };
 
-              if (!confirm("\u0412\u044B \u0443\u0432\u0435\u0440\u0435\u043D\u044B \u0447\u0442\u043E \u0445\u043E\u0442\u0438\u0442\u0435 \u0443\u0434\u0430\u043B\u0438\u0442\u044C \u0438\u0437\u0434\u0430\u0442\u0435\u043B\u044F: ".concat(rowData.CAPTION, "?"))) {
-                _context2.next = 5;
-                break;
-              }
+  const [isOpenShowSignDialog, setisOpenShowSignDialog] = react.useState(false);
+  const [showCertInfo, setshowCertInfo] = react.useState(null);
 
-              _context2.next = 4;
-              return IssuerList_repo.RemoveISSUER(rowData.SING_ISSUER_ID);
-
-            case 4:
-              refresh();
-
-            case 5:
-              _context2.next = 10;
-              break;
-
-            case 7:
-              _context2.prev = 7;
-              _context2.t0 = _context2["catch"](0);
-              alert(_context2.t0.toString());
-
-            case 10:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2, null, [[0, 7]]);
-    }));
-
-    return function removeIssuer(_x, _x2) {
-      return _ref2.apply(this, arguments);
-    };
-  }();
-
-  var _React$useState5 = react.useState(false),
-      _React$useState6 = (0,slicedToArray/* default */.Z)(_React$useState5, 2),
-      isOpenShowSignDialog = _React$useState6[0],
-      setisOpenShowSignDialog = _React$useState6[1];
-
-  var _React$useState7 = react.useState(null),
-      _React$useState8 = (0,slicedToArray/* default */.Z)(_React$useState7, 2),
-      showCertInfo = _React$useState8[0],
-      setshowCertInfo = _React$useState8[1];
-
-  var closeShowDialog = function closeShowDialog() {
+  const closeShowDialog = () => {
     setisOpenShowSignDialog(false);
     setshowCertInfo(null);
   };
 
-  var showDetail = /*#__PURE__*/function () {
-    var _ref3 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee3(event, rowData) {
-      var info;
-      return regenerator_default().wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              _context3.prev = 0;
-              _context3.next = 3;
-              return IssuerList_repo.GetISSUERCertInfo(rowData.SING_ISSUER_ID);
+  const showDetail = async (event, rowData) => {
+    try {
+      const info = await IssuerList_repo.GetISSUERCertInfo(rowData.SING_ISSUER_ID);
+      setshowCertInfo(info);
+      setisOpenShowSignDialog(true);
+    } catch (error) {
+      alert(error.toString());
+    }
+  };
 
-            case 3:
-              info = _context3.sent;
-              setshowCertInfo(info);
-              setisOpenShowSignDialog(true);
-              _context3.next = 11;
-              break;
-
-            case 8:
-              _context3.prev = 8;
-              _context3.t0 = _context3["catch"](0);
-              alert(_context3.t0.toString());
-
-            case 11:
-            case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3, null, [[0, 8]]);
-    }));
-
-    return function showDetail(_x3, _x4) {
-      return _ref3.apply(this, arguments);
-    };
-  }();
-
-  var theme = (0,createTheme/* default */.Z)({
+  const theme = (0,createTheme/* default */.Z)({
     palette: {
       primary: {
         main: '#4CAF50'
@@ -100148,9 +99117,7 @@ function IssuerList() {
         color: "primary"
       },
       isFreeAction: true,
-      onClick: function onClick() {
-        return refresh();
-      }
+      onClick: () => refresh()
     }, {
       icon: "add",
       tooltip: "Добавить издателя",
@@ -100158,7 +99125,7 @@ function IssuerList() {
         color: "primary"
       },
       isFreeAction: true,
-      onClick: function onClick(event) {
+      onClick: event => {
         setisOpenRoleDialog(true);
       }
     }, {
@@ -100203,128 +99170,73 @@ function IssuerList() {
     certInfo: showCertInfo
   }));
 }
-var IssuerList_useStyles = (0,makeStyles/* default */.Z)(function (theme) {
-  return {
-    button: {
-      marginRight: theme.spacing(1)
-    }
-  };
-});
+const IssuerList_useStyles = (0,makeStyles/* default */.Z)(theme => ({
+  button: {
+    marginRight: theme.spacing(1)
+  }
+}));
 function AddISSUERDialog(props) {
-  var classes = IssuerList_useStyles();
-  var onClose = props.onClose,
-      isOpen = props.isOpen,
-      onSave = props.onSave;
+  const classes = IssuerList_useStyles();
+  const {
+    onClose,
+    isOpen,
+    onSave
+  } = props;
+  const [errorMessage, setErrorMessage] = react.useState("");
+  const [file, setFile] = react.useState(null);
+  const [certInfo, setcertInfo] = react.useState(null);
+  const [processReadCertificate, setProcessReadCertificate] = react.useState(false);
 
-  var _React$useState9 = react.useState(""),
-      _React$useState10 = (0,slicedToArray/* default */.Z)(_React$useState9, 2),
-      errorMessage = _React$useState10[0],
-      setErrorMessage = _React$useState10[1];
-
-  var _React$useState11 = react.useState(null),
-      _React$useState12 = (0,slicedToArray/* default */.Z)(_React$useState11, 2),
-      file = _React$useState12[0],
-      setFile = _React$useState12[1];
-
-  var _React$useState13 = react.useState(null),
-      _React$useState14 = (0,slicedToArray/* default */.Z)(_React$useState13, 2),
-      certInfo = _React$useState14[0],
-      setcertInfo = _React$useState14[1];
-
-  var _React$useState15 = react.useState(false),
-      _React$useState16 = (0,slicedToArray/* default */.Z)(_React$useState15, 2),
-      processReadCertificate = _React$useState16[0],
-      setProcessReadCertificate = _React$useState16[1];
-
-  var selectFile = function selectFile(e) {
+  const selectFile = e => {
     var file = e.target.files[0];
     setFile(file);
   };
 
-  var readCertificate = /*#__PURE__*/function () {
-    var _ref4 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee4() {
-      var formData, requestOptions, response, data;
-      return regenerator_default().wrap(function _callee4$(_context4) {
-        while (1) {
-          switch (_context4.prev = _context4.next) {
-            case 0:
-              _context4.prev = 0;
-              setProcessReadCertificate(true);
-              formData = new FormData();
-              formData.append("file", file, file.name);
-              formData.append("isIssuer", true);
-              requestOptions = {
-                method: "POST",
-                body: formData
-              };
-              _context4.next = 8;
-              return window.fetch("GetCertificateINFO", requestOptions);
+  const readCertificate = async () => {
+    try {
+      setProcessReadCertificate(true);
+      const formData = new FormData();
+      formData.append("file", file, file.name);
+      formData.append("isIssuer", true);
+      const requestOptions = {
+        method: "POST",
+        body: formData
+      };
+      const response = await window.fetch("GetCertificateINFO", requestOptions);
+      const data = await response.json();
 
-            case 8:
-              response = _context4.sent;
-              _context4.next = 11;
-              return response.json();
-
-            case 11:
-              data = _context4.sent;
-
-              if (data) {
-                if (data.Result === false) {
-                  setErrorMessage(data.Value);
-                } else {
-                  setcertInfo(data.Value);
-                }
-              }
-
-              _context4.next = 18;
-              break;
-
-            case 15:
-              _context4.prev = 15;
-              _context4.t0 = _context4["catch"](0);
-              setErrorMessage(error.toString());
-
-            case 18:
-              _context4.prev = 18;
-              setProcessReadCertificate(false);
-              return _context4.finish(18);
-
-            case 21:
-            case "end":
-              return _context4.stop();
-          }
+      if (data) {
+        if (data.Result === false) {
+          setErrorMessage(data.Value);
+        } else {
+          setcertInfo(data.Value);
         }
-      }, _callee4, null, [[0, 15, 18, 21]]);
-    }));
-
-    return function readCertificate() {
-      return _ref4.apply(this, arguments);
-    };
-  }();
-
-  var _React$useState17 = react.useState(0),
-      _React$useState18 = (0,slicedToArray/* default */.Z)(_React$useState17, 2),
-      activeStep = _React$useState18[0],
-      setActiveStep = _React$useState18[1];
-
-  var handleNext = function handleNext() {
-    setActiveStep(function (prevActiveStep) {
-      return prevActiveStep + 1;
-    });
+      }
+    } catch (e) {
+      setErrorMessage(error.toString());
+    } finally {
+      setProcessReadCertificate(false);
+    }
   };
 
-  var handleReset = function handleReset() {
+  const [activeStep, setActiveStep] = react.useState(0);
+
+  const handleNext = () => {
+    setActiveStep(prevActiveStep => prevActiveStep + 1);
+  };
+
+  const handleReset = () => {
     setActiveStep(0);
     setcertInfo(null);
     setFile(null);
   };
 
-  var handleSave = function handleSave() {
+  const handleSave = () => {
     handleReset();
     onSave();
   };
 
-  var handleClose = function handleClose() {
+  const handleClose = () => {
     handleReset();
     onClose();
   };
@@ -100392,25 +99304,19 @@ function AddISSUERDialog(props) {
 }
 
 function AddISSUER(props) {
-  var file = props.file,
-      onSave = props.onSave;
-
-  var _React$useState19 = react.useState({
+  const {
+    file,
+    onSave
+  } = props;
+  const [certData, setCertData] = react.useState({
     DATE_B: new Date(),
     DATE_E: null,
     CAPTION: props.CAPTION
-  }),
-      _React$useState20 = (0,slicedToArray/* default */.Z)(_React$useState19, 2),
-      certData = _React$useState20[0],
-      setCertData = _React$useState20[1];
+  });
+  const [validationErr, setValidationErr] = react.useState([]);
 
-  var _React$useState21 = react.useState([]),
-      _React$useState22 = (0,slicedToArray/* default */.Z)(_React$useState21, 2),
-      validationErr = _React$useState22[0],
-      setValidationErr = _React$useState22[1];
-
-  var validate = function validate() {
-    var err = [];
+  const validate = () => {
+    const err = [];
     if (file === null) err.push('Укажите файл для загрузки');
     if (certData.DATE_B === null) err.push('Укажите дату начала');
     if (certData.DATE_B === null) err.push('Укажите дату начала');
@@ -100419,85 +99325,47 @@ function AddISSUER(props) {
     setValidationErr(err);
   };
 
-  (0,react.useEffect)(function () {
+  (0,react.useEffect)(() => {
     validate();
   }, [certData, file]);
 
-  var dateBChange = function dateBChange(date) {
-    setCertData(function (certData) {
-      return IssuerList_objectSpread(IssuerList_objectSpread({}, certData), {}, {
-        DATE_B: date
-      });
-    });
-  };
-
-  var dateEChange = function dateEChange(date) {
-    setCertData(function (certData) {
-      return IssuerList_objectSpread(IssuerList_objectSpread({}, certData), {}, {
-        DATE_E: date
-      });
-    });
-  };
-
-  var captionChange = function captionChange(event, newValue) {
-    setCertData(function (certData) {
-      return IssuerList_objectSpread(IssuerList_objectSpread({}, certData), {}, {
-        CAPTION: newValue
-      });
-    });
-  };
-
-  var _React$useState23 = react.useState(false),
-      _React$useState24 = (0,slicedToArray/* default */.Z)(_React$useState23, 2),
-      processSaveIssuer = _React$useState24[0],
-      setProcessSaveIssuer = _React$useState24[1];
-
-  var saveIssuer = /*#__PURE__*/function () {
-    var _ref5 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee5() {
-      return regenerator_default().wrap(function _callee5$(_context5) {
-        while (1) {
-          switch (_context5.prev = _context5.next) {
-            case 0:
-              _context5.prev = 0;
-              setProcessSaveIssuer(true);
-              _context5.next = 4;
-              return IssuerList_repo.AddISSUER(file, certData.CAPTION, certData.DATE_B, certData.DATE_E);
-
-            case 4:
-              onSave();
-              _context5.next = 10;
-              break;
-
-            case 7:
-              _context5.prev = 7;
-              _context5.t0 = _context5["catch"](0);
-              setValidationErr(_context5.t0.toString());
-
-            case 10:
-              _context5.prev = 10;
-              setProcessSaveIssuer(false);
-              return _context5.finish(10);
-
-            case 13:
-            case "end":
-              return _context5.stop();
-          }
-        }
-      }, _callee5, null, [[0, 7, 10, 13]]);
+  const dateBChange = date => {
+    setCertData(certData => ({ ...certData,
+      DATE_B: date
     }));
+  };
 
-    return function saveIssuer() {
-      return _ref5.apply(this, arguments);
-    };
-  }();
+  const dateEChange = date => {
+    setCertData(certData => ({ ...certData,
+      DATE_E: date
+    }));
+  };
+
+  const captionChange = (event, newValue) => {
+    setCertData(certData => ({ ...certData,
+      CAPTION: newValue
+    }));
+  };
+
+  const [processSaveIssuer, setProcessSaveIssuer] = react.useState(false);
+
+  const saveIssuer = async () => {
+    try {
+      setProcessSaveIssuer(true);
+      await IssuerList_repo.AddISSUER(file, certData.CAPTION, certData.DATE_B, certData.DATE_E);
+      onSave();
+    } catch (err) {
+      setValidationErr(err.toString());
+    } finally {
+      setProcessSaveIssuer(false);
+    }
+  };
 
   return /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, validationErr != null ? /*#__PURE__*/react.createElement("ul", {
     className: "ErrorLi"
-  }, Array.isArray(validationErr) ? validationErr.map(function (value, index) {
-    return /*#__PURE__*/react.createElement("li", {
-      key: index
-    }, value);
-  }) : validationErr) : null), /*#__PURE__*/react.createElement("div", null, " ", /*#__PURE__*/react.createElement(TextField/* default */.Z, {
+  }, Array.isArray(validationErr) ? validationErr.map((value, index) => /*#__PURE__*/react.createElement("li", {
+    key: index
+  }, value)) : validationErr) : null), /*#__PURE__*/react.createElement("div", null, " ", /*#__PURE__*/react.createElement(TextField/* default */.Z, {
     autoFocus: true,
     margin: "dense",
     label: "\u041D\u0430\u0438\u043C\u0435\u043D\u043E\u0432\u0430\u043D\u0438\u0435",
@@ -100518,9 +99386,7 @@ function AddISSUER(props) {
     InputAdornmentProps: {
       position: "start"
     },
-    onChange: function onChange(date) {
-      return dateBChange(date);
-    }
+    onChange: date => dateBChange(date)
   }), /*#__PURE__*/react.createElement(KeyboardDatePicker, {
     autoOk: true,
     variant: "inline",
@@ -100531,9 +99397,7 @@ function AddISSUER(props) {
     InputAdornmentProps: {
       position: "start"
     },
-    onChange: function onChange(date) {
-      return dateEChange(date);
-    }
+    onChange: date => dateEChange(date)
   })), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement(Button/* default */.Z, {
     variant: "contained",
     color: "primary",
@@ -100541,13 +99405,9 @@ function AddISSUER(props) {
     disabled: validationErr == null || validationErr.length !== 0 || processSaveIssuer
   }, "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"));
 }
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js + 2 modules
-var toConsumableArray = __webpack_require__(93433);
 // EXTERNAL MODULE: ./node_modules/@material-ui/core/esm/MenuItem/MenuItem.js
 var MenuItem = __webpack_require__(85639);
 ;// CONCATENATED MODULE: ./SignApp/Cades/CryptoAPI.js
-
-
 var CAPICOM_CURRENT_USER_STORE = 2;
 var CAPICOM_MY_STORE = "My";
 var CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED = 2;
@@ -100564,354 +99424,135 @@ var ProviderSupport = [{
   Value: "1.2.643.7.1.1.1.2",
   algorithm: cadesplugin.CADESCOM_HASH_ALGORITHM_CP_GOST_3411_2012_512
 }];
-function activatePluginAsync() {
-  return _activatePluginAsync.apply(this, arguments);
-}
-
-function _activatePluginAsync() {
-  _activatePluginAsync = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee() {
-    var infoPlugin, certs;
-    return regenerator_default().wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            _context.prev = 0;
-
-            if (!cadesplugin) {
-              _context.next = 13;
-              break;
-            }
-
-            _context.next = 4;
-            return cadesplugin;
-
-          case 4:
-            _context.next = 6;
-            return GetInfoPlugin();
-
-          case 6:
-            infoPlugin = _context.sent;
-            _context.next = 9;
-            return LoadCert();
-
-          case 9:
-            certs = _context.sent;
-            return _context.abrupt("return", {
-              infoPlugin: infoPlugin,
-              certs: certs
-            });
-
-          case 13:
-            throw new Error("Объект плагина не найден");
-
-          case 14:
-            _context.next = 19;
-            break;
-
-          case 16:
-            _context.prev = 16;
-            _context.t0 = _context["catch"](0);
-            return _context.abrupt("return", {
-              infoPlugin: {
-                version: "",
-                cspName: "",
-                versionCSP: "",
-                isEnabled: false,
-                Error: _context.t0
-              },
-              certs: []
-            });
-
-          case 19:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee, null, [[0, 16]]);
-  }));
-  return _activatePluginAsync.apply(this, arguments);
+async function activatePluginAsync() {
+  try {
+    if (cadesplugin) {
+      await cadesplugin;
+      const infoPlugin = await GetInfoPlugin();
+      const certs = await LoadCert();
+      return {
+        infoPlugin,
+        certs
+      };
+    } else {
+      throw new Error("Объект плагина не найден");
+    }
+  } catch (err) {
+    return {
+      infoPlugin: {
+        version: "",
+        cspName: "",
+        versionCSP: "",
+        isEnabled: false,
+        Error: err
+      },
+      certs: []
+    };
+  }
 }
 
 function SupportAlgorithm(algValue) {
-  return ProviderSupport.find(function (value) {
+  return ProviderSupport.find(value => {
     return value.Value === algValue;
   });
 }
 
-function GetInfoPlugin() {
-  return _GetInfoPlugin.apply(this, arguments);
+async function GetInfoPlugin() {
+  try {
+    const oAbout = await cadesplugin.CreateObjectAsync("CAdESCOM.About");
+    const version = await (await oAbout.PluginVersion).toString();
+    const cspName = await oAbout.CSPName(75);
+    const ver = await oAbout.CSPVersion("", 75);
+    const versionCSP = (await ver.MajorVersion) + "." + (await ver.MinorVersion) + "." + (await ver.BuildVersion);
+    return {
+      version,
+      cspName,
+      versionCSP,
+      isEnabled: true
+    };
+  } catch (err) {
+    return {
+      version,
+      cspName,
+      versionCSP,
+      isEnabled: false,
+      Error: err
+    };
+  }
 }
 
-function _GetInfoPlugin() {
-  _GetInfoPlugin = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee2() {
-    var oAbout, _version, _cspName, ver, _versionCSP;
+async function LoadCert() {
+  const oStore = await cadesplugin.CreateObjectAsync("CAdESCOM.Store");
 
-    return regenerator_default().wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            _context2.prev = 0;
-            _context2.next = 3;
-            return cadesplugin.CreateObjectAsync("CAdESCOM.About");
+  if (!oStore) {
+    alert("Не удалось открыть хранилище сертификатов");
+    return null;
+  }
 
-          case 3:
-            oAbout = _context2.sent;
-            _context2.next = 6;
-            return oAbout.PluginVersion;
+  await oStore.Open(CAPICOM_CURRENT_USER_STORE, CAPICOM_MY_STORE, CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
+  let certList = [];
+  const certs = await oStore.Certificates;
+  const certCnt = await certs.Count;
 
-          case 6:
-            _context2.next = 8;
-            return _context2.sent.toString();
+  try {
+    for (let i = 1; i <= certCnt; i++) {
+      const cert = await certs.Item(i);
+      const isPK = await cert.HasPrivateKey();
+      let ProviderName = 'Нет КЛЮЧА';
 
-          case 8:
-            _version = _context2.sent;
-            _context2.next = 11;
-            return oAbout.CSPName(75);
-
-          case 11:
-            _cspName = _context2.sent;
-            _context2.next = 14;
-            return oAbout.CSPVersion("", 75);
-
-          case 14:
-            ver = _context2.sent;
-            _context2.next = 17;
-            return ver.MajorVersion;
-
-          case 17:
-            _context2.t0 = _context2.sent;
-            _context2.t1 = _context2.t0 + ".";
-            _context2.next = 21;
-            return ver.MinorVersion;
-
-          case 21:
-            _context2.t2 = _context2.sent;
-            _context2.t3 = _context2.t1 + _context2.t2;
-            _context2.t4 = _context2.t3 + ".";
-            _context2.next = 26;
-            return ver.BuildVersion;
-
-          case 26:
-            _context2.t5 = _context2.sent;
-            _versionCSP = _context2.t4 + _context2.t5;
-            return _context2.abrupt("return", {
-              version: _version,
-              cspName: _cspName,
-              versionCSP: _versionCSP,
-              isEnabled: true
-            });
-
-          case 31:
-            _context2.prev = 31;
-            _context2.t6 = _context2["catch"](0);
-            return _context2.abrupt("return", {
-              version: version,
-              cspName: cspName,
-              versionCSP: versionCSP,
-              isEnabled: false,
-              Error: _context2.t6
-            });
-
-          case 34:
-          case "end":
-            return _context2.stop();
-        }
+      if (isPK == true) {
+        const PrivateKey = await cert.PrivateKey;
+        ProviderName = await PrivateKey.ProviderName;
       }
-    }, _callee2, null, [[0, 31]]);
-  }));
-  return _GetInfoPlugin.apply(this, arguments);
-}
 
-function LoadCert() {
-  return _LoadCert.apply(this, arguments);
-}
+      const PublicKey = await cert.PublicKey();
+      const Algorithm = await PublicKey.Algorithm;
+      const SerialNumber = await cert.SerialNumber;
+      const SubjectName = await cert.SubjectName;
+      const algValue = await Algorithm.Value;
+      const isSupportAlg = SupportAlgorithm(algValue) != null;
+      const IssuerName = await cert.IssuerName;
+      const FriendlyName = await Algorithm.FriendlyName;
+      const ValidFromDate = new Date(await cert.ValidFromDate);
+      const ValidToDate = new Date(await cert.ValidToDate);
+      const CertName = GetCertName(SubjectName);
+      const Issuer = GetIssuer(IssuerName);
+      const FIO = GetCertFIO(SubjectName);
 
-function _LoadCert() {
-  _LoadCert = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee3() {
-    var oStore, certList, certs, certCnt, i, cert, isPK, ProviderName, PrivateKey, PublicKey, Algorithm, SerialNumber, SubjectName, algValue, isSupportAlg, IssuerName, FriendlyName, ValidFromDate, ValidToDate, CertName, Issuer, FIO, certObj;
-    return regenerator_default().wrap(function _callee3$(_context3) {
-      while (1) {
-        switch (_context3.prev = _context3.next) {
-          case 0:
-            _context3.next = 2;
-            return cadesplugin.CreateObjectAsync("CAdESCOM.Store");
-
-          case 2:
-            oStore = _context3.sent;
-
-            if (oStore) {
-              _context3.next = 6;
-              break;
-            }
-
-            alert("Не удалось открыть хранилище сертификатов");
-            return _context3.abrupt("return", null);
-
-          case 6:
-            _context3.next = 8;
-            return oStore.Open(CAPICOM_CURRENT_USER_STORE, CAPICOM_MY_STORE, CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
-
-          case 8:
-            certList = [];
-            _context3.next = 11;
-            return oStore.Certificates;
-
-          case 11:
-            certs = _context3.sent;
-            _context3.next = 14;
-            return certs.Count;
-
-          case 14:
-            certCnt = _context3.sent;
-            _context3.prev = 15;
-            i = 1;
-
-          case 17:
-            if (!(i <= certCnt)) {
-              _context3.next = 71;
-              break;
-            }
-
-            _context3.next = 20;
-            return certs.Item(i);
-
-          case 20:
-            cert = _context3.sent;
-            _context3.next = 23;
-            return cert.HasPrivateKey();
-
-          case 23:
-            isPK = _context3.sent;
-            ProviderName = 'Нет КЛЮЧА';
-
-            if (!(isPK == true)) {
-              _context3.next = 32;
-              break;
-            }
-
-            _context3.next = 28;
-            return cert.PrivateKey;
-
-          case 28:
-            PrivateKey = _context3.sent;
-            _context3.next = 31;
-            return PrivateKey.ProviderName;
-
-          case 31:
-            ProviderName = _context3.sent;
-
-          case 32:
-            _context3.next = 34;
-            return cert.PublicKey();
-
-          case 34:
-            PublicKey = _context3.sent;
-            _context3.next = 37;
-            return PublicKey.Algorithm;
-
-          case 37:
-            Algorithm = _context3.sent;
-            _context3.next = 40;
-            return cert.SerialNumber;
-
-          case 40:
-            SerialNumber = _context3.sent;
-            _context3.next = 43;
-            return cert.SubjectName;
-
-          case 43:
-            SubjectName = _context3.sent;
-            _context3.next = 46;
-            return Algorithm.Value;
-
-          case 46:
-            algValue = _context3.sent;
-            isSupportAlg = SupportAlgorithm(algValue) != null;
-            _context3.next = 50;
-            return cert.IssuerName;
-
-          case 50:
-            IssuerName = _context3.sent;
-            _context3.next = 53;
-            return Algorithm.FriendlyName;
-
-          case 53:
-            FriendlyName = _context3.sent;
-            _context3.t0 = Date;
-            _context3.next = 57;
-            return cert.ValidFromDate;
-
-          case 57:
-            _context3.t1 = _context3.sent;
-            ValidFromDate = new _context3.t0(_context3.t1);
-            _context3.t2 = Date;
-            _context3.next = 62;
-            return cert.ValidToDate;
-
-          case 62:
-            _context3.t3 = _context3.sent;
-            ValidToDate = new _context3.t2(_context3.t3);
-            CertName = GetCertName(SubjectName);
-            Issuer = GetIssuer(IssuerName);
-            FIO = GetCertFIO(SubjectName);
-
-            if (isSupportAlg) {
-              certObj = {
-                SerialNumber: SerialNumber,
-                SubjectName: SubjectName,
-                algValue: algValue,
-                isSupportAlg: isSupportAlg,
-                IssuerName: IssuerName,
-                FriendlyName: FriendlyName,
-                ValidFromDate: ValidFromDate,
-                ValidToDate: ValidToDate,
-                ProviderName: ProviderName,
-                CertName: CertName,
-                Issuer: Issuer,
-                FIO: FIO
-              };
-              certList.push(certObj);
-            }
-
-          case 68:
-            i++;
-            _context3.next = 17;
-            break;
-
-          case 71:
-            _context3.next = 77;
-            break;
-
-          case 73:
-            _context3.prev = 73;
-            _context3.t4 = _context3["catch"](15);
-            alert("\u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u0440\u0438 \u043F\u0435\u0440\u0435\u0447\u0438\u0441\u043B\u0435\u043D\u0438\u0438 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u043E\u0432: ".concat(cadesplugin.getLastError(_context3.t4)));
-            certList = null;
-
-          case 77:
-            _context3.prev = 77;
-            oStore.Close();
-            return _context3.finish(77);
-
-          case 80:
-            return _context3.abrupt("return", certList);
-
-          case 81:
-          case "end":
-            return _context3.stop();
-        }
+      if (isSupportAlg) {
+        const certObj = {
+          SerialNumber,
+          SubjectName,
+          algValue,
+          isSupportAlg,
+          IssuerName,
+          FriendlyName,
+          ValidFromDate,
+          ValidToDate,
+          ProviderName,
+          CertName,
+          Issuer,
+          FIO
+        };
+        certList.push(certObj);
       }
-    }, _callee3, null, [[15, 73, 77, 80]]);
-  }));
-  return _LoadCert.apply(this, arguments);
+    }
+  } catch (ex) {
+    alert(`Ошибка при перечислении сертификатов: ${cadesplugin.getLastError(ex)}`);
+    certList = null;
+  } finally {
+    oStore.Close();
+  }
+
+  return certList;
 }
 
 function extract(from, what) {
-  var certName = "";
-  var begin = from.indexOf(what);
+  let certName = "";
+  const begin = from.indexOf(what);
 
   if (begin >= 0) {
-    var end = from.indexOf(', ', begin);
+    const end = from.indexOf(', ', begin);
     certName = end < 0 ? from.substr(begin) : from.substr(begin, end - begin);
   }
 
@@ -100927,230 +99568,73 @@ function GetIssuer(certIssuerName) {
 }
 
 function GetCertFIO(certSubjectName) {
-  return "".concat(extract(certSubjectName, 'SN='), " ").concat(extract(certSubjectName, 'G='));
+  return `${extract(certSubjectName, 'SN=')} ${extract(certSubjectName, 'G=')}`;
 }
 
-function SignFile(_x, _x2) {
-  return _SignFile.apply(this, arguments);
+async function SignFile(dataInBase64, snCert) {
+  const result = {
+    Result: false,
+    Error: "",
+    SIGN: ""
+  };
+
+  try {
+    const oStore = await cadesplugin.CreateObjectAsync("CAdESCOM.Store");
+
+    if (!oStore) {
+      throw new Error("Не удалось открыть хранилище сертификатов");
+    }
+
+    await oStore.Open(CAPICOM_CURRENT_USER_STORE, CAPICOM_MY_STORE, CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
+    const cert = await findCert(await oStore.Certificates, snCert);
+
+    if (cert === null) {
+      throw new Error("Не удалось найти сертификат");
+    }
+
+    const PublicKey = await cert.PublicKey();
+    const Algorithm = await PublicKey.Algorithm;
+    const algSing = SupportAlgorithm(await Algorithm.Value);
+
+    if (algSing == undefined) {
+      throw new Error('Алгоритм подписи не поддерживается');
+    }
+
+    const oSigner = await cadesplugin.CreateObjectAsync("CAdESCOM.CPSigner");
+    await oSigner.propset_Certificate(cert);
+    await oSigner.propset_CheckCertificate(true);
+    const oSignedData = await cadesplugin.CreateObjectAsync("CAdESCOM.CadesSignedData");
+    const oHashedData = await cadesplugin.CreateObjectAsync("CAdESCOM.HashedData");
+    await oHashedData.propset_DataEncoding(cadesplugin.CADESCOM_BASE64_TO_BINARY);
+    await oHashedData.propset_Algorithm(algSing.algorithm);
+    await oHashedData.Hash(dataInBase64);
+    const sSignedMessage = await oSignedData.SignHash(oHashedData, oSigner, cadesplugin.CADESCOM_CADES_BES);
+    result.SIGN = sSignedMessage;
+    result.Result = true;
+    oStore.Close();
+    return result;
+  } catch (err) {
+    result.Result = false;
+    const e = cadesplugin.getLastError(err);
+    if (e) result.Error = e;else result.Error = err.message;
+    return result;
+  }
 }
 
-function _SignFile() {
-  _SignFile = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee4(dataInBase64, snCert) {
-    var result, oStore, cert, PublicKey, Algorithm, algSing, oSigner, oSignedData, oHashedData, sSignedMessage, e;
-    return regenerator_default().wrap(function _callee4$(_context4) {
-      while (1) {
-        switch (_context4.prev = _context4.next) {
-          case 0:
-            result = {
-              Result: false,
-              Error: "",
-              SIGN: ""
-            };
-            _context4.prev = 1;
-            _context4.next = 4;
-            return cadesplugin.CreateObjectAsync("CAdESCOM.Store");
+async function findCert(oCertificates, snSert) {
+  const count = await oCertificates.Count;
 
-          case 4:
-            oStore = _context4.sent;
+  if (count > 1) {
+    for (let i = 1; i <= count; i++) {
+      const item = await oCertificates.Item(i);
+      const ssn = await item.SerialNumber;
+      if (ssn === snSert) return item;
+    }
+  }
 
-            if (oStore) {
-              _context4.next = 7;
-              break;
-            }
-
-            throw new Error("Не удалось открыть хранилище сертификатов");
-
-          case 7:
-            _context4.next = 9;
-            return oStore.Open(CAPICOM_CURRENT_USER_STORE, CAPICOM_MY_STORE, CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
-
-          case 9:
-            _context4.t0 = findCert;
-            _context4.next = 12;
-            return oStore.Certificates;
-
-          case 12:
-            _context4.t1 = _context4.sent;
-            _context4.t2 = snCert;
-            _context4.next = 16;
-            return (0, _context4.t0)(_context4.t1, _context4.t2);
-
-          case 16:
-            cert = _context4.sent;
-
-            if (!(cert === null)) {
-              _context4.next = 19;
-              break;
-            }
-
-            throw new Error("Не удалось найти сертификат");
-
-          case 19:
-            _context4.next = 21;
-            return cert.PublicKey();
-
-          case 21:
-            PublicKey = _context4.sent;
-            _context4.next = 24;
-            return PublicKey.Algorithm;
-
-          case 24:
-            Algorithm = _context4.sent;
-            _context4.t3 = SupportAlgorithm;
-            _context4.next = 28;
-            return Algorithm.Value;
-
-          case 28:
-            _context4.t4 = _context4.sent;
-            algSing = (0, _context4.t3)(_context4.t4);
-
-            if (!(algSing == undefined)) {
-              _context4.next = 32;
-              break;
-            }
-
-            throw new Error('Алгоритм подписи не поддерживается');
-
-          case 32:
-            _context4.next = 34;
-            return cadesplugin.CreateObjectAsync("CAdESCOM.CPSigner");
-
-          case 34:
-            oSigner = _context4.sent;
-            _context4.next = 37;
-            return oSigner.propset_Certificate(cert);
-
-          case 37:
-            _context4.next = 39;
-            return oSigner.propset_CheckCertificate(true);
-
-          case 39:
-            _context4.next = 41;
-            return cadesplugin.CreateObjectAsync("CAdESCOM.CadesSignedData");
-
-          case 41:
-            oSignedData = _context4.sent;
-            _context4.next = 44;
-            return cadesplugin.CreateObjectAsync("CAdESCOM.HashedData");
-
-          case 44:
-            oHashedData = _context4.sent;
-            _context4.next = 47;
-            return oHashedData.propset_DataEncoding(cadesplugin.CADESCOM_BASE64_TO_BINARY);
-
-          case 47:
-            _context4.next = 49;
-            return oHashedData.propset_Algorithm(algSing.algorithm);
-
-          case 49:
-            _context4.next = 51;
-            return oHashedData.Hash(dataInBase64);
-
-          case 51:
-            _context4.next = 53;
-            return oSignedData.SignHash(oHashedData, oSigner, cadesplugin.CADESCOM_CADES_BES);
-
-          case 53:
-            sSignedMessage = _context4.sent;
-            result.SIGN = sSignedMessage;
-            result.Result = true;
-            oStore.Close();
-            return _context4.abrupt("return", result);
-
-          case 60:
-            _context4.prev = 60;
-            _context4.t5 = _context4["catch"](1);
-            result.Result = false;
-            e = cadesplugin.getLastError(_context4.t5);
-            if (e) result.Error = e;else result.Error = _context4.t5.message;
-            return _context4.abrupt("return", result);
-
-          case 66:
-          case "end":
-            return _context4.stop();
-        }
-      }
-    }, _callee4, null, [[1, 60]]);
-  }));
-  return _SignFile.apply(this, arguments);
-}
-
-function findCert(_x3, _x4) {
-  return _findCert.apply(this, arguments);
-}
-
-function _findCert() {
-  _findCert = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee5(oCertificates, snSert) {
-    var count, i, item, ssn;
-    return regenerator_default().wrap(function _callee5$(_context5) {
-      while (1) {
-        switch (_context5.prev = _context5.next) {
-          case 0:
-            _context5.next = 2;
-            return oCertificates.Count;
-
-          case 2:
-            count = _context5.sent;
-
-            if (!(count > 1)) {
-              _context5.next = 17;
-              break;
-            }
-
-            i = 1;
-
-          case 5:
-            if (!(i <= count)) {
-              _context5.next = 17;
-              break;
-            }
-
-            _context5.next = 8;
-            return oCertificates.Item(i);
-
-          case 8:
-            item = _context5.sent;
-            _context5.next = 11;
-            return item.SerialNumber;
-
-          case 11:
-            ssn = _context5.sent;
-
-            if (!(ssn === snSert)) {
-              _context5.next = 14;
-              break;
-            }
-
-            return _context5.abrupt("return", item);
-
-          case 14:
-            i++;
-            _context5.next = 5;
-            break;
-
-          case 17:
-            return _context5.abrupt("return", null);
-
-          case 18:
-          case "end":
-            return _context5.stop();
-        }
-      }
-    }, _callee5);
-  }));
-  return _findCert.apply(this, arguments);
+  return null;
 }
 ;// CONCATENATED MODULE: ./SignApp/Components/SignDialog.jsx
-
-
-
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-
 
 
 
@@ -101168,380 +99652,173 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
 function SingDialog(props) {
-  var onClose = props.onClose,
-      isOpen = props.isOpen,
-      onSave = props.onSave,
-      files = props.files;
+  const {
+    onClose,
+    isOpen,
+    onSave,
+    files
+  } = props;
+  const [pluginInfo, setPluginInfo] = react.useState(null);
+  const [signList, setSignList] = react.useState([]);
+  const [certs, setCerts] = react.useState([]);
+  const [currentCert, setCurrentCert] = react.useState([]);
+  const [signProcess, setSignProcess] = react.useState(false);
 
-  var _React$useState = react.useState(null),
-      _React$useState2 = (0,slicedToArray/* default */.Z)(_React$useState, 2),
-      pluginInfo = _React$useState2[0],
-      setPluginInfo = _React$useState2[1];
-
-  var _React$useState3 = react.useState([]),
-      _React$useState4 = (0,slicedToArray/* default */.Z)(_React$useState3, 2),
-      signList = _React$useState4[0],
-      setSignList = _React$useState4[1];
-
-  var _React$useState5 = react.useState([]),
-      _React$useState6 = (0,slicedToArray/* default */.Z)(_React$useState5, 2),
-      certs = _React$useState6[0],
-      setCerts = _React$useState6[1];
-
-  var _React$useState7 = react.useState([]),
-      _React$useState8 = (0,slicedToArray/* default */.Z)(_React$useState7, 2),
-      currentCert = _React$useState8[0],
-      setCurrentCert = _React$useState8[1];
-
-  var _React$useState9 = react.useState(false),
-      _React$useState10 = (0,slicedToArray/* default */.Z)(_React$useState9, 2),
-      signProcess = _React$useState10[0],
-      setSignProcess = _React$useState10[1];
-
-  var handleClose = function handleClose() {
+  const handleClose = () => {
     onClose();
   };
 
-  var _React$useState11 = react.useState(false),
-      _React$useState12 = (0,slicedToArray/* default */.Z)(_React$useState11, 2),
-      checkingPlugin = _React$useState12[0],
-      setCheckingPlugin = _React$useState12[1];
+  const [checkingPlugin, setCheckingPlugin] = react.useState(false);
+  (0,react.useEffect)(async () => {
+    if (isOpen) {
+      try {
+        setSignErr("");
+        setCheckingPlugin(true);
+        const data = await activatePluginAsync();
+        setPluginInfo(data.infoPlugin);
+        setCerts(data.certs);
+        setSignList(files.map(value => {
+          return {
+            isSing: 0,
+            Text: "",
+            FILENAME: value.FILENAME,
+            DOC_FOR_SIGN_ID: value.DOC_FOR_SIGN_ID
+          };
+        }));
+      } catch (err) {
+        alert(err.message);
+        handleClose();
+      } finally {
+        setCheckingPlugin(false);
+      }
+    }
+  }, [isOpen]);
 
-  (0,react.useEffect)( /*#__PURE__*/(0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee() {
-    var data;
-    return regenerator_default().wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            if (!isOpen) {
-              _context.next = 19;
-              break;
+  const downloadFile = async docForSignId => {
+    const result = {
+      Valid: false,
+      Error: "",
+      File: null
+    };
+
+    try {
+      const requestOptions = {
+        method: "GET",
+        cache: 'no-cache',
+        headers: {
+          'Content-Type': "application/json"
+        }
+      };
+      const response = await window.fetch(`DownloadFileForSign?DOC_FOR_SIGN_ID=${docForSignId}`, requestOptions);
+      const data = await response.json();
+
+      if (data.Result === false) {
+        result.Error = data.Value;
+      } else {
+        result.Valid = true;
+        result.File = data.Value;
+      }
+
+      return result;
+    } catch (error) {
+      result.Error = error;
+      return result;
+    }
+  };
+
+  const sendSignFile = async (sign, docForSignId) => {
+    const result = {
+      Valid: false,
+      Error: ""
+    };
+
+    try {
+      const formData = new FormData();
+      formData.append("SIGN", sign);
+      formData.append("DOC_FOR_SIGN_ID", docForSignId);
+      const requestOptions = {
+        method: "POST",
+        body: formData
+      };
+      const response = await window.fetch(`SendSign`, requestOptions);
+      const data = await response.json();
+
+      if (data.Result === false) {
+        result.Error = data.Value;
+      } else {
+        result.Valid = true;
+      }
+
+      return result;
+    } catch (error) {
+      result.Error = error;
+      return result;
+    }
+  };
+
+  const updateItemState = async (signItem, isSing, text) => {
+    setSignList(signList.map(value => {
+      if (value === signItem) {
+        value.isSing = isSing;
+        value.Text = text;
+      }
+
+      return value;
+    }));
+  };
+
+  const [singErr, setSignErr] = react.useState("");
+
+  const signFiles = async () => {
+    let countOk = 0;
+
+    try {
+      setSignProcess(true);
+
+      for (const signItem of signList) {
+        const docForSignId = signItem.DOC_FOR_SIGN_ID;
+        updateItemState(signItem, 1, "Загрузка файла с сервера");
+        const file = await downloadFile(docForSignId);
+
+        if (file.Valid) {
+          updateItemState(signItem, 1, "Подпись файла");
+          const sign = await SignFile(file.File.FileContents, currentCert.SerialNumber);
+
+          if (sign.Result) {
+            updateItemState(signItem, 1, "Отправка подписи");
+            const res = await sendSignFile(sign.SIGN, docForSignId);
+
+            if (res.Valid) {
+              updateItemState(signItem, 2, "Файл подписан");
+              countOk++;
+            } else {
+              updateItemState(signItem, 3, `Ошибка сервера: ${res.Error}`);
             }
-
-            _context.prev = 1;
-            setSignErr("");
-            setCheckingPlugin(true);
-            _context.next = 6;
-            return activatePluginAsync();
-
-          case 6:
-            data = _context.sent;
-            setPluginInfo(data.infoPlugin);
-            setCerts(data.certs);
-            setSignList(files.map(function (value) {
-              return {
-                isSing: 0,
-                Text: "",
-                FILENAME: value.FILENAME,
-                DOC_FOR_SIGN_ID: value.DOC_FOR_SIGN_ID
-              };
-            }));
-            _context.next = 16;
-            break;
-
-          case 12:
-            _context.prev = 12;
-            _context.t0 = _context["catch"](1);
-            alert(_context.t0.message);
-            handleClose();
-
-          case 16:
-            _context.prev = 16;
-            setCheckingPlugin(false);
-            return _context.finish(16);
-
-          case 19:
-          case "end":
-            return _context.stop();
+          } else {
+            updateItemState(signItem, 3, `Ошибка клиента: ${sign.Error}`);
+          }
+        } else {
+          updateItemState(signItem, 3, `Ошибка клиента: ${file.Error}`);
         }
       }
-    }, _callee, null, [[1, 12, 16, 19]]);
-  })), [isOpen]);
+    } catch (err) {
+      alert();
+    } finally {
+      setSignProcess(false);
 
-  var downloadFile = /*#__PURE__*/function () {
-    var _ref2 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee2(docForSignId) {
-      var result, requestOptions, response, data;
-      return regenerator_default().wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              result = {
-                Valid: false,
-                Error: "",
-                File: null
-              };
-              _context2.prev = 1;
-              requestOptions = {
-                method: "GET",
-                cache: 'no-cache',
-                headers: {
-                  'Content-Type': "application/json"
-                }
-              };
-              _context2.next = 5;
-              return window.fetch("DownloadFileForSign?DOC_FOR_SIGN_ID=".concat(docForSignId), requestOptions);
+      if (countOk === signList.length) {
+        onSave();
+      } else {
+        setSignErr(`Не удалось подписать: ${signList.length - countOk} файлов`);
+      }
+    }
+  };
 
-            case 5:
-              response = _context2.sent;
-              _context2.next = 8;
-              return response.json();
-
-            case 8:
-              data = _context2.sent;
-
-              if (data.Result === false) {
-                result.Error = data.Value;
-              } else {
-                result.Valid = true;
-                result.File = data.Value;
-              }
-
-              return _context2.abrupt("return", result);
-
-            case 13:
-              _context2.prev = 13;
-              _context2.t0 = _context2["catch"](1);
-              result.Error = _context2.t0;
-              return _context2.abrupt("return", result);
-
-            case 17:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2, null, [[1, 13]]);
-    }));
-
-    return function downloadFile(_x) {
-      return _ref2.apply(this, arguments);
-    };
-  }();
-
-  var sendSignFile = /*#__PURE__*/function () {
-    var _ref3 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee3(sign, docForSignId) {
-      var result, formData, requestOptions, response, data;
-      return regenerator_default().wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              result = {
-                Valid: false,
-                Error: ""
-              };
-              _context3.prev = 1;
-              formData = new FormData();
-              formData.append("SIGN", sign);
-              formData.append("DOC_FOR_SIGN_ID", docForSignId);
-              requestOptions = {
-                method: "POST",
-                body: formData
-              };
-              _context3.next = 8;
-              return window.fetch("SendSign", requestOptions);
-
-            case 8:
-              response = _context3.sent;
-              _context3.next = 11;
-              return response.json();
-
-            case 11:
-              data = _context3.sent;
-
-              if (data.Result === false) {
-                result.Error = data.Value;
-              } else {
-                result.Valid = true;
-              }
-
-              return _context3.abrupt("return", result);
-
-            case 16:
-              _context3.prev = 16;
-              _context3.t0 = _context3["catch"](1);
-              result.Error = _context3.t0;
-              return _context3.abrupt("return", result);
-
-            case 20:
-            case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3, null, [[1, 16]]);
-    }));
-
-    return function sendSignFile(_x2, _x3) {
-      return _ref3.apply(this, arguments);
-    };
-  }();
-
-  var updateItemState = /*#__PURE__*/function () {
-    var _ref4 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee4(signItem, isSing, text) {
-      return regenerator_default().wrap(function _callee4$(_context4) {
-        while (1) {
-          switch (_context4.prev = _context4.next) {
-            case 0:
-              setSignList(signList.map(function (value) {
-                if (value === signItem) {
-                  value.isSing = isSing;
-                  value.Text = text;
-                }
-
-                return value;
-              }));
-
-            case 1:
-            case "end":
-              return _context4.stop();
-          }
-        }
-      }, _callee4);
-    }));
-
-    return function updateItemState(_x4, _x5, _x6) {
-      return _ref4.apply(this, arguments);
-    };
-  }();
-
-  var _React$useState13 = react.useState(""),
-      _React$useState14 = (0,slicedToArray/* default */.Z)(_React$useState13, 2),
-      singErr = _React$useState14[0],
-      setSignErr = _React$useState14[1];
-
-  var signFiles = /*#__PURE__*/function () {
-    var _ref5 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee5() {
-      var countOk, _iterator, _step, signItem, docForSignId, file, sign, res;
-
-      return regenerator_default().wrap(function _callee5$(_context5) {
-        while (1) {
-          switch (_context5.prev = _context5.next) {
-            case 0:
-              countOk = 0;
-              _context5.prev = 1;
-              setSignProcess(true);
-              _iterator = _createForOfIteratorHelper(signList);
-              _context5.prev = 4;
-
-              _iterator.s();
-
-            case 6:
-              if ((_step = _iterator.n()).done) {
-                _context5.next = 32;
-                break;
-              }
-
-              signItem = _step.value;
-              docForSignId = signItem.DOC_FOR_SIGN_ID;
-              updateItemState(signItem, 1, "Загрузка файла с сервера");
-              _context5.next = 12;
-              return downloadFile(docForSignId);
-
-            case 12:
-              file = _context5.sent;
-
-              if (!file.Valid) {
-                _context5.next = 29;
-                break;
-              }
-
-              updateItemState(signItem, 1, "Подпись файла");
-              _context5.next = 17;
-              return SignFile(file.File.FileContents, currentCert.SerialNumber);
-
-            case 17:
-              sign = _context5.sent;
-
-              if (!sign.Result) {
-                _context5.next = 26;
-                break;
-              }
-
-              updateItemState(signItem, 1, "Отправка подписи");
-              _context5.next = 22;
-              return sendSignFile(sign.SIGN, docForSignId);
-
-            case 22:
-              res = _context5.sent;
-
-              if (res.Valid) {
-                updateItemState(signItem, 2, "Файл подписан");
-                countOk++;
-              } else {
-                updateItemState(signItem, 3, "\u041E\u0448\u0438\u0431\u043A\u0430 \u0441\u0435\u0440\u0432\u0435\u0440\u0430: ".concat(res.Error));
-              }
-
-              _context5.next = 27;
-              break;
-
-            case 26:
-              updateItemState(signItem, 3, "\u041E\u0448\u0438\u0431\u043A\u0430 \u043A\u043B\u0438\u0435\u043D\u0442\u0430: ".concat(sign.Error));
-
-            case 27:
-              _context5.next = 30;
-              break;
-
-            case 29:
-              updateItemState(signItem, 3, "\u041E\u0448\u0438\u0431\u043A\u0430 \u043A\u043B\u0438\u0435\u043D\u0442\u0430: ".concat(file.Error));
-
-            case 30:
-              _context5.next = 6;
-              break;
-
-            case 32:
-              _context5.next = 37;
-              break;
-
-            case 34:
-              _context5.prev = 34;
-              _context5.t0 = _context5["catch"](4);
-
-              _iterator.e(_context5.t0);
-
-            case 37:
-              _context5.prev = 37;
-
-              _iterator.f();
-
-              return _context5.finish(37);
-
-            case 40:
-              _context5.next = 45;
-              break;
-
-            case 42:
-              _context5.prev = 42;
-              _context5.t1 = _context5["catch"](1);
-              alert();
-
-            case 45:
-              _context5.prev = 45;
-              setSignProcess(false);
-
-              if (countOk === signList.length) {
-                onSave();
-              } else {
-                setSignErr("\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u0442\u044C: ".concat(signList.length - countOk, " \u0444\u0430\u0439\u043B\u043E\u0432"));
-              }
-
-              return _context5.finish(45);
-
-            case 49:
-            case "end":
-              return _context5.stop();
-          }
-        }
-      }, _callee5, null, [[1, 42, 45, 49], [4, 34, 37, 40]]);
-    }));
-
-    return function signFiles() {
-      return _ref5.apply(this, arguments);
-    };
-  }();
-
-  var onSelected = function onSelected(index) {
+  const onSelected = index => {
     setCurrentCert(certs[index]);
   };
 
-  var switchClassNameStatusText = function switchClassNameStatusText(value) {
+  const switchClassNameStatusText = value => {
     switch (value) {
       case 2:
         return "GreenText";
@@ -101554,7 +99831,7 @@ function SingDialog(props) {
     }
   };
 
-  var switchIconStatus = function switchIconStatus(value) {
+  const switchIconStatus = value => {
     switch (value) {
       case 1:
         return /*#__PURE__*/react.createElement(CircularProgress/* default */.Z, {
@@ -101588,13 +99865,11 @@ function SingDialog(props) {
     id: "form-dialog-title"
   }, "\u041F\u043E\u0434\u043F\u0438\u0441\u0430\u0442\u044C \u0444\u0430\u0439\u043B"), /*#__PURE__*/react.createElement(DialogContent/* default */.Z, null, /*#__PURE__*/react.createElement("div", null, " ", signList != null ? /*#__PURE__*/react.createElement("table", {
     className: "table_report"
-  }, /*#__PURE__*/react.createElement("tbody", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("th", null, "\u0418\u043C\u044F \u0444\u0430\u0439\u043B\u0430"), /*#__PURE__*/react.createElement("th", null, "\u0421\u0442\u0430\u0442\u0443\u0441"), /*#__PURE__*/react.createElement("th", null, "\u0414\u0435\u0439\u0441\u0442\u0432\u0438\u0435")), signList.map(function (value, index) {
-    return /*#__PURE__*/react.createElement("tr", {
-      key: index
-    }, /*#__PURE__*/react.createElement("td", null, value.FILENAME), /*#__PURE__*/react.createElement("td", null, switchIconStatus(value.isSing)), /*#__PURE__*/react.createElement("td", {
-      className: switchClassNameStatusText(value.isSing)
-    }, value.Text));
-  }))) : null), checkingPlugin ? /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(CircularProgress/* default */.Z, {
+  }, /*#__PURE__*/react.createElement("tbody", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("th", null, "\u0418\u043C\u044F \u0444\u0430\u0439\u043B\u0430"), /*#__PURE__*/react.createElement("th", null, "\u0421\u0442\u0430\u0442\u0443\u0441"), /*#__PURE__*/react.createElement("th", null, "\u0414\u0435\u0439\u0441\u0442\u0432\u0438\u0435")), signList.map((value, index) => /*#__PURE__*/react.createElement("tr", {
+    key: index
+  }, /*#__PURE__*/react.createElement("td", null, value.FILENAME), /*#__PURE__*/react.createElement("td", null, switchIconStatus(value.isSing)), /*#__PURE__*/react.createElement("td", {
+    className: switchClassNameStatusText(value.isSing)
+  }, value.Text))))) : null), checkingPlugin ? /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(CircularProgress/* default */.Z, {
     size: "25px"
   })), /*#__PURE__*/react.createElement("div", null, "\u041E\u043F\u0440\u043E\u0441 \u043F\u043B\u0430\u0433\u0438\u043D\u0430")) : null, /*#__PURE__*/react.createElement("div", null, pluginInfo != null ? /*#__PURE__*/react.createElement(PluginInfo, {
     pluginInfo: pluginInfo
@@ -101612,7 +99887,9 @@ function SingDialog(props) {
 }
 
 function PluginInfo(props) {
-  var pluginInfo = props.pluginInfo;
+  const {
+    pluginInfo
+  } = props;
   return /*#__PURE__*/react.createElement("div", null, pluginInfo.isEnabled ? /*#__PURE__*/react.createElement("div", {
     className: "GreenText"
   }, "\u041F\u043B\u0430\u0433\u0438\u043D \u0434\u043E\u0441\u0442\u0443\u043F\u0435\u043D") : /*#__PURE__*/react.createElement("div", {
@@ -101620,34 +99897,29 @@ function PluginInfo(props) {
   }, "\u041F\u043B\u0430\u0433\u0438\u043D \u043D\u0435 \u0434\u043E\u0441\u0442\u0443\u043F\u0435\u043D"), /*#__PURE__*/react.createElement("div", null, "\u0412\u0435\u0440\u0441\u0438\u044F \u043F\u043B\u0430\u0433\u0438\u043D\u0430: ", pluginInfo.version), /*#__PURE__*/react.createElement("div", null, "\u041A\u0440\u0438\u043F\u0442\u043E\u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440: ", pluginInfo.cspName), /*#__PURE__*/react.createElement("div", null, "\u0412\u0435\u0440\u0441\u0438\u044F \u043A\u0440\u0438\u043F\u0442\u043E\u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440\u0430: ", pluginInfo.versionCSP));
 }
 
-var SignDialog_ListItemStyles = (0,makeStyles/* default */.Z)(function (theme) {
-  return {
-    red: {
-      color: 'red !important'
-    },
-    green: {
-      color: 'green !important'
-    }
-  };
-});
+const SignDialog_ListItemStyles = (0,makeStyles/* default */.Z)(theme => ({
+  red: {
+    color: 'red !important'
+  },
+  green: {
+    color: 'green !important'
+  }
+}));
 
 function SignDialog_CertList(props) {
-  var items = props.items,
-      onSelected = props.onSelected;
-  var classes = SignDialog_ListItemStyles();
-
-  var _React$useState15 = react.useState(0),
-      _React$useState16 = (0,slicedToArray/* default */.Z)(_React$useState15, 2),
-      selectedIndex = _React$useState16[0],
-      setselectedIndex = _React$useState16[1];
-
-  react.useEffect(function () {
+  const {
+    items,
+    onSelected
+  } = props;
+  const classes = SignDialog_ListItemStyles();
+  const [selectedIndex, setselectedIndex] = react.useState(0);
+  react.useEffect(() => {
     if (items.length != 0) {
       handleListItemClick(null, 0);
     }
   }, [items]);
 
-  var handleListItemClick = function handleListItemClick(event, index) {
+  const handleListItemClick = (event, index) => {
     setselectedIndex(index);
     onSelected(index);
   };
@@ -101662,19 +99934,15 @@ function SignDialog_CertList(props) {
     className: "BoldText"
   }, "\u0421\u043F\u0438\u0441\u043E\u043A \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u043E\u0432"), /*#__PURE__*/react.createElement(List/* default */.Z, {
     "aria-label": "secondary mailbox folder"
-  }, items.map(function (value, index) {
-    return /*#__PURE__*/react.createElement(ListItem/* default */.Z, {
-      key: index,
-      className: value.isSupportAlg ? classes.green : classes.red,
-      selected: selectedIndex === index,
-      button: true,
-      onClick: function onClick(event) {
-        return handleListItemClick(event, index);
-      }
-    }, /*#__PURE__*/react.createElement(ListItemText/* default */.Z, {
-      primary: "\u0421\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442:".concat(value.CertName)
-    }));
-  }))), /*#__PURE__*/react.createElement(Grid/* default */.Z, {
+  }, items.map((value, index) => /*#__PURE__*/react.createElement(ListItem/* default */.Z, {
+    key: index,
+    className: value.isSupportAlg ? classes.green : classes.red,
+    selected: selectedIndex === index,
+    button: true,
+    onClick: event => handleListItemClick(event, index)
+  }, /*#__PURE__*/react.createElement(ListItemText/* default */.Z, {
+    primary: `Сертификат:${value.CertName}`
+  }))))), /*#__PURE__*/react.createElement(Grid/* default */.Z, {
     item: true,
     xs: true
   }, /*#__PURE__*/react.createElement(InfoCert, {
@@ -101683,7 +99951,9 @@ function SignDialog_CertList(props) {
 }
 
 function InfoCert(props) {
-  var cert = props.cert;
+  const {
+    cert
+  } = props;
   return cert != null ? /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", {
     className: "BoldText"
   }, "\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F \u043E \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u0435"), !cert.isSupportAlg ? /*#__PURE__*/react.createElement("div", {
@@ -103042,7 +101312,9 @@ var LinearProgress = __webpack_require__(33681);
 
 
 function LinearProgressWithLabel(props) {
-  var value = props.value;
+  const {
+    value
+  } = props;
   return /*#__PURE__*/React.createElement(Box/* default */.Z, {
     display: "flex",
     alignItems: "center"
@@ -103056,23 +101328,14 @@ function LinearProgressWithLabel(props) {
   }, /*#__PURE__*/React.createElement(Typography/* default */.Z, {
     variant: "body2",
     color: "textSecondary"
-  }, "".concat(Math.round(value), "%"))));
+  }, `${Math.round(value)}%`)));
 }
 ;// CONCATENATED MODULE: ./SignApp/API/HubAPI.js
 
-
-
-
-
-
-var HUBConnect = /*#__PURE__*/function () {
-  function HUBConnect() {
-    var _this = this;
-
-    (0,classCallCheck/* default */.Z)(this, HUBConnect);
-
-    (0,defineProperty/* default */.Z)(this, "onProgress", function (callback) {
-      _this.connection.on("Progress", function (data) {
+class HUBConnect {
+  constructor() {
+    (0,defineProperty/* default */.Z)(this, "onProgress", callback => {
+      this.connection.on("Progress", data => {
         callback(data);
       });
     });
@@ -103080,69 +101343,18 @@ var HUBConnect = /*#__PURE__*/function () {
     this.connection = null;
   }
 
-  (0,createClass/* default */.Z)(HUBConnect, [{
-    key: "Connect",
-    value: function () {
-      var _Connect = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee() {
-        return regenerator_default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                this.connection = new signalR.HubConnectionBuilder().withUrl("../Notification").build();
-                _context.next = 3;
-                return this.connection.start();
+  async Connect() {
+    this.connection = new signalR.HubConnectionBuilder().withUrl("../Notification").build();
+    await this.connection.start();
+    await this.connection.invoke('RegisterForLoadThemeFile');
+    return this.connection.connection.connectionId;
+  }
 
-              case 3:
-                _context.next = 5;
-                return this.connection.invoke('RegisterForLoadThemeFile');
+  async Disconnect() {
+    if (this.connection != null) {}
+  }
 
-              case 5:
-                return _context.abrupt("return", this.connection.connection.connectionId);
-
-              case 6:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function Connect() {
-        return _Connect.apply(this, arguments);
-      }
-
-      return Connect;
-    }()
-  }, {
-    key: "Disconnect",
-    value: function () {
-      var _Disconnect = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee2() {
-        return regenerator_default().wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                if (this.connection != null) {}
-
-              case 1:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this);
-      }));
-
-      function Disconnect() {
-        return _Disconnect.apply(this, arguments);
-      }
-
-      return Disconnect;
-    }()
-  }]);
-
-  return HUBConnect;
-}();
-
-
+}
 ;// CONCATENATED MODULE: ./SignApp/Components/ThemeFileSaver.jsx
 
 
@@ -103153,38 +101365,24 @@ var HUBConnect = /*#__PURE__*/function () {
 
 
 
-
-
-
-var ThemeFileSaver_repo = new Repository();
-var hub = new HUBConnect();
+const ThemeFileSaver_repo = new Repository();
+const hub = new HUBConnect();
 function ThemeFileSaver(props) {
-  var isOpen = props.isOpen,
-      onClose = props.onClose,
-      onSave = props.onSave,
-      themeId = props.themeId;
+  const {
+    isOpen,
+    onClose,
+    onSave,
+    themeId
+  } = props;
+  const [errorMessage, setErrorMessage] = react.useState("");
+  const [statusText, setStatusText] = react.useState("");
+  const [progress, setProgress] = react.useState(50);
+  let connectionId = "";
 
-  var _React$useState = react.useState(""),
-      _React$useState2 = (0,slicedToArray/* default */.Z)(_React$useState, 2),
-      errorMessage = _React$useState2[0],
-      setErrorMessage = _React$useState2[1];
-
-  var _React$useState3 = react.useState(""),
-      _React$useState4 = (0,slicedToArray/* default */.Z)(_React$useState3, 2),
-      statusText = _React$useState4[0],
-      setStatusText = _React$useState4[1];
-
-  var _React$useState5 = react.useState(50),
-      _React$useState6 = (0,slicedToArray/* default */.Z)(_React$useState5, 2),
-      progress = _React$useState6[0],
-      setProgress = _React$useState6[1];
-
-  var connectionId = "";
-
-  var onProgress = function onProgress(data) {
-    var maxProcess = data.maxProcess;
-    var message = data.message;
-    var process = data.process;
+  const onProgress = data => {
+    const maxProcess = data.maxProcess;
+    const message = data.message;
+    const process = data.process;
     setStatusText(message);
 
     if (maxProcess === 0) {
@@ -103194,83 +101392,35 @@ function ThemeFileSaver(props) {
     }
   };
 
-  var saveAllFile = /*#__PURE__*/function () {
-    var _ref = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee() {
-      var data;
-      return regenerator_default().wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.prev = 0;
-              _context.next = 3;
-              return ThemeFileSaver_repo.DownloadAllFileTheme(themeId, connectionId);
+  const saveAllFile = async () => {
+    try {
+      const data = await ThemeFileSaver_repo.DownloadAllFileTheme(themeId, connectionId);
+      setStatusText("Сохранение файла");
+      saveFile(data.Data, data.FileName);
+      setStatusText("Сохранение файла завершено");
+      onClose();
+    } catch (error) {
+      alert(error.toString());
+    }
+  };
 
-            case 3:
-              data = _context.sent;
-              debugger;
-              setStatusText("Загрузка файла");
-              downloadBase64File(data.FileContents, data.ContentType, data.FileDownloadName);
-              setStatusText("Загрузка завершена");
-              onClose();
-              _context.next = 14;
-              break;
+  react.useEffect(async () => {
+    if (isOpen) {
+      connectionId = await hub.Connect();
+      hub.onProgress(onProgress);
+      saveAllFile();
+    } else {
+      hub.Disconnect();
+    }
+  }, [isOpen]);
 
-            case 11:
-              _context.prev = 11;
-              _context.t0 = _context["catch"](0);
-              alert(_context.t0.toString());
-
-            case 14:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee, null, [[0, 11]]);
-    }));
-
-    return function saveAllFile() {
-      return _ref.apply(this, arguments);
-    };
-  }();
-
-  react.useEffect( /*#__PURE__*/(0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee2() {
-    return regenerator_default().wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            if (!isOpen) {
-              _context2.next = 8;
-              break;
-            }
-
-            _context2.next = 3;
-            return hub.Connect();
-
-          case 3:
-            connectionId = _context2.sent;
-            hub.onProgress(onProgress);
-            saveAllFile();
-            _context2.next = 9;
-            break;
-
-          case 8:
-            hub.Disconnect();
-
-          case 9:
-          case "end":
-            return _context2.stop();
-        }
-      }
-    }, _callee2);
-  })), [isOpen]);
-
-  var handleReset = function handleReset() {
+  const handleReset = () => {
     setStatusText("");
     setErrorMessage("");
     setProgress(0);
   };
 
-  var handleClose = function handleClose() {
+  const handleClose = () => {
     onClose();
     handleReset();
   };
@@ -103292,18 +101442,6 @@ function ThemeFileSaver(props) {
   }, statusText)))));
 }
 ;// CONCATENATED MODULE: ./SignApp/Components/DOC_LIST.jsx
-
-
-
-
-
-
-function DOC_LIST_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = DOC_LIST_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-
-function DOC_LIST_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return DOC_LIST_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return DOC_LIST_arrayLikeToArray(o, minLen); }
-
-function DOC_LIST_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 
 
 
@@ -103347,8 +101485,8 @@ function DOC_LIST_arrayLikeToArray(arr, len) { if (len == null || len > arr.leng
 
 
 
-var DOC_LIST_repo = new Repository();
-var DOC_LIST_theme = (0,createTheme/* default */.Z)({
+const DOC_LIST_repo = new Repository();
+const DOC_LIST_theme = (0,createTheme/* default */.Z)({
   palette: {
     primary: {
       main: '#4CAF50'
@@ -103362,369 +101500,132 @@ var DOC_LIST_theme = (0,createTheme/* default */.Z)({
   }
 });
 function DOC_LIST(props) {
-  var isAdmin = props.isAdmin;
-  var tableRef = react.useRef(null);
+  const {
+    isAdmin
+  } = props;
+  const tableRef = react.useRef(null);
+  const [themeList, setThemeList] = react.useState([]);
 
-  var _React$useState = react.useState([]),
-      _React$useState2 = (0,slicedToArray/* default */.Z)(_React$useState, 2),
-      themeList = _React$useState2[0],
-      setThemeList = _React$useState2[1];
+  const onRefreshTheme = async () => {
+    setThemeList(await DOC_LIST_repo.GetTheme());
+  };
 
-  var onRefreshTheme = /*#__PURE__*/function () {
-    var _ref = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee() {
-      return regenerator_default().wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.t0 = setThemeList;
-              _context.next = 3;
-              return DOC_LIST_repo.GetTheme();
+  react.useEffect(async () => {
+    try {
+      onRefreshTheme();
+    } catch (err) {
+      alert(err.message);
+    }
+  }, []);
+  const [currentTheme, setCurrentTheme] = react.useState([]);
+  const [docsList, setDocsList] = react.useState([]);
 
-            case 3:
-              _context.t1 = _context.sent;
-              (0, _context.t0)(_context.t1);
+  const onSelectThemeChanged = async themeItem => {
+    try {
+      setCurrentTheme(themeItem);
+      setDocsList(await DOC_LIST_repo.GetDocsList(themeItem.THEME_ID));
+    } catch (err) {
+      alert(err.toString());
+    }
+  };
 
-            case 5:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }));
-
-    return function onRefreshTheme() {
-      return _ref.apply(this, arguments);
-    };
-  }();
-
-  react.useEffect( /*#__PURE__*/(0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee2() {
-    return regenerator_default().wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            try {
-              onRefreshTheme();
-            } catch (err) {
-              alert(err.message);
-            }
-
-          case 1:
-          case "end":
-            return _context2.stop();
-        }
-      }
-    }, _callee2);
-  })), []);
-
-  var _React$useState3 = react.useState([]),
-      _React$useState4 = (0,slicedToArray/* default */.Z)(_React$useState3, 2),
-      currentTheme = _React$useState4[0],
-      setCurrentTheme = _React$useState4[1];
-
-  var _React$useState5 = react.useState([]),
-      _React$useState6 = (0,slicedToArray/* default */.Z)(_React$useState5, 2),
-      docsList = _React$useState6[0],
-      setDocsList = _React$useState6[1];
-
-  var onSelectThemeChanged = /*#__PURE__*/function () {
-    var _ref3 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee3(themeItem) {
-      return regenerator_default().wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              _context3.prev = 0;
-              setCurrentTheme(themeItem);
-              _context3.t0 = setDocsList;
-              _context3.next = 5;
-              return DOC_LIST_repo.GetDocsList(themeItem.THEME_ID);
-
-            case 5:
-              _context3.t1 = _context3.sent;
-              (0, _context3.t0)(_context3.t1);
-              _context3.next = 12;
-              break;
-
-            case 9:
-              _context3.prev = 9;
-              _context3.t2 = _context3["catch"](0);
-              alert(_context3.t2.toString());
-
-            case 12:
-            case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3, null, [[0, 9]]);
-    }));
-
-    return function onSelectThemeChanged(_x) {
-      return _ref3.apply(this, arguments);
-    };
-  }();
-
-  function refresh() {
-    return _refresh.apply(this, arguments);
+  async function refresh() {
+    try {
+      if (currentTheme != null) setDocsList(await DOC_LIST_repo.GetDocsList(currentTheme.THEME_ID));
+    } catch (err) {
+      alert(err.toString());
+    }
   }
 
-  function _refresh() {
-    _refresh = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee7() {
-      return regenerator_default().wrap(function _callee7$(_context7) {
-        while (1) {
-          switch (_context7.prev = _context7.next) {
-            case 0:
-              _context7.prev = 0;
+  const [isOpenAddDocsDialog, setIsOpenAddDocsDialog] = react.useState(false);
 
-              if (!(currentTheme != null)) {
-                _context7.next = 7;
-                break;
-              }
-
-              _context7.t0 = setDocsList;
-              _context7.next = 5;
-              return DOC_LIST_repo.GetDocsList(currentTheme.THEME_ID);
-
-            case 5:
-              _context7.t1 = _context7.sent;
-              (0, _context7.t0)(_context7.t1);
-
-            case 7:
-              _context7.next = 12;
-              break;
-
-            case 9:
-              _context7.prev = 9;
-              _context7.t2 = _context7["catch"](0);
-              alert(_context7.t2.toString());
-
-            case 12:
-            case "end":
-              return _context7.stop();
-          }
-        }
-      }, _callee7, null, [[0, 9]]);
-    }));
-    return _refresh.apply(this, arguments);
-  }
-
-  var _React$useState7 = react.useState(false),
-      _React$useState8 = (0,slicedToArray/* default */.Z)(_React$useState7, 2),
-      isOpenAddDocsDialog = _React$useState8[0],
-      setIsOpenAddDocsDialog = _React$useState8[1];
-
-  var closeAddDocsDialog = function closeAddDocsDialog() {
+  const closeAddDocsDialog = () => {
     setIsOpenAddDocsDialog(false);
   };
 
-  var saveDocsDialog = function saveDocsDialog() {
+  const saveDocsDialog = () => {
     closeAddDocsDialog();
     refresh();
   };
 
-  var _React$useState9 = react.useState(false),
-      _React$useState10 = (0,slicedToArray/* default */.Z)(_React$useState9, 2),
-      isOpenSignDialog = _React$useState10[0],
-      setIsOpenSignDialog = _React$useState10[1];
+  const [isOpenSignDialog, setIsOpenSignDialog] = react.useState(false);
 
-  var closeSignDialog = function closeSignDialog() {
+  const closeSignDialog = () => {
     setIsOpenSignDialog(false);
   };
 
-  var saveSignDialog = function saveSignDialog() {
+  const saveSignDialog = () => {
     setIsOpenSignDialog(false);
     refresh();
   };
 
-  var _React$useState11 = react.useState(null),
-      _React$useState12 = (0,slicedToArray/* default */.Z)(_React$useState11, 2),
-      selectedFiles = _React$useState12[0],
-      setSelectedFiles = _React$useState12[1];
+  const [selectedFiles, setSelectedFiles] = react.useState(null);
 
-  var signDocs = function signDocs(event, rowsData) {
+  const signDocs = (event, rowsData) => {
     setSelectedFiles(rowsData);
     setIsOpenSignDialog(true);
   };
 
-  var downloadDoc = /*#__PURE__*/function () {
-    var _ref4 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee4(event, rowData) {
-      var data;
-      return regenerator_default().wrap(function _callee4$(_context4) {
-        while (1) {
-          switch (_context4.prev = _context4.next) {
-            case 0:
-              _context4.prev = 0;
-              _context4.next = 3;
-              return DOC_LIST_repo.DownloadFileForSign(rowData.DOC_FOR_SIGN_ID);
+  const downloadDoc = async (event, rowData) => {
+    try {
+      downloadFileTest(`DownloadFileForSign?DOC_FOR_SIGN_ID=${docForSignId}`);
+      return;
+      const data = await DOC_LIST_repo.DownloadFileForSign(rowData.DOC_FOR_SIGN_ID);
+      downloadBase64File(data.FileContents, data.ContentType, data.FileDownloadName);
+    } catch (error) {
+      alert(error.toString());
+    }
+  };
 
-            case 3:
-              data = _context4.sent;
-              downloadBase64File(data.FileContents, data.ContentType, data.FileDownloadName);
-              _context4.next = 10;
-              break;
+  const downloadDocAndSign = async (event, rowData) => {
+    try {
+      const data = await DOC_LIST_repo.DownloadDocAndSign(rowData.DOC_FOR_SIGN_ID);
+      downloadBase64File(data.FileContents, data.ContentType, data.FileDownloadName);
+    } catch (error) {
+      alert(error.toString());
+    }
+  };
 
-            case 7:
-              _context4.prev = 7;
-              _context4.t0 = _context4["catch"](0);
-              alert(_context4.t0.toString());
-
-            case 10:
-            case "end":
-              return _context4.stop();
-          }
+  const removeDocs = async (event, rowsData) => {
+    try {
+      if (confirm(`Вы уверены что хотите удалить ${rowsData.length} документ?`)) {
+        for (const item of rowsData) {
+          await DOC_LIST_repo.RemoveDoc(item.DOC_FOR_SIGN_ID);
         }
-      }, _callee4, null, [[0, 7]]);
-    }));
 
-    return function downloadDoc(_x2, _x3) {
-      return _ref4.apply(this, arguments);
-    };
-  }();
+        refresh();
+      }
+    } catch (error) {
+      alert(error.toString());
+    }
+  };
 
-  var downloadDocAndSign = /*#__PURE__*/function () {
-    var _ref5 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee5(event, rowData) {
-      var data;
-      return regenerator_default().wrap(function _callee5$(_context5) {
-        while (1) {
-          switch (_context5.prev = _context5.next) {
-            case 0:
-              _context5.prev = 0;
-              _context5.next = 3;
-              return DOC_LIST_repo.DownloadDocAndSign(rowData.DOC_FOR_SIGN_ID);
+  const [isOpenSigFileDialog, setIsOpenSigFileDialog] = react.useState(false);
+  const [docForSignId, setDocForSignId] = react.useState(null);
 
-            case 3:
-              data = _context5.sent;
-              downloadBase64File(data.FileContents, data.ContentType, data.FileDownloadName);
-              _context5.next = 10;
-              break;
-
-            case 7:
-              _context5.prev = 7;
-              _context5.t0 = _context5["catch"](0);
-              alert(_context5.t0.toString());
-
-            case 10:
-            case "end":
-              return _context5.stop();
-          }
-        }
-      }, _callee5, null, [[0, 7]]);
-    }));
-
-    return function downloadDocAndSign(_x4, _x5) {
-      return _ref5.apply(this, arguments);
-    };
-  }();
-
-  var removeDocs = /*#__PURE__*/function () {
-    var _ref6 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee6(event, rowsData) {
-      var _iterator, _step, item;
-
-      return regenerator_default().wrap(function _callee6$(_context6) {
-        while (1) {
-          switch (_context6.prev = _context6.next) {
-            case 0:
-              _context6.prev = 0;
-
-              if (!confirm("\u0412\u044B \u0443\u0432\u0435\u0440\u0435\u043D\u044B \u0447\u0442\u043E \u0445\u043E\u0442\u0438\u0442\u0435 \u0443\u0434\u0430\u043B\u0438\u0442\u044C ".concat(rowsData.length, " \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442?"))) {
-                _context6.next = 20;
-                break;
-              }
-
-              _iterator = DOC_LIST_createForOfIteratorHelper(rowsData);
-              _context6.prev = 3;
-
-              _iterator.s();
-
-            case 5:
-              if ((_step = _iterator.n()).done) {
-                _context6.next = 11;
-                break;
-              }
-
-              item = _step.value;
-              _context6.next = 9;
-              return DOC_LIST_repo.RemoveDoc(item.DOC_FOR_SIGN_ID);
-
-            case 9:
-              _context6.next = 5;
-              break;
-
-            case 11:
-              _context6.next = 16;
-              break;
-
-            case 13:
-              _context6.prev = 13;
-              _context6.t0 = _context6["catch"](3);
-
-              _iterator.e(_context6.t0);
-
-            case 16:
-              _context6.prev = 16;
-
-              _iterator.f();
-
-              return _context6.finish(16);
-
-            case 19:
-              refresh();
-
-            case 20:
-              _context6.next = 25;
-              break;
-
-            case 22:
-              _context6.prev = 22;
-              _context6.t1 = _context6["catch"](0);
-              alert(_context6.t1.toString());
-
-            case 25:
-            case "end":
-              return _context6.stop();
-          }
-        }
-      }, _callee6, null, [[0, 22], [3, 13, 16, 19]]);
-    }));
-
-    return function removeDocs(_x6, _x7) {
-      return _ref6.apply(this, arguments);
-    };
-  }();
-
-  var _React$useState13 = react.useState(false),
-      _React$useState14 = (0,slicedToArray/* default */.Z)(_React$useState13, 2),
-      isOpenSigFileDialog = _React$useState14[0],
-      setIsOpenSigFileDialog = _React$useState14[1];
-
-  var _React$useState15 = react.useState(null),
-      _React$useState16 = (0,slicedToArray/* default */.Z)(_React$useState15, 2),
-      docForSignId = _React$useState16[0],
-      setDocForSignId = _React$useState16[1];
-
-  var closeSigFileDialog = function closeSigFileDialog() {
+  const closeSigFileDialog = () => {
     setIsOpenSigFileDialog(false);
   };
 
-  var saveSigFileDialog = function saveSigFileDialog() {
+  const saveSigFileDialog = () => {
     closeSigFileDialog();
     refresh();
   };
 
-  var uploadSigFile = function uploadSigFile(event, rowsData) {
+  const uploadSigFile = (event, rowsData) => {
     setDocForSignId(rowsData.DOC_FOR_SIGN_ID);
     setIsOpenSigFileDialog(true);
   };
 
   function tableAction() {
-    var action = [{
+    const action = [{
       icon: "refresh",
       iconProps: {
         color: "primary"
       },
       tooltip: "Обновить",
       isFreeAction: true,
-      onClick: function onClick() {
-        return refresh();
-      }
+      onClick: () => refresh()
     }, {
       icon: 'fingerprint',
       iconProps: {
@@ -103743,7 +101644,7 @@ function DOC_LIST(props) {
       },
       tooltip: "Подписать",
       position: 'row',
-      onClick: function onClick(e, data) {
+      onClick: (e, data) => {
         signDocs(e, [data]);
       }
     }, {
@@ -103755,7 +101656,7 @@ function DOC_LIST(props) {
       },
       tooltip: "Загрузить открепленную подпись",
       position: 'row',
-      onClick: function onClick(e, data) {
+      onClick: (e, data) => {
         uploadSigFile(e, data);
       }
     }, {
@@ -103784,7 +101685,7 @@ function DOC_LIST(props) {
         },
         tooltip: "Добавить документы",
         isFreeAction: true,
-        onClick: function onClick(event) {
+        onClick: event => {
           setIsOpenAddDocsDialog(true);
         }
       }, {
@@ -103794,7 +101695,7 @@ function DOC_LIST(props) {
         },
         tooltip: "Удалить документ",
         position: 'row',
-        onClick: function onClick(e, data) {
+        onClick: (e, data) => {
           removeDocs(e, [data]);
         }
       }, {
@@ -103845,15 +101746,11 @@ function DOC_LIST(props) {
     }, {
       title: "Подписано",
       field: "ROLE_SIGN",
-      render: function render(rowData) {
-        return /*#__PURE__*/react.createElement("div", null, rowData.SIGNS.map(function (value, index) {
-          return /*#__PURE__*/react.createElement("div", {
-            key: index
-          }, /*#__PURE__*/react.createElement("span", {
-            className: value.IsSIGN ? "GreenText" : "RedText"
-          }, value.ROLE_NAME), /*#__PURE__*/react.createElement("br", null));
-        }));
-      }
+      render: rowData => /*#__PURE__*/react.createElement("div", null, rowData.SIGNS.map((value, index) => /*#__PURE__*/react.createElement("div", {
+        key: index
+      }, /*#__PURE__*/react.createElement("span", {
+        className: value.IsSIGN ? "GreenText" : "RedText"
+      }, value.ROLE_NAME), /*#__PURE__*/react.createElement("br", null))))
     }],
     data: docsList,
     actions: tableAction(),
@@ -103898,106 +101795,63 @@ function DOC_LIST(props) {
     docForSignId: docForSignId
   }))));
 }
-var DOC_LIST_useStyles = (0,makeStyles/* default */.Z)(function (theme) {
-  return {
-    root: {
-      width: '100%',
-      maxWidth: 360,
-      backgroundColor: theme.palette.background.paper
-    },
-    themeListItem: {
-      color: 'green !important'
-    }
-  };
-});
+const DOC_LIST_useStyles = (0,makeStyles/* default */.Z)(theme => ({
+  root: {
+    width: '100%',
+    maxWidth: 360,
+    backgroundColor: theme.palette.background.paper
+  },
+  themeListItem: {
+    color: 'green !important'
+  }
+}));
 
 function ListTheme(props) {
-  var classes = DOC_LIST_useStyles();
-  var themeItems = props.themeItems,
-      onSelectChanged = props.onSelectChanged,
-      isAdmin = props.isAdmin,
-      onRefresh = props.onRefresh;
+  const classes = DOC_LIST_useStyles();
+  const {
+    themeItems,
+    onSelectChanged,
+    isAdmin,
+    onRefresh
+  } = props;
+  const [selectedIndex, setSelectedIndex] = react.useState(-1);
+  const [currentThemeId, setCurrentThemeId] = react.useState(null);
+  const [openAddDialog, setOpenAddDialog] = react.useState(false);
 
-  var _React$useState17 = react.useState(-1),
-      _React$useState18 = (0,slicedToArray/* default */.Z)(_React$useState17, 2),
-      selectedIndex = _React$useState18[0],
-      setSelectedIndex = _React$useState18[1];
-
-  var _React$useState19 = react.useState(null),
-      _React$useState20 = (0,slicedToArray/* default */.Z)(_React$useState19, 2),
-      currentThemeId = _React$useState20[0],
-      setCurrentThemeId = _React$useState20[1];
-
-  var _React$useState21 = react.useState(false),
-      _React$useState22 = (0,slicedToArray/* default */.Z)(_React$useState21, 2),
-      openAddDialog = _React$useState22[0],
-      setOpenAddDialog = _React$useState22[1];
-
-  var changeSelectedIndex = function changeSelectedIndex(newIndex) {
+  const changeSelectedIndex = newIndex => {
     setSelectedIndex(newIndex);
     setCurrentThemeId(themeItems[newIndex].THEME_ID);
     onSelectChanged(themeItems[newIndex]);
   };
 
-  react.useEffect(function () {
+  react.useEffect(() => {
     if (selectedIndex === -1 && themeItems.length !== 0) changeSelectedIndex(0);
   }, [themeItems]);
 
   function renderList() {
-    return /*#__PURE__*/react.createElement(List/* default */.Z, null, themeItems != null ? themeItems.map(function (value, index) {
-      return /*#__PURE__*/react.createElement(ListItem/* default */.Z, {
-        key: value.THEME_ID,
-        selected: selectedIndex === index,
-        className: classes.themeListItem,
-        onClick: function onClick() {
-          return changeSelectedIndex(index);
-        },
-        button: true
-      }, /*#__PURE__*/react.createElement(ListItemText/* default */.Z, {
-        primary: value.CAPTION
-      }));
-    }) : null);
+    return /*#__PURE__*/react.createElement(List/* default */.Z, null, themeItems != null ? themeItems.map((value, index) => /*#__PURE__*/react.createElement(ListItem/* default */.Z, {
+      key: value.THEME_ID,
+      selected: selectedIndex === index,
+      className: classes.themeListItem,
+      onClick: () => changeSelectedIndex(index),
+      button: true
+    }, /*#__PURE__*/react.createElement(ListItemText/* default */.Z, {
+      primary: value.CAPTION
+    }))) : null);
   }
 
-  var removeThemeClick = /*#__PURE__*/function () {
-    var _ref7 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee8() {
-      return regenerator_default().wrap(function _callee8$(_context8) {
-        while (1) {
-          switch (_context8.prev = _context8.next) {
-            case 0:
-              _context8.prev = 0;
-              _context8.next = 3;
-              return DOC_LIST_repo.RemoveTheme(themeItems[selectedIndex].THEME_ID);
+  const removeThemeClick = async () => {
+    try {
+      await DOC_LIST_repo.RemoveTheme(themeItems[selectedIndex].THEME_ID);
+      onRefresh();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
 
-            case 3:
-              onRefresh();
-              _context8.next = 9;
-              break;
+  const [openThemeFileSaver, setOpenThemeFileSaver] = react.useState(false);
 
-            case 6:
-              _context8.prev = 6;
-              _context8.t0 = _context8["catch"](0);
-              alert(_context8.t0.message);
-
-            case 9:
-            case "end":
-              return _context8.stop();
-          }
-        }
-      }, _callee8, null, [[0, 6]]);
-    }));
-
-    return function removeThemeClick() {
-      return _ref7.apply(this, arguments);
-    };
-  }();
-
-  var _React$useState23 = react.useState(false),
-      _React$useState24 = (0,slicedToArray/* default */.Z)(_React$useState23, 2),
-      openThemeFileSaver = _React$useState24[0],
-      setOpenThemeFileSaver = _React$useState24[1];
-
-  var saveAllFileThemeClick = function saveAllFileThemeClick() {
+  const saveAllFileThemeClick = () => {
     try {
       setOpenThemeFileSaver(true);
     } catch (error) {
@@ -104005,45 +101859,28 @@ function ListTheme(props) {
     }
   };
 
-  var closeOpenThemeFileSaver = /*#__PURE__*/function () {
-    var _ref8 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee9() {
-      return regenerator_default().wrap(function _callee9$(_context9) {
-        while (1) {
-          switch (_context9.prev = _context9.next) {
-            case 0:
-              try {
-                setOpenThemeFileSaver(false);
-              } catch (error) {
-                alert(error.toString());
-              }
+  const closeOpenThemeFileSaver = async () => {
+    try {
+      setOpenThemeFileSaver(false);
+    } catch (error) {
+      alert(error.toString());
+    }
+  };
 
-            case 1:
-            case "end":
-              return _context9.stop();
-          }
-        }
-      }, _callee9);
-    }));
-
-    return function closeOpenThemeFileSaver() {
-      return _ref8.apply(this, arguments);
-    };
-  }();
-
-  var showAddDialog = function showAddDialog() {
+  const showAddDialog = () => {
     setOpenAddDialog(true);
   };
 
-  var hideAddDialog = function hideAddDialog() {
+  const hideAddDialog = () => {
     setOpenAddDialog(false);
   };
 
-  var onSaveAddDialog = function onSaveAddDialog() {
+  const onSaveAddDialog = () => {
     hideAddDialog();
     onRefresh();
   };
 
-  var handleRefresh = function handleRefresh() {
+  const handleRefresh = () => {
     onRefresh();
   };
 
@@ -104071,65 +101908,34 @@ function ListTheme(props) {
 }
 
 function AddThemeDialog(props) {
-  var onClose = props.onClose,
-      isOpen = props.isOpen,
-      onSave = props.onSave;
-
-  var _React$useState25 = react.useState(""),
-      _React$useState26 = (0,slicedToArray/* default */.Z)(_React$useState25, 2),
-      errorMessage = _React$useState26[0],
-      setErrorMessage = _React$useState26[1];
-
-  var _React$useState27 = react.useState(""),
-      _React$useState28 = (0,slicedToArray/* default */.Z)(_React$useState27, 2),
-      theme = _React$useState28[0],
-      setTheme = _React$useState28[1];
-
-  react.useEffect(function () {
+  const {
+    onClose,
+    isOpen,
+    onSave
+  } = props;
+  const [errorMessage, setErrorMessage] = react.useState("");
+  const [theme, setTheme] = react.useState("");
+  react.useEffect(() => {
     setTheme("");
   }, []);
 
-  var themeChange = function themeChange(event) {
+  const themeChange = event => {
     setTheme(event.target.value);
   };
 
-  var handleClose = function handleClose() {
+  const handleClose = () => {
     onClose();
   };
 
-  var handleSave = /*#__PURE__*/function () {
-    var _ref9 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee10() {
-      return regenerator_default().wrap(function _callee10$(_context10) {
-        while (1) {
-          switch (_context10.prev = _context10.next) {
-            case 0:
-              _context10.prev = 0;
-              _context10.next = 3;
-              return DOC_LIST_repo.AddTheme(theme);
-
-            case 3:
-              onSave();
-              handleClose();
-              _context10.next = 10;
-              break;
-
-            case 7:
-              _context10.prev = 7;
-              _context10.t0 = _context10["catch"](0);
-              setErrorMessage(_context10.t0.toString());
-
-            case 10:
-            case "end":
-              return _context10.stop();
-          }
-        }
-      }, _callee10, null, [[0, 7]]);
-    }));
-
-    return function handleSave() {
-      return _ref9.apply(this, arguments);
-    };
-  }();
+  const handleSave = async () => {
+    try {
+      await DOC_LIST_repo.AddTheme(theme);
+      onSave();
+      handleClose();
+    } catch (err) {
+      setErrorMessage(err.toString());
+    }
+  };
 
   return /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Dialog/* default */.Z, {
     open: isOpen,
@@ -104157,44 +101963,37 @@ function AddThemeDialog(props) {
   }, "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"))));
 }
 function AddDocsDialog(props) {
-  var classes = DOC_LIST_useStyles();
-  var onClose = props.onClose,
-      isOpen = props.isOpen,
-      onSave = props.onSave,
-      themeId = props.themeId;
+  const classes = DOC_LIST_useStyles();
+  const {
+    onClose,
+    isOpen,
+    onSave,
+    themeId
+  } = props;
+  const [files, setFiles] = react.useState(null);
 
-  var _React$useState29 = react.useState(null),
-      _React$useState30 = (0,slicedToArray/* default */.Z)(_React$useState29, 2),
-      files = _React$useState30[0],
-      setFiles = _React$useState30[1];
-
-  var selectFile = function selectFile(e) {
+  const selectFile = e => {
     var files = e.target.files;
     setFiles(Array.from(files));
   };
 
-  var _React$useState31 = react.useState(0),
-      _React$useState32 = (0,slicedToArray/* default */.Z)(_React$useState31, 2),
-      activeStep = _React$useState32[0],
-      setActiveStep = _React$useState32[1];
+  const [activeStep, setActiveStep] = react.useState(0);
 
-  var handleNext = function handleNext() {
-    setActiveStep(function (prevActiveStep) {
-      return prevActiveStep + 1;
-    });
+  const handleNext = () => {
+    setActiveStep(prevActiveStep => prevActiveStep + 1);
   };
 
-  var handleReset = function handleReset() {
+  const handleReset = () => {
     setFiles(null);
     setActiveStep(0);
   };
 
-  var handleSave = function handleSave() {
+  const handleSave = () => {
     onSave();
     handleReset();
   };
 
-  var handleClose = function handleClose() {
+  const handleClose = () => {
     onClose();
     handleReset();
   };
@@ -104235,79 +102034,42 @@ function AddDocsDialog(props) {
   }, "\u041D\u0430\u0437\u0430\u0434")))))))))));
 }
 function AddSigFileDialog(props) {
-  var classes = DOC_LIST_useStyles();
-  var onClose = props.onClose,
-      isOpen = props.isOpen,
-      onSave = props.onSave,
-      docForSignId = props.docForSignId;
+  const classes = DOC_LIST_useStyles();
+  const {
+    onClose,
+    isOpen,
+    onSave,
+    docForSignId
+  } = props;
+  const [errorMessage, setErrorMessage] = react.useState("");
+  const [file, setFile] = react.useState(null);
+  const [processing, setProcessing] = react.useState(false);
 
-  var _React$useState33 = react.useState(""),
-      _React$useState34 = (0,slicedToArray/* default */.Z)(_React$useState33, 2),
-      errorMessage = _React$useState34[0],
-      setErrorMessage = _React$useState34[1];
-
-  var _React$useState35 = react.useState(null),
-      _React$useState36 = (0,slicedToArray/* default */.Z)(_React$useState35, 2),
-      file = _React$useState36[0],
-      setFile = _React$useState36[1];
-
-  var _React$useState37 = react.useState(false),
-      _React$useState38 = (0,slicedToArray/* default */.Z)(_React$useState37, 2),
-      processing = _React$useState38[0],
-      setProcessing = _React$useState38[1];
-
-  var selectFile = function selectFile(e) {
+  const selectFile = e => {
     var file = e.target.files[0];
     setFile(file);
   };
 
-  var handleReset = function handleReset() {
+  const handleReset = () => {
     setFile(null);
     setErrorMessage("");
   };
 
-  var handleSave = /*#__PURE__*/function () {
-    var _ref10 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee11() {
-      return regenerator_default().wrap(function _callee11$(_context11) {
-        while (1) {
-          switch (_context11.prev = _context11.next) {
-            case 0:
-              _context11.prev = 0;
-              setErrorMessage("");
-              setProcessing(true);
-              _context11.next = 5;
-              return DOC_LIST_repo.AddSigFile(file, docForSignId);
+  const handleSave = async () => {
+    try {
+      setErrorMessage("");
+      setProcessing(true);
+      await DOC_LIST_repo.AddSigFile(file, docForSignId);
+      onSave();
+      handleReset();
+    } catch (err) {
+      setErrorMessage(err.toString());
+    } finally {
+      setProcessing(false);
+    }
+  };
 
-            case 5:
-              onSave();
-              handleReset();
-              _context11.next = 12;
-              break;
-
-            case 9:
-              _context11.prev = 9;
-              _context11.t0 = _context11["catch"](0);
-              setErrorMessage(_context11.t0.toString());
-
-            case 12:
-              _context11.prev = 12;
-              setProcessing(false);
-              return _context11.finish(12);
-
-            case 15:
-            case "end":
-              return _context11.stop();
-          }
-        }
-      }, _callee11, null, [[0, 9, 12, 15]]);
-    }));
-
-    return function handleSave() {
-      return _ref10.apply(this, arguments);
-    };
-  }();
-
-  var handleClose = function handleClose() {
+  const handleClose = () => {
     onClose();
     handleReset();
   };
@@ -104340,36 +102102,18 @@ function AddSigFileDialog(props) {
 }
 
 function FileViwer(props) {
-  var files = props.files,
-      themeId = props.themeId,
-      onSave = props.onSave;
+  const {
+    files,
+    themeId,
+    onSave
+  } = props;
+  const [roles, setRoles] = react.useState([]);
+  const [lpu, setLpu] = react.useState([]);
+  const [items, setItems] = react.useState([]);
+  const [validationErr, setValidationErr] = react.useState([]);
+  const [selectAllRole, setSelectAllRole] = react.useState([]);
 
-  var _React$useState39 = react.useState([]),
-      _React$useState40 = (0,slicedToArray/* default */.Z)(_React$useState39, 2),
-      roles = _React$useState40[0],
-      setRoles = _React$useState40[1];
-
-  var _React$useState41 = react.useState([]),
-      _React$useState42 = (0,slicedToArray/* default */.Z)(_React$useState41, 2),
-      lpu = _React$useState42[0],
-      setLpu = _React$useState42[1];
-
-  var _React$useState43 = react.useState([]),
-      _React$useState44 = (0,slicedToArray/* default */.Z)(_React$useState43, 2),
-      items = _React$useState44[0],
-      setItems = _React$useState44[1];
-
-  var _React$useState45 = react.useState([]),
-      _React$useState46 = (0,slicedToArray/* default */.Z)(_React$useState45, 2),
-      validationErr = _React$useState46[0],
-      setValidationErr = _React$useState46[1];
-
-  var _React$useState47 = react.useState([]),
-      _React$useState48 = (0,slicedToArray/* default */.Z)(_React$useState47, 2),
-      selectAllRole = _React$useState48[0],
-      setSelectAllRole = _React$useState48[1];
-
-  var findMo = function findMo(filename, lpu) {
+  const findMo = (filename, lpu) => {
     var regex = /\d{6}/;
     var match = regex.exec(filename);
 
@@ -104380,25 +102124,27 @@ function FileViwer(props) {
     return "";
   };
 
-  var createItems = function createItems(moList) {
-    var dicLpu = {};
-    moList.forEach(function (x) {
+  const createItems = moList => {
+    const dicLpu = {};
+    moList.forEach(x => {
       dicLpu[x.MCOD] = x;
     });
     var list = [];
-    files.forEach(function (x) {
+    files.forEach(x => {
       list.push({
         FILE: x,
         FILENAME: x.name,
         SIZE: Math.round(x.size / 1024 * 100) / 100,
         MO: findMo(x.name, dicLpu),
         ROLE: [],
-        Validation: function Validation() {
-          var err = [];
-          if (!this.MO) err.push("\u0423\u043A\u0430\u0436\u0438\u0442\u0435 \u041C\u041E \u0434\u043B\u044F \u0444\u0430\u0439\u043B\u0430 ".concat(this.FILENAME));
-          if (this.ROLE.length === 0) err.push("\u0423\u043A\u0430\u0436\u0438\u0442\u0435 \u0440\u043E\u043B\u0438 \u0434\u043B\u044F \u0444\u0430\u0439\u043B\u0430 ".concat(this.FILENAME));
+
+        Validation() {
+          const err = [];
+          if (!this.MO) err.push(`Укажите МО для файла ${this.FILENAME}`);
+          if (this.ROLE.length === 0) err.push(`Укажите роли для файла ${this.FILENAME}`);
           return err;
         },
+
         isLoad: false,
         Text: ""
       });
@@ -104406,73 +102152,44 @@ function FileViwer(props) {
     setItems(list);
   };
 
-  (0,react.useEffect)( /*#__PURE__*/(0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee12() {
-    var f003;
-    return regenerator_default().wrap(function _callee12$(_context12) {
-      while (1) {
-        switch (_context12.prev = _context12.next) {
-          case 0:
-            _context12.prev = 0;
-            _context12.t0 = setRoles;
-            _context12.next = 4;
-            return DOC_LIST_repo.GetRoleSPR();
+  (0,react.useEffect)(async () => {
+    try {
+      setRoles(await DOC_LIST_repo.GetRoleSPR());
+      const f003 = await DOC_LIST_repo.GetF003();
+      createItems(f003);
+      setLpu(f003);
+    } catch (err) {
+      alert(err.toString());
+    }
+  }, []);
 
-          case 4:
-            _context12.t1 = _context12.sent;
-            (0, _context12.t0)(_context12.t1);
-            _context12.next = 8;
-            return DOC_LIST_repo.GetF003();
-
-          case 8:
-            f003 = _context12.sent;
-            createItems(f003);
-            setLpu(f003);
-            _context12.next = 16;
-            break;
-
-          case 13:
-            _context12.prev = 13;
-            _context12.t2 = _context12["catch"](0);
-            alert(_context12.t2.toString());
-
-          case 16:
-          case "end":
-            return _context12.stop();
-        }
-      }
-    }, _callee12, null, [[0, 13]]);
-  })), []);
-
-  var moChange = function moChange(event, newValue, index) {
-    var newItems = (0,toConsumableArray/* default */.Z)(items);
-
+  const moChange = (event, newValue, index) => {
+    const newItems = [...items];
     newItems[index].MO = newValue;
     setItems(newItems);
   };
 
-  var roleChange = function roleChange(event, newValue, index) {
-    var newItems = (0,toConsumableArray/* default */.Z)(items);
-
+  const roleChange = (event, newValue, index) => {
+    const newItems = [...items];
     newItems[index].ROLE = newValue;
     setItems(newItems);
   };
 
-  var selectAllRoleChange = function selectAllRoleChange(event, newValue) {
+  const selectAllRoleChange = (event, newValue) => {
     setSelectAllRole(newValue);
   };
 
-  var setAllRole = function setAllRole() {
-    var newItems = (0,toConsumableArray/* default */.Z)(items);
-
-    newItems.forEach(function (value) {
+  const setAllRole = () => {
+    const newItems = [...items];
+    newItems.forEach(value => {
       value.ROLE = selectAllRole;
     });
     setItems(newItems);
   };
 
-  var validation = function validation() {
+  const validation = () => {
     var validationError = [];
-    items.forEach(function (value) {
+    items.forEach(value => {
       var validationResult = value.Validation();
       if (validationResult.length !== 0) validationError = validationError.concat(validationResult);
     });
@@ -104480,131 +102197,60 @@ function FileViwer(props) {
     return validationError;
   };
 
-  (0,react.useEffect)(function () {
+  (0,react.useEffect)(() => {
     validation();
   }, [items]);
 
-  var updateItemState = /*#__PURE__*/function () {
-    var _ref12 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee13(item, isLoad, text) {
-      return regenerator_default().wrap(function _callee13$(_context13) {
-        while (1) {
-          switch (_context13.prev = _context13.next) {
-            case 0:
-              item.isLoad = isLoad;
-              item.Text = text;
-              setItems(items);
+  const updateItemState = async (item, isLoad, text) => {
+    item.isLoad = isLoad;
+    item.Text = text;
+    setItems(items);
+  };
 
-            case 3:
-            case "end":
-              return _context13.stop();
-          }
+  const [progress, setProgress] = react.useState(0);
+  const [processSaveFiles, setProcessSaveFiles] = react.useState(false);
+
+  const saveFiles = async () => {
+    try {
+      setProgress(0);
+      setProcessSaveFiles(true);
+      const length = items.length;
+
+      for (let index = 0; index < items.length; index++) {
+        const item = items[index];
+        updateItemState(item, null, "Загрузка файла на сервер");
+
+        try {
+          await DOC_LIST_repo.AddFileForSign(item.FILE, themeId, item.MO.MCOD, item.ROLE.map(value => value.SIGN_ROLE_ID));
+          updateItemState(item, true, "Файл загружен");
+        } catch (err) {
+          updateItemState(item, false, `Ошибка при загрузке:${err.toString()}`);
         }
-      }, _callee13);
-    }));
 
-    return function updateItemState(_x8, _x9, _x10) {
-      return _ref12.apply(this, arguments);
-    };
-  }();
+        setProgress(index / length * 100);
+      }
 
-  var _React$useState49 = react.useState(0),
-      _React$useState50 = (0,slicedToArray/* default */.Z)(_React$useState49, 2),
-      progress = _React$useState50[0],
-      setProgress = _React$useState50[1];
-
-  var _React$useState51 = react.useState(false),
-      _React$useState52 = (0,slicedToArray/* default */.Z)(_React$useState51, 2),
-      processSaveFiles = _React$useState52[0],
-      setProcessSaveFiles = _React$useState52[1];
-
-  var saveFiles = /*#__PURE__*/function () {
-    var _ref13 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee14() {
-      var length, index, item;
-      return regenerator_default().wrap(function _callee14$(_context14) {
-        while (1) {
-          switch (_context14.prev = _context14.next) {
-            case 0:
-              _context14.prev = 0;
-              setProgress(0);
-              setProcessSaveFiles(true);
-              length = items.length;
-              index = 0;
-
-            case 5:
-              if (!(index < items.length)) {
-                _context14.next = 21;
-                break;
-              }
-
-              item = items[index];
-              updateItemState(item, null, "Загрузка файла на сервер");
-              _context14.prev = 8;
-              _context14.next = 11;
-              return DOC_LIST_repo.AddFileForSign(item.FILE, themeId, item.MO.MCOD, item.ROLE.map(function (value) {
-                return value.SIGN_ROLE_ID;
-              }));
-
-            case 11:
-              updateItemState(item, true, "Файл загружен");
-              _context14.next = 17;
-              break;
-
-            case 14:
-              _context14.prev = 14;
-              _context14.t0 = _context14["catch"](8);
-              updateItemState(item, false, "\u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u0440\u0438 \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0435:".concat(_context14.t0.toString()));
-
-            case 17:
-              setProgress(index / length * 100);
-
-            case 18:
-              index++;
-              _context14.next = 5;
-              break;
-
-            case 21:
-              if (items.every(function (val) {
-                return val.isLoad === true;
-              })) onSave();
-
-            case 22:
-              _context14.prev = 22;
-              setProcessSaveFiles(false);
-              return _context14.finish(22);
-
-            case 25:
-            case "end":
-              return _context14.stop();
-          }
-        }
-      }, _callee14, null, [[0,, 22, 25], [8, 14]]);
-    }));
-
-    return function saveFiles() {
-      return _ref13.apply(this, arguments);
-    };
-  }();
+      if (items.every(val => val.isLoad === true)) onSave();
+    } finally {
+      setProcessSaveFiles(false);
+    }
+  };
 
   return /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, validationErr != null ? /*#__PURE__*/react.createElement("ul", {
     className: "ErrorLi"
-  }, validationErr.map(function (value, index) {
-    return /*#__PURE__*/react.createElement("li", {
-      key: index
-    }, value);
-  })) : null), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Autocomplete_Autocomplete, {
+  }, validationErr.map((value, index) => /*#__PURE__*/react.createElement("li", {
+    key: index
+  }, value))) : null), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Autocomplete_Autocomplete, {
     multiple: true,
     options: roles,
-    getOptionLabel: function getOptionLabel(option) {
-      return option.CAPTION;
-    },
+    getOptionLabel: option => option.CAPTION,
     value: selectAllRole,
     onChange: selectAllRoleChange,
-    renderInput: function renderInput(params) {
-      return /*#__PURE__*/react.createElement(TextField/* default */.Z, (0,esm_extends/* default */.Z)({}, params, (0,defineProperty/* default */.Z)({
-        variant: "standard",
-        label: "\u0420\u043E\u043B\u0438"
-      }, "variant", "outlined")));
-    }
+    renderInput: params => /*#__PURE__*/react.createElement(TextField/* default */.Z, (0,esm_extends/* default */.Z)({}, params, {
+      variant: "standard",
+      label: "\u0420\u043E\u043B\u0438",
+      variant: "outlined"
+    }))
   })), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Button/* default */.Z, {
     variant: "contained",
     color: "primary",
@@ -104621,50 +102267,41 @@ function FileViwer(props) {
     width: "25%"
   }, "\u041C\u0435\u0434\u0438\u0446\u0438\u043D\u0441\u043A\u0430\u044F \u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u044F"), /*#__PURE__*/react.createElement("th", {
     width: "25%"
-  }, "\u041E\u0436\u0438\u0434\u0430\u0435\u043C\u044B\u0435 \u043F\u043E\u0434\u043F\u0438\u0441\u0438")), items.map(function (value, index) {
-    return /*#__PURE__*/react.createElement("tr", {
-      key: index
-    }, /*#__PURE__*/react.createElement("td", null, value.Text), /*#__PURE__*/react.createElement("td", null, value.FILENAME), /*#__PURE__*/react.createElement("td", null, value.SIZE), /*#__PURE__*/react.createElement("td", {
-      style: {
-        margin: 5
-      }
-    }, /*#__PURE__*/react.createElement(Autocomplete_Autocomplete, {
-      options: lpu,
-      getOptionLabel: function getOptionLabel(option) {
-        return option ? option.NAME : "";
-      },
-      value: value.MO,
-      onChange: function onChange(event, newValue) {
-        moChange(event, newValue, index);
-      },
-      renderInput: function renderInput(params) {
-        return /*#__PURE__*/react.createElement(TextField/* default */.Z, (0,esm_extends/* default */.Z)({}, params, {
-          label: "\u041C\u0435\u0434\u0438\u0446\u0438\u043D\u0441\u043A\u0430\u044F \u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u044F",
-          variant: "outlined"
-        }));
-      }
-    })), /*#__PURE__*/react.createElement("td", {
-      style: {
-        margin: 5
-      }
-    }, /*#__PURE__*/react.createElement(Autocomplete_Autocomplete, {
-      multiple: true,
-      options: roles,
-      getOptionLabel: function getOptionLabel(option) {
-        return option ? option.CAPTION : "";
-      },
-      value: value.ROLE,
-      onChange: function onChange(event, newValue) {
-        roleChange(event, newValue, index);
-      },
-      renderInput: function renderInput(params) {
-        return /*#__PURE__*/react.createElement(TextField/* default */.Z, (0,esm_extends/* default */.Z)({}, params, (0,defineProperty/* default */.Z)({
-          variant: "standard",
-          label: "\u0420\u043E\u043B\u0438"
-        }, "variant", "outlined")));
-      }
-    })));
-  })))), /*#__PURE__*/react.createElement("br", null), processSaveFiles === true ? /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(LinearProgressWithLabel, {
+  }, "\u041E\u0436\u0438\u0434\u0430\u0435\u043C\u044B\u0435 \u043F\u043E\u0434\u043F\u0438\u0441\u0438")), items.map((value, index) => /*#__PURE__*/react.createElement("tr", {
+    key: index
+  }, /*#__PURE__*/react.createElement("td", null, value.Text), /*#__PURE__*/react.createElement("td", null, value.FILENAME), /*#__PURE__*/react.createElement("td", null, value.SIZE), /*#__PURE__*/react.createElement("td", {
+    style: {
+      margin: 5
+    }
+  }, /*#__PURE__*/react.createElement(Autocomplete_Autocomplete, {
+    options: lpu,
+    getOptionLabel: option => option ? option.NAME : "",
+    value: value.MO,
+    onChange: (event, newValue) => {
+      moChange(event, newValue, index);
+    },
+    renderInput: params => /*#__PURE__*/react.createElement(TextField/* default */.Z, (0,esm_extends/* default */.Z)({}, params, {
+      label: "\u041C\u0435\u0434\u0438\u0446\u0438\u043D\u0441\u043A\u0430\u044F \u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u044F",
+      variant: "outlined"
+    }))
+  })), /*#__PURE__*/react.createElement("td", {
+    style: {
+      margin: 5
+    }
+  }, /*#__PURE__*/react.createElement(Autocomplete_Autocomplete, {
+    multiple: true,
+    options: roles,
+    getOptionLabel: option => option ? option.CAPTION : "",
+    value: value.ROLE,
+    onChange: (event, newValue) => {
+      roleChange(event, newValue, index);
+    },
+    renderInput: params => /*#__PURE__*/react.createElement(TextField/* default */.Z, (0,esm_extends/* default */.Z)({}, params, {
+      variant: "standard",
+      label: "\u0420\u043E\u043B\u0438",
+      variant: "outlined"
+    }))
+  }))))))), /*#__PURE__*/react.createElement("br", null), processSaveFiles === true ? /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(LinearProgressWithLabel, {
     value: progress
   }), /*#__PURE__*/react.createElement("br", null)) : null, /*#__PURE__*/react.createElement(Button/* default */.Z, {
     variant: "contained",
@@ -104686,16 +102323,13 @@ var Collapse = __webpack_require__(66037);
 
 
 
-
 function Spoller(props) {
-  var caption = props.caption;
+  const {
+    caption
+  } = props;
+  const [isOpen, setIsOpen] = react.useState(false);
 
-  var _React$useState = react.useState(false),
-      _React$useState2 = (0,slicedToArray/* default */.Z)(_React$useState, 2),
-      isOpen = _React$useState2[0],
-      setIsOpen = _React$useState2[1];
-
-  var handleClick = function handleClick() {
+  const handleClick = () => {
     setIsOpen(!isOpen);
   };
 
@@ -104709,7 +102343,7 @@ function Spoller(props) {
   }, /*#__PURE__*/react.createElement(ListItemText/* default */.Z, {
     primary: caption
   }), isOpen ? /*#__PURE__*/react.createElement(ExpandLess/* default */.Z, null) : /*#__PURE__*/react.createElement(ExpandMore/* default */.Z, null)), /*#__PURE__*/react.createElement("hr", null), /*#__PURE__*/react.createElement(Collapse/* default */.Z, {
-    "in": isOpen,
+    in: isOpen,
     timeout: "auto",
     unmountOnExit: true
   }, props.children));
@@ -104720,7 +102354,7 @@ function Spoller(props) {
 
 
 
-var InstructionDialog_styles = {
+const InstructionDialog_styles = {
   imgCenter: {
     border: 'ridge',
     display: 'block',
@@ -104738,10 +102372,12 @@ var InstructionDialog_styles = {
   }
 };
 function InstructionDialog(props) {
-  var isOpen = props.isOpen,
-      onClose = props.onClose;
+  const {
+    isOpen,
+    onClose
+  } = props;
 
-  var handleClose = function handleClose() {
+  const handleClose = () => {
     onClose();
   };
 
@@ -104755,9 +102391,9 @@ function InstructionDialog(props) {
     className: "RedText"
   }, "\u041E\u0431\u0440\u0430\u0449\u0430\u0435\u043C \u0412\u0430\u0448\u0435 \u0432\u043D\u0438\u043C\u0430\u043D\u0438\u0435, \u0447\u0442\u043E \u0441\u0435\u0440\u0432\u0438\u0441 \u0432\u0441\u0442\u0443\u043F\u0438\u0442 \u0432 \u0440\u0430\u0431\u043E\u0442\u0443, \u0442\u043E\u043B\u044C\u043A\u043E \u043F\u043E\u0441\u043B\u0435 \u0437\u0430\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u044F \u0441\u043E\u0433\u043B\u0430\u0448\u0435\u043D\u0438\u0435 \u043C\u0435\u0436\u0434\u0443 \u041C\u0435\u0434\u0438\u0446\u0438\u043D\u0441\u043A\u0438\u043C\u0438 \u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u044F\u043C\u0438 \u0438 \u0422\u0424\u041E\u041C\u0421 \u0417\u0430\u0431\u0430\u0439\u043A\u0430\u043B\u044C\u0441\u043A\u043E\u0433\u043E \u043A\u0440\u0430\u044F. \u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442 \u043D\u0430\u0445\u043E\u0434\u0438\u0442\u0441\u044F \u0432 \u0441\u0442\u0430\u0434\u0438\u0438 \u0440\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u043A\u0438"), /*#__PURE__*/react.createElement("p", {
     className: "GreenText"
-  }, "\u041E\u0434\u043D\u0430\u043A\u043E \u0435\u0441\u043B\u0438 \u0443 \u0432\u0430\u0441 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D \u041A\u0440\u0438\u043F\u0442\u043E\u041F\u0440\u043E CSP \u0412\u044B \u043C\u043E\u0436\u0435\u0442\u0435 \u043F\u043E\u043F\u0440\u043E\u0431\u043E\u0432\u0430\u0442\u044C \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C \u0440\u0435\u0441\u0443\u0440\u0441(\u0432 \u0440\u0430\u043C\u043A\u0430\u0445 \u0442\u0435\u0441\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F). \u0414\u043B\u044F \u044D\u0442\u043E\u0433\u043E \u0441\u0432\u044F\u0436\u0438\u0442\u0435\u0441\u044C \u0441 \u0422\u0424\u041E\u041C\u0421 \u0417\u0430\u0431\u0430\u0439\u043A\u0430\u043B\u044C\u0441\u043A\u043E\u0433\u043E \u043A\u0440\u0430\u044F: 21-26-69"), /*#__PURE__*/react.createElement("p", null, "\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435: \u041C\u043E\u0434\u0443\u043B\u044C \u043F\u0440\u0435\u0434\u043D\u0430\u0437\u043D\u0430\u0447\u0435\u043D \u0434\u043B\u044F \u043F\u043E\u0434\u043F\u0438\u0441\u0438 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430\u043C \u043C\u0435\u0436\u0434\u0443 \u043C\u0435\u0434\u0438\u0446\u0438\u043D\u0441\u043A\u0438\u043C\u0438 \u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u044F\u043C\u0438 \u0438 \u0422\u0424\u041E\u041C\u0421 \u0417\u0430\u0431\u0430\u0439\u043A\u0430\u043B\u044C\u0441\u043A\u043E\u0433\u043E \u043A\u0440\u0430\u044F"), /*#__PURE__*/react.createElement("p", null, "\u041E\u0441\u043D\u043E\u0432\u043D\u044B\u0435 \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u0438:"), /*#__PURE__*/react.createElement("ul", null, /*#__PURE__*/react.createElement("li", null, "\u0421\u043A\u0430\u0447\u0438\u0432\u0430\u043D\u0438\u0435 \u0444\u0430\u0439\u043B\u043E\u0432"), /*#__PURE__*/react.createElement("li", null, "\u0421\u043A\u0430\u0447\u0438\u0432\u0430\u043D\u0438\u0435 \u0444\u0430\u0439\u043B\u043E\u0432 \u0441\u043E\u0432\u043C\u0435\u0441\u0442\u043D\u043E \u0441 \u043F\u043E\u0434\u043F\u0438\u0441\u044F\u043C\u0438"), /*#__PURE__*/react.createElement("li", null, "\u041F\u043E\u0434\u043F\u0438\u0441\u044C \u0444\u0430\u0439\u043B\u043E\u0432 \u0432 \u0431\u0440\u0430\u0443\u0437\u0435\u0440\u0435"), /*#__PURE__*/react.createElement("li", null, "\u041F\u043E\u0434\u043F\u0438\u0441\u044C \u0444\u0430\u0439\u043B\u043E\u0432 \u0447\u0435\u0440\u0435\u0437 \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0443 \u0444\u0430\u0439\u043B\u0430 \u043E\u0442\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u043D\u043E\u0439 \u043F\u043E\u0434\u043F\u0438\u0441\u0438")), /*#__PURE__*/react.createElement("p", {
+  }, "\u041E\u0434\u043D\u0430\u043A\u043E \u0435\u0441\u043B\u0438 \u0443 \u0432\u0430\u0441 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D \u041A\u0440\u0438\u043F\u0442\u043E\u041F\u0440\u043E CSP, \u0412\u044B \u043C\u043E\u0436\u0435\u0442\u0435 \u043F\u043E\u043F\u0440\u043E\u0431\u043E\u0432\u0430\u0442\u044C \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C \u0440\u0435\u0441\u0443\u0440\u0441 (\u0432 \u0440\u0430\u043C\u043A\u0430\u0445 \u0442\u0435\u0441\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F). \u0414\u043B\u044F \u044D\u0442\u043E\u0433\u043E \u0441\u0432\u044F\u0436\u0438\u0442\u0435\u0441\u044C \u0441 \u0422\u0424\u041E\u041C\u0421 \u0417\u0430\u0431\u0430\u0439\u043A\u0430\u043B\u044C\u0441\u043A\u043E\u0433\u043E \u043A\u0440\u0430\u044F: 21-26-69"), /*#__PURE__*/react.createElement("p", null, "\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435: \u041C\u043E\u0434\u0443\u043B\u044C \u043F\u0440\u0435\u0434\u043D\u0430\u0437\u043D\u0430\u0447\u0435\u043D \u0434\u043B\u044F \u043F\u043E\u0434\u043F\u0438\u0441\u0438 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430\u043C \u043C\u0435\u0436\u0434\u0443 \u043C\u0435\u0434\u0438\u0446\u0438\u043D\u0441\u043A\u0438\u043C\u0438 \u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u044F\u043C\u0438 \u0438 \u0422\u0424\u041E\u041C\u0421 \u0417\u0430\u0431\u0430\u0439\u043A\u0430\u043B\u044C\u0441\u043A\u043E\u0433\u043E \u043A\u0440\u0430\u044F"), /*#__PURE__*/react.createElement("p", null, "\u041E\u0441\u043D\u043E\u0432\u043D\u044B\u0435 \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u0438:"), /*#__PURE__*/react.createElement("ul", null, /*#__PURE__*/react.createElement("li", null, "\u0421\u043A\u0430\u0447\u0438\u0432\u0430\u043D\u0438\u0435 \u0444\u0430\u0439\u043B\u043E\u0432"), /*#__PURE__*/react.createElement("li", null, "\u0421\u043A\u0430\u0447\u0438\u0432\u0430\u043D\u0438\u0435 \u0444\u0430\u0439\u043B\u043E\u0432 \u0441\u043E\u0432\u043C\u0435\u0441\u0442\u043D\u043E \u0441 \u043F\u043E\u0434\u043F\u0438\u0441\u044F\u043C\u0438"), /*#__PURE__*/react.createElement("li", null, "\u041F\u043E\u0434\u043F\u0438\u0441\u044C \u0444\u0430\u0439\u043B\u043E\u0432 \u0432 \u0431\u0440\u0430\u0443\u0437\u0435\u0440\u0435"), /*#__PURE__*/react.createElement("li", null, "\u041F\u043E\u0434\u043F\u0438\u0441\u044C \u0444\u0430\u0439\u043B\u043E\u0432 \u0447\u0435\u0440\u0435\u0437 \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0443 \u0444\u0430\u0439\u043B\u0430 \u043E\u0442\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u043D\u043E\u0439 \u043F\u043E\u0434\u043F\u0438\u0441\u0438")), /*#__PURE__*/react.createElement("p", {
     className: "TextCursiv"
-  }, "\u0414\u043B\u044F \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u0435 \u0444\u0443\u043D\u043A\u0446\u0438\u0438 \xAB\u041F\u043E\u0434\u043F\u0438\u0441\u044C \u0444\u0430\u0439\u043B\u043E\u0432 \u0432 \u0431\u0440\u0430\u0443\u0437\u0435\u0440\u0435\xBB \u0412\u0430\u043C \u043D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u043F\u043E\u0434\u0433\u043E\u0442\u043E\u0432\u0438\u0442\u044C \u0440\u0430\u0431\u043E\u0447\u0435\u0435 \u043C\u0435\u0441\u0442\u043E. \u0414\u043B\u044F \u043F\u043E\u0434\u0433\u043E\u0442\u043E\u0432\u043A\u0438 \u0440\u0430\u0431\u043E\u0447\u0435\u0433\u043E \u043C\u0435\u0441\u0442\u0430 \u0436\u0435\u043B\u0430\u0442\u0435\u043B\u044C\u043D\u043E \u043E\u0431\u0440\u0430\u0442\u0438\u0442\u0435\u0441\u044C \u043A IT \u0441\u043F\u0435\u0446\u0438\u0430\u043B\u0438\u0441\u0442\u0430\u043C"), /*#__PURE__*/react.createElement(Spoller, {
+  }, "\u0414\u043B\u044F \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u044F \u0444\u0443\u043D\u043A\u0446\u0438\u0438 \xAB\u041F\u043E\u0434\u043F\u0438\u0441\u044C \u0444\u0430\u0439\u043B\u043E\u0432 \u0432 \u0431\u0440\u0430\u0443\u0437\u0435\u0440\u0435\xBB \u0412\u0430\u043C \u043D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u043F\u043E\u0434\u0433\u043E\u0442\u043E\u0432\u0438\u0442\u044C \u0440\u0430\u0431\u043E\u0447\u0435\u0435 \u043C\u0435\u0441\u0442\u043E. \u0414\u043B\u044F \u043F\u043E\u0434\u0433\u043E\u0442\u043E\u0432\u043A\u0438 \u0440\u0430\u0431\u043E\u0447\u0435\u0433\u043E \u043C\u0435\u0441\u0442\u0430 \u0436\u0435\u043B\u0430\u0442\u0435\u043B\u044C\u043D\u043E \u043E\u0431\u0440\u0430\u0442\u0438\u0442\u0435\u0441\u044C \u043A IT \u0441\u043F\u0435\u0446\u0438\u0430\u043B\u0438\u0441\u0442\u0430\u043C"), /*#__PURE__*/react.createElement(Spoller, {
     caption: "\u041F\u043E\u0434\u0433\u043E\u0442\u043E\u0432\u043A\u0430 \u0440\u0430\u0431\u043E\u0447\u0435\u0433\u043E \u043C\u0435\u0441\u0442\u0430"
   }, /*#__PURE__*/react.createElement("ul", null, /*#__PURE__*/react.createElement("li", null, "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C ", /*#__PURE__*/react.createElement("span", {
     className: "BoldText"
@@ -104765,7 +102401,7 @@ function InstructionDialog(props) {
     className: "BoldText"
   }, "\u041A\u0440\u0438\u043F\u0442\u043E\u041F\u0440\u043E \u042D\u0426\u041F Browser plug-in")), /*#__PURE__*/react.createElement("li", null, "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C ", /*#__PURE__*/react.createElement("span", {
     className: "BoldText"
-  }, "\u0440\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u0435 \u041A\u0440\u0438\u043F\u0442\u043E\u041F\u0440\u043E \u042D\u0426\u041F Browser plug-in"), " \u0434\u043B\u044F \u0432\u0435\u0431-\u0431\u0440\u0430\u0443\u0437\u0435\u0440\u0435"), /*#__PURE__*/react.createElement("li", null, "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F \u043A\u043E\u0442\u043E\u0440\u044B\u043C \u043F\u043B\u0430\u043D\u0438\u0440\u0443\u0435\u0442\u0441\u044F \u043F\u043E\u0434\u043F\u0438\u0441\u044B\u0432\u0430\u0442\u044C \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B")), /*#__PURE__*/react.createElement(Spoller, {
+  }, "\u0440\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u0435 \u041A\u0440\u0438\u043F\u0442\u043E\u041F\u0440\u043E \u042D\u0426\u041F Browser plug-in"), " \u0434\u043B\u044F \u0432\u0435\u0431-\u0431\u0440\u0430\u0443\u0437\u0435\u0440\u0435"), /*#__PURE__*/react.createElement("li", null, "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F, \u043A\u043E\u0442\u043E\u0440\u044B\u043C \u043F\u043B\u0430\u043D\u0438\u0440\u0443\u0435\u0442\u0441\u044F \u043F\u043E\u0434\u043F\u0438\u0441\u044B\u0432\u0430\u0442\u044C \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B")), /*#__PURE__*/react.createElement(Spoller, {
     caption: "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0430 \u041A\u0440\u0438\u043F\u0442\u043E\u041F\u0440\u043E \u042D\u0426\u041F Browser plug-in:"
   }, /*#__PURE__*/react.createElement("p", null, "\u041F\u0440\u0438 \u043D\u0430\u043B\u0438\u0447\u0438\u0438 \u0438\u043D\u0442\u0435\u0440\u043D\u0435\u0442\u0430 \u043F\u0435\u0440\u0435\u0439\u0434\u0438\u0442\u0435 \u043D\u0430 \u0441\u0430\u0439\u0442 ", /*#__PURE__*/react.createElement("a", {
     href: "https://www.cryptopro.ru/products/cades/plugin",
@@ -104836,7 +102472,7 @@ function InstructionDialog(props) {
     style: InstructionDialog_styles.imgCenter
   })), /*#__PURE__*/react.createElement(Spoller, {
     caption: "\u041E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435 \u0441\u043F\u0438\u0441\u043A\u043E\u0432 \u043E\u0442\u0437\u044B\u0432\u043E\u0432 \u043F\u0440\u0438 \u043E\u0442\u0441\u0443\u0442\u0441\u0432\u0438\u0438 \u0441\u0435\u0442\u0438 \u0418\u043D\u0442\u0435\u0440\u043D\u0435\u0442"
-  }, /*#__PURE__*/react.createElement("p", null, "\u0422\u0424\u041E\u041C\u0421 \u0417\u0430\u0431\u0430\u0439\u043A\u0430\u043B\u044C\u0441\u043A\u043E\u0433\u043E \u043A\u0440\u0430\u044F \u043A\u043E\u043F\u0438\u0440\u0443\u0435\u0442 \u0441\u043F\u0438\u0441\u043A\u0438 \u043E\u0442\u0437\u044B\u0432\u043E\u0432(CRL), \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0435\u043C\u044B\u0445 \u0446\u0435\u043D\u0442\u0440\u043E\u0432 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u0438 \u043D\u0430 \u0434\u0430\u043D\u043D\u044B\u0439 \u0440\u0435\u0441\u0443\u0440\u0441"), /*#__PURE__*/react.createElement("p", null, "\u041D\u0430\u043F\u0440\u0438\u043C\u0435\u0440, \u0430\u0434\u0440\u0435\u0441 \u0442\u043E\u0447\u043A\u0438 \u0440\u0430\u0441\u043F\u0440\u043E\u0441\u0442\u0440\u0430\u043D\u043D\u0438\u044F CRL \u0434\u043B\u044F \u0446\u0435\u043D\u0442\u0440\u0430 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u0438 \u0424\u0424\u041E\u041C\u0421: http://", /*#__PURE__*/react.createElement("span", {
+  }, /*#__PURE__*/react.createElement("p", null, "\u0422\u0424\u041E\u041C\u0421 \u0417\u0430\u0431\u0430\u0439\u043A\u0430\u043B\u044C\u0441\u043A\u043E\u0433\u043E \u043A\u0440\u0430\u044F \u043A\u043E\u043F\u0438\u0440\u0443\u0435\u0442 \u0441\u043F\u0438\u0441\u043A\u0438 \u043E\u0442\u0437\u044B\u0432\u043E\u0432(CRL), \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0435\u043C\u044B\u0445 \u0446\u0435\u043D\u0442\u0440\u043E\u0432 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u0438 \u043D\u0430 \u0434\u0430\u043D\u043D\u044B\u0439 \u0440\u0435\u0441\u0443\u0440\u0441"), /*#__PURE__*/react.createElement("p", null, "\u041D\u0430\u043F\u0440\u0438\u043C\u0435\u0440, \u0430\u0434\u0440\u0435\u0441 \u0442\u043E\u0447\u043A\u0438 \u0440\u0430\u0441\u043F\u0440\u043E\u0441\u0442\u0440\u0430\u043D\u0435\u043D\u0438\u044F CRL \u0434\u043B\u044F \u0446\u0435\u043D\u0442\u0440\u0430 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u0438 \u0424\u0424\u041E\u041C\u0421: http://", /*#__PURE__*/react.createElement("span", {
     className: "BoldText"
   }, "ucfoms.ffoms.ru"), "/cdp/630a8f435386a2e3f3e340c9adb5640bd9640dce.crl, \u0434\u0430\u043D\u043D\u044B\u0439 \u0444\u0430\u0439\u043B \u0432\u044B \u043C\u043E\u0436\u0435\u0442\u0435 \u043D\u0430\u0439\u0442\u0438 \u043D\u0430 http://", /*#__PURE__*/react.createElement("span", {
     className: "BoldText"
@@ -104859,7 +102495,7 @@ function InstructionDialog(props) {
     src: "../SignInstunction/Image/\u0413\u043B\u0430\u0432\u043D\u043E\u0435 \u043E\u043A\u043D\u043E.png",
     alt: "\u0413\u043B\u0430\u0432\u043D\u043E\u0435 \u043E\u043A\u043D\u043E",
     style: InstructionDialog_styles.imgCenter
-  }), /*#__PURE__*/react.createElement("p", null, "\u0413\u043B\u0430\u0432\u043D\u043E\u0435 \u043E\u043A\u043D\u043E \u043C\u043E\u0434\u0443\u043B\u044F \u0441\u043E\u0441\u0442\u043E\u0438\u0442 \u0438\u0437:"), /*#__PURE__*/react.createElement("ul", null, /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("div", null, "\u0420\u0430\u0437\u0434\u0435\u043B\u0430 \xAB\u0421\u043F\u0438\u0441\u043E\u043A \u0442\u0435\u043C\xBB - \u0433\u0440\u0443\u043F\u043F\u0430 \u0444\u0430\u0439\u043B\u043E\u0432 \u0441 \u043E\u043F\u0440\u0435\u0434\u0435\u043B\u0435\u043D\u043D\u043E\u0439 \u0442\u0435\u043C\u043E\u0439(\u043D\u0430\u043F\u0440\u0438\u043C\u0435\u0440 \u0410\u043A\u0442\u044B \u041C\u042D\u041A \u0437\u0430 \u044F\u043D\u0432\u0430\u0440\u044C 2021 \u0433\u043E\u0434\u0430)", /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("span", {
+  }), /*#__PURE__*/react.createElement("p", null, "\u0413\u043B\u0430\u0432\u043D\u043E\u0435 \u043E\u043A\u043D\u043E \u043C\u043E\u0434\u0443\u043B\u044F \u0441\u043E\u0441\u0442\u043E\u0438\u0442 \u0438\u0437:"), /*#__PURE__*/react.createElement("ul", null, /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("div", null, "\u0420\u0430\u0437\u0434\u0435\u043B\u0430 \xAB\u0421\u043F\u0438\u0441\u043E\u043A \u0442\u0435\u043C\xBB - \u0433\u0440\u0443\u043F\u043F\u0430 \u0444\u0430\u0439\u043B\u043E\u0432 \u0441 \u043E\u043F\u0440\u0435\u0434\u0435\u043B\u0435\u043D\u043D\u043E\u0439 \u0442\u0435\u043C\u043E\u0439 (\u043D\u0430\u043F\u0440\u0438\u043C\u0435\u0440 \u0410\u043A\u0442\u044B \u041C\u042D\u041A \u0437\u0430 \u044F\u043D\u0432\u0430\u0440\u044C 2021 \u0433\u043E\u0434\u0430)", /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement("span", {
     className: "TextCursiv"
   }, "\u041D\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u044F \u043F\u043E \u0442\u0435\u043C\u0430\u043C \u043E\u0441\u0443\u0449\u0435\u0441\u0442\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u0441 \u043F\u043E\u043C\u043E\u0449\u044C\u044E \u0449\u0435\u043B\u0447\u043A\u0430 \u043B\u0435\u0432\u043E\u0439 \u043A\u043D\u043E\u043F\u043A\u043E\u0439 \u043C\u044B\u0448\u0438 \u043D\u0430 \u0441\u043E\u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0443\u044E\u0449\u0443\u044E \u0442\u0435\u043C\u0443"), /*#__PURE__*/react.createElement("span", {
     className: "TextCursiv"
@@ -104871,9 +102507,9 @@ function InstructionDialog(props) {
     className: "BoldText"
   }, "\u0414\u0430\u0442\u0430"), " \u2013 \u0434\u0430\u0442\u0430 \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0438 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430 \u0432 \u0438\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u043E\u043D\u043D\u0443\u044E \u0441\u0438\u0441\u0442\u0435\u043C\u0443"), /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("span", {
     className: "BoldText"
-  }, "\u041F\u043E\u0434\u043F\u0438\u0441\u0430\u043D\u043E"), " \u2013 \u0421\u043F\u0438\u0441\u043E\u043A \u043B\u0438\u0446 \u043F\u043E\u0434\u043F\u0438\u0441\u044C \u043A\u043E\u0442\u043E\u0440\u044B\u0445 \u043E\u0436\u0438\u0434\u0430\u0435\u0442\u0441\u044F. \u0415\u0441\u043B\u0438 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D\u0442 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043B \u043F\u0438\u0441\u044C\u043C\u043E, \u0442\u043E \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0435 \u0431\u0443\u0434\u0435\u0442 ", /*#__PURE__*/react.createElement("span", {
+  }, "\u041F\u043E\u0434\u043F\u0438\u0441\u0430\u043D\u043E"), " \u2013 \u0421\u043F\u0438\u0441\u043E\u043A \u043B\u0438\u0446, \u043F\u043E\u0434\u043F\u0438\u0441\u044C \u043A\u043E\u0442\u043E\u0440\u044B\u0445 \u043E\u0436\u0438\u0434\u0430\u0435\u0442\u0441\u044F. \u0415\u0441\u043B\u0438 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D\u0442 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043B \u043F\u0438\u0441\u044C\u043C\u043E, \u0442\u043E \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0435 \u0431\u0443\u0434\u0435\u0442 ", /*#__PURE__*/react.createElement("span", {
     className: "GreenText"
-  }, "\u0437\u0435\u043B\u0435\u043D\u043E\u0433\u043E \u0446\u0432\u0435\u0442\u0430 "), ", \u0435\u0441\u043B\u0438 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D\u0442 \u043D\u0435 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043B \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0435 \u0431\u0443\u0434\u0435\u0442 ", /*#__PURE__*/react.createElement("span", {
+  }, "\u0437\u0435\u043B\u0435\u043D\u043E\u0433\u043E \u0446\u0432\u0435\u0442\u0430 "), ", \u0435\u0441\u043B\u0438 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D\u0442 \u043D\u0435 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043B \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442, \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0435 \u0431\u0443\u0434\u0435\u0442 ", /*#__PURE__*/react.createElement("span", {
     className: "RedText"
   }, "\u043A\u0440\u0430\u0441\u043D\u043E\u0433\u043E \u0446\u0432\u0435\u0442\u0430 ")), /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("span", {
     className: "BoldText"
@@ -104927,9 +102563,9 @@ function InstructionDialog(props) {
     style: InstructionDialog_styles.imgCenter
   }), /*#__PURE__*/react.createElement("p", {
     className: "TextCursiv"
-  }, "\u0415\u0441\u043B\u0438 \u043F\u043B\u0430\u0433\u0438\u043D \u043D\u0435 \u0434\u043E\u0441\u0442\u0443\u043F\u0435\u043D \u0437\u043D\u0430\u0447\u0438\u0442 \u0412\u0430\u0448\u0435 \u0440\u0430\u0431\u043E\u0447\u0435\u0435 \u043C\u0435\u0441\u0442\u043E \u043D\u0435 \u043F\u043E\u0434\u0433\u043E\u0442\u043E\u0432\u043B\u0435\u043D\u043E \u043A \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u044E \u042D\u0426\u041F"), /*#__PURE__*/react.createElement("p", {
+  }, "\u0415\u0441\u043B\u0438 \u043F\u043B\u0430\u0433\u0438\u043D \u043D\u0435 \u0434\u043E\u0441\u0442\u0443\u043F\u0435\u043D, \u0437\u043D\u0430\u0447\u0438\u0442 \u0412\u0430\u0448\u0435 \u0440\u0430\u0431\u043E\u0447\u0435\u0435 \u043C\u0435\u0441\u0442\u043E \u043D\u0435 \u043F\u043E\u0434\u0433\u043E\u0442\u043E\u0432\u043B\u0435\u043D\u043E \u043A \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u044E \u042D\u0426\u041F"), /*#__PURE__*/react.createElement("p", {
     className: "TextCursiv"
-  }, "\u0412 \u0434\u0430\u043D\u043D\u043E\u043C \u043E\u043A\u043D\u0435 \u043D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u0432\u044B\u0431\u0440\u0430\u0442\u044C \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F \u043A\u043E\u0442\u043E\u0440\u044B\u043C \u0432\u044B \u0445\u043E\u0442\u0438\u0442\u0435 \u043F\u043E\u0434\u043F\u0438\u0441\u044C \u0444\u0430\u0439\u043B \u0438 \u043D\u0430\u0436\u0430\u0442\u044C \u043D\u0430 \u043A\u043D\u043E\u043F\u043A\u0443 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u0442\u044C"), /*#__PURE__*/react.createElement("p", {
+  }, "\u0412 \u0434\u0430\u043D\u043D\u043E\u043C \u043E\u043A\u043D\u0435 \u043D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E \u0432\u044B\u0431\u0440\u0430\u0442\u044C \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F, \u043A\u043E\u0442\u043E\u0440\u044B\u043C \u0432\u044B \u0445\u043E\u0442\u0438\u0442\u0435 \u043F\u043E\u0434\u043F\u0438\u0441\u044C \u0444\u0430\u0439\u043B, \u0438 \u043D\u0430\u0436\u0430\u0442\u044C \u043D\u0430 \u043A\u043D\u043E\u043F\u043A\u0443 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u0442\u044C"), /*#__PURE__*/react.createElement("p", {
     className: "TextCursiv"
   }, "\u0411\u0440\u0430\u0443\u0437\u0435\u0440 \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442 \u0444\u0430\u0439\u043B, \u043F\u043E\u0434\u043F\u0438\u0448\u0435\u0442 \u0435\u0433\u043E \u0438 \u043E\u0442\u043F\u0440\u0430\u0432\u0438\u0442 \u043D\u0430 \u0441\u0435\u0440\u0432\u0435\u0440 \u0434\u043B\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0438"), /*#__PURE__*/react.createElement("p", null, "\u0412 \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u0435 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442 \u043F\u043E\u0434\u043F\u0438\u0448\u0435\u0442\u0441\u044F, \u0435\u0441\u043B\u0438 \u043F\u043E\u0434\u043F\u0438\u0441\u044C \u0432\u0430\u043B\u0438\u0434\u043D\u0430 \u0438\u043B\u0438 \u043D\u0435 \u043F\u043E\u0434\u043F\u0438\u0448\u0435\u0442\u0441\u044F, \u0438 \u0431\u0440\u0430\u0443\u0437\u0435\u0440 \u043E\u0442\u043E\u0431\u0440\u0430\u0437\u0438\u0442 \u043E\u0448\u0438\u0431\u043A\u0443"), /*#__PURE__*/react.createElement("p", null, "\u0412\u043E\u0437\u043C\u043E\u0436\u043D\u044B\u0435 \u043E\u0448\u0438\u0431\u043A\u0438 \u0441\u0435\u0440\u0432\u0435\u0440\u0430, \u0435\u0441\u043B\u0438 \u043F\u043E\u0434\u043F\u0438\u0441\u044C \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043B\u044C\u043D\u0430:"), /*#__PURE__*/react.createElement("ul", null, /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("span", {
     className: "RedText"
@@ -104943,7 +102579,7 @@ function InstructionDialog(props) {
     className: "RedText"
   }, "\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442 \u0443\u0436\u0435 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D \u0434\u0430\u043D\u043D\u043E\u0439 \u043F\u043E\u0434\u043F\u0438\u0441\u044C\u044E"), " \u2013 \u0444\u0430\u0439\u043B \u0443\u0436\u0435 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D \u0434\u0430\u043D\u043D\u044B\u043C \u043B\u0438\u0446\u043E\u043C"))), /*#__PURE__*/react.createElement(Spoller, {
     caption: "\u041F\u043E\u0434\u043F\u0438\u0441\u044C \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430 \u043F\u0443\u0442\u0435\u043C \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0438 \u043E\u0442\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u043D\u043E\u0439 \u043F\u043E\u0434\u043F\u0438\u0441\u0438"
-  }, /*#__PURE__*/react.createElement("p", null, "\u041E\u0442\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u043D\u0430\u044F \u043F\u043E\u0434\u043F\u0438\u0441\u044C - \u044D\u0442\u043E \u0444\u0430\u0439\u043B \u0441\u043E\u0434\u0435\u0440\u0436\u0430\u0449\u0438\u0439 \u0432 \u0441\u0435\u0431\u0435 \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u043D\u043D\u043E-\u0446\u0438\u0444\u0440\u043E\u0432\u0443\u044E \u043F\u043E\u0434\u043F\u0438\u0441\u044C \u0432 \u043A\u043E\u0434\u0438\u0440\u043E\u0432\u043A\u0435 BASE64. \u041E\u0431\u044B\u0447\u043D\u043E \u0442\u0430\u043A\u0438\u0435 \u0444\u0430\u0439\u043B\u044B \u0438\u043C\u0435\u044E\u0442 \u0440\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u0435 *.SIG"), /*#__PURE__*/react.createElement("p", null, "\u0414\u043B\u044F \u043F\u043E\u0434\u043F\u0438\u0441\u044C \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430 \u043F\u0443\u0442\u0435\u043C \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0438 \u043E\u0442\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u043D\u043E\u0439 \u043F\u043E\u0434\u043F\u0438\u0441\u0438 \u043D\u0430\u0436\u043C\u0438\u0442\u0435 \u043D\u0430 \u043A\u043D\u043E\u043F\u043A\u0443 \xAB\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u043E\u0442\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u043D\u0443\u044E \u043F\u043E\u0434\u043F\u0438\u0441\u044C\xBB, \u043F\u043E\u0441\u043B\u0435 \u0447\u0435\u0433\u043E \u043E\u0442\u043A\u0440\u043E\u0435\u0442\u0441\u044F \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0438\u0435 \u043E\u043A\u043D\u043E:"), /*#__PURE__*/react.createElement("img", {
+  }, /*#__PURE__*/react.createElement("p", null, "\u041E\u0442\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u043D\u0430\u044F \u043F\u043E\u0434\u043F\u0438\u0441\u044C - \u044D\u0442\u043E \u0444\u0430\u0439\u043B, \u0441\u043E\u0434\u0435\u0440\u0436\u0430\u0449\u0438\u0439 \u0432 \u0441\u0435\u0431\u0435 \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u043D\u043D\u043E-\u0446\u0438\u0444\u0440\u043E\u0432\u0443\u044E \u043F\u043E\u0434\u043F\u0438\u0441\u044C \u0432 \u043A\u043E\u0434\u0438\u0440\u043E\u0432\u043A\u0435 BASE64. \u041E\u0431\u044B\u0447\u043D\u043E \u0442\u0430\u043A\u0438\u0435 \u0444\u0430\u0439\u043B\u044B \u0438\u043C\u0435\u044E\u0442 \u0440\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u0435 *.SIG"), /*#__PURE__*/react.createElement("p", null, "\u0414\u043B\u044F \u043F\u043E\u0434\u043F\u0438\u0441\u0438 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430 \u043F\u0443\u0442\u0435\u043C \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0438 \u043E\u0442\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u043D\u043E\u0439 \u043F\u043E\u0434\u043F\u0438\u0441\u0438 \u043D\u0430\u0436\u043C\u0438\u0442\u0435 \u043D\u0430 \u043A\u043D\u043E\u043F\u043A\u0443 \xAB\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u043E\u0442\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u043D\u0443\u044E \u043F\u043E\u0434\u043F\u0438\u0441\u044C\xBB, \u043F\u043E\u0441\u043B\u0435 \u0447\u0435\u0433\u043E \u043E\u0442\u043A\u0440\u043E\u0435\u0442\u0441\u044F \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0438\u0435 \u043E\u043A\u043D\u043E:"), /*#__PURE__*/react.createElement("img", {
     src: "../SignInstunction/Image/\u041E\u043A\u043D\u043E \u043E\u0442\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u043D\u043E\u0439 \u043F\u043E\u0434\u043F\u0438\u0441\u0438.png",
     alt: "\u041E\u043A\u043D\u043E \u043E\u0442\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u043D\u043E\u0439 \u043F\u043E\u0434\u043F\u0438\u0441\u0438",
     style: InstructionDialog_styles.imgCenter
@@ -104953,7 +102589,7 @@ function InstructionDialog(props) {
     className: "TextCursiv"
   }, "\u0411\u0440\u0430\u0443\u0437\u0435\u0440 \u043E\u0442\u043F\u0440\u0430\u0432\u0438\u0442 \u0444\u0430\u0439\u043B\u0430 \u043D\u0430 \u0441\u0435\u0440\u0432\u0435\u0440 \u0434\u043B\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0438"), /*#__PURE__*/react.createElement("p", null, "\u0412 \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u0435 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442 \u043F\u043E\u0434\u043F\u0438\u0448\u0435\u0442\u0441\u044F, \u0435\u0441\u043B\u0438 \u043F\u043E\u0434\u043F\u0438\u0441\u044C \u0432\u0430\u043B\u0438\u0434\u043D\u0430 \u0438\u043B\u0438 \u043D\u0435 \u043F\u043E\u0434\u043F\u0438\u0448\u0435\u0442\u0441\u044F, \u0438 \u0431\u0440\u0430\u0443\u0437\u0435\u0440 \u043E\u0442\u043E\u0431\u0440\u0430\u0437\u0438\u0442 \u043E\u0448\u0438\u0431\u043A\u0443"), /*#__PURE__*/react.createElement("p", null, "\u0412\u043E\u0437\u043C\u043E\u0436\u043D\u044B\u0435 \u043E\u0448\u0438\u0431\u043A\u0438 \u0441\u0435\u0440\u0432\u0435\u0440\u0430, \u0435\u0441\u043B\u0438 \u043F\u043E\u0434\u043F\u0438\u0441\u044C \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043B\u044C\u043D\u0430:"), /*#__PURE__*/react.createElement("ul", null, /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("span", {
     className: "RedText"
-  }, "\u0424\u0430\u0439\u043B \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D \u043D\u0430 \u0441\u0435\u0440\u0432\u0435\u0440\u0435"), " \u2013 \u043D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043D\u0430\u0439\u0442\u0438 \u0444\u0430\u0439\u043B\u0430 \u043D\u0430 \u0441\u0435\u0440\u0432\u0435\u0440\u0435(\u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E \u043E\u043D \u0431\u044B\u043B \u0443\u0434\u0430\u043B\u0435\u043D \u043F\u043E\u043A\u0430 \u0412\u044B \u0433\u043E\u0442\u043E\u0432\u0438\u043B\u0438\u0441\u044C \u043A \u043F\u043E\u0434\u043F\u0438\u0441\u0438)"), /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("span", {
+  }, "\u0424\u0430\u0439\u043B \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D \u043D\u0430 \u0441\u0435\u0440\u0432\u0435\u0440\u0435"), " \u2013 \u043D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043D\u0430\u0439\u0442\u0438 \u0444\u0430\u0439\u043B\u0430 \u043D\u0430 \u0441\u0435\u0440\u0432\u0435\u0440\u0435 (\u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E \u043E\u043D \u0431\u044B\u043B \u0443\u0434\u0430\u043B\u0435\u043D \u043F\u043E\u043A\u0430 \u0412\u044B \u0433\u043E\u0442\u043E\u0432\u0438\u043B\u0438\u0441\u044C \u043A \u043F\u043E\u0434\u043F\u0438\u0441\u0438)"), /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("span", {
     className: "RedText"
   }, "\u041D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u0430 \u0434\u0430\u0442\u0430 \u043F\u043E\u0434\u043F\u0438\u0441\u0438"), " \u2013 \u043F\u043E\u0434\u043F\u0438\u0441\u044C \u043D\u0435 \u0441\u043E\u0434\u0435\u0440\u0436\u0438\u0442 \u0434\u0430\u0442\u0443 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u043D\u0438\u044F"), /*#__PURE__*/react.createElement("li", null, /*#__PURE__*/react.createElement("span", {
     className: "RedText"
@@ -104971,7 +102607,6 @@ var Tab = __webpack_require__(41423);
 
 
 
-var _excluded = ["children", "value", "index"];
 
 
 
@@ -104982,9 +102617,7 @@ var _excluded = ["children", "value", "index"];
 
 
 
-
-
-var app_theme = (0,createTheme/* default */.Z)({
+const app_theme = (0,createTheme/* default */.Z)({
   palette: {
     primary: {
       // light: will be calculated from palette.primary.main,
@@ -105005,43 +102638,39 @@ var app_theme = (0,createTheme/* default */.Z)({
 });
 
 function TabPanel(props) {
-  var children = props.children,
-      value = props.value,
-      index = props.index,
-      other = (0,objectWithoutProperties/* default */.Z)(props, _excluded);
-
+  const {
+    children,
+    value,
+    index,
+    ...other
+  } = props;
   return /*#__PURE__*/react.createElement("div", (0,esm_extends/* default */.Z)({
     role: "tabpanel",
     hidden: value !== index,
-    id: "simple-tabpanel-".concat(index),
-    "aria-labelledby": "simple-tab-".concat(index)
+    id: `simple-tabpanel-${index}`,
+    "aria-labelledby": `simple-tab-${index}`
   }, other), value === index && /*#__PURE__*/react.createElement(Box/* default */.Z, {
     p: 3
   }, children));
 }
 
 function MainTab(props) {
-  var isAdmin = props.isAdmin;
+  const {
+    isAdmin
+  } = props;
+  const [value, setValue] = react.useState(0);
 
-  var _React$useState = react.useState(0),
-      _React$useState2 = (0,slicedToArray/* default */.Z)(_React$useState, 2),
-      value = _React$useState2[0],
-      setValue = _React$useState2[1];
-
-  var handleChange = function handleChange(event, newValue) {
+  const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  var _React$useState3 = react.useState(false),
-      _React$useState4 = (0,slicedToArray/* default */.Z)(_React$useState3, 2),
-      isOpenInstruction = _React$useState4[0],
-      setIsOpenInstruction = _React$useState4[1];
+  const [isOpenInstruction, setIsOpenInstruction] = react.useState(false);
 
-  var hideInstruction = function hideInstruction() {
+  const hideInstruction = () => {
     setIsOpenInstruction(false);
   };
 
-  var showInstruction = function showInstruction() {
+  const showInstruction = () => {
     setIsOpenInstruction(true);
   };
 

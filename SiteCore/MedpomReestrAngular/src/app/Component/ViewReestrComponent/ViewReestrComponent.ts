@@ -1,16 +1,21 @@
-﻿import { Component, Output, EventEmitter, OnChanges, SimpleChanges, OnDestroy } from "@angular/core";
+﻿import { Component, Output, EventEmitter, OnChanges, SimpleChanges, OnDestroy ,ViewChild} from "@angular/core";
 import { BaseReportComponent } from '../../Component/BaseReportComponent'
 import { IRepository } from "../../API/Repository";
 
 import { FileAPI } from "../../API/FileAPI";
-import { HubConnect }  from "../../API/HUBConnect";
+import { HubConnect } from "../../API/HUBConnect";
 import { ViewReestViewModel, StatusFilePack, StepsProcess, STATUS_FILE, TYPEFILE } from "../../API/LoadReestViewModel";
-
+import {InstructionDialog} from '../../Component/InstructionDialog/InstructionDialog'
 
 @Component({ selector: "view-reestr", templateUrl: "ViewReestrComponent.html" })
-export class ViewReestrComponent extends BaseReportComponent implements  OnDestroy  {
+export class ViewReestrComponent extends BaseReportComponent implements OnDestroy {
     ngOnDestroy(): void {
-        this.hubConnect.Disconnect();
+        try {
+            this.hubConnect.Disconnect();
+        }
+        catch (err) {
+            alert(err.toString());
+        }
     }
 
     model: ViewReestViewModel = new ViewReestViewModel(null);
@@ -25,21 +30,22 @@ export class ViewReestrComponent extends BaseReportComponent implements  OnDestr
         this.connectHub();
     }
 
-    private connectHub= async ()=>{
+    private connectHub = async () => {
         try {
             await this.hubConnect.Connect();
-            this.hubConnect.NewPackState(() => {
-                this.getModel();
+            this.hubConnect.RegisterNewPackState(() => {
+                this.getModel(true);
             });
         }
         catch (err) {
             alert(`Ошибка подключения к интерфейсу обратного вызова: ${err.toString()}`);
         }
     }
-    
-    getModel = async () => {
+
+    getModel = async (hide_mode:boolean = false) => {
         try {
-            this.isLoad = true;
+            if(!hide_mode)
+                this.isLoad = true;
             this.model = await this.repo.getViewReestViewModelAsync();
         } catch (err) {
             alert(err.toString());
@@ -60,9 +66,9 @@ export class ViewReestrComponent extends BaseReportComponent implements  OnDestr
         }
     }
 
-    displayDialog = false;
+    @ViewChild(InstructionDialog) instructionDialog: InstructionDialog;
     ShowInstruction = () => {
-        this.displayDialog = true;
+        this.instructionDialog.ShowDialog();
     }
 
 

@@ -17,118 +17,101 @@ namespace SiteCore.Data
     public  class WCFIdentiScaner
     {
         private  IWCFIdentiScaner _MyWcfConnection;
-        private  volatile bool InConnect = false;
         private string HOST { get; }    
         private ILogger logger { get; }
-        private IHubContext<NotificationHub> NotificationHubContext { get; }
+        private IHubContext<NotificationHub, IHubClient> NotificationHubContext { get; }
         private CSOracleSet csOracleSet { get; }
 
-        public WCFIdentiScaner(string HOST, ILogger logger, IHubContext<NotificationHub> NotificationHubContext, CSOracleSet csOracleSet)
+        public WCFIdentiScaner(string HOST, ILogger logger, IHubContext<NotificationHub, IHubClient> NotificationHubContext, CSOracleSet csOracleSet)
         {
             this.HOST = HOST;            
             this.logger = logger;
             this.NotificationHubContext = NotificationHubContext;
             this.csOracleSet = csOracleSet;
         }
+
+        private ICommunicationObject CommunicationObject => _MyWcfConnection as ICommunicationObject;
+
+
         private  IWCFIdentiScaner MyWcfConnection
         {
             get
             {
-                waitConnect();
-                if (_MyWcfConnection == null)
+                if (_MyWcfConnection == null || !CommunicationObject.State.In(CommunicationState.Opened, CommunicationState.Opening))
                 {
-                    Connect();
-                    return _MyWcfConnection;
+                    _MyWcfConnection = null;
+                    _MyWcfConnection = Connect();
                 }
-                if (!((ICommunicationObject)_MyWcfConnection).State.In(CommunicationState.Opened, CommunicationState.Opening))
-                {
-                    Connect();
-                    return _MyWcfConnection;
-                }
-
                 return _MyWcfConnection;
             }
         }
 
+        private object InConnect = new ();
 
-
-        private async void waitConnect()
+        private IWCFIdentiScaner Connect()
         {
-            while (InConnect)
+            lock (InConnect)
             {
-                await Task.Delay(300);
-            }
-        }
-
-
-        private  void Connect()
-        {
-            InConnect = true;
-            try
-            {
-                var addr = $@"net.tcp://{HOST}:44447/IdentiServer.svc"; // Адрес сервиса
-                var tcpUri = new Uri(addr);
-                var address = new EndpointAddress(tcpUri);
-                //  BasicHttpBinding basicHttpBinding = new BasicHttpBinding(BasicHttpSecurityMode.None); //HTTP!
-                var netTcpBinding = new NetTcpBinding(SecurityMode.None)
+                try
                 {
-                    ReaderQuotas = {MaxArrayLength = int.MaxValue, MaxBytesPerRead = int.MaxValue, MaxStringContentLength = int.MaxValue},
-                    MaxBufferPoolSize = 105000000,
-                    MaxReceivedMessageSize = 105000000,
-                    SendTimeout = new TimeSpan(24, 0, 0),
-                    ReceiveTimeout = new TimeSpan(24, 0, 0)
-                };
+                    //Если 1 поток ждал лока то вернуть результат
+                    if (_MyWcfConnection != null)
+                        return _MyWcfConnection;
 
+                    var addr = $@"net.tcp://{HOST}:44447/IdentiServer.svc"; // Адрес сервиса
+                    var tcpUri = new Uri(addr);
+                    var address = new EndpointAddress(tcpUri);
+                    //  BasicHttpBinding basicHttpBinding = new BasicHttpBinding(BasicHttpSecurityMode.None); //HTTP!
+                    var netTcpBinding = new NetTcpBinding(SecurityMode.None)
+                    {
+                        ReaderQuotas = { MaxArrayLength = int.MaxValue, MaxBytesPerRead = int.MaxValue, MaxStringContentLength = int.MaxValue },
+                        MaxBufferPoolSize = 105000000,
+                        MaxReceivedMessageSize = 105000000,
+                        SendTimeout = new TimeSpan(24, 0, 0),
+                        ReceiveTimeout = new TimeSpan(24, 0, 0)
+                    };
 
-                // Ниже строки для того, чтоб пролазили таблицы развером побольше
+                    var callback = new IdentiScanerCallback();
+                    var instanceContext = new InstanceContext(callback);
 
+                    var factory = new DuplexChannelFactory<IWCFIdentiScaner>(instanceContext, netTcpBinding, address);
 
-                var callback = new IdentiScanerCallback();
-                var instanceContext = new InstanceContext(callback);
-
-                var factory = new DuplexChannelFactory<IWCFIdentiScaner>(instanceContext, netTcpBinding, address);
-
-                _MyWcfConnection = factory.CreateChannel(); // Создаём само подключение      
-                _MyWcfConnection.Connect();
-
-                callback.onNewListState += Callback_onNewListState;
-
-
-            }
-            catch (Exception ex)
-            {
-                logger?.AddLog($"Ошибка при подключении к WCF_IdentiServer: {ex.Message}", LogType.Error);
-            }
-            finally
-            {
-                InConnect = false;
+                    _MyWcfConnection = factory.CreateChannel(); 
+                    _MyWcfConnection.Connect();
+                    callback.onNewListState += Callback_onNewListState;
+                    return _MyWcfConnection;
+                }
+                catch (Exception ex)
+                {
+                    logger?.AddLog($"Ошибка при подключении к WCF_IdentiServer: {ex.Message}", LogType.Error);
+                    return null;
+                }
             }
         }
 
         private void Callback_onNewListState(List<int> ID)
         {
-            var list = csOracleSet.CS_LIST.Where(x => ID.Contains(x.CS_LIST_ID)).Select(x => x.CODE_MO).Distinct();
-
-            foreach (var codeMo in list)
-            {                
-                NotificationHubContext.Clients.Groups(codeMo).SendAsync("NewListState", ID);
-            }
-            NotificationHubContext.Clients.Group("Admin").SendAsync("NewListState", ID);
+            var list = csOracleSet.CS_LIST_IN.Where(x => ID.Contains(x.CS_LIST_IN_ID)).Select(x => x.CODE_MO).Distinct().ToArray();
+            NotificationHubContext.Clients.Groups(NotificationHub.GetGroupNamesNewCSListState(list,true)).NewCSListState(ID);
         }
-        public bool IsEnabled
+
+        public bool IsEnabled()
         {
-            get
+            try
             {
-                try
-                {
-                    return MyWcfConnection!=null && MyWcfConnection.Ping();
-                }
-                catch (Exception ex)
-                {
-                    logger?.AddLog($"Ошибка WCF_IdentiServer(Ping): {ex.Message}", LogType.Error);
-                    return false;
-                }
+                var conn = MyWcfConnection;
+                return conn != null && conn.Ping();
             }
+            catch (Exception ex)
+            {
+                logger?.AddLog($"Ошибка WCF_IdentiServer(Ping): {ex.Message}", LogType.Error);
+                return false;
+            }
+        }
+
+        public Task<bool> IsEnabledAsync()
+        {
+            return Task.Run(IsEnabled);
         }
 
         public IdentiModel.EntriesMy[] GetLog()

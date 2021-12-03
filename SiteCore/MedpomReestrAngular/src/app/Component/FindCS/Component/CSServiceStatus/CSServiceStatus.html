@@ -1,0 +1,29 @@
+<p-splitButton [icon]="isLoad? 'pi pi-spin pi-spinner' : ''"
+    [label]="isLoad? 'Запрос данных...': isEnabled?'Сервис доступен':'Сервис не доступен'" [model]="items"
+    [styleClass]="isEnabled===null? 'gray-p-splitbutton': isEnabled?'green-p-splitbutton':'red-p-splitbutton'">
+</p-splitButton>
+
+
+
+<p-dialog header="Лог сервиса отправки сообщений" [(visible)]="isDisplayLogDialog" [style]="{width: '90vw'}" [modal]="true">
+    <Content-Load [isLoad]="isLoadLog">
+        <table class="table_report">
+            <tr>
+                <th>Тип</th>
+                <th>Дата</th>
+                <th>Сообщение</th>
+            </tr>
+            <tr *ngFor="let log of Log">
+                <td>
+                    <div [ngClass]="{
+                        ImgWarning:log.Type==TypeEntries.warning,
+                        ImgError:log.Type==TypeEntries.error,
+                        ImgQuestion:log.Type==TypeEntries.message
+                     }"></div>
+                </td>
+                <td>{{log.TimeGenerated|date:'dd.MM.yyyy HH:mm:ss'}}</td>
+                <td>{{log.Message}}</td>
+            </tr>
+        </table>
+    </Content-Load>
+</p-dialog>

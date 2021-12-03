@@ -4,7 +4,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-import { Component, Output, Input, EventEmitter } from "@angular/core";
+import { Component, Output, EventEmitter } from "@angular/core";
 import { ErrorSpr } from '../../API/ErrorSPRModel';
 import * as ClassicEditor from '../../ClassicEditor/ckeditor.js';
 let ERROR_EDIT = class ERROR_EDIT {
@@ -12,41 +12,32 @@ let ERROR_EDIT = class ERROR_EDIT {
         this.repo = repo;
         this.model = new ErrorSpr(null);
         this.Editor = ClassicEditor;
-        this._display = false;
-        this.displayChange = new EventEmitter();
+        this.display = false;
+        this.isLoad = false;
         this.onSave = new EventEmitter();
         this.ReadOnly = true;
         this.SectionSpr = [];
         this.SectionSprFiltered = [];
         this.SelectedSection = null;
-        this.isLoad = false;
         this.getModel = async () => {
             try {
                 if (this.ID_ERR === null) {
                     this.model = new ErrorSpr(null);
                     return;
                 }
-                this.isLoad = true;
                 this.model = await this.repo.getError(this.ID_ERR);
                 this.SelectedSection = this.SectionSpr.find(x => x.ID_SECTION === this.model.ID_SECTION);
             }
             catch (err) {
                 alert(err.toString());
             }
-            finally {
-                this.isLoad = false;
-            }
         };
         this.FillSpr = async () => {
             try {
-                this.isLoad = true;
                 this.SectionSpr = await this.repo.getSections();
             }
             catch (err) {
                 alert(err.toString());
-            }
-            finally {
-                this.isLoad = false;
             }
         };
         this.errorList = [];
@@ -65,6 +56,7 @@ let ERROR_EDIT = class ERROR_EDIT {
                 }
                 this.errorList = result;
                 if (result.length === 0) {
+                    this.display = false;
                     this.onSave.emit(true);
                 }
             }
@@ -76,16 +68,20 @@ let ERROR_EDIT = class ERROR_EDIT {
             }
         };
     }
-    get display() {
-        return this._display;
-    }
-    set display(value) {
-        if (this._display !== value)
-            this.displayChange.emit(value);
-        this._display = value;
-        if (value) {
-            this.FillSpr();
-            this.getModel();
+    async ShowDialog(ID_ERR, ReadOnly) {
+        try {
+            this.isLoad = true;
+            this.ID_ERR = ID_ERR;
+            this.ReadOnly = ReadOnly;
+            this.display = true;
+            await this.FillSpr();
+            await this.getModel();
+        }
+        catch (err) {
+            alert(err.toString());
+        }
+        finally {
+            this.isLoad = false;
         }
     }
     onReady(editor) {
@@ -115,20 +111,8 @@ let ERROR_EDIT = class ERROR_EDIT {
     }
 };
 __decorate([
-    Input()
-], ERROR_EDIT.prototype, "display", null);
-__decorate([
-    Output()
-], ERROR_EDIT.prototype, "displayChange", void 0);
-__decorate([
     Output()
 ], ERROR_EDIT.prototype, "onSave", void 0);
-__decorate([
-    Input()
-], ERROR_EDIT.prototype, "ID_ERR", void 0);
-__decorate([
-    Input()
-], ERROR_EDIT.prototype, "ReadOnly", void 0);
 ERROR_EDIT = __decorate([
     Component({ selector: "ERROR_EDIT", templateUrl: "ERROR_EDIT.html", styleUrls: ["ERROR_EDIT.css"] })
 ], ERROR_EDIT);

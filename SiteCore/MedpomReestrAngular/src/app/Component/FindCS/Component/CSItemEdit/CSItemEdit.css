@@ -1,0 +1,19 @@
+
+
+
+.InForm {
+    display: flex;
+}
+
+    .InForm td input {
+        width: 100%;
+        text-transform: uppercase;
+    }
+
+    .InForm fieldset {
+        width: 100%;
+    }
+
+        .InForm fieldset table {
+            width: 100%;
+        }

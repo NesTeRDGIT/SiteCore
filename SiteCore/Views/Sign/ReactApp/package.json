@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "author": "metanit.com",
   "scripts": {
-    "build": "webpack --mode=production",
-    "dev": "webpack watch --mode=development"
+    "build": "webpack --config webpack.prod.js",
+    "dev": "webpack watch --config webpack.dev.js"
   },
   "dependencies": {
     "@material-ui/icons": "^4.11.2",
@@ -13,7 +13,9 @@
     "@material-ui/pickers": "^3.3.10",
     "babel-runtime": "^6.26.0",
     "moment": "^2.29.1",
-    "react-contextmenu": "^2.14.0"
+    "react-contextmenu": "^2.14.0",
+    "streamsaver": "^2.0.5",
+    "web-streams-polyfill": "^3.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
@@ -33,6 +35,15 @@
     "react-dom": "^17.0.0",
     "webpack": "^5.11.0",
     "webpack-cli": "^4.3.0",
-    "webpack-dev-server": "^3.11.0"
-  }
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^5.8.0"
+  },
+  "browserslist": [
+    "last 1 Chrome version",
+    "last 1 Firefox version",
+    "last 2 Edge major versions",
+    "last 2 Safari major versions",
+    "last 2 iOS major versions",
+    "Firefox ESR"
+  ]
 }

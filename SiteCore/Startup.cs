@@ -150,7 +150,7 @@ namespace SiteCore
             var host = Configuration.GetSection("WCFParam").GetValue("HOST", "");
             var login = Configuration.GetSection("WCFParam").GetValue("LOGIN", "");
             var password = Configuration.GetSection("WCFParam").GetValue("PASSWORD", "");
-            services.AddSingleton(provider => new WCFConnect(host, login, password, provider.GetService<ILogger>(), provider.GetService<IHubContext<NotificationHub>>()));
+            services.AddSingleton(provider => new WCFConnect(host, login, password, provider.GetService<ILogger>(), provider.GetService<IHubContext<NotificationHub, IHubClient>>()));
             var SharedFolder = Configuration.GetValue<string>("SharedFolder");
            
             services.AddTransient<IMedpomRepository>(provider => new MedpomFileManager(SharedFolder));          
@@ -160,7 +160,7 @@ namespace SiteCore
         {
             services.AddDbContext<CSOracleSet>(options => options.UseLazyLoadingProxies().UseOracle(Configuration.GetConnectionString("DefaultConnection"), b => b.UseOracleSQLCompatibility("11")));
             var host = Configuration.GetSection("WCFIdentiCSParam").GetValue("HOST", "");          
-            services.AddSingleton(provider => new WCFIdentiScaner(host, provider.GetService<ILogger>(), provider.GetService<IHubContext<NotificationHub>>(), services.BuildServiceProvider().GetService<CSOracleSet>()));
+            services.AddSingleton(provider => new WCFIdentiScaner(host, provider.GetService<ILogger>(), provider.GetService<IHubContext<NotificationHub, IHubClient>>(), services.BuildServiceProvider().GetService<CSOracleSet>()));
             return services;
         }
 

@@ -1,4 +1,4 @@
-﻿import { Component, Output, Input,EventEmitter, OnChanges, SimpleChanges} from "@angular/core";
+﻿import { Component, Output, Input, EventEmitter, OnChanges, SimpleChanges } from "@angular/core";
 import { BaseReportComponent } from '../../Component/BaseReportComponent'
 import { SectionSpr, ErrorSpr, EditErrorSPRViewModel } from '../../API/ErrorSPRModel'
 
@@ -12,30 +12,31 @@ import { IRepository } from "../../API/Repository";
 export class ERROR_EDIT {
     model: ErrorSpr = new ErrorSpr(null);
     public Editor = ClassicEditor;
-
-   
-    _display = false;
-    @Input()
-    get display(): any {
-        return this._display;
-    }
-    set display(value: any) {
-        if (this._display !== value)
-            this.displayChange.emit(value);
-        this._display = value;
-        if (value) {
-            this.FillSpr();
-            this.getModel();
-        }
-       
-    }
-    @Output() displayChange: EventEmitter<any> = new EventEmitter();
-
+    display: boolean = false;
+    isLoad = false;
+    
     @Output() onSave: EventEmitter<boolean> = new EventEmitter();
+    ID_ERR: number | null;
+    ReadOnly: boolean = true;
 
-    @Input() ID_ERR: number | null;
-    @Input() ReadOnly: boolean = true;
- 
+
+    public async ShowDialog(ID_ERR: number, ReadOnly: boolean) {
+        try {
+            this.isLoad = true;
+            this.ID_ERR = ID_ERR;
+            this.ReadOnly = ReadOnly;
+            this.display = true;
+            await this.FillSpr();
+            await this.getModel();
+        }
+        catch (err) {
+            alert(err.toString())
+        }
+        finally {
+            this.isLoad = false;
+        }
+
+    }
 
 
     public onReady(editor) {
@@ -55,7 +56,7 @@ export class ERROR_EDIT {
     SectionSpr: SectionSpr[] = [];
     SectionSprFiltered: SectionSpr[] = [];
     SelectedSection: SectionSpr = null;
-   
+
 
     filterSectionSpr(event) {
         const filtered: any[] = [];
@@ -69,11 +70,11 @@ export class ERROR_EDIT {
         }
         this.SectionSprFiltered = filtered;
     }
-    isLoad=false;
+   
 
 
     constructor(public repo: IRepository) {
-    
+
     }
 
     getModel = async () => {
@@ -82,36 +83,29 @@ export class ERROR_EDIT {
                 this.model = new ErrorSpr(null);
                 return;
             }
-                
-            this.isLoad = true;
+
             this.model = await this.repo.getError(this.ID_ERR);
             this.SelectedSection = this.SectionSpr.find(x => x.ID_SECTION === this.model.ID_SECTION);
         } catch (err) {
             alert(err.toString());
-        } finally {
-            this.isLoad = false;
         }
     }
 
     FillSpr = async () => {
         try {
-            this.isLoad = true;
             this.SectionSpr = await this.repo.getSections();
         } catch (err) {
             alert(err.toString());
-        } finally {
-            this.isLoad = false;
         }
     }
 
-    errorList:string[]=[];
+    errorList: string[] = [];
     SaveError = async () => {
         try {
             this.isLoad = true;
-            if(this.SelectedSection!=null)
-            {
+            if (this.SelectedSection != null) {
                 this.model.ID_SECTION = this.SelectedSection.ID_SECTION;
-            }                
+            }
             let result: string[];
             if (this.ID_ERR === null) {
                 result = await this.repo.AddErrorSPR(this.model);
@@ -120,6 +114,7 @@ export class ERROR_EDIT {
             }
             this.errorList = result;
             if (result.length === 0) {
+                this.display = false;
                 this.onSave.emit(true);
             }
         } catch (err) {

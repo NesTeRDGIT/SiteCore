@@ -37,7 +37,7 @@ import SingDialog from "./SignDialog.jsx"
 import Box from '@material-ui/core/Box';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
-import { downloadBase64File } from "../API/FileAPI.js";
+import { downloadBase64File, downloadFileTest } from "../API/FileAPI.js";
 import { Repository } from "../API/Repository.js";
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
@@ -136,7 +136,9 @@ export default function DOC_LIST(props) {
    
     const downloadDoc = async (event, rowData) => {
         try {
-        
+
+            downloadFileTest(`DownloadFileForSign?DOC_FOR_SIGN_ID=${docForSignId}`);
+            return;
             const data = await repo.DownloadFileForSign(rowData.DOC_FOR_SIGN_ID);
             downloadBase64File(data.FileContents, data.ContentType, data.FileDownloadName);
         } catch (error) {

@@ -134,6 +134,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CryptoWCFContract\CryptoWCFContract.csproj" />
     <ProjectReference Include="..\ExcelManager\ExcelManager.csproj" />
+    <ProjectReference Include="..\IndentiModel\IdentiModel.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -142,9 +143,6 @@
     </Reference>
     <Reference Include="DocumentFormat.OpenXml">
       <HintPath>..\..\..\ServiceVersion\ExcelManager\bin\Debug\DocumentFormat.OpenXml.dll</HintPath>
-    </Reference>
-    <Reference Include="IdentiModel">
-      <HintPath>..\..\..\Site\MedpomSite\IndentiModel\bin\Debug\IdentiModel.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore">
       <HintPath>..\..\..\ServiceVersion\ExcelManager\bin\Debug\PresentationCore.dll</HintPath>

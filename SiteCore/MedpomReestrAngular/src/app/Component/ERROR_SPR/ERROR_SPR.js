@@ -4,8 +4,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-import { Component, Input } from "@angular/core";
+import { Component, Input, ViewChild } from "@angular/core";
 import { BaseReportComponent } from '../../Component/BaseReportComponent';
+import { ERROR_EDIT } from '../../Component/ERROR_EDIT/ERROR_EDIT';
 import { EditErrorSPRViewModel } from '../../API/ErrorSPRModel';
 let ERROR_SPR = class ERROR_SPR extends BaseReportComponent {
     constructor(repo) {
@@ -46,15 +47,10 @@ let ERROR_SPR = class ERROR_SPR extends BaseReportComponent {
                 this.isLoad = false;
             }
         };
-        this.selectError = null;
-        this.showEditError = false;
-        this.readOnlyEditError = true;
         this.EditError = (err) => {
             try {
                 if (err != null) {
-                    this.selectError = err;
-                    this.readOnlyEditError = false;
-                    this.showEditError = true;
+                    this.errorEditDialog.ShowDialog(err.ID_ERR, false);
                 }
             }
             catch (err) {
@@ -63,9 +59,7 @@ let ERROR_SPR = class ERROR_SPR extends BaseReportComponent {
         };
         this.AddError = () => {
             try {
-                this.selectError = null;
-                this.readOnlyEditError = false;
-                this.showEditError = true;
+                this.errorEditDialog.ShowDialog(null, false);
             }
             catch (err) {
                 alert(err.toString());
@@ -74,9 +68,7 @@ let ERROR_SPR = class ERROR_SPR extends BaseReportComponent {
         this.ShowError = (err) => {
             try {
                 if (err != null) {
-                    this.selectError = err;
-                    this.readOnlyEditError = true;
-                    this.showEditError = true;
+                    this.errorEditDialog.ShowDialog(err.ID_ERR, true);
                 }
             }
             catch (err) {
@@ -97,7 +89,6 @@ let ERROR_SPR = class ERROR_SPR extends BaseReportComponent {
             }
         };
         this.RefreshModel = () => {
-            this.showEditError = false;
             this.getModel();
         };
         this.getModel();
@@ -106,6 +97,9 @@ let ERROR_SPR = class ERROR_SPR extends BaseReportComponent {
 __decorate([
     Input()
 ], ERROR_SPR.prototype, "AdminMode", void 0);
+__decorate([
+    ViewChild(ERROR_EDIT)
+], ERROR_SPR.prototype, "errorEditDialog", void 0);
 ERROR_SPR = __decorate([
     Component({ selector: "ERROR_SPR", templateUrl: "ERROR_SPR.html" })
 ], ERROR_SPR);

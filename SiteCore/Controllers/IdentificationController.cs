@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Castle.Components.DictionaryAdapter;
+using CRZ_IDENTITIFI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
@@ -48,382 +49,330 @@ namespace SiteCore.Controllers
             this.userInfoHelper = userInfoHelper;
         }
 
-
-        #region Основное
-
-        // GET: Identification
-        public IActionResult CreateCSList()
+        private IQueryable<CS_LIST_IN> getCsItemSingle(int CS_LIST_IN_ID)
         {
-            return View();
+            return !User.IsInRole("Admin") ?  csOracleSet.CS_LIST_IN.Where(x => x.CODE_MO == userInfo.CODE_MO && x.CS_LIST_IN_ID == CS_LIST_IN_ID) :  csOracleSet.CS_LIST_IN.Where(x => x.CS_LIST_IN_ID == CS_LIST_IN_ID);
+        }
+
+        private IQueryable<CS_LIST_IN> getCsItemList()
+        {
+
+            return !User.IsInRole("Admin") ?  csOracleSet.CS_LIST_IN.Where(x => x.CODE_MO == userInfo.CODE_MO) :  csOracleSet.CS_LIST_IN;
+        }
+
+        private CustomJsonResult InternalError(Exception e, bool toList = false)
+        {
+            object err;
+            if (e is ModelException)
+            {
+                err = toList ? new List<string> { e.Message } : e.Message;
+            }
+            else
+            {
+                err = toList ? new List<string> { "Внутренняя ошибка сервиса!" } : "Внутренняя ошибка сервиса!";
+                logger?.AddLogExtension(e);
+            }
+            return CustomJsonResult.Create(err, false);
+        }
+        [HttpGet]
+        public async Task<CustomJsonResult> GetCSItemTitleByID(int[] CS_LIST_IN_ID)
+        {
+            try
+            {
+                var list = getCsItemList();
+                var items = await list.Where(x=> CS_LIST_IN_ID.Contains(x.CS_LIST_IN_ID)).Select(x => new PersonItem
+                {
+                    CS_LIST_IN_ID = x.CS_LIST_IN_ID,
+                    CODE_MO = x.CODE_MO,
+                    CURRENT_SMO = (x.CurrentSMO != null ? $"{ csOracleSet.FindNameSMO(x.CurrentSMO.TYPE_SMO, x.CurrentSMO.SMO, x.CurrentSMO.SMO_OK)} c {x.CurrentSMO.DATE_B.ToStr("dd.MM.yyyy")} {(x.CurrentSMO.DATE_E.HasValue ? $" по {x.CurrentSMO.DATE_E.ToStr("dd.MM.yyyy")}" : "")}" : ""),
+                    DOC = x.DOC,
+                    DR = x.DR,
+                    FAM = x.FAM,
+                    IM = x.IM,
+                    OT = x.OT,
+                    POLIS = x.POLIS,
+                    STATUS = x.STATUS,
+                    STATUS_TEXT = $"{x.STATUS_RUS}{(!string.IsNullOrEmpty(x.COMM) && x.STATUS == false ? $"({x.COMM})" : "")}",
+                    STATUS_SEND = x.STATUS_SEND,
+                    STATUS_SEND_TEXT = x.STATUS_SEND.ToRusStr(),
+                    DATE_CREATE = x.DATE_CREATE,
+
+                }).ToListAsync();
+                return CustomJsonResult.Create(items);
+            }
+            catch (Exception e)
+            {
+                return InternalError(e);
+            }
         }
 
         [HttpGet]
-        public CustomJsonResult GetServiceState()
+        public async  Task<CustomJsonResult> GetCSItemTitle(int first = 0, int rows = 25)
         {
-            return CustomJsonResult.Create(wcfIdentiScaner.IsEnabled);
+            try
+            {
+                var list = getCsItemList();
+                var totalRecord = await list.CountAsync();
+                var items = await list.OrderByDescending(x => x.CS_LIST_IN_ID).Skip(first).Take(rows).Select(x => new PersonItem
+                {
+                    CS_LIST_IN_ID = x.CS_LIST_IN_ID,
+                    CODE_MO = x.CODE_MO,
+                    CURRENT_SMO = (x.CurrentSMO != null ? $"{ csOracleSet.FindNameSMO(x.CurrentSMO.TYPE_SMO, x.CurrentSMO.SMO, x.CurrentSMO.SMO_OK)} c {x.CurrentSMO.DATE_B.ToStr("dd.MM.yyyy")} {(x.CurrentSMO.DATE_E.HasValue ? $" по {x.CurrentSMO.DATE_E.ToStr("dd.MM.yyyy")}" : "")}" : ""),
+                    DOC = x.DOC,
+                    DR = x.DR,
+                    FAM = x.FAM,
+                    IM = x.IM,
+                    OT = x.OT,
+                    POLIS = x.POLIS,
+                    STATUS = x.STATUS,
+                    STATUS_TEXT = $"{x.STATUS_RUS}{(!string.IsNullOrEmpty(x.COMM) && x.STATUS == false ? $"({x.COMM})" : "")}",
+                    STATUS_SEND = x.STATUS_SEND,
+                    STATUS_SEND_TEXT = x.STATUS_SEND.ToRusStr(),
+                    DATE_CREATE = x.DATE_CREATE,
+
+                }).ToListAsync();
+                return CustomJsonResult.Create(new TitleResult(){ PersonItems = items, TotalRecord = totalRecord});
+            }
+            catch (Exception e)
+            {
+                return InternalError(e);
+            }
         }
+
         [HttpGet]
-        public IActionResult GetInstruction()
+        public async Task<CustomJsonResult> GetSPR()
         {
-            return PartialView("_InstructionPartical");
+            try
+            {
+                var SPRmodel = new SPRModel
+                {
+                    W = new List<SprWItemModel> { new() { ID = 1, NAME = "Мужской" }, new() { ID = 2, NAME = "Женский" } },
+                    F011 = await csOracleSet.F011.OrderBy(x => x.IDDOC == "14" ? "-1" : x.IDDOC).Select(x=>new SprF011ItemModel{ID = x.IDDOC, NAME = x.DOCNAME}).ToListAsync(),
+                    VPOLIS = ((VPOLIS_VALUES[])Enum.GetValues(typeof(VPOLIS_VALUES))).Select(x => new SprVPOLISItemModel { ID = Convert.ToInt32(x), NAME = x.ToRusStr() }).ToList()
+                };
+                return CustomJsonResult.Create(SPRmodel);
+            }
+            catch (Exception e)
+            {
+                return InternalError(e);
+            }
         }
+
+
+
+        [HttpPost]
+        public async Task<CustomJsonResult> AddPerson(PersonItemModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var item = model.ToCS_LIST_IN();
+                    item.CODE_MO = userInfo.CODE_MO;
+                    item.DATE_CREATE = DateTime.Now;
+                   
+                    csOracleSet.CS_LIST_IN.Add(item);
+                    await csOracleSet.SaveChangesAsync();
+                    return CustomJsonResult.Create(true);
+                }
+                return CustomJsonResult.Create(ModelState.GetErrors(), false);
+
+            }
+            catch (Exception ex)
+            {
+                return InternalError(ex);
+            }
+        }
+
+        [HttpPost]
+        public async Task<CustomJsonResult> UpdatePerson(PersonItemModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (!model.CS_LIST_IN_ID.HasValue)
+                        throw new ModelException("Не указан идентификатор основного случая");
+
+                    var baseItem = await getCsItemSingle(model.CS_LIST_IN_ID.Value).FirstOrDefaultAsync();
+                    if (baseItem == null)
+                        throw new ModelException($"Не удалось найти запись №{model.CS_LIST_IN_ID.Value}");
+                    if(baseItem.STATUS_SEND!=StatusCS_LIST.New)
+                        throw new ModelException($"Не допустимо редактирование записей со статусом отличным от \"Новый\"");
+
+                    model.CopyTo(baseItem);
+                    baseItem.CODE_MO = userInfo.CODE_MO;
+                    baseItem.DATE_CREATE = DateTime.Now;
+
+                    await csOracleSet.SaveChangesAsync();
+                    return CustomJsonResult.Create(true);
+                }
+                return CustomJsonResult.Create(ModelState.GetErrors(), false);
+
+            }
+            catch (Exception ex)
+            {
+                return InternalError(ex);
+            }
+        }
+        [HttpPost]
+        public async Task<CustomJsonResult> RemovePerson(int[] CS_LIST_IN_ID)
+        {
+            try
+            {
+                var items = await  getCsItemList().Where(x => CS_LIST_IN_ID.Contains(x.CS_LIST_IN_ID)).ToListAsync();
+                csOracleSet.CS_LIST_IN.RemoveRange(items);
+                await csOracleSet.SaveChangesAsync();
+                return CustomJsonResult.Create(true);
+            }
+            catch (Exception ex)
+            {
+                return InternalError(ex);
+            }
+        }
+
+
+        [HttpGet]
+        public async Task<CustomJsonResult> GetPerson(int CS_LIST_IN_ID)
+        {
+            try
+            {
+                var item = await getCsItemSingle(CS_LIST_IN_ID).FirstOrDefaultAsync();
+                if (item == null)
+                    throw new ModelException($"Не удалось найти запись №{CS_LIST_IN_ID}");
+                return CustomJsonResult.Create(new PersonItemModel(item));
+            }
+            catch (Exception ex)
+            {
+                return InternalError(ex);
+            }
+        }
+
+
+        [HttpPost]
+        public async Task<CustomJsonResult> SendPerson(int[] CS_LIST_IN_ID)
+        {
+            try
+            {
+                var items = await getCsItemList().Where(x=>CS_LIST_IN_ID.Contains(x.CS_LIST_IN_ID)).ToListAsync();
+                foreach (var item in items)
+                {
+                    if (item.STATUS_SEND != StatusCS_LIST.New)
+                        throw new ModelException("Не возможно отправить запись со статусом отличным от статуса \"Новый\"");
+                    item.STATUS_SEND = StatusCS_LIST.OnSend;
+                }
+                await csOracleSet.SaveChangesAsync();
+                return CustomJsonResult.Create(true);
+            }
+            catch (Exception ex)
+            {
+                return InternalError(ex);
+            }
+        }
+
+
+        [HttpPost]
+        public async Task<CustomJsonResult> SetNewStatus(int[] CS_LIST_IN_ID)
+        {
+            try
+            {
+                var items = await getCsItemList().Include(x=>x.CS_LIST_IN_RESULT).ThenInclude(x=>x.CS_LIST_IN_RESULT_SMO).Where(x => CS_LIST_IN_ID.Contains(x.CS_LIST_IN_ID)).ToListAsync();
+                foreach (var item in items)
+                {
+                    item.STATUS_SEND = StatusCS_LIST.New;
+                    item.STATUS = null;
+                    csOracleSet.CS_LIST_IN_RESULT_SMO.RemoveRange(item.CS_LIST_IN_RESULT.SelectMany(x => x.CS_LIST_IN_RESULT_SMO));
+                    csOracleSet.CS_LIST_IN_RESULT.RemoveRange(item.CS_LIST_IN_RESULT);
+
+                }
+                await csOracleSet.SaveChangesAsync();
+                return CustomJsonResult.Create(true);
+            }
+            catch (Exception ex)
+            {
+                return InternalError(ex);
+            }
+        }
+
+
+        [HttpGet]
+        public async Task<CustomJsonResult> GetPersonView(int CS_LIST_IN_ID)
+        {
+            try
+            {
+                var item =  await getCsItemSingle(CS_LIST_IN_ID).Include(x=>x.CS_LIST_IN_RESULT).ThenInclude(x=>x.CS_LIST_IN_RESULT_SMO).ThenInclude(x=>x.TFOMS).FirstOrDefaultAsync();
+                if (item == null)
+                    throw new ModelException($"Запись №{CS_LIST_IN_ID} не найдена!");
+                var pers = new PersonView()
+                {
+                    STATUS = item.STATUS,
+                    DOC = item.DOC,
+                    DR = item.DR,
+                    FIO = item.FIO,
+                    POLIS = item.POLIS,
+                    SNILS = item.SNILS,
+                    W = item.W == 1 ? "Мужской" : "Женский",
+                    RESULT = item.CS_LIST_IN_RESULT.Select(y => new PersonViewResult()
+                    {
+                        DR = y.DR,
+                        DDEATH = y.DDEATH,
+                        ENP = y.ENP,
+                        LVL_D = y.LVL_D.LVL_D_TO_RUS(),
+                        LVL_D_KOD = y.LVL_D_KOD.Split(";", StringSplitOptions.RemoveEmptyEntries).Select(lvl => $"{lvl} - {lvl.LVL_D_kod_TO_RUS()}").ToArray(),
+                        SMO = y.CS_LIST_IN_RESULT_SMO.Select(smo => new PersonViewResultSMO()
+                        {
+                            NAME_TFK = smo.TFOMS == null ? "" : smo.TFOMS.NAME_TFK,
+                            DATE_B = smo.DATE_B,
+                            DATE_E = smo.DATE_E,
+                            ENP = smo.ENP,
+                            SMO = smo.SMO,
+                            SMO_NAME = csOracleSet.FindNameSMO(smo.TYPE_SMO, smo.SMO, smo.SMO_OK),
+                            VPOLIS = smo.VPOLIS.ToRusStr(),
+                            SPOLIS = smo.SPOLIS,
+                            NPOLIS = smo.NPOLIS,
+                            SMO_OK = smo.SMO_OK,
+                            TF_OKATO = smo.TF_OKATO,
+                            TYPE_SMO = smo.TypeSMO_RUS
+                        }).ToArray()
+                    }).ToArray()
+                };
+                return CustomJsonResult.Create(pers);
+            }
+            catch (Exception ex)
+            {
+                return InternalError(ex);
+            }
+        }
+
+
+        [HttpGet]
+        public async Task<CustomJsonResult> GetServiceState()
+        {
+            try
+            {
+                return CustomJsonResult.Create(await wcfIdentiScaner.IsEnabledAsync());
+            }
+            catch (Exception e)
+            {
+                return InternalError(e);
+            }
+         
+        }
+      
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public IActionResult GetServiceLog()
-        {
-            return PartialView("_LogServicePartical", wcfIdentiScaner.GetLog());
-        }
-        #endregion
-        #region Работа со списками
-
-        [HttpGet]
-        public IActionResult NewCSList()
-        {
-            return PartialView("_NewCSListPartical", new NewCSListViewModel());
-        }
-
-
-
-
-        [HttpPost]
-        public async Task<CustomJsonResult> NewCSList(NewCSListViewModel model)
+        public CustomJsonResult GetServiceLog()
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    var CSItem = new CS_LIST();
-                    CSItem.DATE_CREATE = DateTime.Now;
-                    CSItem.CODE_MO = userInfo.CODE_MO;
-                    CSItem.CAPTION = string.IsNullOrEmpty(model.Caption) ? $"Запрос {CSItem.CODE_MO} от {CSItem.DATE_CREATE:dd.MM.yyyy HH:mm}" : model.Caption;
-                    csOracleSet.CS_LIST.Add(CSItem);
-                    await csOracleSet.SaveChangesAsync();
-                    return CustomJsonResult.Create(null);
-                }
-                return CustomJsonResult.Create(await this.RenderViewAsync("_errorList", ModelToList(ModelState)));
+                return CustomJsonResult.Create(wcfIdentiScaner.GetLog());
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                logger.AddLog($"NewCSList:{ex.Message}||{ex.StackTrace}", LogType.Error);
-                return await CreateInternalError();
+                return InternalError(e);
             }
-
+           
         }
-        [HttpGet]
-        public async Task<CustomJsonResult> GetCSList(int Page, int CountOnPage)
-        {
-            try
-            {
-                var listq = getCsListsQ();
-                var count = listq.Count();
-                var list = (await listq.OrderByDescending(x => x.CS_LIST_ID).Skip((Page - 1) * CountOnPage).Take(CountOnPage).ToListAsync()).Select(x => new { x.CS_LIST_ID, x.CAPTION, x.CODE_MO, x.COMM, x.DATE_CREATE, STATUS = x.STATUS.ToString(), STATUS_RUS = $"{x.STATUS.ToRusStr()}{(!string.IsNullOrEmpty(x.COMM) ? $"({x.COMM})" : "")}" });
-                return CustomJsonResult.Create(new { count, items = list });
-            }
-            catch (Exception ex)
-            {
-                logger.AddLog($"GetCSList:{ex.Message}||{ex.StackTrace}", LogType.Error);
-                return await CreateInternalError(false);
-            }
-        }
-
-        [HttpGet]
-        public async Task<CustomJsonResult> GetCSListByID(List<int> CS_LIST_ID)
-        {
-            try
-            {
-                var listq = getCsList(CS_LIST_ID);
-                var list = (await listq.ToListAsync()).Select(x => new { x.CS_LIST_ID, x.CAPTION, x.CODE_MO, x.COMM, x.DATE_CREATE, STATUS = x.STATUS.ToString(), STATUS_RUS = x.STATUS.ToRusStr() });
-                return CustomJsonResult.Create(new { items = list });
-            }
-            catch (Exception ex)
-            {
-                logger.AddLog($"GetCSListByID:{ex.Message}||{ex.StackTrace}", LogType.Error);
-                return await CreateInternalError(false);
-            }
-        }
-        [HttpPost]
-        public async Task<CustomJsonResult> DeleteCSList([FromBody] int[] CS_LIST_ID)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    foreach (var val in CS_LIST_ID)
-                    {
-                        var list = await getCsList(val);
-                        if (list != null)
-                        {
-                            var res = list.CS_LIST_IN.SelectMany(x => x.CS_LIST_IN_RESULT).ToList();
-                            csOracleSet.CS_LIST_IN_RESULT_SMO.RemoveRange(res.SelectMany(x => x.CS_LIST_IN_RESULT_SMO));
-                            csOracleSet.CS_LIST_IN_RESULT.RemoveRange(res);
-                            csOracleSet.CS_LIST_IN.RemoveRange(list.CS_LIST_IN);
-                            csOracleSet.CS_LIST.Remove(list);
-                        }
-                    }
-                    await csOracleSet.SaveChangesAsync();
-                    return CustomJsonResult.Create(null);
-                }
-                return CustomJsonResult.Create(await this.RenderViewAsync("_errorList", ModelToList(ModelState)), false);
-            }
-            catch (Exception ex)
-            {
-                logger.AddLog($"DeleteCSList:{ex.Message}||{ex.StackTrace}", LogType.Error);
-                return await CreateInternalError(false);
-            }
-        }
-
-        [HttpPost]
-        public async Task<CustomJsonResult> SendCSList([FromBody] int[] CS_LIST_ID)
-        {
-            try
-            {
-                foreach (var val in CS_LIST_ID)
-                {
-                    var list = await getCsList(val);
-                    if (list is { STATUS: StatusCS_LIST.New } && list.CS_LIST_IN.Count != 0)
-                    {
-                        list.STATUS = StatusCS_LIST.OnSend;
-                    }
-                }
-                await csOracleSet.SaveChangesAsync();
-                return CustomJsonResult.Create(null);
-            }
-            catch (Exception ex)
-            {
-                logger.AddLog($"SendCSList:{ex.Message}||{ex.StackTrace}", LogType.Error);
-                return await CreateInternalError(false);
-            }
-        }
-
-        [HttpPost]
-        public async Task<CustomJsonResult> OpenCSList([FromBody] int[] CS_LIST_ID)
-        {
-            try
-            {
-                foreach (var val in CS_LIST_ID)
-                {
-                    var list = await getCsList(val);
-                    if (list != null && list.STATUS.In(StatusCS_LIST.Answer, StatusCS_LIST.Error))
-                    {
-                        list.STATUS = StatusCS_LIST.New;
-                        var res = list.CS_LIST_IN.SelectMany(x => x.CS_LIST_IN_RESULT).ToList();
-                        csOracleSet.CS_LIST_IN_RESULT_SMO.RemoveRange(res.SelectMany(x => x.CS_LIST_IN_RESULT_SMO));
-                        csOracleSet.CS_LIST_IN_RESULT.RemoveRange(res);
-                        foreach (var list_in in list.CS_LIST_IN)
-                        {
-                            list_in.STATUS = null;
-                        }
-                    }
-                }
-                await csOracleSet.SaveChangesAsync();
-                return CustomJsonResult.Create(null);
-            }
-            catch (Exception ex)
-            {
-                logger.AddLog($"OpenCSList:{ex.Message}||{ex.StackTrace}", LogType.Error);
-                return await CreateInternalError(false);
-            }
-        }
-        #endregion
-        #region Работа с элементами списков
-
-        async Task<NewCSItemViewModel> CreateModel(int CS_LIST_ID, NewCSItemModel item)
-        {
-            return new() {F011 = await csOracleSet.F011.OrderBy(x => x.IDDOC == "14" ? "-1" : x.IDDOC).ToListAsync(), CS_LIST_ID = CS_LIST_ID, ITEM = item};
-        }
-
-        [HttpGet]
-        public async Task<CustomJsonResult> NewCSItem(int CS_LIST_ID, int? CS_LIST_IN_ID)
-        {
-            try
-            {
-                NewCSItemModel item = null;
-                if (CS_LIST_IN_ID.HasValue)
-                    item = new NewCSItemModel(await getCsItem(CS_LIST_IN_ID.Value));
-                return CustomJsonResult.Create(await this.RenderViewAsync("_NewCSItemPartical", await CreateModel(CS_LIST_ID, item), true));
-            }
-            catch (Exception ex)
-            {
-                logger.AddLog($"NewCSItem:{ex.Message}||{ex.StackTrace}", LogType.Error);
-                return await CreateInternalError(false);
-            }
-        }
-        [HttpPost]
-        public async Task<CustomJsonResult> NewCSItem([Bind(Prefix = "ITEM")] NewCSItemModel model)
-        {
-            try
-            {
-                model.FAM = model.FAM?.ToUpper().Trim();
-                model.IM = model.IM?.ToUpper().Trim();
-                model.OT = model.OT?.ToUpper().Trim();
-                model.DOC_NUM = model.DOC_NUM?.ToUpper().Trim();
-                model.DOC_SER = model.DOC_SER?.ToUpper().Trim();
-                model.SNILS = model.SNILS?.ToUpper().Trim();
-                model.SPOLIS = model.SPOLIS?.ToUpper().Trim();
-                model.NPOLIS = model.NPOLIS?.ToUpper().Trim();
-
-                foreach (var err in model.IsValid)
-                {
-                    ModelState.AddModelError("", err);
-                }
-
-                if (ModelState.IsValid)
-                {
-                    var list = await getCsList(model.CS_LIST_ID);
-                    if (list == null)
-                    {
-                        throw new ModelException("", "Список для добавления не найден");
-                    }
-
-                    if (list.STATUS != StatusCS_LIST.New)
-                    {
-                        throw new ModelException("", "Невозможно добавить\\изменить данные в список со статусом отличным от \"Новый\"");
-                    }
-
-                    if (!model.CS_LIST_IN_ID.HasValue)
-                    {
-                        list.CS_LIST_IN.Add(model.ToCS_LIST_IN());
-                    }
-                    else
-                    {
-                        var itemBD = await getCsItem(model.CS_LIST_IN_ID.Value);
-                        itemBD.CopyFrom(model.ToCS_LIST_IN());
-                    }
-                    await csOracleSet.SaveChangesAsync();
-                    return CustomJsonResult.Create(null);
-                }
-                throw new ModelException(null, null);
-            }
-            catch (ModelException ex)
-            {
-                if(ex.Key!=null)
-                    ModelState.AddModelError(ex.Key, ex.Message);
-                return CustomJsonResult.Create(await this.RenderViewAsync("_NewCSItemPartical", await CreateModel(model.CS_LIST_ID, model), true), false);
-            }
-            catch (Exception ex)
-            {
-                logger?.AddLog($"Ошибка NewCSItem: {ex.FullError()}:{ex.StackTrace}", LogType.Error);
-                ModelState.AddModelError("", "Внутренняя ошибка сервиса");
-                return CustomJsonResult.Create(await this.RenderViewAsync("_NewCSItemPartical", await CreateModel(model.CS_LIST_ID, model), true), false);
-            }
-        }
-        [HttpPost]
-        public async Task<CustomJsonResult> DeleteCSItem([FromBody] int[] CS_LIST_IN_ID)
-        {
-            try
-            {
-                foreach (var val in CS_LIST_IN_ID)
-                {
-                    var item = await getCsItem(val);
-                    if (item != null)
-                    {
-                        if (item.CS_LIST.STATUS != StatusCS_LIST.New)
-                        {
-                            throw new Exception("Невозможно удалить данные из списка со статусом отличным от \"Новый\"");
-                        }
-                        if (item.CS_LIST_IN_RESULT != null)
-                        {
-                            csOracleSet.CS_LIST_IN_RESULT_SMO.RemoveRange(item.CS_LIST_IN_RESULT.SelectMany(x => x.CS_LIST_IN_RESULT_SMO));
-                            csOracleSet.CS_LIST_IN_RESULT.RemoveRange(item.CS_LIST_IN_RESULT);
-                        }
-                        csOracleSet.CS_LIST_IN.Remove(item);
-                    }
-                }
-                await csOracleSet.SaveChangesAsync();
-                return CustomJsonResult.Create(null);
-            }
-            catch (Exception ex)
-            {
-                logger?.AddLog($"Ошибка DeleteCSItem: {ex.FullError()}:{ex.StackTrace}", LogType.Error);
-                return await CreateInternalError(false);
-            }
-        }
-        [HttpGet]
-        public async Task<CustomJsonResult> GetCSListIN(int CS_LIST_ID, int Page, int CountOnPage)
-        {
-            try
-            {
-                var listq = getCsList_INQ(CS_LIST_ID);
-                var count = listq.Count();
-                var list = (await listq.OrderByDescending(x => x.CS_LIST_IN_ID).Skip((Page - 1) * CountOnPage).Take(CountOnPage).ToListAsync()).Select(x => new
-                {
-                    x.FAM,
-                    x.IM,
-                    x.OT,
-                    x.W,
-                    x.DR,
-                    x.POLIS,
-                    x.DOC,
-                    x.STATUS,
-                    STATUS_RUS = $"{x.STATUS_RUS}{(!string.IsNullOrEmpty(x.COMM) && x.STATUS == false ? $"({x.COMM})" : "")}",
-                    CURRENT_SMO = (x.CurrentSMO != null ? $"{csOracleSet.FindNameSMO(x.CurrentSMO.TYPE_SMO, x.CurrentSMO.SMO, x.CurrentSMO.SMO_OK)} c {x.CurrentSMO.DATE_B.ToStr("dd.MM.yyyy")} {(x.CurrentSMO.DATE_E.HasValue ? $" по {x.CurrentSMO.DATE_E.ToStr("dd.MM.yyyy")}" : "")}" : ""),
-                    x.CS_LIST_IN_ID
-                }).ToList();
-                return CustomJsonResult.Create(new { count, items = list });
-            }
-            catch (Exception ex)
-            {
-                logger?.AddLog($"Ошибка GetCSListIN: {ex.FullError()}:{ex.StackTrace}", LogType.Error);
-                return await CreateInternalError();
-            }
-        }
-
-        [HttpGet]
-        public async Task<CustomJsonResult> ViewResult(int CS_LIST_IN_ID)
-        {
-            try
-            {
-
-                var item = await getCsItem(CS_LIST_IN_ID);
-                foreach (var smo in item.CS_LIST_IN_RESULT.SelectMany(x => x.CS_LIST_IN_RESULT_SMO))
-                {
-                    smo.SMO_NAME = await csOracleSet.FindNameSMO(smo.TYPE_SMO, smo.SMO, smo.SMO_OK);
-                }
-                return CustomJsonResult.Create(await this.RenderViewAsync("_ViewResultPartical", item, true));
-            }
-            catch (Exception ex)
-            {
-                logger?.AddLog($"Ошибка ViewResult: {ex.FullError()}:{ex.StackTrace}", LogType.Error);
-                return await CreateInternalError(false);
-            }
-
-        }
-
-        #endregion
-        #region Private
-        private async Task<CustomJsonResult> CreateInternalError(bool errorList = true)
-        {
-            return errorList ? CustomJsonResult.Create(await this.RenderViewAsync("_errorList", "Внутренняя ошибка сервиса", true), false) : CustomJsonResult.Create("Внутренняя ошибка сервиса", false);
-        }
-
-        private List<string> ModelToList(ModelStateDictionary model)
-        {
-            return model.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList();
-        }
-
-        private IQueryable<CS_LIST_IN> getCsList_INQ(int CS_LIST_ID)
-        {
-            return !User.IsInRole("Admin") ? csOracleSet.CS_LIST_IN.Where(x => x.CS_LIST.CS_LIST_ID == CS_LIST_ID && x.CS_LIST.CODE_MO == userInfo.CODE_MO) : csOracleSet.CS_LIST_IN.Where(x => x.CS_LIST_ID == CS_LIST_ID);
-        }
-
-        private IQueryable<CS_LIST> getCsListsQ()
-        {
-            return !User.IsInRole("Admin") ? csOracleSet.CS_LIST.Where(x => x.CODE_MO == userInfo.CODE_MO) : csOracleSet.CS_LIST;
-        }
-        private async Task<CS_LIST> getCsList(int CS_LIST_ID)
-        {
-            return !User.IsInRole("Admin") ? await csOracleSet.CS_LIST.FirstOrDefaultAsync(x => x.CODE_MO == userInfo.CODE_MO && x.CS_LIST_ID == CS_LIST_ID) : await csOracleSet.CS_LIST.FirstOrDefaultAsync(x => x.CS_LIST_ID == CS_LIST_ID);
-        }
-        private async Task<CS_LIST_IN> getCsItem(int CS_LIST_IN_ID)
-        {
-
-            return !User.IsInRole("Admin") ? await csOracleSet.CS_LIST_IN.FirstOrDefaultAsync(x => x.CS_LIST.CODE_MO == userInfo.CODE_MO && x.CS_LIST_IN_ID == CS_LIST_IN_ID) : await csOracleSet.CS_LIST_IN.FirstOrDefaultAsync(x => x.CS_LIST_IN_ID == CS_LIST_IN_ID);
-        }
-        private IQueryable<CS_LIST> getCsList(List<int> CS_LIST_ID)
-        {
-            return !User.IsInRole("Admin") ? csOracleSet.CS_LIST.Where(x => x.CODE_MO == userInfo.CODE_MO && CS_LIST_ID.Contains(x.CS_LIST_ID)) : csOracleSet.CS_LIST.Where(x => CS_LIST_ID.Contains(x.CS_LIST_ID));
-        }
-        #endregion
 
 
     }

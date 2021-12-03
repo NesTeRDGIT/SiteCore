@@ -5,7 +5,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import LinearProgressWithLabel from "./LinearProgressWithLabel.jsx"
-import { downloadBase64File } from "../API/FileAPI.js";
+import { downloadBase64File ,downloadBase64FileAsync,saveFile} from "../API/FileAPI.js";
 import HUBConnect from "../API/HubAPI.js"
 import { Repository } from "../API/Repository.js";
 
@@ -36,11 +36,10 @@ export default function ThemeFileSaver(props) {
 
     const saveAllFile = async () => {
         try {
-            const data = await repo.DownloadAllFileTheme(themeId, connectionId);
-            debugger;
-            setStatusText("Загрузка файла");
-            downloadBase64File(data.FileContents, data.ContentType, data.FileDownloadName);
-            setStatusText("Загрузка завершена");
+            const data = await repo.DownloadAllFileTheme(themeId, connectionId);  
+            setStatusText("Сохранение файла"); 
+            saveFile(data.Data, data.FileName);
+            setStatusText("Сохранение файла завершено");
             onClose();
           
         } catch (error) {

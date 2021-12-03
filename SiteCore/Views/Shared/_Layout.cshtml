@@ -86,15 +86,15 @@
                                     <li><a asp-action="ReestrMed" asp-route-selectIndex="0" asp-controller="MedpomReestr">Загрузка файлов</a></li>
                                     <li><a asp-action="ReestrMed" asp-route-selectIndex="1" asp-controller="MedpomReestr">Статус загрузки</a></li>
                                     <li><a asp-action="ReestrMed" asp-route-selectIndex="2" asp-controller="MedpomReestr">Справочник ошибок</a></li>
-                                    @if (isSignAdmin|| isSignMO)
+                                    @if (isSignAdmin || isSignMO)
                                     {
                                         <li><a asp-action="SignSPR" asp-controller="Sign">Подписи</a></li>
                                     }
                                     @if (isCS)
                                     {
-                                        <li><a asp-action="CreateCSList"  asp-controller="Identification">Поиск в ЦС</a></li>
+                                        <li><a asp-action="ReestrMed" asp-route-selectIndex="3" asp-controller="MedpomReestr">Поиск в ЦС</a></li>
                                     }
-                                </ul>
+                                    </ul>
                             </li>
                         }
                         @if (isTMKAdmin || isTMKSMO || isTMKReader || isTMKUser)

@@ -1,4 +1,4 @@
-(self["webpackChunksearchapp"] = self["webpackChunksearchapp"] || []).push([[856],{
+(globalThis["webpackChunksearchapp"] = globalThis["webpackChunksearchapp"] || []).push([[856],{
 
 /***/ 27856:
 /***/ (function(module) {

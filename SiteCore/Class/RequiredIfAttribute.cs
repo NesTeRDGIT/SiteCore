@@ -106,7 +106,7 @@ namespace SiteCore.Class
             }
 
             object otherValue = otherProperty.GetValue(validationContext.ObjectInstance);
-           
+      
 
             // check if this value is actually required and validate it
             if (!IsInverted && OtherPropertyValue.Count(x => Equals(otherValue, x)) != 0 || IsInverted && !OtherPropertyValue.Any(x => Equals(otherValue, x)))

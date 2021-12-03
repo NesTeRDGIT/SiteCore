@@ -12,8 +12,8 @@ let MainComponent = class MainComponent {
         this.elementRef = elementRef;
         this.urlHelper = urlHelper;
         this.isAdmin = false;
-        this.isZpz = false;
-        this.isOms = false;
+        this.isMO = false;
+        this.isCS = false;
         this.ReportType = ReportType;
         this.reportList = [];
         this.onLoading = (value, type) => {
@@ -26,8 +26,8 @@ let MainComponent = class MainComponent {
             this.selectedReport = this.reportList.find(x => x.Type === ReportType.ViewMedpom);
         };
         this.isAdmin = this.elementRef.nativeElement.getAttribute("[isAdmin]") === "true";
-        this.isZpz = this.elementRef.nativeElement.getAttribute("[isZpz]") === "true";
-        this.isOms = this.elementRef.nativeElement.getAttribute("[isOms]") === "true";
+        this.isMO = this.elementRef.nativeElement.getAttribute("[isMO]") === "true";
+        this.isCS = this.elementRef.nativeElement.getAttribute("[isCS]") === "true";
     }
     get selectedReport() {
         return this._selectedReport;
@@ -40,9 +40,13 @@ let MainComponent = class MainComponent {
     ;
     ngOnInit() {
         this.primeNGConfig.setTranslation(new RusPrime());
-        this.reportList.push(new ReportCaption("Загрузка реестров", ReportType.LoadMedpom));
-        this.reportList.push(new ReportCaption("Статус проверки", ReportType.ViewMedpom));
-        this.reportList.push(new ReportCaption("Справочник ошибок", ReportType.ErrorSPR));
+        if (this.isMO || this.isAdmin) {
+            this.reportList.push(new ReportCaption("Загрузка реестров", ReportType.LoadMedpom));
+            this.reportList.push(new ReportCaption("Статус проверки", ReportType.ViewMedpom));
+            this.reportList.push(new ReportCaption("Справочник ошибок", ReportType.ErrorSPR));
+        }
+        if (this.isCS || this.isAdmin)
+            this.reportList.push(new ReportCaption("Поиск в ЦС", ReportType.FIND_CS));
         if (this.reportList.length !== 0) {
             const selectIndex = +this.urlHelper.getParameter('selectIndex');
             if (!isNaN(selectIndex)) {
@@ -63,6 +67,7 @@ var ReportType;
     ReportType[ReportType["LoadMedpom"] = 0] = "LoadMedpom";
     ReportType[ReportType["ViewMedpom"] = 1] = "ViewMedpom";
     ReportType[ReportType["ErrorSPR"] = 2] = "ErrorSPR";
+    ReportType[ReportType["FIND_CS"] = 3] = "FIND_CS";
 })(ReportType || (ReportType = {}));
 class ReportCaption {
     constructor(name, type) {

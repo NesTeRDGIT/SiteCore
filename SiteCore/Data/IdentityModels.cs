@@ -237,11 +237,11 @@ namespace SiteCore.Data
 
         public override Task<ApplicationUser> FindByNameAsync(string userName)
         {
-            return Users.Include(c => c.UserRoles).Include(x => x.Claims).Include(x => x.CODE_MO_NAME).FirstOrDefaultAsync(u => u.NormalizedUserName == userName);
+            return Users.Include(c => c.UserRoles).Include(x => x.Claims).Include(x => x.CODE_MO_NAME).FirstOrDefaultAsync(u => u.NormalizedUserName == userName.ToUpper());
         }
         public ApplicationUser FindByName(string userName)
         {
-            return Users.Include(c => c.UserRoles).Include(x => x.Claims).Include(x => x.CODE_MO_NAME).FirstOrDefault(u => u.NormalizedUserName == userName);
+            return Users.Include(c => c.UserRoles).Include(x => x.Claims).Include(x => x.CODE_MO_NAME).FirstOrDefault(u => u.NormalizedUserName == userName.ToUpper());
         }
 
 

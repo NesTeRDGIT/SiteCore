@@ -3,6 +3,15 @@ function throwResponse(response){
     throw new Error(`${response.status}-${response.statusText}`);
 }
 
+export class FileData{
+    FileName=null;
+    Data = null;
+    constructor(FileName, Data) {
+        this.FileName = FileName;
+        this.Data = Data;
+      }
+}
+
 export class Repository {
 
 
@@ -116,27 +125,42 @@ export class Repository {
         }
     }
 
-    async DownloadAllFileTheme(themeId, connectionId) {
+   
+
+
+    getFileNameFromContentDisposition(zglv)
+    { 
+        const attr = zglv.split(';');
+        let filename = null;
+        let filenameRFC5987 = null;
+        for(let element of attr)
+        {
+            let at = element.trim();
+            if(at.startsWith('filename='))    
+                filename = at.replace('filename=', '');    
+            if(at.startsWith('filename*=UTF-8\'\''))    
+                filenameRFC5987 = at.replace('filename*=UTF-8\'\'', '');    
+        }
+        var filenameRFC5987decode = decodeURI(filenameRFC5987);
+        return filenameRFC5987decode??filename;
+    }
+
+     async DownloadAllFileTheme(themeId, connectionId){
 
         const requestOptions = {
             method: "GET",
             headers: { 'Content-Type': "application/json" },
             credentials: "same-origin"
         };
-       
         const response = await window.fetch(`DownloadAllFileTheme?THEME_ID=${themeId}&&ConnectionId=${connectionId}`, requestOptions);
-        
         if (response.ok) {
-            const result = await response.json();
-            if (result.Result) {
-                return result.Value;
-            }
-            throw new Error(result.Value);
+            const zglv = response.headers.get('Content-Disposition');
+            const filename = this.getFileNameFromContentDisposition(zglv);
+            return new FileData(filename,await response.blob());
         } else {
             throwResponse(response);
         }
     }
-
 
     async RemoveDoc(docForSignId) {
 

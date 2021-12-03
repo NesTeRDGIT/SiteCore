@@ -1,0 +1,103 @@
+<p-dialog [header]="'Просмотр'" [(visible)]="display" [style]="{width: '90vw'}" [modal]="true">
+    <Content-Load [isLoad]="isLoad" style="font-family: 'Times New Roman';">
+        <fieldset>
+            <legend>Исходные данные</legend>
+            <table>
+                <tr>
+                    <td class="BoldText">ФИО</td>
+                    <td>{{model.FIO}}</td>
+                </tr>
+                <tr>
+                    <td class="BoldText">Дата рождения</td>
+                    <td>{{model.DR|date:'dd-MM-yyyy'}}</td>
+                </tr>
+                <tr>
+                    <td class="BoldText">Пол</td>
+                    <td>{{model.W}}</td>
+                </tr>
+                <tr>
+                    <td class="BoldText">Полис</td>
+                    <td>{{model.POLIS}}</td>
+                </tr>
+                <tr>
+                    <td class="BoldText">Документ</td>
+                    <td>{{model.DOC}}</td>
+                </tr>
+                <tr>
+                    <td class="BoldText">СНИЛС</td>
+                    <td>{{model.SNILS}}</td>
+                </tr>
+            </table>
+        </fieldset>
+        <fieldset>
+            <legend>Результаты</legend>
+            <div *ngIf="model.STATUS === false">Не найден в ЦС</div>
+            <div *ngIf="model.STATUS === null">Результат еще не получен</div>
+            <div *ngIf="model.STATUS === true">
+                <div *ngIf="!model.HaveResult">Результат не найден в базе данных</div>
+                <fieldset *ngFor="let res of model.RESULT; index as i">
+                    <legend>Результат {{i+1}}</legend>
+                    <table>
+                        <tr>
+                            <td class="BoldText">Главное ЕНП</td>
+                            <td>{{res.ENP}}</td>
+                        </tr>
+                        <tr>
+                            <td class="BoldText">Дата рождения</td>
+                            <td>{{res.DR|date:'dd-MM-yyyy'}}</td>
+                        </tr>
+                        <tr>
+                            <td class="BoldText">Дата смерти</td>
+                            <td>{{res.DDEATH|date:'dd-MM-yyyy'}}</td>
+                        </tr>
+                        <tr>
+                            <td class="BoldText">Уровень доверия к информации</td>
+                            <td>{{res.LVL_D}}</td>
+                        </tr>
+                        <tr>
+                            <td class="BoldText">Ключи поиска</td>
+                            <td>
+                                <ng-container *ngFor="let lvl of res.LVL_D_KOD">
+                                    <span>{{lvl}}</span><br />
+                                </ng-container>
+                            </td>
+                        </tr>
+                    </table>
+                    <h3 style="text-align: center">История страхования</h3>
+                    <table class="table_report">
+                        <tr>
+                            <th>ЕНП</th>
+                            <th>OKATO ТФОМС</th>
+                            <th>Наименование ТФОМС</th>
+                            <th>Тип кода СМО</th>
+                            <th>Код СМО</th>
+                            <th>Наименование СМО</th>
+                            <th>Дата начала</th>
+                            <th>Дата окончания</th>
+                            <th>Тип ДПФС</th>
+                            <th>Серия</th>
+                            <th>Номер</th>
+                            <th>Территория</th>
+                        </tr>
+                        <tr *ngFor="let smo of res.SMO">
+                            <td>{{smo.ENP}}</td>
+                            <td>{{smo.TF_OKATO}}</td>
+                            <td>{{smo.NAME_TFK}}</td>
+                            <td>{{smo.TYPE_SMO}}</td>
+                            <td>{{smo.SMO}}</td>
+                            <td>{{smo.SMO_NAME}}</td>
+                            <td>{{smo.DATE_B|date:'dd-MM-yyyy'}}</td>
+                            <td>{{smo.DATE_E|date:'dd-MM-yyyy'}}</td>
+                            <td>{{smo.VPOLIS}}</td>
+                            <td>{{smo.SPOLIS}}</td>
+                            <td>{{smo.NPOLIS}}</td>
+                            <td>{{smo.SMO_OK}}</td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </div>
+        </fieldset>
+
+
+    </Content-Load>
+</p-dialog>
