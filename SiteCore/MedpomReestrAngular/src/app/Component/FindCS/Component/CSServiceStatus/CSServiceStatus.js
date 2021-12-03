@@ -64,7 +64,7 @@ __decorate([
     Input()
 ], CSServiceStatus.prototype, "AdminMode", void 0);
 CSServiceStatus = __decorate([
-    Component({ selector: "CSServiceStatus", templateUrl: "CSServiceStatus.html", styleUrls: ["CSServiceStatus.css", "CSServiceStatus.scss"] })
+    Component({ selector: "CSServiceStatus", templateUrl: "CSServiceStatus.html", styleUrls: ["CSServiceStatus.scss"] })
 ], CSServiceStatus);
 export { CSServiceStatus };
 //# sourceMappingURL=CSServiceStatus.js.map

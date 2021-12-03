@@ -11,9 +11,8 @@ import { CSItemEdit, EditMode } from "src/app/Component/FindCS/Component/CSItemE
 import { CSItemView } from "src/app/Component/FindCS/Component/CSItemView/CSItemView";
 import { InstructionDialogCS } from "src/app/Component/FindCS/Component/InstructionDialogCS/InstructionDialogCS";
 let MainTable = class MainTable {
-    constructor(repo, iterableDiffers) {
+    constructor(repo) {
         this.repo = repo;
-        this.iterableDiffers = iterableDiffers;
         this.AdminMode = false;
         this.ListPerson = [];
         this.first = 0;
@@ -55,14 +54,14 @@ let MainTable = class MainTable {
         const EditEnabled = this.firstsSelectedPersons != null && this.firstsSelectedPersons.STATUS_SEND === StatusCS_LIST.New;
         const SendEnabled = this.selectedPersons.length != 0 && this.selectedPersons.filter(x => x.STATUS_SEND !== StatusCS_LIST.New).length == 0;
         this.contextMenuItems = [
-            { label: 'Просмотр', icon: 'pi pi-fw pi-search', command: () => { this.showItemDialog(); } },
+            { label: 'Просмотр', icon: 'pi pi-fw pi-search', styleClass: 'bold-menuitem', command: () => { this.showItemDialog(); } },
             { label: 'Новый', icon: 'pi pi-fw pi-file', command: () => { this.showNewItemDialog(); } },
             { separator: true },
             { label: 'Редактировать', disabled: !EditEnabled, icon: 'pi pi-fw pi-user-edit', command: () => { this.EditItemDialog(); } },
             { label: 'Дублировать', icon: 'pi pi-fw pi-copy', command: () => { this.DoubleItemDialog(); } },
             { label: 'Установить статус "Новый"', icon: 'pi pi-fw pi-book', command: () => { this.SetNewStatusItems(); } },
             { separator: true },
-            { label: 'Удалить', icon: 'pi pi-fw pi-times', command: () => { this.RemoveItems(); } },
+            { label: 'Удалить', icon: 'pi pi-fw pi-times', styleClass: 'red-menuitem', command: () => { this.RemoveItems(); } },
             { separator: true },
             { label: 'Обновить', icon: 'pi pi-fw pi-refresh', command: () => { this.LoadData(this.first, this.countOnPage); } },
             { label: 'Отправить', disabled: !SendEnabled, icon: 'pi pi-fw pi-send', command: () => { this.SendItems(); } },
@@ -231,7 +230,7 @@ __decorate([
     ViewChild(InstructionDialogCS)
 ], MainTable.prototype, "instructionDialogCS", void 0);
 MainTable = __decorate([
-    Component({ selector: "Main-Table", templateUrl: "MainTable.html" })
+    Component({ selector: "Main-Table", templateUrl: "MainTable.html", styleUrls: ['MainTable.scss'] })
 ], MainTable);
 export { MainTable };
 //# sourceMappingURL=MainTable.js.map
