@@ -46,10 +46,10 @@ namespace SiteCore.Class
             uint rowindex = 1;
             var bold = ex.CreateType(new FontOpenXML { Bold = true }, new BorderOpenXML(), null);
             var Text = ex.CreateType(new FontOpenXML(), new BorderOpenXML(), null);
-            var floatFormat = ex.CreateNumFormatCustom("# ##0,00");
+     
             
 
-            var Number = ex.CreateType(new FontOpenXML { Format = floatFormat }, new BorderOpenXML(), null);
+            var Number = ex.CreateType(new FontOpenXML { Format = NumFormat.FloatAndSpace }, new BorderOpenXML(), null);
             var Date = ex.CreateType(new FontOpenXML { Format = (uint)DefaultNumFormat.F14 }, new BorderOpenXML(), null);
             var r = ex.GetRow(rowindex, true);
             ex.PrintCell(r, "A", "Код МО", bold);
@@ -81,11 +81,10 @@ namespace SiteCore.Class
                 ex.PrintCell(r, "J", row.TAL_D, Date);
                 ex.PrintCell(r, "K", row.TAL_P, Date);
                 ex.PrintCell(r, "L", row.OS_SLUCH, Text);
-                if (row.SUMM.HasValue)
-                    ex.PrintCell(r, "M", Convert.ToDouble(row.SUMM.Value), Number);
-
+                ex.PrintCell(r, "M", row.SUMM, Number);
                 rowindex++;
             }
+            ex.AutoSizeColumns(1,13);
             ex.Save();
             return ms.ToArray();
         }
@@ -98,10 +97,9 @@ namespace SiteCore.Class
             var TextCenterStyle = ex.CreateType(new FontOpenXML { HorizontalAlignment = HorizontalAlignmentV.Center }, new BorderOpenXML(), null);
             var TextRightStyle = ex.CreateType(new FontOpenXML() { HorizontalAlignment = HorizontalAlignmentV.Right }, new BorderOpenXML(), null);
 
-            var floatFormat = ex.CreateNumFormatCustom("# ##0,00");
+          
             
-
-            var FloatStyle = ex.CreateType(new FontOpenXML { Format = floatFormat, HorizontalAlignment = HorizontalAlignmentV.Right }, new BorderOpenXML(), null);
+            var FloatStyle = ex.CreateType(new FontOpenXML { Format = NumFormat.FloatAndSpace, HorizontalAlignment = HorizontalAlignmentV.Right }, new BorderOpenXML(), null);
 
 
             uint rowindex = 1;
@@ -136,8 +134,8 @@ namespace SiteCore.Class
                 ex.PrintCell(rowindex, 7, row.FIO, TextCenterStyle);
                 ex.PrintCell(rowindex, 8, row.W, TextCenterStyle);
                 ex.PrintCell(rowindex, 9, row.VPOLIS, TextCenterStyle);
-                ex.PrintCell(rowindex, 10, row.NPOLIS, TextRightStyle);
-                ex.PrintCell(rowindex, 11, row.SPOLIS, TextRightStyle);
+                ex.PrintCell(rowindex, 10, row.SPOLIS, TextRightStyle);
+                ex.PrintCell(rowindex, 11, row.NPOLIS, TextRightStyle);
                 ex.PrintCell(rowindex, 12, row.AGE, TextCenterStyle);
                 ex.PrintCell(rowindex, 13, row.VID_HMP, TextRightStyle);
                 ex.PrintCell(rowindex, 14, row.METOD_HMP, TextRightStyle);
@@ -158,17 +156,17 @@ namespace SiteCore.Class
             using var ex = new ExcelOpenXML(ms, "Лист1");
             uint rowindex = 1;
 
-            var floatFormat = ex.CreateNumFormatCustom("# ##0,00");
+        
       
 
             var boldHead = ex.CreateType(new FontOpenXML { Bold = true, wordwrap = true, HorizontalAlignment = HorizontalAlignmentV.Center }, new BorderOpenXML(), null);
             var TextLeft = ex.CreateType(new FontOpenXML() { HorizontalAlignment = HorizontalAlignmentV.Left }, new BorderOpenXML(), null);
             var TextCenter = ex.CreateType(new FontOpenXML() { HorizontalAlignment = HorizontalAlignmentV.Center }, new BorderOpenXML(), null);
-            var Number = ex.CreateType(new FontOpenXML { Format = floatFormat, HorizontalAlignment = HorizontalAlignmentV.Right }, new BorderOpenXML(), null);
+            var Number = ex.CreateType(new FontOpenXML { Format = NumFormat.FloatAndSpace, HorizontalAlignment = HorizontalAlignmentV.Right }, new BorderOpenXML(), null);
 
             var TextLeftBOLD = ex.CreateType(new FontOpenXML() { Bold = true, HorizontalAlignment = HorizontalAlignmentV.Left }, new BorderOpenXML(), null);
             var TextCenterBOLD = ex.CreateType(new FontOpenXML() { Bold = true, HorizontalAlignment = HorizontalAlignmentV.Center }, new BorderOpenXML(), null);
-            var NumberBOLD = ex.CreateType(new FontOpenXML { Bold = true, Format = floatFormat, HorizontalAlignment = HorizontalAlignmentV.Right }, new BorderOpenXML(), null);
+            var NumberBOLD = ex.CreateType(new FontOpenXML { Bold = true, Format = NumFormat.FloatAndSpace, HorizontalAlignment = HorizontalAlignmentV.Right }, new BorderOpenXML(), null);
 
             var r = ex.GetRow(rowindex, true);
             ex.PrintCell(r, 1, "Диагноз", boldHead);
@@ -212,10 +210,9 @@ namespace SiteCore.Class
             var TextLeft = ex.CreateType(new FontOpenXML() { HorizontalAlignment = HorizontalAlignmentV.Left }, new BorderOpenXML(), null);
             var TextCenter = ex.CreateType(new FontOpenXML() { HorizontalAlignment = HorizontalAlignmentV.Center }, new BorderOpenXML(), null);
 
-            var floatFormat = ex.CreateNumFormatCustom("# ##0,00");
-          
+         
 
-            var Number = ex.CreateType(new FontOpenXML { Format = floatFormat, HorizontalAlignment = HorizontalAlignmentV.Right }, new BorderOpenXML(), null);
+            var Number = ex.CreateType(new FontOpenXML { Format = NumFormat.FloatAndSpace, HorizontalAlignment = HorizontalAlignmentV.Right }, new BorderOpenXML(), null);
             var TextCenterDate = ex.CreateType(new FontOpenXML() { HorizontalAlignment = HorizontalAlignmentV.Center, Format = (uint)DefaultNumFormat.F14 }, new BorderOpenXML(), null);
 
 
@@ -358,10 +355,9 @@ namespace SiteCore.Class
             var TextLeft = ex.CreateType(new FontOpenXML() { HorizontalAlignment = HorizontalAlignmentV.Left }, new BorderOpenXML(), null);
             var TextCenter = ex.CreateType(new FontOpenXML() { HorizontalAlignment = HorizontalAlignmentV.Center }, new BorderOpenXML(), null);
 
-            var floatFormat = ex.CreateNumFormatCustom("# ##0,00");
           
 
-            var Number = ex.CreateType(new FontOpenXML { Format = floatFormat, HorizontalAlignment = HorizontalAlignmentV.Right }, new BorderOpenXML(), null);
+            var Number = ex.CreateType(new FontOpenXML { Format = NumFormat.FloatAndSpace, HorizontalAlignment = HorizontalAlignmentV.Right }, new BorderOpenXML(), null);
             var TextCenterDate = ex.CreateType(new FontOpenXML() { HorizontalAlignment = HorizontalAlignmentV.Center, Format = (uint)DefaultNumFormat.F14 }, new BorderOpenXML(), null);
 
        
@@ -427,11 +423,10 @@ namespace SiteCore.Class
             var TextCenter = ex.CreateType(new FontOpenXML() { HorizontalAlignment = HorizontalAlignmentV.Center }, new BorderOpenXML(), null);
             var TextRight = ex.CreateType(new FontOpenXML() { HorizontalAlignment = HorizontalAlignmentV.Right }, new BorderOpenXML(), null);
 
-            var floatFormat = ex.CreateNumFormatCustom("# ##0,00");
-   
+          
 
 
-            var Number = ex.CreateType(new FontOpenXML { Format = floatFormat, HorizontalAlignment = HorizontalAlignmentV.Right }, new BorderOpenXML(), null);
+            var Number = ex.CreateType(new FontOpenXML { Format = NumFormat.FloatAndSpace, HorizontalAlignment = HorizontalAlignmentV.Right }, new BorderOpenXML(), null);
             var TextCenterDate = ex.CreateType(new FontOpenXML() { HorizontalAlignment = HorizontalAlignmentV.Center, Format = (uint)DefaultNumFormat.F14 }, new BorderOpenXML(), null);
 
 
@@ -658,11 +653,10 @@ namespace SiteCore.Class
             ms.Write(templateBytes, 0, templateBytes.Length);
             using var ex = new ExcelOpenXML();
             ex.OpenFile(ms,0);
-            var floatFormat = ex.CreateNumFormatCustom("# ##0,00");
-            var intFormat = ex.CreateNumFormatCustom("# ##0");
+            
             var textLeft = ex.CreateType(new FontOpenXML() { HorizontalAlignment = HorizontalAlignmentV.Left, fontname = "Times New Roman", size = 10 }, new BorderOpenXML(), null);
-            var floatStyle = ex.CreateType(new FontOpenXML { Format = floatFormat, HorizontalAlignment = HorizontalAlignmentV.Right, fontname = "Times New Roman", size = 10 }, new BorderOpenXML(), null);
-            var intStyle = ex.CreateType(new FontOpenXML { Format = intFormat, HorizontalAlignment = HorizontalAlignmentV.Right, fontname = "Times New Roman", size = 10 }, new BorderOpenXML(), null);
+            var floatStyle = ex.CreateType(new FontOpenXML { Format = NumFormat.FloatAndSpace, HorizontalAlignment = HorizontalAlignmentV.Right, fontname = "Times New Roman", size = 10 }, new BorderOpenXML(), null);
+            var intStyle = ex.CreateType(new FontOpenXML { Format = NumFormat.IntAndSpace, HorizontalAlignment = HorizontalAlignmentV.Right, fontname = "Times New Roman", size = 10 }, new BorderOpenXML(), null);
 
 
             uint rowIndex = 8;
@@ -814,13 +808,12 @@ namespace SiteCore.Class
             ms.Write(templateBytes, 0, templateBytes.Length);
             using var ex = new ExcelOpenXML();
             ex.OpenFile(ms, 0);
-            var floatFormat = ex.CreateNumFormatCustom("# ##0,00");
-            var intFormat = ex.CreateNumFormatCustom("# ##0");
+           
             var textLeft = ex.CreateType(new FontOpenXML() { HorizontalAlignment = HorizontalAlignmentV.Left, fontname = "Times New Roman", size = 9 }, new BorderOpenXML(), null);
-            var floatStyle = ex.CreateType(new FontOpenXML { Format = floatFormat, HorizontalAlignment = HorizontalAlignmentV.Right, fontname = "Times New Roman", size = 9 }, new BorderOpenXML(), null);
-            var intStyle = ex.CreateType(new FontOpenXML { Format = intFormat, HorizontalAlignment = HorizontalAlignmentV.Right, fontname = "Times New Roman", size = 9 }, new BorderOpenXML(), null);
-            var floatStyleGrey = ex.CreateType(new FontOpenXML { Format = floatFormat, HorizontalAlignment = HorizontalAlignmentV.Right, fontname = "Times New Roman", size = 9 }, new BorderOpenXML(), new FillOpenXML { color = Color.Silver });
-            var intStyleGrey = ex.CreateType(new FontOpenXML { Format = intFormat, HorizontalAlignment = HorizontalAlignmentV.Right, fontname = "Times New Roman", size = 9 }, new BorderOpenXML(), new FillOpenXML{color = Color.Silver});
+            var floatStyle = ex.CreateType(new FontOpenXML { Format = NumFormat.FloatAndSpace, HorizontalAlignment = HorizontalAlignmentV.Right, fontname = "Times New Roman", size = 9 }, new BorderOpenXML(), null);
+            var intStyle = ex.CreateType(new FontOpenXML { Format = NumFormat.IntAndSpace, HorizontalAlignment = HorizontalAlignmentV.Right, fontname = "Times New Roman", size = 9 }, new BorderOpenXML(), null);
+            var floatStyleGrey = ex.CreateType(new FontOpenXML { Format = NumFormat.FloatAndSpace, HorizontalAlignment = HorizontalAlignmentV.Right, fontname = "Times New Roman", size = 9 }, new BorderOpenXML(), new FillOpenXML { color = Color.Silver });
+            var intStyleGrey = ex.CreateType(new FontOpenXML { Format = NumFormat.IntAndSpace, HorizontalAlignment = HorizontalAlignmentV.Right, fontname = "Times New Roman", size = 9 }, new BorderOpenXML(), new FillOpenXML{color = Color.Silver});
 
             uint rowIndex = 5;
             int i = 1;

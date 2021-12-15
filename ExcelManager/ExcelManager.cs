@@ -30,6 +30,15 @@ using VerticalAlignmentValues = DocumentFormat.OpenXml.Spreadsheet.VerticalAlign
 
 namespace ExcelManager
 {
+    public static class NumFormat
+    {
+        // public static string  IntAndSpace { get; }= "# ##0";
+        //        public static string FloatAndSpace { get; } = "# ##0.00";
+
+        public static uint IntAndSpace { get; } = (uint)DefaultNumFormat.F3;
+        public static uint FloatAndSpace { get; } = (uint)DefaultNumFormat.F4;
+    }
+
     /// <summary>
     /// Класс строки
     /// </summary>
@@ -52,10 +61,7 @@ namespace ExcelManager
         /// </summary>
         public double Height
         {
-            get
-            {
-                return r.Height;
-            }
+            get => r.Height;
             set
             {
                 r.Height = new DoubleValue(value);
@@ -1337,6 +1343,15 @@ namespace ExcelManager
                 PrintCell(Row, GetColumnAddr(Cell), Convert.ToDouble(value), styleid);
             else
                 PrintCell(Row, GetColumnAddr(Cell), "", styleid);
+        }
+
+
+        public void PrintCell(MRow Row, string Cell, decimal? value, uint? styleid)
+        {
+            if (value.HasValue)
+                PrintCell(Row, Cell, Convert.ToDouble(value), styleid);
+            else
+                PrintCell(Row, Cell, "", styleid);
         }
         /// <summary>
         /// Вставить значение
