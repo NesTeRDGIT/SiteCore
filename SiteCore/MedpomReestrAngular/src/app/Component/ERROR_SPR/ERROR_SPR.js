@@ -14,6 +14,7 @@ let ERROR_SPR = class ERROR_SPR extends BaseReportComponent {
         this.repo = repo;
         this.AdminMode = false;
         this.model = new EditErrorSPRViewModel(null);
+        this.IsShowClose = false;
         this.FIND_LIST = null;
         this.findError = (filter) => {
             if (filter === null || filter === "")
@@ -38,13 +39,27 @@ let ERROR_SPR = class ERROR_SPR extends BaseReportComponent {
         this.getModel = async () => {
             try {
                 this.isLoad = true;
-                this.model = await this.repo.getErrorSPR();
+                this.model = await this.repo.getErrorSPR(this.IsShowClose);
             }
             catch (err) {
                 alert(err.toString());
             }
             finally {
                 this.isLoad = false;
+            }
+        };
+        this.selectedItems = [];
+        this.selectItem = (err) => {
+            try {
+                if (err != null) {
+                    this.selectedItems.forEach(v => v.SELECTED = false);
+                    this.selectedItems = [];
+                    err.SELECTED = true;
+                    this.selectedItems.push(err);
+                }
+            }
+            catch (err) {
+                alert(err.toString());
             }
         };
         this.EditError = (err) => {
@@ -101,7 +116,7 @@ __decorate([
     ViewChild(ERROR_EDIT)
 ], ERROR_SPR.prototype, "errorEditDialog", void 0);
 ERROR_SPR = __decorate([
-    Component({ selector: "ERROR_SPR", templateUrl: "ERROR_SPR.html" })
+    Component({ selector: "ERROR_SPR", templateUrl: "ERROR_SPR.html", styleUrls: ["ERROR_SPR.css"] })
 ], ERROR_SPR);
 export { ERROR_SPR };
 //# sourceMappingURL=ERROR_SPR.js.map

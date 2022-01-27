@@ -90,6 +90,11 @@ namespace SiteCore.Models
         public string TEXT { get; set; }
         [Required(ErrorMessage = "Секция обязательна к заполению")]
         public int? ID_SECTION { get; set; }
+        [Required(ErrorMessage = "Дата начала обязательна к заполению")]
+        public DateTime D_BEGIN { get; set; }      
+        public DateTime? D_END { get; set; }
+        [Required(ErrorMessage = "Признак МЭК обязателен к заполнению")]
+        public bool ISMEK { get; set; }
     }
 
 

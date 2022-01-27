@@ -1851,6 +1851,10 @@ namespace SiteCore.Data
         public byte[] TEXT { get; set; }
         public string OSN_TFOMS { get; set; }
         public DateTime D_EDIT { get; set; } = DateTime.Now;
+        public DateTime D_BEGIN { get; set; }
+        public DateTime? D_END { get; set; }
+        public bool ISMEK { get; set; }
+
         [NotMapped]
         public string TEXT_STR
         {
@@ -1866,6 +1870,7 @@ namespace SiteCore.Data
             return Encoding.GetEncoding(1251).GetString(hashValue);
         }
         public virtual ErrorSPRSection Section { get; set; }
+
     }
 
 

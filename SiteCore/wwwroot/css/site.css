@@ -369,7 +369,12 @@ body {
     }
 
     .table_report tr:hover {
-        background-color: #99ffc1;
+        background-color: #99ffc1 !important;
+    }
+
+    .table_report tr.selected {
+        border-color: cornflowerblue;
+        border:2px cornflowerblue solid;
     }
 
     .table_report th {

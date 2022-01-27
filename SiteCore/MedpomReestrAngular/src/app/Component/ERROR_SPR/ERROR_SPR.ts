@@ -6,12 +6,13 @@ import { SectionSpr,ErrorSpr, EditErrorSPRViewModel } from '../../API/ErrorSPRMo
 
 import { IRepository } from "../../API/Repository";
 
-@Component({ selector: "ERROR_SPR", templateUrl: "ERROR_SPR.html" })
+@Component({ selector: "ERROR_SPR", templateUrl: "ERROR_SPR.html",styleUrls:["ERROR_SPR.css"] })
 export class ERROR_SPR extends BaseReportComponent {
     @Input()
     AdminMode: boolean = false;
     model: EditErrorSPRViewModel = new EditErrorSPRViewModel(null);
     filter: string;
+    IsShowClose:boolean = false;
     FIND_LIST: ErrorSpr[]= null;
 
    
@@ -44,14 +45,15 @@ export class ERROR_SPR extends BaseReportComponent {
 
     constructor(public repo: IRepository) {
         super();
-        
         this.getModel();
     }
 
     getModel = async () => {
         try {
             this.isLoad = true;
-            this.model = await this.repo.getErrorSPR();
+            let model = await this.repo.getErrorSPR(this.IsShowClose);
+            this.reSelect(model);
+            this.model = model;
         } catch (err) {
             alert(err.toString());
         } finally {
@@ -60,6 +62,47 @@ export class ERROR_SPR extends BaseReportComponent {
     }
 
 
+    selectedItems:ErrorSpr[] = [];
+    selectItem = (err: ErrorSpr)=>
+    {
+        try {
+            if (err != null) {
+                this.selectedItems.forEach(v=>v.SELECTED = false);
+                this.selectedItems = [];
+                err.SELECTED = true;
+                this.selectedItems.push(err);
+            }
+        } catch (err) {
+            alert(err.toString());
+        } 
+    }
+
+    reSelect=(model: EditErrorSPRViewModel)=>
+    {
+        if(this.selectedItems.length!==0)
+        {
+            let temp:ErrorSpr[] = [];
+            model.Sections.forEach(sec=> {
+                sec.Errors.forEach(err=>
+                    {
+                        if(this.selectedItems.filter(s=>s.ID_ERR===err.ID_ERR).length!==0)
+                        {
+                            temp.push(err);
+                        }
+                    })
+                }            );
+            model.Top30.forEach(err=> {
+                if(this.selectedItems.filter(s=>s.ID_ERR===err.ID_ERR).length!==0)
+                        {
+                            temp.push(err);
+                        }
+                    }
+            );
+            temp.forEach(x=>x.SELECTED =true);
+            this.selectedItems = temp;
+        }
+    }
+   
 
   
     @ViewChild(ERROR_EDIT) errorEditDialog: ERROR_EDIT;
@@ -109,6 +152,12 @@ export class ERROR_SPR extends BaseReportComponent {
     RefreshModel = () => {
         this.getModel();
     }
+
+
+
+
+
+
 }
 
 
