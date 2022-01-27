@@ -127,6 +127,10 @@ let Repository = class Repository {
         throw new Error(`${response.status}: ${response.statusText}`);
     }
     async getErrorSPR(isShowClose) {
+<<<<<<< HEAD
+=======
+        debugger;
+>>>>>>> 6c6c044a498abee325c306a40cc061a8e0a09d91
         const response = await this.createFetch(`../ErrorList?isShowClose=${isShowClose}`);
         if (response.ok) {
             const data = await response.json();
