@@ -50,13 +50,14 @@ import { CSItemView } from './Component/FindCS/Component/CSItemView/CSItemView';
 import { CSServiceStatus } from './Component/FindCS/Component/CSServiceStatus/CSServiceStatus';
 import { InstructionDialogCS } from './Component/FindCS/Component/InstructionDialogCS/InstructionDialogCS';
 import { PanelModule } from 'primeng/panel';
+import { CheckboxModule } from 'primeng/checkbox';
 registerLocaleData(localeRu);
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     NgModule({
         imports: [BrowserModule, FormsModule, BrowserAnimationsModule, TableModule, TabViewModule, HttpClientModule, SplitterModule, ListboxModule, DividerModule, CalendarModule, ProgressSpinnerModule, DialogModule, InputTextModule, AutoCompleteModule,
-            CKEditorModule, ContextMenuModule, InputMaskModule, DropdownModule, SplitButtonModule, PanelModule, SelectButtonModule],
+            CKEditorModule, ContextMenuModule, InputMaskModule, DropdownModule, SplitButtonModule, PanelModule, SelectButtonModule, CheckboxModule],
         declarations: [MainComponent, YesNoPipe, ENUMPipe, ISTEnumRusPipe, SafeHtmlPipe, StepsProcessRusPipe, StatusFilePackRusPipe, LoadReestrComponent, FileLoader, ProgressBar, ViewReestrComponent, ContentLoad, InstructionDialog, ERROR_SPR, ERROR_EDIT,
             FindCSMain, MainTable, CSItemEdit, CSItemView, CSServiceStatus, InstructionDialogCS],
         providers: [

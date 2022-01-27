@@ -23,6 +23,7 @@ let ERROR_EDIT = class ERROR_EDIT {
             try {
                 if (this.ID_ERR === null) {
                     this.model = new ErrorSpr(null);
+                    this.model.D_BEGIN = new Date();
                     return;
                 }
                 this.model = await this.repo.getError(this.ID_ERR);

@@ -550,7 +550,7 @@ namespace SiteCore.Controllers
       
         #region Справочник ошибок
   
-        public async Task<CustomJsonResult> ErrorList()
+        public async Task<CustomJsonResult> ErrorList(bool isShowClose = false)
         {
             try
             {
@@ -559,11 +559,14 @@ namespace SiteCore.Controllers
                     Sections = await MyOracleSet.ErrorSPRSection.Include(x => x.Error).OrderBy(x=>x.ORD).Select(x => new SectionSprModel
                     {
                         SECTION_NAME = x.SECTION_NAME,
-                        Errors = x.Error.OrderByDescending(y => y.D_EDIT).ThenByDescending(y => y.ID_ERR).Select(y => new ErrorSprModel
+                        Errors = x.Error.Where(x=>!x.D_END.HasValue || isShowClose).OrderByDescending(y => y.D_EDIT).ThenByDescending(y => y.ID_ERR).Select(y => new ErrorSprModel
                         {
                             D_EDIT = y.D_EDIT,
                             EXAMPLE = y.EXAMPLE,
                             OSN_TFOMS = y.OSN_TFOMS,
+                            D_BEGIN = y.D_BEGIN,
+                            D_END = y.D_END,
+                            ISMEK = y.ISMEK,
                             ID_ERR = y.ID_ERR
                         }).ToList()
                     }).ToListAsync()
@@ -590,7 +593,10 @@ namespace SiteCore.Controllers
                     ID_ERR = model.ID_ERR,
                     OSN_TFOMS = model.OSN_TFOMS,
                     TEXT = model.TEXT_STR,
-                    ID_SECTION = model.ID_SECTION
+                    ID_SECTION = model.ID_SECTION,
+                    D_BEGIN = model.D_BEGIN,
+                    D_END = model.D_END,
+                    ISMEK = model.ISMEK
                 });
             }
             catch (Exception e)
@@ -630,7 +636,10 @@ namespace SiteCore.Controllers
                         ID_SECTION = model.ID_SECTION.Value,
                         EXAMPLE = model.EXAMPLE,
                         OSN_TFOMS = model.OSN_TFOMS,
-                        TEXT_STR = model.TEXT
+                        TEXT_STR = model.TEXT,
+                        D_BEGIN = model.D_BEGIN,
+                        D_END = model.D_END,
+                        ISMEK = model.ISMEK                        
                     });
                     await MyOracleSet.SaveChangesAsync();
                     return CustomJsonResult.Create(true);
@@ -659,6 +668,9 @@ namespace SiteCore.Controllers
                     item.EXAMPLE = model.EXAMPLE;
                     item.OSN_TFOMS = model.OSN_TFOMS;
                     item.TEXT_STR = model.TEXT;
+                    item.D_BEGIN = model.D_BEGIN;
+                    item.D_END = model.D_END;
+                    item.ISMEK = model.ISMEK;
                     await MyOracleSet.SaveChangesAsync();
                     return CustomJsonResult.Create(true);
                 }

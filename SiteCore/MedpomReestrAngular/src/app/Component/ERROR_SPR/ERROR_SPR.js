@@ -14,6 +14,7 @@ let ERROR_SPR = class ERROR_SPR extends BaseReportComponent {
         this.repo = repo;
         this.AdminMode = false;
         this.model = new EditErrorSPRViewModel(null);
+        this.IsShowClose = false;
         this.FIND_LIST = null;
         this.findError = (filter) => {
             if (filter === null || filter === "")
@@ -38,13 +39,48 @@ let ERROR_SPR = class ERROR_SPR extends BaseReportComponent {
         this.getModel = async () => {
             try {
                 this.isLoad = true;
-                this.model = await this.repo.getErrorSPR();
+                let model = await this.repo.getErrorSPR(this.IsShowClose);
+                this.reSelect(model);
+                this.model = model;
             }
             catch (err) {
                 alert(err.toString());
             }
             finally {
                 this.isLoad = false;
+            }
+        };
+        this.selectedItems = [];
+        this.selectItem = (err) => {
+            try {
+                if (err != null) {
+                    this.selectedItems.forEach(v => v.SELECTED = false);
+                    this.selectedItems = [];
+                    err.SELECTED = true;
+                    this.selectedItems.push(err);
+                }
+            }
+            catch (err) {
+                alert(err.toString());
+            }
+        };
+        this.reSelect = (model) => {
+            if (this.selectedItems.length !== 0) {
+                let temp = [];
+                model.Sections.forEach(sec => {
+                    sec.Errors.forEach(err => {
+                        if (this.selectedItems.filter(s => s.ID_ERR === err.ID_ERR).length !== 0) {
+                            temp.push(err);
+                        }
+                    });
+                });
+                model.Top30.forEach(err => {
+                    if (this.selectedItems.filter(s => s.ID_ERR === err.ID_ERR).length !== 0) {
+                        temp.push(err);
+                    }
+                });
+                temp.forEach(x => x.SELECTED = true);
+                this.selectedItems = temp;
             }
         };
         this.EditError = (err) => {
@@ -101,7 +137,7 @@ __decorate([
     ViewChild(ERROR_EDIT)
 ], ERROR_SPR.prototype, "errorEditDialog", void 0);
 ERROR_SPR = __decorate([
-    Component({ selector: "ERROR_SPR", templateUrl: "ERROR_SPR.html" })
+    Component({ selector: "ERROR_SPR", templateUrl: "ERROR_SPR.html", styleUrls: ["ERROR_SPR.css"] })
 ], ERROR_SPR);
 export { ERROR_SPR };
 //# sourceMappingURL=ERROR_SPR.js.map

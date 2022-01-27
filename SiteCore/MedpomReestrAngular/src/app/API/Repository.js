@@ -75,6 +75,11 @@ let Repository = class Repository {
         value.append("D_EDIT", this.convertToString(new Date()));
         value.append("EXAMPLE", item.EXAMPLE);
         value.append("TEXT", item.TEXT);
+        if (item.D_BEGIN !== null)
+            value.append("D_BEGIN", this.convertToString(item.D_BEGIN));
+        if (item.D_END !== null)
+            value.append("D_END", this.convertToString(item.D_END));
+        value.append("ISMEK", item.IsMEK ? "True" : "False");
         return value;
     }
     async EditErrorSPR(item) {
@@ -121,8 +126,8 @@ let Repository = class Repository {
         }
         throw new Error(`${response.status}: ${response.statusText}`);
     }
-    async getErrorSPR() {
-        const response = await this.createFetch(`../ErrorList`);
+    async getErrorSPR(isShowClose) {
+        const response = await this.createFetch(`../ErrorList?isShowClose=${isShowClose}`);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {

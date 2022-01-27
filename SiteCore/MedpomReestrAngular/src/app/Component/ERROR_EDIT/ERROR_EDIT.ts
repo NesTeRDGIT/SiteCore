@@ -81,10 +81,10 @@ export class ERROR_EDIT {
         try {
             if (this.ID_ERR === null) {
                 this.model = new ErrorSpr(null);
+                this.model.D_BEGIN = new Date();
                 return;
             }
-
-            this.model = await this.repo.getError(this.ID_ERR);
+            this.model = await this.repo.getError(this.ID_ERR);         
             this.SelectedSection = this.SectionSpr.find(x => x.ID_SECTION === this.model.ID_SECTION);
         } catch (err) {
             alert(err.toString());
@@ -107,6 +107,7 @@ export class ERROR_EDIT {
                 this.model.ID_SECTION = this.SelectedSection.ID_SECTION;
             }
             let result: string[];
+           
             if (this.ID_ERR === null) {
                 result = await this.repo.AddErrorSPR(this.model);
             } else {
