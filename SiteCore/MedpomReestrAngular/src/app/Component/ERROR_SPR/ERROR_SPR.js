@@ -39,13 +39,9 @@ let ERROR_SPR = class ERROR_SPR extends BaseReportComponent {
         this.getModel = async () => {
             try {
                 this.isLoad = true;
-<<<<<<< HEAD
                 let model = await this.repo.getErrorSPR(this.IsShowClose);
                 this.reSelect(model);
                 this.model = model;
-=======
-                this.model = await this.repo.getErrorSPR(this.IsShowClose);
->>>>>>> 6c6c044a498abee325c306a40cc061a8e0a09d91
             }
             catch (err) {
                 alert(err.toString());
@@ -68,7 +64,6 @@ let ERROR_SPR = class ERROR_SPR extends BaseReportComponent {
                 alert(err.toString());
             }
         };
-<<<<<<< HEAD
         this.reSelect = (model) => {
             if (this.selectedItems.length !== 0) {
                 let temp = [];
@@ -88,8 +83,6 @@ let ERROR_SPR = class ERROR_SPR extends BaseReportComponent {
                 this.selectedItems = temp;
             }
         };
-=======
->>>>>>> 6c6c044a498abee325c306a40cc061a8e0a09d91
         this.EditError = (err) => {
             try {
                 if (err != null) {

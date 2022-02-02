@@ -15,7 +15,7 @@ using SiteCore.Models;
 using System.Text;
 using Castle.Components.DictionaryAdapter;
 using FileItem = ServiceLoaderMedpomData.FileItem;
-using SiteCore.Class;
+
 namespace SiteCore.Controllers
 {
     [Authorize(Roles = "MO, Admin")]

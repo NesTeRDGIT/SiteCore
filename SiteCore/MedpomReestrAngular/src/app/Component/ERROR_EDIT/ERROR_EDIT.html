@@ -34,17 +34,10 @@
                 <td>
                     <span>с </span>
                     <span *ngIf="ReadOnly">{{model.D_BEGIN|date:"dd.MM.yyyy"}}</span>
-<<<<<<< HEAD
                     <p-calendar *ngIf="!ReadOnly" [(ngModel)]="model.D_BEGIN" dateFormat="dd.mm.yy" view="date" [yearNavigator]="true" yearRange="2000:2030"></p-calendar>
                     <span *ngIf="!ReadOnly || model.D_END!=null"> по </span>
                     <span *ngIf="ReadOnly">{{model.D_END|date:"dd.MM.yyyy"}}</span>
                     <p-calendar *ngIf="!ReadOnly" [(ngModel)]="model.D_END" dateFormat="dd.mm.yy" view="date" [yearNavigator]="true" yearRange="2000:2030"></p-calendar>
-=======
-                    <p-calendar *ngIf="!ReadOnly" [(ngModel)]="model.D_BEGIN" dateFormat="dd MM yy" view="date" [yearNavigator]="true" yearRange="2000:2030"></p-calendar>
-                    <span *ngIf="!ReadOnly || model.D_END!=null"> по </span>
-                    <span *ngIf="ReadOnly">{{model.D_END|date:"dd.MM.yyyy"}}</span>
-                    <p-calendar *ngIf="!ReadOnly" [(ngModel)]="model.D_END" dateFormat="dd MM yy" view="date" [yearNavigator]="true" yearRange="2000:2030"></p-calendar>
->>>>>>> 6c6c044a498abee325c306a40cc061a8e0a09d91
                 </td>
             </tr>
             <tr>
