@@ -535,7 +535,7 @@ myApp.controller("Grid1", ["$scope", "$http", "uiGridConstants", "i18nService", 
 
         $scope.SaveExpertize = function () {
             
-            var win = "custom-modal-2";
+            var win = "custom-modal-2";            
             $http.post("EditExpertize", prePost($scope.CurrentExpertize))
                 .then(function (response) {
                     const data = response.data;

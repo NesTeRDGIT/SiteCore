@@ -108,8 +108,8 @@
                         </select>
                     </td>
                     <td><textarea type="text" style="width: 100%; box-sizing: border-box;" maxlength="1500" ng-model="osn.S_COM"></textarea></td>
-                    <td><input type="text" pattern="[0-9]+([,][0-9]{1,2})?" placeholder="0,00" style="width: 100%; box-sizing: border-box;" maxlength="1500" ng-model="osn.S_SUM" /></td>
-                    <td><input type="text" pattern="[0-9]+([,][0-9]{1,2})?" placeholder="0,00" style="width: 100%; box-sizing: border-box;" maxlength="1500" ng-model="osn.S_FINE" /></td>
+                    <td><input  type="number" step="0.01"  placeholder="0,00" style="width: 100%; box-sizing: border-box;" ng-model="osn.S_SUM" /></td>
+                    <td><input type="number" step="0.01"  placeholder="0,00" style="width: 100%; box-sizing: border-box;" ng-model="osn.S_FINE" /></td>
                     <td><input type="submit" class="delButtonICO" value="" style="width: 30px; height: 30px;" ng-click="deleteOSN(osn)" /></td>
                 </tr>
             </table>
