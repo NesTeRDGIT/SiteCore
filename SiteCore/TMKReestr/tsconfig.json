@@ -1,0 +1,30 @@
+{
+  "compileOnSave": true,
+  "angularCompilerOptions": {
+    "strictTemplates": true
+  },
+  "compilerOptions": {
+    "baseUrl": "./",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+   
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "es2018",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "dom"
+    ]
+  },
+  "include": [
+    "src/**/*.d.ts"
+  ],
+  "files": [
+    "src/main.ts",
+    "src/polyfills.ts"
+  ]
+}

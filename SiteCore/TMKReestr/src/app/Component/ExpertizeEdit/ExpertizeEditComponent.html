@@ -1,0 +1,138 @@
+<p-dialog [style]="{width: '80vw', fontFamily:'Times New Roman'}" [header]="CurrentExpertize.EXPERTIZE_ID == null? 'Создание экспертизы':'Редактирование экспертизы'" [modal]="true" [position]="'top'" [(visible)]="Display" (onHide)="Close()">
+    <div style="display: flex; flex-direction: column;">
+        <ul>
+            <li *ngFor="let err of ErrList" class="ErrorLi">{{err}}</li>
+        </ul>  
+        <div [ngSwitch]="OpenType">
+            <h1 *ngSwitchCase="ExpTypeEnum.MEK">Акт МЭК</h1>
+            <h1 *ngSwitchCase="ExpTypeEnum.MEE">Акт МЭЭ</h1>
+            <h1 *ngSwitchCase="ExpTypeEnum.EKMP">Акт ЭКМП</h1>
+        </div>
+        
+        <div>
+            <label class="label-sup">№ акта <input type="text" pInputText  [(ngModel)]="CurrentExpertize.NUMACT"></label>
+            <label class="label-sup">Дата акта <input type="date" pInputText  [ngModel]="CurrentExpertize.DATEACT| date:'yyyy-MM-dd'" (ngModelChange)="CurrentExpertize.DATEACT =ConvertToDate($event)"  [style]="{'width':'200px'}"> </label>
+        </div>
+        <div>
+            <hr />
+            <label style="width: 100%;" class="label-sup" *ngIf="CurrentExpertize.S_TIP==ExpTypeEnum.MEE">ФИО специалиста-эксперта <input type="text" pInputText   [(ngModel)]="CurrentExpertize.FIO" [style]="{'width':'100%'}"></label>
+            <div *ngIf="CurrentExpertize.S_TIP==ExpTypeEnum.EKMP">
+                <label class="BoldText" > Врач ЭКМП </label>
+                <p-dropdown [options]="SPR.EXPERTS.SPR.values()" [(ngModel)]="CurrentExpertize.N_EXP" optionLabel="NAME_NUM" [filter]="true" filterBy="NAME_NUM" optionValue="N_EXPERT" appendTo="body" ></p-dropdown>
+            </div>
+        </div>
+        <div *ngIf="CurrentExpertize.S_TIP!==ExpTypeEnum.MEK">
+            <hr />
+            <table class="table_input">
+                <tr>
+                    <td class="BoldText" width="70%">Наличие заключение медицинского работника, привлекаемого для проведения консультации и (или) участия в консилиуме врачей с применение телемедицинских технологий или протокола консилиума врачей</td>
+                    <td>
+                        <p-inputSwitch [(ngModel)]="CurrentExpertize.ISCOROLLARY"></p-inputSwitch>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="BoldText">Наличие факта отражения рекомендаций в медицинской документации, в том числе в листе назначения</td>
+                    <td>
+                        <p-inputSwitch [(ngModel)]="CurrentExpertize.ISRECOMMENDMEDDOC"></p-inputSwitch>
+                    </td>
+                </tr>
+                <tr *ngIf="CurrentExpertize.S_TIP==ExpTypeEnum.EKMP">
+                    <td class="BoldText">Наличие в медицинской документации медицинских показаний, не позволяющих применить рекомендацию(и)</td>
+                    <td>
+                        <p-inputSwitch [(ngModel)]="CurrentExpertize.ISNOTRECOMMEND"></p-inputSwitch>                    
+                    </td>
+                </tr>
+                <tr *ngIf="CurrentExpertize.S_TIP==ExpTypeEnum.EKMP">
+                    <td class="BoldText">Заключение эксперта качества медицинской помощи об обоснованности действий лечащего врача</td>
+                    <td>
+                        <p-inputSwitch [(ngModel)]="CurrentExpertize.ISOSN"></p-inputSwitch>
+                    </td>
+                </tr>
+            </table>
+            <hr />
+            <label class="BoldText">Цель консультаций/консилиумов с применением телемедицинских технологий</label>
+            <p-dropdown  [options]="SPR.NMIC_CELL.SPR.values()" [(ngModel)]="CurrentExpertize.CELL" optionLabel="CELL_NAME" optionValue="CELL" [filter]="true" filterBy="CELL_NAME" appendTo="body"  [style]="{'minWidth':'100%'}"></p-dropdown>
+            <hr />
+            <div *ngIf="CurrentExpertize.S_TIP==ExpTypeEnum.EKMP">
+                <label class="BoldText">Оценка полноты выполнения медицинскими организациями рекомендаций медицинских работников НМИЦ по применению методов профилактики, диагностики, лечения и реабилитации, данных при проведении указанными центрами консультаций/консилиумов с применением телемедицинских технологий</label>
+                <p-dropdown  [options]="SPR.NMIC_FULL.SPR.values()" [(ngModel)]="CurrentExpertize.FULL" optionLabel="FULL_NAME" optionValue="FULL" [filter]="true" filterBy="FULL_NAME" appendTo="body"  [style]="{'minWidth':'100%'}"></p-dropdown>
+                <hr />
+                <label class="BoldText">Констатировано неисполнение следующих рекомендаций:</label>
+                <textarea [rows]="5" [cols]="30" pInputTextarea [autoResize]="true" maxlength="1500" [(ngModel)]="CurrentExpertize.NOTPERFORM" style="width: 100%; height: 100px; max-width: 100%;"></textarea>              
+                <hr />
+            </div>
+        </div>
+
+        <div>
+            <label class="BoldText">Список дефектов</label>
+            <p-table [value]="CurrentExpertize.OSN" responsiveLayout="scroll">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Дефект</th>
+                        <th>Комментарий</th>
+                        <th style="width: 120px;">Сумма</th>
+                        <th style="width: 120px;">Штраф</th>
+                        <th style="width: 30px;"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-osn>
+                    <tr>
+                        <td pEditableColumn>
+                            <p-cellEditor>                             
+                                <ng-template pTemplate="input">
+                                    <p-dropdown [style]="{'minWidth':'100%'}" [options]="(SPR.F014|ActualSPR:CurrentExpertize.DATEACT).SPR.values()" [(ngModel)]="osn.S_OSN" optionLabel="FullName" optionDisabled="false" optionValue="KOD" [filter]="true" filterBy="FullName" appendTo="body"></p-dropdown>                                    
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{osn.S_OSN|SPRTimeMark:(SPR.F014|ActualSPR:CurrentExpertize.DATEACT):'FullName':true}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td pEditableColumn>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" [(ngModel)]="osn.S_COM" style="width: 100%;">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{osn.S_COM}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td pEditableColumn>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText [(ngModel)]="osn.S_SUM" required style="width: 100%;">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{osn.S_SUM| currency: 'RUB'}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td pEditableColumn>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" [(ngModel)]="osn.S_FINE"  style="width: 100%;">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{osn.S_FINE | currency: 'RUB'}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <i class="pi pi-times-circle" style="font-size: 1rem;color: red; cursor: pointer;" (click)="RemoveOsn(osn)"></i>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <div style="margin-top: 10px;">
+                <input type="button" value="Добавить дефект" class="ActionButton" style="display: block; margin-right: 0; margin-left: auto;" (click)="AddOsn()" />
+            </div>
+        </div>
+        <div style="display: flex; align-items: center;">
+            <input type="button" value="Сохранить" class="ActionButton" (click)="Save()" />
+            <i *ngIf="onSaveProgress" class="pi pi-spin pi-spinner" style="font-size: 1.5rem;"></i>
+        </div>
+    </div>
+</p-dialog>
+
+

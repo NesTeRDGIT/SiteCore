@@ -1,0 +1,28 @@
+{
+    "files.exclude": {
+        "**/*.js" : {"when": "$(basename).ts"},
+        "**/*.js.map": {"when": "$(basename)" }
+    },
+    "cSpell.words": [
+        "НМИЦ",
+        "Телемедицинская",
+        "ТФОМС",
+        "ЭКМП",
+        "DATEBEG",
+        "DATEEND",
+        "EKMP",
+        "endregion",
+        "IDPR",
+        "MCOD",
+        "NHISTORY",
+        "NMIC",
+        "OPLATA",
+        "PRNAME",
+        "PROFIL",
+        "PROTOKOL",
+        "SMOCOD",
+        "SMOK",
+        "TFOMS",
+        "TMIS"
+    ]
+}

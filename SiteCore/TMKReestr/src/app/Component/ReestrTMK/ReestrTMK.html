@@ -1,0 +1,127 @@
+<FindMenu (onSearch)="onCurrentFilterChange($event)"></FindMenu>
+<br/>
+<div style="display: flex; justify-content: space-between;">
+    <input type="button"  class="ActionButton" value="Новая запись" (click)="NewTMK()"/>
+    <input type="button"  class="ActionButton" value="Скачать Excel"/>
+</div>
+<p style="font-weight: bold; font-style: italic;">*Управление таблицей происходит с помощью выделения и правой кнопки мыши</p>
+<p style="font-weight: bold; font-style: italic;">*Двойной щелчок левой кнопки мыши открывает запись</p>
+
+<p-contextMenu #context [model]="contextMenuItems"></p-contextMenu>
+
+<p-table [value]="TMKList" [(contextMenuSelection)]="contextMenuSelect"  (onContextMenuSelect)="onContextMenuSelect($event, context)" [contextMenu]="context"
+selectionMode="multiple" [metaKeySelection]="true" dataKey="TMK_ID" selectionMode="multiple" [(selection)]="selectedTMKItems"
+responsiveLayout="scroll" styleClass="p-datatable-gridlines"
+[paginator]="true" [rowsPerPageOptions]="[20,50,100,300]" [(rows)]="countOnPage" [(first)]="first"
+[lazy]="true" (onLazyLoad)="onLazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading" 
+[scrollable]="true" scrollHeight="40vh" scrollDirection="both">
+   <ng-template pTemplate="colgroup">
+        <colgroup>
+            <col style="width:60px">
+            <col style="width:60px">
+            <col style="width:150px">
+            <col style="width:190px">
+            <col style="width:200px">
+
+            <col style="width:130px">
+            <col style="width:130px">
+            <col style="width:130px">
+            <col style="width:130px">
+
+            <col style="width:130px">
+
+            <col style="width:200px">
+            <col style="width:200px">
+
+            <col style="width:100px">
+            <col style="width:300px">
+            <col style="width:100px">
+            <col style="width:300px">
+            <col style="width:100px">
+            <col style="width:300px">
+        </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th pResizableColumn></th>
+            <th pResizableColumn>№</th>
+            <th pResizableColumn>ЕНП</th>
+            <th pResizableColumn>МО</th>
+            <th pResizableColumn>ФИО</th>
+            <th pResizableColumn>Дата начала лечения</th>
+            <th pResizableColumn>Дата оформления запроса на ТМК</th>
+            <th pResizableColumn>Дата получение протокола</th>
+            <th pResizableColumn>Дата проведения очной консультации\ консилиума</th>
+            <th pResizableColumn>Страхование</th>
+            <th pResizableColumn>Вид медицинской документации</th>
+            <th pResizableColumn>Признак оплаты</th>
+            <th pResizableColumn>Даты МЭК</th>
+            <th pResizableColumn>Дефекты МЭК</th>
+            <th pResizableColumn>Даты МЭЭ</th>
+            <th pResizableColumn>Дефекты МЭЭ</th>
+            <th pResizableColumn>Даты ЭКМП</th>
+            <th pResizableColumn>Дефекты ЭКМП</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+        <tr [pSelectableRow]="item" [pSelectableRowIndex]="rowIndex" [pSelectableRow]="item" [pSelectableRowIndex]="rowIndex"  [pContextMenuRow]="item" (dblclick)="ShowTMK(item)">
+            <td>
+              
+                <div class="tooltip">
+                    <div style="position: relative; float: left;" [pTooltip]="item.StatusText">
+                        <div class="inline"  [class.ImgGreenIndicator]="item.STATUS == StatusENUM.Closed" [class.ImgYellowIndicator]="item.STATUS == StatusENUM.Open" [class.ImgRedIndicator]="item.STATUS == StatusENUM.Error"  ></div>
+                        <div *ngIf="item.isEXP"  class="ImgInExpertIcon absolute-left inline" ></div>                                                      
+                    </div>
+                </div>
+            </td>
+            <td>{{item.TMK_ID}}</td>
+            <td>{{item.ENP}}</td>
+            <td>{{item.CODE_MO|SPRTimeMark:SPR.CODE_MO:'NAM_MOK'}}</td>
+            <td>{{item.FIO}}</td>
+            <td>{{item.DATE_B | date: 'dd.MM.yyyy'}}</td>
+            <td>{{item.DATE_QUERY | date: 'dd.MM.yyyy'}}</td>
+            <td>{{item.DATE_PROTOKOL | date: 'dd.MM.yyyy'}}</td>
+            <td>{{item.DATE_TMK | date: 'dd.MM.yyyy'}}</td>
+            <td>{{item.SMO}}</td>
+            <td>{{item.VID_NHISTORY|SPRTimeMark:SPR.NMIC_VID_NHISTORY:'VID_NHISTORY'}}</td>
+            <td>{{item.OPLATA|SPRTimeMark:SPR.NMIC_OPLATA:'OPLATA'}}</td>        
+            <td>
+                <div *ngFor="let mek of item.MEK">{{mek.DATEACT|date:'dd.MM.yyyy'}}</div>               
+            </td>
+            <td> 
+                <div *ngFor="let mek of item.MEK">
+                    <div *ngFor="let osn of mek.OSN">
+                        {{osn|SPRTimeMark:(SPR.F014|ActualSPR:mek.DATEACT):'FullName'}}
+                    </div>
+                </div>  
+            </td>
+            <td>
+                <div *ngFor="let mee of item.MEE">{{mee.DATEACT|date:'dd.MM.yyyy'}}</div>    
+            </td>
+            <td>
+                <div *ngFor="let mek of item.MEE">
+                    <div *ngFor="let osn of mek.OSN">
+                        {{osn|SPRTimeMark:(SPR.F014|ActualSPR:mek.DATEACT):'FullName'}}
+                    </div>
+                </div>  
+            </td>
+            <td>
+                <div *ngFor="let ekmp of item.EKMP">{{ekmp.DATEACT|date:'dd.MM.yyyy'}}</div>    
+            </td>
+            <td>
+                <div *ngFor="let mek of item.EKMP">
+                    <div *ngFor="let osn of mek.OSN">
+                        {{osn|SPRTimeMark:(SPR.F014|ActualSPR:mek.DATEACT):'FullName'}}
+                    </div>
+                </div>  
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<EditTMK #EditTMKWin [userInfo]="userInfo" (onChange)="LoadData(first,totalRecords)"></EditTMK>
+
+
+
+
+

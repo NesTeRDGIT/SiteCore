@@ -48,34 +48,224 @@ namespace SiteCore.Controllers
         }
         public IActionResult TMKReestr()
         {
-            return View(GetIndexModel());
+            return View();
         }
         private async Task<CustomJsonResult> CreateInternalError(bool errorList = true)
         {
             return errorList ? CustomJsonResult.Create(await this.RenderViewAsync("_errorList", "Внутренняя ошибка сервиса", true), false) : CustomJsonResult.Create("Внутренняя ошибка сервиса", false);
         }
-        private string GetStatusCom(TMKReestr r)
+
+        [HttpGet]
+        public async Task<CustomJsonResult> GetNMIC_OPLATA()
         {
-            var isExpert = r.Expertizes.Any();
-            return r.STATUS switch
+            try
             {
-                StatusTMKRow.Closed => $"Закрыта{(isExpert ? ", есть экспертиза" : "")}",
-                StatusTMKRow.Open => $"Открыта{(isExpert ? ", есть экспертиза" : "")}",
-                StatusTMKRow.Error => $"Ошибочная:{r.STATUS_COM} {(isExpert ? ", есть экспертиза" : "")}",
-                _ => null
-            };
+                var NMIC_OPLATA = await dbo.OPLATA.ToListAsync();
+                return CustomJsonResult.Create(NMIC_OPLATA);
+            }
+            catch (Exception ex)
+            {
+                logger?.AddLog($"Ошибка в GetNMIC_OPLATA:{ex.Message}:{ex.StackTrace}", LogType.Error);
+                return await CreateInternalError(false);
+            }
         }
-        private IndexModel GetIndexModel()
+
+        [HttpGet]
+        public async Task<CustomJsonResult> GetNMIC_VID_NHISTORY()
         {
-            var model = new IndexModel
+            try
             {
-                NMIC_OPLATA = dbo.OPLATA.ToList(),
-                NMIC_VID_NHISTORY = dbo.VID_NHISTORY.OrderBy(x => x.ORD).ToList(),
-                CODE_MO = dbo.TMKReestr.Select(x => x.CODE_MO_NAME).Distinct().ToList(),
-                CODE_SMO = dbo.TMKReestr.Select(x => x.SMO_NAME).Distinct().Where(x => x != null).ToList()
-            };
-            model.CODE_SMO.InsertRange(0, new List<SMO> { new() { NAM_SMOK = "Без СМО", SMOCOD = "null" }, new() { NAM_SMOK = "ТФОМС ЗК", SMOCOD = "75" } });
-            return model;
+                var NMIC_VID_NHISTORY = dbo.VID_NHISTORY.OrderBy(x => x.ORD).ToList();
+                return CustomJsonResult.Create(NMIC_VID_NHISTORY);
+            }
+            catch (Exception ex)
+            {
+                logger?.AddLog($"Ошибка в GetNMIC_VID_NHISTORY:{ex.Message}:{ex.StackTrace}", LogType.Error);
+                return await CreateInternalError(false);
+            }
+        }
+
+        [HttpGet]
+        public async Task<CustomJsonResult> GetCODE_SMO()
+        {
+            try
+            {
+                var CODE_SMO = dbo.TMKReestr.Select(x => x.SMO_NAME).Distinct().Where(x => x != null).ToList();
+                CODE_SMO.Insert(0,  new SMO { NAM_SMOK = "ТФОМС ЗК", SMOCOD = "75" } );
+                return CustomJsonResult.Create(CODE_SMO);
+            }
+            catch (Exception ex)
+            {
+                logger?.AddLog($"Ошибка в CODE_SMO:{ex.Message}:{ex.StackTrace}", LogType.Error);
+                return await CreateInternalError(false);
+            }
+        }
+
+
+        [HttpGet]
+        public async Task<CustomJsonResult> GetCODE_MO_Reestr()
+        {
+            try
+            {
+                var CODE_MO = dbo.TMKReestr.Select(x => x.CODE_MO_NAME).Distinct().ToList();
+                return CustomJsonResult.Create(CODE_MO);
+            }
+            catch (Exception ex)
+            {
+                logger?.AddLog($"Ошибка в GetNMIC_OPLATA:{ex.Message}:{ex.StackTrace}", LogType.Error);
+                return await CreateInternalError(false);
+            }
+        }
+
+
+        [HttpGet]
+        public async Task<CustomJsonResult> GetCODE_MO()
+        {
+            try
+            {
+                var CODE_MO = await dbo.CODE_MO.Where(x=>x.MCOD.StartsWith("75")).Distinct().ToListAsync();
+                return CustomJsonResult.Create(CODE_MO);
+            }
+            catch (Exception ex)
+            {
+                logger?.AddLog($"Ошибка в GetNMIC_OPLATA:{ex.Message}:{ex.StackTrace}", LogType.Error);
+                return await CreateInternalError(false);
+            }
+        }
+
+        [HttpGet]
+        public async Task<CustomJsonResult> GetNMIC()
+        {
+            try
+            {
+                var NMIC = await dbo.NMIC.ToListAsync();
+                return CustomJsonResult.Create(NMIC);
+            }
+            catch (Exception ex)
+            {
+                logger?.AddLog($"Ошибка в GetNMIC:{ex.Message}:{ex.StackTrace}", LogType.Error);
+                return await CreateInternalError(false);
+            }
+        }
+
+
+        [HttpGet]
+        public async Task<CustomJsonResult> GetTMIS()
+        {
+            try
+            {
+                var TMIS = await dbo.TMIS.ToListAsync();
+                return CustomJsonResult.Create(TMIS);
+            }
+            catch (Exception ex)
+            {
+                logger?.AddLog($"Ошибка в GetTMIS:{ex.Message}:{ex.StackTrace}", LogType.Error);
+                return await CreateInternalError(false);
+            }
+        }
+
+        [HttpGet]
+        public async Task<CustomJsonResult> GetV002()
+        {
+            try
+            {
+                var V002 = await dbo.V002.ToListAsync();
+                return CustomJsonResult.Create(V002);
+            }
+            catch (Exception ex)
+            {
+                logger?.AddLog($"Ошибка в GetV002:{ex.Message}:{ex.StackTrace}", LogType.Error);
+                return await CreateInternalError(false);
+            }
+        }
+
+
+        [HttpGet]
+        public async Task<CustomJsonResult> GetF014()
+        {
+            try
+            {
+                var spr = await dbo.F014.ToListAsync();
+                return CustomJsonResult.Create(spr);
+            }
+            catch (Exception ex)
+            {
+                logger?.AddLog($"Ошибка в GetF014:{ex.Message}:{ex.StackTrace}", LogType.Error);
+                return await CreateInternalError(false);
+            }
+        }
+
+
+        [HttpGet]
+        public async Task<CustomJsonResult> GetNMIC_CELL()
+        {
+            try
+            {
+                var spr = await dbo.NMIC_CELL.ToListAsync();
+                return CustomJsonResult.Create(spr);
+            }
+            catch (Exception ex)
+            {
+                logger?.AddLog($"Ошибка в GetNMIC_CELL:{ex.Message}:{ex.StackTrace}", LogType.Error);
+                return await CreateInternalError(false);
+            }
+        }
+
+        [HttpGet]
+        public async Task<CustomJsonResult> GetEXPERTS()
+        {
+            try
+            {
+                var spr = await dbo.EXPERTS.ToListAsync();
+                return CustomJsonResult.Create(spr);
+            }
+            catch (Exception ex)
+            {
+                logger?.AddLog($"Ошибка в GetEXPERTS:{ex.Message}:{ex.StackTrace}", LogType.Error);
+                return await CreateInternalError(false);
+            }
+        }
+
+
+        [HttpGet]
+        public async Task<CustomJsonResult> GetNMIC_FULL()
+        {
+            try
+            {
+                var spr = await dbo.NMIC_FULL.ToListAsync();
+                return CustomJsonResult.Create(spr);
+            }
+            catch (Exception ex)
+            {
+                logger?.AddLog($"Ошибка в GetNMIC_FULL:{ex.Message}:{ex.StackTrace}", LogType.Error);
+                return await CreateInternalError(false);
+            }
+        }
+
+
+
+
+
+        [HttpGet]
+        public async Task<CustomJsonResult> GetSPRNew()
+        {
+            try
+            {
+                var model = new SPRNewModel
+                {
+                    NMIC_OPLATA = await dbo.OPLATA.ToListAsync(),
+                    NMIC_VID_NHISTORY = await dbo.VID_NHISTORY.OrderBy(x => x.ORD).ToListAsync(),
+                    CODE_MO = await dbo.TMKReestr.Select(x => x.CODE_MO_NAME).Distinct().ToListAsync(),
+                    CODE_SMO = await dbo.TMKReestr.Select(x => x.SMO_NAME).Distinct().Where(x => x != null).ToListAsync()
+                };
+                model.CODE_SMO.InsertRange(0, new List<SMO> { new() { NAM_SMOK = "Без СМО", SMOCOD = "null" }, new() { NAM_SMOK = "ТФОМС ЗК", SMOCOD = "75" } });
+                return CustomJsonResult.Create(model);
+            }
+            catch (Exception ex)
+            {
+                logger?.AddLog($"Ошибка в GetSPRNew:{ex.Message}:{ex.StackTrace}", LogType.Error);
+                return await CreateInternalError(false);
+            }
         }
 
         private string FindF014(IEnumerable<F014> F014, DateTime? DATEACT, int? S_OSN)
@@ -88,25 +278,21 @@ namespace SiteCore.Controllers
         {
             return Nodes.Skip((Page - 1) * CountOnPage).Take(CountOnPage);
         }
+        private IQueryable<TMKReestr> GetNodesPageNew(IQueryable<TMKReestr> Nodes, int first, int rows)
+        {
+            return Nodes.Skip(first).Take(rows);
+        }
 
 
         private async Task<IEnumerable<TMKListModel>> GetTMKListModel(IQueryable<TMKReestr> Nodes)
         {
-            var F014 = await dbo.F014.ToListAsync();
-            return (await Nodes
-                    .Include(x => x.CODE_MO_NAME)
-                    .Include(x => x.N_VID_NHISTORY)
-                    .Include(x => x.N_OPLATA)
+            return (await Nodes                    
                     .Include(x => x.Expertizes)
                     .Include(x => x.Expertizes).ThenInclude(x => x.OSN)
-                    .Include(x => x.CONTACT_INFO)
-                    .Include(x => x.TMIS_NAME)
-                    .Include(x => x.NMIC_NAME)
                     .ToListAsync())
                 .Select(x => new TMKListModel
                 {
-                    ENP = x.ENP,
-                    NAM_MOK = x.CODE_MO_NAME?.NAM_MOK,
+                    ENP = x.ENP,                  
                     CODE_MO = x.CODE_MO,
                     FIO = x.FIO,
                     DATE_B = x.DATE_B,
@@ -114,23 +300,50 @@ namespace SiteCore.Controllers
                     DATE_PROTOKOL = x.DATE_PROTOKOL,
                     DATE_TMK = x.DATE_TMK,
                     SMO = x.SMO,
-                    VID_NHISTORY = x.N_VID_NHISTORY?.VID_NHISTORY,
-                    OPLATA = x.N_OPLATA?.OPLATA,
-                    CONTACT_INFO = x.CONTACT_INFO.Count == 0 ? "Нет контактов МО" : string.Join(Environment.NewLine, x.CONTACT_INFO.Select(y => y.TelAndFio)),
-                    DATE_MEK = string.Join(";", x.Expertizes.Where(y => y.S_TIP == ExpertTip.MEK).Select(y => y.DATEACT.ToString("dd.MM.yyyy"))),
-                    DEF_MEK = string.Join(";", x.Expertizes.Where(y => y.S_TIP == ExpertTip.MEK).SelectMany(y => y.OSN, (y, z) => new {y.DATEACT, z.S_OSN}).Select(y => FindF014(F014, y.DATEACT, y.S_OSN))),
-                    DATE_MEE = string.Join(";", x.Expertizes.Where(y => y.S_TIP == ExpertTip.MEE).Select(y => y.DATEACT.ToString("dd.MM.yyyy"))),
-                    DEF_MEE = string.Join(";", x.Expertizes.Where(y => y.S_TIP == ExpertTip.MEE).SelectMany(y => y.OSN, (y, z) => new {y.DATEACT, z.S_OSN}).Select(y => FindF014(F014, y.DATEACT, y.S_OSN))),
-                    DATE_EKMP = string.Join(";", x.Expertizes.Where(y => y.S_TIP == ExpertTip.EKMP).Select(y => y.DATEACT.ToString("dd.MM.yyyy"))),
-                    DEF_EKMP = string.Join(";", x.Expertizes.Where(y => y.S_TIP == ExpertTip.EKMP).SelectMany(y => y.OSN, (y, z) => new {y.DATEACT, z.S_OSN}).Select(y => FindF014(F014, y.DATEACT, y.S_OSN))),
-                    STATUS = x.STATUS.ToString(),
-                    STATUS_COM = GetStatusCom(x),
+                    VID_NHISTORY = x.VID_NHISTORY,
+                    OPLATA = x.OPLATA,
+                    MEK = x.Expertizes.Where(y => y.S_TIP == ExpertTip.MEK).Select(exp=> new TMKListExpModel
+                    {
+                        DATEACT = exp.DATEACT,
+                        OSN = exp.OSN.Select(x=>x.S_OSN.Value).ToList()
+                    }).ToList(),
+                    MEE = x.Expertizes.Where(y => y.S_TIP == ExpertTip.MEE).Select(exp => new TMKListExpModel
+                    {
+                        DATEACT = exp.DATEACT,
+                        OSN = exp.OSN.Select(x => x.S_OSN.Value).ToList()
+                    }).ToList(),
+                    EKMP = x.Expertizes.Where(y => y.S_TIP == ExpertTip.EKMP).Select(exp => new TMKListExpModel
+                    {
+                        DATEACT = exp.DATEACT,
+                        OSN = exp.OSN.Select(x => x.S_OSN.Value).ToList()
+                    }).ToList(),
+                    STATUS = x.STATUS,
+                    STATUS_COM = x.STATUS_COM,
                     isEXP = x.Expertizes.Any(),
                     TMK_ID = x.TMK_ID,
-                    TMIS_NAME = x.TMIS_NAME?.TMS_NAME,
-                    NMIC_NAME = x.NMIC_NAME?.NMIC_NAME
+                    TMIS = x.TMIS,
+                    NMIC = x.NMIC
                 });
         }
+        [HttpGet]
+        public async Task<CustomJsonResult> GetTMKListNew(int first, int rows, TMKFillter filter = null)
+        {
+            try
+            {
+                var Nodes = GetNodes(filter);
+                var listq = GetNodesPageNew(GetNodes(filter), first, rows);
+                var Count = Nodes.Count();
+                var list = await GetTMKListModel(listq);
+                return CustomJsonResult.Create(new { Count, Items = list });
+            }
+            catch (Exception ex)
+            {
+                logger?.AddLog($"Ошибка в GetTMKList:{ex.Message}:{ex.StackTrace}", LogType.Error);
+                return await CreateInternalError(false);
+            }
+
+        }
+
 
 
         [HttpGet]
@@ -213,7 +426,7 @@ namespace SiteCore.Controllers
 
                 if (filter.SMO != null)
                 {
-                    nodes = nodes.Where(x => filter.SMO.Contains(x.SMO ?? "null"));
+                    nodes = nodes.Where(x => filter.SMO.Contains(x.SMO ?? ""));
                 }
 
 
@@ -404,54 +617,62 @@ namespace SiteCore.Controllers
      
         private async Task<TMKItem> GetTMKItem(int TMK_ID)
         {
-            var query = from tmk in
-                    dbo.TMKReestr
-                        .Include(x => x.N_VID_NHISTORY)
-                        .Include(x => x.CODE_MO_NAME)
-                        .Include(x => x.N_OPLATA)
-                        .Include(x => x.NMIC_NAME)
-                        .Include(x => x.TMIS_NAME)
-                        .Include(x => x.SMO_NAME)
-                        join prof in dbo.V002 on tmk.PROFIL equals prof.IDPR
-                where tmk.TMK_ID == TMK_ID && tmk.DATE_B >= prof.DATEBEG && tmk.DATE_B  <= (prof.DATEEND ?? DateTime.Now)
-                        select new TMKItem
+            var query = dbo.TMKReestr.Where(x=>x.TMK_ID==TMK_ID).Select( tmk=>
+            new TMKItem
             {
-             TMK_ID = tmk.TMK_ID,
-             NMIC = tmk.NMIC,
-             TMIS = tmk.TMIS,
-             PROFIL = tmk.PROFIL,
-             DATE_TMK = tmk.DATE_TMK,
-             DATE_PROTOKOL = tmk.DATE_PROTOKOL,
-             DATE_QUERY = tmk.DATE_QUERY,
-             DATE_B = tmk.DATE_B,
-             NHISTORY = tmk.NHISTORY,
-             VID_NHISTORY = tmk.VID_NHISTORY,
-             VID_NHISTORY_NAM = tmk.N_VID_NHISTORY.VID_NHISTORY,
-             DATE_INVITE = tmk.DATE_INVITE,
-             ISNOTSMO = tmk.ISNOTSMO,
-             ENP = tmk.ENP,
-             FAM = tmk.FAM,
-             IM = tmk.IM,
-             OT = tmk.OT,
-             DR = tmk.DR,
-             NOVOR = tmk.NOVOR,
-             FAM_P = tmk.FAM_P,
-             IM_P = tmk.IM_P,
-             OT_P = tmk.OT_P,
-             DR_P = tmk.DR_P,
-             CODE_MO = tmk.CODE_MO,
-             NAM_MOK = tmk.CODE_MO_NAME == null? "" : tmk.CODE_MO_NAME.NAM_MOK,
-             STATUS = tmk.STATUS,
-             STATUS_COM = tmk.STATUS_COM,
-             SMO = tmk.SMO,
-             SMO_NAM = tmk.SMO == "75" ? "ТФОМС Забайкальского края" : (tmk.SMO_NAME != null ? tmk.SMO_NAME.NAM_SMOK : tmk.SMO),
-             OPLATA = tmk.OPLATA,
-             OPLATA_NAM = tmk.N_OPLATA.OPLATA,
-             SMO_COM = tmk.SMO_COM,
-             PROFIL_NAM = prof.PRNAME,
-             NMIC_NAM = tmk.NMIC_NAME.NMIC_NAME,
-             TMS_NAM = tmk.TMIS_NAME.TMS_NAME
-            };
+                TMK_ID = tmk.TMK_ID,
+                NMIC = tmk.NMIC,
+                TMIS = tmk.TMIS,
+                PROFIL = tmk.PROFIL,
+                DATE_TMK = tmk.DATE_TMK,
+                DATE_PROTOKOL = tmk.DATE_PROTOKOL,
+                DATE_QUERY = tmk.DATE_QUERY,
+                DATE_B = tmk.DATE_B,
+                NHISTORY = tmk.NHISTORY,
+                VID_NHISTORY = tmk.VID_NHISTORY,
+                DATE_INVITE = tmk.DATE_INVITE,
+                ISNOTSMO = tmk.ISNOTSMO,
+                ENP = tmk.ENP,
+                FAM = tmk.FAM,
+                IM = tmk.IM,
+                OT = tmk.OT,
+                DR = tmk.DR,
+                NOVOR = tmk.NOVOR,
+                FAM_P = tmk.FAM_P,
+                IM_P = tmk.IM_P,
+                OT_P = tmk.OT_P,
+                DR_P = tmk.DR_P,
+                CODE_MO = tmk.CODE_MO,
+                STATUS = tmk.STATUS,
+                STATUS_COM = tmk.STATUS_COM,
+                SMO = tmk.SMO,
+                OPLATA = tmk.OPLATA,
+                SMO_COM = tmk.SMO_COM,
+                Expertize = tmk.Expertizes.Select(exp => new ExpertizeModel
+                {
+                    CELL = exp.CELL,
+                    DATEACT = exp.DATEACT,
+                    EXPERTIZE_ID = exp.EXPERTIZE_ID,
+                    FIO = exp.FIO,
+                    FULL = exp.FULL,
+                    ISCOROLLARY = exp.ISCOROLLARY,
+                    ISNOTRECOMMEND = exp.ISNOTRECOMMEND,
+                    ISOSN = exp.ISOSN,
+                    ISRECOMMENDMEDDOC = exp.ISRECOMMENDMEDDOC,
+                    NOTPERFORM = exp.NOTPERFORM,
+                    NUMACT = exp.NUMACT,
+                    N_EXP = exp.N_EXP,
+                    S_TIP = exp.S_TIP,
+                    TMK_ID = exp.TMK_ID,
+                    OSN = exp.OSN.Select(osn => new EXPERTIZE_OSNModel
+                    {
+                        S_COM = osn.S_COM,
+                        S_FINE = osn.S_FINE,
+                        S_OSN = osn.S_OSN,
+                        S_SUM = osn.S_SUM
+                    }).ToList()
+                }).ToList()
+            });
             var items = await query.ToListAsync();
             if (items.Count > 1)
                 throw new Exception($"Ошибка получения записи: На ID = {TMK_ID} вернулось 2 или более записи");
@@ -498,7 +719,7 @@ namespace SiteCore.Controllers
         /// <returns></returns>
         [HttpPost]
         [Authorize(Roles = "TMKUser")]
-        public async Task<ActionResult> EditTmkReestr([FromBody]TMKItem item)
+        public async Task<CustomJsonResult> EditTmkReestr(TMKItem item)
         {
             try
             {
@@ -517,55 +738,30 @@ namespace SiteCore.Controllers
 
                     if (editItem == null)
                     {
-                        ModelState.AddModelError("", "Не удалось найти случай");
+                        throw new ModelException("Не удалось найти случай");
                     }
                     else
                     {
                         if (editItem.CODE_MO != userInfo.CODE_MO)
                         {
-                            ModelState.AddModelError("", "Запись не принадлежит Вашей МО");
+                            throw new ModelException("Запись не принадлежит Вашей МО");
                         }
                         if (editItem.STATUS == StatusTMKRow.Closed)
                         {
-                            ModelState.AddModelError("", "Запись не подлежит редактированию");
+                            throw new ModelException("Запись не подлежит редактированию");
                         }
                     }
-                    if (ModelState.IsValid && editItem!=null)
-                    {
-                        editItem.DATE_B = item.DATE_B.Value;
-                        editItem.DATE_PROTOKOL = item.DATE_PROTOKOL.Value;
-                        editItem.DATE_QUERY = item.DATE_QUERY.Value;
-                        editItem.DATE_TMK = item.DATE_TMK;
-                        editItem.DR = item.DR.Value;
-                        editItem.ENP = item.ENP?.ToUpper();
-                        editItem.FAM = item.FAM?.ToUpper();
-                        editItem.IM = item.IM?.ToUpper();
-                        editItem.OT = item.OT?.ToUpper();
-                        editItem.NHISTORY = item.NHISTORY?.ToUpper();
-                        editItem.NMIC = item.NMIC.Value;
-                        editItem.PROFIL = item.PROFIL.Value;
-                        editItem.TMIS = item.TMIS.Value;
-                        editItem.USER_ID = userInfo.USER_ID;
-                        editItem.NOVOR = item.NOVOR;
-                        if (!editItem.NOVOR)
-                        {
-                            editItem.FAM_P = editItem.IM_P = editItem.OT_P = "";
-                            editItem.DR_P = null;
-                        }
-                        else
-                        {
-                            editItem.FAM_P = item.FAM_P?.ToUpper();
-                            editItem.IM_P = item.IM_P?.ToUpper();
-                            editItem.OT_P = item.OT_P?.ToUpper();
-                        }
-                        editItem.VID_NHISTORY = item.VID_NHISTORY.Value;
-                        editItem.ISNOTSMO = item.ISNOTSMO;
-                        await dbo.SaveChangesAsync();
-                        return CustomJsonResult.Create(null);
-                    }
+                    item.CopyTo(editItem);
+                    editItem.USER_ID = userInfo.USER_ID;
+                    await dbo.SaveChangesAsync();
+                    return CustomJsonResult.Create(true);
                 }
                 var err = ModelState.GetErrors();
                 return CustomJsonResult.Create(err, false);
+            }
+            catch (ModelException ex)
+            {
+                return CustomJsonResult.Create(new string[] { ex.Message }, false);
             }
             catch (Exception ex)
             {
@@ -714,7 +910,7 @@ namespace SiteCore.Controllers
         }
         [Authorize(Roles = "TMKAdmin, TMKSMO")]
         [HttpPost]
-        public async Task<CustomJsonResult> EditExpertize([FromBody] ExpertizeModel item)
+        public async Task<CustomJsonResult> EditExpertize(ExpertizeModel item)
         {
             try
             {
@@ -739,7 +935,7 @@ namespace SiteCore.Controllers
 
                     if (ModelState.IsValid)
                     {
-                        if (item.EXPERTIZE_ID == -1)
+                        if (item.EXPERTIZE_ID == 0)
                         {
                             var exp = new TMKReestRExpertize {USER_ID = userInfo.USER_ID, TMK_ID = r.TMK_ID};
                             item.CopyTo(exp);
@@ -751,13 +947,13 @@ namespace SiteCore.Controllers
                         }
                         else
                         {
-                            var exp = await dbo.Expertizes.FirstOrDefaultAsync(x=>x.EXPERTIZE_ID == item.EXPERTIZE_ID);
-                            var items = exp.OSN.ToList();
-                            for (var i = exp.OSN.Count; i < items.Count; i++)
+                            var expBD = await dbo.Expertizes.Include(x=>x.OSN).FirstOrDefaultAsync(x=>x.EXPERTIZE_ID == item.EXPERTIZE_ID);
+                            var OSNBD = expBD.OSN.ToList();
+                            for (var i = item.OSN.Count; i < OSNBD.Count; i++)
                             {
-                                dbo.OSN.Remove(items[i]);
+                                dbo.OSN.Remove(OSNBD[i]);
                             }
-                            item.CopyTo(exp);
+                            item.CopyTo(expBD);
                         }
                         await dbo.SaveChangesAsync();
                         return CustomJsonResult.Create(null);
@@ -781,17 +977,19 @@ namespace SiteCore.Controllers
 
         [Authorize(Roles = "TMKAdmin, TMKSMO")]
         [HttpPost]
-        public async Task<CustomJsonResult> DeleteExpertize(int EXPERTIZE_ID)
+        public async Task<CustomJsonResult> DeleteExpertize(int[] EXPERTIZE_ID)
         {
             try
             {
-                var exp = await dbo.Expertizes.FirstOrDefaultAsync(x => x.EXPERTIZE_ID == EXPERTIZE_ID);
-                if (exp == null)
-                    throw new ModelException("", "Экспертиза не найдена");
-                if (exp.TMKReestr.SMO != userInfo.CODE_SMO) 
-                    throw new ModelException("", "Экспертиза принадлежит другой СМО");
-
-                dbo.Expertizes.Remove(exp);
+                foreach(var exp_id in EXPERTIZE_ID)
+                {
+                    var exp = await dbo.Expertizes.FirstOrDefaultAsync(x => x.EXPERTIZE_ID == exp_id);
+                    if (exp == null)
+                        throw new ModelException("", "Экспертиза не найдена");
+                    if (exp.TMKReestr.SMO != userInfo.CODE_SMO)
+                        throw new ModelException("", "Экспертиза принадлежит другой СМО");
+                    dbo.Expertizes.Remove(exp);
+                }
                 await dbo.SaveChangesAsync();
                 return CustomJsonResult.Create(null);
             }
@@ -808,13 +1006,12 @@ namespace SiteCore.Controllers
 
         
         [HttpPost]
-        public async Task<CustomJsonResult> SetOPLATAandVID_NHISTORY([FromBody] OPLATAandVID_NHISTORYModel item)
+        public async Task<CustomJsonResult> SetSmoData(OPLATAandVID_NHISTORYModel item)
         {
             try
             {
                
-                var tmk = await dbo.TMKReestr.FirstOrDefaultAsync(x => x.TMK_ID == item.TMK_ID);
-              
+                var tmk = await dbo.TMKReestr.FirstOrDefaultAsync(x => x.TMK_ID == item.TMK_ID);              
                 if (tmk == null)
                     throw new ModelException("", "Не удалось найти запись");
 
@@ -830,7 +1027,7 @@ namespace SiteCore.Controllers
             }
             catch (Exception ex)
             {
-                logger?.AddLog($"Ошибка в {nameof(SetOPLATAandVID_NHISTORY)}:{ex.Message}:{ex.StackTrace}", LogType.Error);
+                logger?.AddLog($"Ошибка в {nameof(SetSmoData)}:{ex.Message}:{ex.StackTrace}", LogType.Error);
                 return await CreateInternalError(false);
             }
         }
@@ -896,153 +1093,130 @@ namespace SiteCore.Controllers
         #endregion
         #region  Справочник контактов
         [Authorize(Roles = "TMKAdmin,TMKUser")]
-        public async Task<IActionResult> ContactInfo()
+        public async Task<CustomJsonResult> GetSPRContact()
         {
             var info = new List<CONTACT_INFO>();
             try
             {
                 if (User.IsInRole("TMKAdmin"))
                 {
-                    info = await dbo.CONTACT_INFO.Include(x=>x.CODE_MO_NAME).OrderBy(x => x.CODE_MO).ThenByDescending(x => x.ID_CONTACT_INFO).ToListAsync();
+                    info = await dbo.CONTACT_INFO.OrderBy(x => x.CODE_MO).ThenByDescending(x => x.ID_CONTACT_INFO).ToListAsync();
                 }
                 else
                 {
                     if (User.IsInRole("TMKUser"))
                     {
-                        info = await dbo.CONTACT_INFO.Include(x => x.CODE_MO_NAME).Where(x => x.CODE_MO == userInfo.CODE_MO).OrderBy(x => x.CODE_MO).ThenByDescending(x => x.ID_CONTACT_INFO).ToListAsync();
+                        info = await dbo.CONTACT_INFO.Where(x => x.CODE_MO == userInfo.CODE_MO).OrderBy(x => x.CODE_MO).ThenByDescending(x => x.ID_CONTACT_INFO).ToListAsync();
                     }
-                }
+                }                
+                return CustomJsonResult.Create(info.Select(x => new SPRContactModel
+                {
+                    CODE_MO = x.CODE_MO,
+                    FAM = x.FAM,
+                    IM = x.IM,
+                    OT = x.OT,
+                    ID_CONTACT_INFO = x.ID_CONTACT_INFO,
+                    TEL = x.TEL
+                }).ToList());
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("","Внутренняя ошибка сервиса");
-                logger?.AddLog($"Ошибка в {nameof(GetReportXLSXFile)}:{ex.Message}:{ex.StackTrace}", LogType.Error);
+                logger?.AddLog($"Ошибка в {nameof(SetSmoData)}:{ex.Message}:{ex.StackTrace}", LogType.Error);
+                return await CreateInternalError(false);
             }
-            return View("SPR/ContactInfo", info);
-        }
-        [Authorize(Roles = "TMKAdmin,TMKUser")]
-        [HttpGet]
-        public async Task<IActionResult> EditCONTACT_INFO(int ID_CONTACT_INFO = 0)
-        {
-            return View("SPR/EditCONTACT_INFO", await GetEditCONTACT_INFOModel(ID_CONTACT_INFO));
         }
       
-
-        private async  Task<EditCONTACT_INFOModel> GetEditCONTACT_INFOModel(int ID_CONTACT_INFO)
-        {
-            var item = new CONTACT_INFOModel();
-           
-            if (User.IsInRole("TMKAdmin"))
-            {
-                if(ID_CONTACT_INFO != 0)
-                    item = new CONTACT_INFOModel(await dbo.CONTACT_INFO.Include(x => x.CODE_MO_NAME).FirstOrDefaultAsync(x => x.ID_CONTACT_INFO == ID_CONTACT_INFO));
-            }
-            else
-            {
-                if (User.IsInRole("TMKUser"))
-                {
-                    if (ID_CONTACT_INFO != 0)
-                        item = new CONTACT_INFOModel(await dbo.CONTACT_INFO.FirstOrDefaultAsync(x => x.ID_CONTACT_INFO == ID_CONTACT_INFO && x.CODE_MO == userInfo.CODE_MO));
-                }
-            }
-            return await GetEditCONTACT_INFOModel(item);
-        }
-        private async Task<EditCONTACT_INFOModel> GetEditCONTACT_INFOModel(CONTACT_INFOModel model)
-        {
-            var code_mo = new List<CODE_MO>();
-            if (User.IsInRole("TMKAdmin"))
-            {
-                code_mo = await dbo.CODE_MO.Where(x => !x.D_END.HasValue && x.MCOD.StartsWith("75")).OrderBy(x => x.MCOD).ToListAsync();
-            }
-            else
-            {
-                if (User.IsInRole("TMKUser"))
-                {
-                    code_mo = await dbo.CODE_MO.Where(x => !x.D_END.HasValue && x.MCOD == userInfo.CODE_MO).OrderBy(x => x.MCOD).ToListAsync();
-                }
-            }
-            return new EditCONTACT_INFOModel { CODE_MO = code_mo, INFO = model };
-        }
         [Authorize(Roles = "TMKAdmin,TMKUser")]
         [HttpPost]
-        public async Task<IActionResult> EditCONTACT_INFO(EditCONTACT_INFOModel model)
+        public async Task<CustomJsonResult> EditSPRContact(SPRContactModel model)
         {
-            var item = model.INFO;
             try
             {
                 if (ModelState.IsValid)
                 {
                     CONTACT_INFO editItem = null;
-                    if (item.ID_CONTACT_INFO != 0)
+                    if (model.ID_CONTACT_INFO.HasValue)
                     {
                         if (User.IsInRole("TMKAdmin"))
                         {
-                            editItem = await dbo.CONTACT_INFO.FirstOrDefaultAsync(x => x.ID_CONTACT_INFO == item.ID_CONTACT_INFO);
+                            editItem = await dbo.CONTACT_INFO.FirstOrDefaultAsync(x => x.ID_CONTACT_INFO == model.ID_CONTACT_INFO);
                         }
-
-                        if (User.IsInRole("TMKUser"))
+                        else
                         {
-                            editItem = await dbo.CONTACT_INFO.FirstOrDefaultAsync(x => x.ID_CONTACT_INFO == item.ID_CONTACT_INFO && x.CODE_MO == userInfo.CODE_MO);
+                            if (User.IsInRole("TMKUser"))
+                            {
+                                editItem = await dbo.CONTACT_INFO.FirstOrDefaultAsync(x => x.ID_CONTACT_INFO == model.ID_CONTACT_INFO && x.CODE_MO == userInfo.CODE_MO);
+                            }
                         }
-
                         if (editItem == null)
                         {
                             throw new ModelException("", "Запись не найдена в реестре");
                         }
 
-                        editItem.CODE_MO = item.CODE_MO;
-                        editItem.FAM = item.FAM;
-                        editItem.OT = item.OT;
-                        editItem.IM = item.IM;
-                        editItem.TEL = item.TEL;
+                        model.CopyTo(editItem);
                     }
                     else
                     {
                         editItem = new CONTACT_INFO();
+                        model.CopyTo(editItem);
+                        if (!User.IsInRole("TMKAdmin"))
+                        {
+                            editItem.CODE_MO = userInfo.CODE_MO;
+                        }
                         dbo.CONTACT_INFO.Add(editItem);
                     }
-
-                    item.To(editItem);
                     await dbo.SaveChangesAsync();
-                    return RedirectToAction("ContactInfo");
+                    return CustomJsonResult.Create(true);
                 }
-                return View("SPR/EditCONTACT_INFO", await GetEditCONTACT_INFOModel(item));
+               
+                return CustomJsonResult.Create(ModelState.GetErrors(), false);
             }
-            catch (ModelException e)
+            catch (ModelException ex)
             {
-                ModelState.AddModelError("", e.Message);
-                return View("SPR/EditCONTACT_INFO", await GetEditCONTACT_INFOModel(item));
+                return CustomJsonResult.Create(new string[] { ex.Message }, false);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                ModelState.AddModelError("", "Внутренняя ошибка сервиса");
-                return View("SPR/EditCONTACT_INFO", await GetEditCONTACT_INFOModel(item));
+                logger?.AddLog($"Ошибка в {nameof(EditSPRContact)}:{ex.Message}:{ex.StackTrace}", LogType.Error);
+                return await CreateInternalError(true);
             }
         }
 
         [Authorize(Roles = "TMKAdmin,TMKUser")]
         [HttpPost]
-        public async Task<IActionResult> DeleteCONTACT_INFO(int ID_CONTACT_INFO)
+        public async Task<CustomJsonResult> DeleteSPRContact(int[] ID_CONTACT_INFO)
         {
-            CONTACT_INFO t = null;
-            if (User.IsInRole("TMKAdmin"))
+            try
             {
-                t = await dbo.CONTACT_INFO.FirstOrDefaultAsync(x => x.ID_CONTACT_INFO == ID_CONTACT_INFO);
-            }
-            else
-            {
-                if (User.IsInRole("TMKUser"))
+                foreach (var id in ID_CONTACT_INFO)
                 {
-                    t = await dbo.CONTACT_INFO.FirstOrDefaultAsync(x => x.ID_CONTACT_INFO == ID_CONTACT_INFO && x.CODE_MO == userInfo.CODE_MO);
+                    CONTACT_INFO t = null;
+                    if (User.IsInRole("TMKAdmin"))
+                    {
+                        t = await dbo.CONTACT_INFO.FirstOrDefaultAsync(x => x.ID_CONTACT_INFO == id);
+                    }
+                    else
+                    {
+                        if (User.IsInRole("TMKUser"))
+                        {
+                            t = await dbo.CONTACT_INFO.FirstOrDefaultAsync(x => x.ID_CONTACT_INFO == id && x.CODE_MO == userInfo.CODE_MO);
+                        }
+                    }
+
+                    if (t != null)
+                    {
+                        dbo.CONTACT_INFO.Remove(t);
+                    }
+
                 }
-            }
-           
-            if (t != null)
-            {
-                dbo.CONTACT_INFO.Remove(t);
                 await dbo.SaveChangesAsync();
+                return CustomJsonResult.Create(true);
             }
-            return RedirectToAction("ContactInfo");
+            catch (Exception ex)
+            {
+                logger?.AddLog($"Ошибка в {nameof(DeleteSPRContact)}:{ex.Message}:{ex.StackTrace}", LogType.Error);
+                return await CreateInternalError(false);
+            }
         }
 
         #endregion

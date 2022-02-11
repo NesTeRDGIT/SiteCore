@@ -1,0 +1,286 @@
+<p-dialog [style]="{width: '80vw', fontFamily:'Times New Roman'}" [modal]="true" [position]="'top'" [header]="TypeOpen===EditTMKType.New? 'Создание': TypeOpen == EditTMKType.Edit? 'Редактирование':'Просмотр'" [(visible)]="Display" (onHide)="Close()">
+    <div>
+        <div *ngIf="onLoading" >Загрузка справочников...</div>
+        <div *ngIf="!onLoading">
+            <div class="tooltip" *ngIf="TypeOpen !== EditTMKType.New">
+                <span class="BoldText" style="font-size: 1.17em;" [pTooltip]="CurrentTMK.CODE_MO|SPRTimeMark:SPR.CODE_MO:'NAM_MOP':true"  tooltipPosition="top">{{CurrentTMK.CODE_MO|SPRTimeMark:SPR.CODE_MO:'NAM_MOK':true}}</span>    
+            </div>
+            <div class="tooltip" *ngIf="TypeOpen == EditTMKType.New">
+                <span class="BoldText" style="font-size: 1.17em;" [pTooltip]="userInfo.CodeMO|SPRTimeMark:SPR.CODE_MO:'NAM_MOP':true"  tooltipPosition="top">{{userInfo.CodeMO|SPRTimeMark:SPR.CODE_MO:'NAM_MOK':true}}</span>    
+            </div>
+            <hr />
+           <ul>
+                <li *ngFor="let err of ErrMessage" class="ErrorLi">{{err}}</li>
+            </ul>  
+                <table>
+                    <tr>
+                        <td class="BoldText">Статус</td>
+                        <td>
+                            <div  [ngSwitch]="CurrentTMK.STATUS">
+                                <div class="tooltip" *ngSwitchCase="StatusTMKRow.Closed">
+                                    <img src="../Image/GreenIndicator.png" alt="Закрыта" pTooltip="Закрыта"/>                                  
+                                </div>
+        
+                                <div class="tooltip" *ngSwitchCase="StatusTMKRow.Open">
+                                    <img src="../Image/YelowIndicator.png" alt="Открыта" pTooltip="Открыта"/>
+                                </div>
+        
+                                <div class="tooltip" *ngSwitchCase="StatusTMKRow.Error">
+                                    <img src="../Image/RedIndicator.png" alt="Ошибка" pTooltip="Ошибочная: {{CurrentTMK.STATUS_COM}}"/>                              
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="BoldText">Дата внесения</td>
+                        <td>{{CurrentTMK.DATE_INVITE| date :'yyyy-MM-dd HH:mm'}}</td>
+                    </tr>
+                    <tr>
+                        <td class="BoldText">Дата редактирования</td>
+                        <td>{{CurrentTMK.DATE_EDIT|date:'yyyy-MM-dd HH:mm'}}</td>
+                    </tr>
+                    <tr *ngIf="TypeOpen!==EditTMKType.New && userInfo.IsTMKAdmin">
+                        <td class="BoldText">Страховая компания</td>
+                        <td>{{CurrentTMK.SMO|SPRTimeMark:SPR.CODE_SMO:'NAM_SMOK':true}}</td>
+                        <td>
+                            <div style="display: flex; align-items: center;">
+                                <div class="tooltip" *ngIf="userInfo.IsTMKAdmin">
+                                    <input type="button" class="ActionButton" value="Пометить как МТР" (click)="SetAsMTR()" [disabled]="onOperationProgress" pTooltip="Указать в качестве СМО - ТФОМС Забайкальского края" />                                
+                                </div>
+                                <i *ngIf="onSetAsMTRProgress" class="pi pi-spin pi-spinner" style="font-size: 1.5rem;"></i>
+                            </div>
+
+                            
+                        </td>
+                    </tr>
+                </table>
+
+                <hr />
+                <div>
+                    <div style="display: flex; flex-direction: column;">
+                        <div>
+                            <div class="field-checkbox" style="margin-top: 10px; margin-bottom: 10px;">
+                                <p-checkbox [(ngModel)]="CurrentTMK.ISNOTSMO" [binary]="true" inputId="inputISNOTSMO"  [disabled]="IsReadOnly? true : false"></p-checkbox>
+                                <label for="inputISNOTSMO"> Нет страхования</label>
+                            </div>      
+                            <label *ngIf="!CurrentTMK.ISNOTSMO"  class="label-sup">ЕНП <input id="inputFAM" type="text" pInputText [attr.readonly]="IsReadOnly? true : null"  [(ngModel)]="CurrentTMK.ENP" autofocus></label>
+                        </div>                        
+                        <div >
+                            <label class="label-sup">Фамилия пациента <input type="text" pInputText [attr.readonly]="IsReadOnly? true : null"  [(ngModel)]="CurrentTMK.FAM"></label>
+                            <label class="label-sup">Имя пациента <input type="text" pInputText [attr.readonly]="IsReadOnly? true : null" [(ngModel)]="CurrentTMK.IM"></label>
+                            <label class="label-sup">Отчество пациента <input type="text" pInputText [attr.readonly]="IsReadOnly? true : null" [(ngModel)]="CurrentTMK.OT"></label>
+                            <label class="label-sup">Дата рождения пациента <input type="date" pInputText [attr.readonly]="IsReadOnly? true : null" [ngModel]="CurrentTMK.DR| date:'yyyy-MM-dd'" (ngModelChange)="CurrentTMK.DR = ConvertToDate($event)"> </label>                       
+                        </div>
+                        <div class="field-checkbox" style="margin-top: 10px; margin-bottom: 10px;">
+                            <p-checkbox [(ngModel)]="CurrentTMK.NOVOR" [binary]="true" inputId="inputNOVOR"  [disabled]="IsReadOnly? true : false"></p-checkbox>
+                            <label for="inputNOVOR"> Данные представителя</label>
+                        </div>                  
+                        <div *ngIf="CurrentTMK.NOVOR">
+                            <label class="label-sup">Фамилия представителя <input type="text" pInputText [attr.readonly]="IsReadOnly? true : null"  [(ngModel)]="CurrentTMK.FAM_P"></label>
+                            <label class="label-sup">Имя представителя <input type="text" pInputText [attr.readonly]="IsReadOnly? true : null" [(ngModel)]="CurrentTMK.IM_P"></label>
+                            <label class="label-sup">Отчество представителя <input type="text" pInputText [attr.readonly]="IsReadOnly? true : null" [(ngModel)]="CurrentTMK.OT_P"></label>
+                            <label class="label-sup">Дата рождения представителя <input type="date" pInputText [attr.readonly]="IsReadOnly? true : null" [ngModel]="CurrentTMK.DR_P| date:'yyyy-MM-dd'" (ngModelChange)="CurrentTMK.DR_P = ConvertToDate($event)"> </label>  
+                        </div>
+                    </div>
+                    <hr />
+                    <div>                      
+                        <table style="width: 100%">
+                            <tr>
+                                <td class="BoldText" style="width: 30%;">Вид медицинской документации</td>
+                                <td *ngIf="IsReadOnly" style="width: 70%;">
+                                    <input style="width:100%;" type="text" pInputText readonly value="{{CurrentTMK.VID_NHISTORY|SPRTimeMark:SPR.NMIC_VID_NHISTORY:'VID_NHISTORY'}}" [style]="{'width':'200px'}" />
+                                </td>
+                                <td *ngIf="!IsReadOnly" style="width: 70%;">
+                                    <p-dropdown [options]="SPR.NMIC_VID_NHISTORY.SPR.values()" [(ngModel)]="CurrentTMK.VID_NHISTORY" optionLabel="VID_NHISTORY" optionValue="ID_VID_NHISTORY"  [style]="{'minWidth':'200px'}"></p-dropdown>                                   
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="BoldText">№ истории болезни / амбулаторной карты</td>
+                                <td>
+                                    <input type="text" pInputText [attr.readonly]="IsReadOnly? true : null" [(ngModel)]="CurrentTMK.NHISTORY"  [style]="{'width':'200px'}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="BoldText">Дата начала лечения</td>
+                                <td>
+                                    <input type="date" pInputText [attr.readonly]="IsReadOnly? true : null" [ngModel]="CurrentTMK.DATE_B| date:'yyyy-MM-dd'" (ngModelChange)="CurrentTMK.DATE_B = ConvertToDate($event)"  [style]="{'width':'200px'}">                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="BoldText">Дата оформления запроса на ТМК</td>
+                                <td >
+                                    <input type="date" pInputText [attr.readonly]="IsReadOnly? true : null" [ngModel]="CurrentTMK.DATE_QUERY| date:'yyyy-MM-dd'" (ngModelChange)="CurrentTMK.DATE_QUERY =ConvertToDate($event)"  [style]="{'width':'200px'}">  
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="BoldText">Дата получения протокола</td>
+                                <td>
+                                    <input type="date" pInputText [attr.readonly]="IsReadOnly? true : null" [ngModel]="CurrentTMK.DATE_PROTOKOL| date:'yyyy-MM-dd'" (ngModelChange)="CurrentTMK.DATE_PROTOKOL = ConvertToDate($event)"  [style]="{'width':'200px'}">                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Дата проведения очной консультации\консилиума</td>
+                                <td>
+                                    <input type="date" pInputText [attr.readonly]="IsReadOnly? true : null" [ngModel]="CurrentTMK.DATE_TMK| date:'yyyy-MM-dd'" (ngModelChange)="CurrentTMK.DATE_TMK = ConvertToDate($event)"  [style]="{'width':'200px'}">                                    
+                                </td>
+                            </tr>
+            
+                        </table>
+                    </div>
+                    <hr />
+                    <div>
+                        <table style="width: 100%; max-width: 100%;">
+                            <tr>
+                                <td class="BoldText" style="width: 20%;">
+                                    <div class="tooltip">
+                                        Профиль <i *ngIf="!IsReadOnly" class="pi pi-question-circle" pTooltip="Фильтр отражает значение по состоянию на дату начала лечения, если значения отсутствуют укажите дату начала лечения" style="font-size: 1rem"></i>                                  
+                                    </div>
+                                </td>                                
+                                <td *ngIf="IsReadOnly">
+                                    <input style="width:100%;" type="text" pInputText readonly value="{{CurrentTMK.PROFIL|SPRTimeMark:(SPR.V002|ActualSPR:CurrentTMK.DATE_B):'PRNAME'}}" />
+                                </td>
+                                <td *ngIf="!IsReadOnly">                                    
+                                    <p-dropdown [options]="(SPR.V002|ActualSPR:CurrentTMK.DATE_B).SPR.values()" [(ngModel)]="CurrentTMK.PROFIL" optionDisabled="false" optionLabel="PRNAME" [filter]="true" filterBy="PRNAME" optionValue="IDPR" appendTo="body" [style]="{'minWidth':'100%'}"></p-dropdown>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="BoldText">Наименование НМИЦ</td>
+                                <td *ngIf="IsReadOnly">
+                                    <input style="width:100%;" type="text" pInputText readonly value="{{CurrentTMK.NMIC|SPRTimeMark:SPR.NMIC:'NMIC_NAME'}}" />
+                                </td>
+                                <td *ngIf="!IsReadOnly">                                  
+                                    <p-dropdown  [options]="SPR.NMIC.SPR.values()" [(ngModel)]="CurrentTMK.NMIC" optionLabel="NMIC_NAME" optionValue="NMIC_ID" [filter]="true" filterBy="NMIC_NAME" appendTo="body"  [style]="{'minWidth':'100%'}"></p-dropdown>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="BoldText">Телемедицинская система</td>
+                                <td *ngIf="IsReadOnly">
+                                    <input style="width:100%;" type="text" pInputText readonly value="{{CurrentTMK.TMIS|SPRTimeMark:SPR.TMIS:'TMS_NAME'}}" />
+                                </td>
+                                <td *ngIf="!IsReadOnly"> 
+                                    <p-dropdown [options]="SPR.TMIS.SPR.values()" [(ngModel)]="CurrentTMK.TMIS" optionLabel="TMS_NAME" optionValue="TMIS_ID"  appendTo="body" [style]="{'minWidth':'100%'}" ></p-dropdown>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div *ngIf="!IsReadOnly">
+                    <hr />
+                    <div style="display: flex; justify-content: space-between;">
+                        <div style="display: flex; align-items: center;">
+                            <input  type="button" class="ActionButton" (click)="Save()" value="Сохранить" [disabled]="onOperationProgress" tabindex="0"/>  
+                            <i *ngIf="onSaveProgress" class="pi pi-spin pi-spinner" style="font-size: 1.5rem;"></i>
+                        </div>  
+                        <div style="display: flex; align-items: center;">
+                            <i *ngIf="onDeleteProgress" class="pi pi-spin pi-spinner" style="font-size: 1.5rem;"></i>
+                            <input  type="button" class="delButton" (click)="Delete()" value="Удалить" [disabled]="onOperationProgress" tabindex="0" *ngIf="TypeOpen==EditTMKType.Edit"  /> 
+                        </div>                  
+                      
+                    </div>
+                   
+                </div>
+        </div>
+        <div *ngIf="TypeOpen!==EditTMKType.New">
+            <hr />
+            <TmkSmoData  [SPR]="SPR" [IsReadOnly]="userInfo.IsTMKSmo===false" [CurrentTMK]="CurrentTMK"></TmkSmoData>
+            <hr />
+        </div>
+     <div *ngIf="TypeOpen==EditTMKType.Read && (userInfo.IsTMKSmo || userInfo.IsTMKAdmin && IsTFOMS())">
+        <input  type="button" class="ActionButton" (click)="AddExpertize(ExpType.MEK)" value="Добавить акт МЭК"  tabindex="0"/>  
+        <input  type="button" class="ActionButton" (click)="AddExpertize(ExpType.MEE)" value="Добавить акт МЭЭ"  tabindex="0"/>  
+        <input  type="button" class="ActionButton" (click)="AddExpertize(ExpType.EKMP)" value="Добавить акт ЭКМП" tabindex="0"/>  
+     </div>
+
+
+     <hr />
+
+        <div style="margin-top: 100px;" *ngFor="let exp of CurrentTMK.Expertize"  >
+            <hr style="border-top: 2px solid black;" />
+            <div style="display: flex; justify-content: space-between;">
+                <div>
+                    <h1>Акт {{exp.S_TIP|S_TIP_NAME}} №{{exp.NUMACT}} от {{exp.DATEACT|date:'dd.MM.yyyy'}}</h1>
+                </div>
+                <div style="display: flex; justify-content: flex-start" *ngIf="userInfo.IsTMKSmo || userInfo.IsTMKAdmin && IsTFOMS()">
+                    <div class="tooltip">
+                        <input class="editButtonICO" type="button" (click)="EditExpertize(exp)" pTooltip="Редактировать" />                                            
+                    </div>
+                    <div class="tooltip">
+                        <input class="delButtonICO" type="button" (click)="DelExpertize(exp)" pTooltip="Удалить экспертизу" />                                            
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div *ngIf="exp.S_TIP == ExpType.MEE">
+                    <label class="BoldText" >Специалист: </label><span>{{exp.FIO}}</span>
+                </div>
+                <div *ngIf="exp.S_TIP == ExpType.EKMP">
+                    <label class="BoldText" >Врач ЭКМП: </label><span>{{exp.N_EXP|SPRTimeMark:SPR.EXPERTS:'NAME_NUM'}}</span>
+                </div>
+    
+    
+    
+                <table class="table_input" *ngIf="exp.S_TIP !==  ExpType.MEK">
+                    <tr>
+                        <td class="BoldText" width="70%">Наличие заключение медицинского работника, привлекаемого для проведения консультации и (или) участия в консилиуме врачей с применение телемедицинских технологий или протокола консилиума врачей</td>
+                        <td>{{exp.ISCOROLLARY|yesNo}}</td>
+                    </tr>
+                    <tr>
+                        <td class="BoldText">Наличие факта отражения рекомендаций в медицинской документации, в том числе в листе назначения</td>
+                        <td>{{exp.ISRECOMMENDMEDDOC|yesNo}}</td>
+                    </tr>                    
+                    <tr *ngIf="exp.S_TIP === ExpType.EKMP">
+                        <td class="BoldText">Наличие в медицинской документации медицинских показаний, не позволяющих применить рекомендацию(и)</td>
+                        <td>{{exp.ISNOTRECOMMEND|yesNo}}</td>
+                    </tr>
+    
+                    <tr *ngIf="exp.S_TIP === ExpType.EKMP">
+                        <td class="BoldText">Заключение эксперта качества медицинской помощи об обоснованности действий лечащего врача</td>
+                        <td>{{exp.ISOSN|S_OSN_NAME}}</td>
+                    </tr>
+                  
+                    <tr>
+                        <td class="BoldText">Цель консультаций/консилиумов с применением телемедицинских технологий</td>
+                        <td>{{exp.CELL|SPRTimeMark:SPR.NMIC_CELL:'CELL_NAME'}}</td>
+                    </tr>
+    
+                    <tr *ngIf="exp.S_TIP === ExpType.EKMP">
+                        <td class="BoldText">Оценка полноты выполнения медицинскими организациями рекомендаций медицинских работников НМИЦ по применению методов профилактики, диагностики, лечения и реабилитации, данных при проведении указанными центрами консультаций/консилиумов с применением телемедицинских технологий</td>
+                        <td>{{exp.FULL|SPRTimeMark:SPR.NMIC_FULL:'FULL_NAME'}}</td>
+                    </tr>
+    
+                   
+    
+                    <tr *ngIf="exp.S_TIP === ExpType.EKMP">
+                        <td class="BoldText">Констатировано неисполнение следующих рекомендаций:</td>
+                        <td>{{exp.NOTPERFORM}}</td>
+                    </tr>
+                </table>
+                <hr />
+                <div [ngSwitch]="exp.OSN.length === 0">
+                    <div *ngSwitchCase="true"><h3>Без дефектов</h3></div>
+                    <div *ngSwitchCase="false">
+                        <table class="table_report">
+                            <tr>
+                                <th>Дефект</th>
+                                <th>Комментарий</th>
+                                <th>Сумма</th>
+                                <th>Штраф</th>
+                            </tr>
+                            <tr *ngFor="let osn of exp.OSN">
+                                <td style="text-align: left;">{{osn.S_OSN|SPRTimeMark:(SPR.F014|ActualSPR:exp.DATEACT):'FullName'}}</td>
+                                <td style="text-align: left;">{{osn.S_COM}}</td>
+                                <td style="text-align: right;">{{osn.S_SUM| currency: 'RUB'}}</td>
+                                <td style="text-align: right;">{{osn.S_FINE| currency: 'RUB'}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <hr style="border-top: 2px solid black;" />
+        </div>     
+    </div>
+</p-dialog>
+
+<ExpertizeEdit  #ExpertizeEditWin [SPR]="SPR" (onChange)="refreshModel()"></ExpertizeEdit>
+
+

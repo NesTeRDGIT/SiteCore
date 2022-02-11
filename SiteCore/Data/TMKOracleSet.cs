@@ -97,7 +97,7 @@ namespace SiteCore.Data
 
     }
     [Table("TMKREESTR")]
-    public class TMKReestr: IValidatableObject
+    public class TMKReestr
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
@@ -105,17 +105,12 @@ namespace SiteCore.Data
         public bool NOVOR { get; set; }
         public bool ISNOTSMO { get; set; }
         private string enp;
-        [MaxLength(16, ErrorMessage = "ЕНП не может быть больше 16 символов")]
-        [RequiredIf(nameof(ISNOTSMO), new object[] { false }, ErrorMessage = "Поле \"ЕНП\" обязательно к заполнению")]
         public string ENP
         {
             get => ISNOTSMO ? "НЕТ" : enp;
             set => enp = value;
         }
-        [Required(ErrorMessage = "Поле \"№ истории\" обязательно к заполнению")]
-        [MaxLength(16)]
         public string NHISTORY { get; set; }
-        [Required(ErrorMessage = "Поле \"Вид медицинской документации\" обязательно к заполнению")]
         public int VID_NHISTORY { get; set; }
         [Required(ErrorMessage = "Поле \"Фамилия\" обязательно к заполнению")]
         [MaxLength(40)]
@@ -174,62 +169,6 @@ namespace SiteCore.Data
         public virtual NMIC_OPLATA N_OPLATA { get; set; }
         public virtual NMIC_VID_NHISTORY N_VID_NHISTORY { get; set; }
         public virtual ICollection<CONTACT_INFO> CONTACT_INFO { get; set; } = new List<CONTACT_INFO>();
-
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            yield return new ValidationResult("Дата начала лечения не может быть больше даты запроса на ТМК");
-            yield return new ValidationResult("Дата начала лечения не может быть больше даты запроса на ТМК");
-        
-            if (DATE_B > DATE_QUERY)
-                yield return new ValidationResult("Дата начала лечения не может быть больше даты запроса на ТМК");
-            if (DATE_QUERY > DATE_PROTOKOL)
-                yield return new ValidationResult("Дата запроса на ТМК не может быть больше даты протокола");
-            if (DATE_TMK > DATE_QUERY)
-                yield return new ValidationResult("Дата проведения очной консультации\\консилиума	не может быть больше даты запроса на ТМК");
-            if (!string.IsNullOrEmpty(ENP) && !ISNOTSMO)
-            {
-                var patternV1 = (@"^[0-9]{16}$|^[0-9]{9}$|^[a-zA-Z0-9А-Яа-я]+ [a-zA-Z0-9А-Яа-я]+$");
-
-                if (!Regex.IsMatch(ENP, patternV1))
-                {
-                    yield return new ValidationResult("ЕНП не соответствует ожидаемому формату");
-                }
-            }
-            var patternRUS = (@"^[А-Яа-яЕё\s-]+");
-            if (!Regex.IsMatch(FAM ?? "", patternRUS))
-            {
-                yield return new ValidationResult("Фамилия содержит не допустимые символы, допустимые: [символы русского алфавита;тире;пробел]");
-            }
-            if (!Regex.IsMatch(IM ?? "", patternRUS))
-            {
-                yield return new ValidationResult("Имя содержит не допустимые символы, допустимые: [символы русского алфавита;тире;пробел]");
-            }
-            if (!Regex.IsMatch(OT ?? "", patternRUS))
-            {
-                yield return new ValidationResult("Отчество содержит не допустимые символы, допустимые: [символы русского алфавита;тире;пробел]");
-            }
-
-            if (DR > DateTime.Now.Date || DR < new DateTime(1900, 1, 1))
-            {
-                yield return new ValidationResult("Дата рождения не может быть больше текущей даты или позже 1900 года");
-            }
-            if (DATE_B > DateTime.Now.Date || DATE_B < new DateTime(2018, 1, 1))
-            {
-                yield return new ValidationResult("Дата начала лечения не может быть больше текущей даты или позже 2018 года");
-            }
-            if (DATE_PROTOKOL > DateTime.Now.Date || DATE_PROTOKOL < new DateTime(2018, 1, 1))
-            {
-                yield return new ValidationResult("Дата протокола не может быть больше текущей даты или позже 2018 года");
-            }
-            if (DATE_QUERY > DateTime.Now.Date || DATE_QUERY < new DateTime(2018, 1, 1))
-            {
-                yield return new ValidationResult("Дата запроса на ТМК не может быть больше текущей даты или позже 2018 года");
-            }
-            if (DATE_TMK > DateTime.Now.Date || DATE_TMK < new DateTime(2018, 1, 1))
-            {
-                yield return new ValidationResult("Дата проведения очной консультации\\консилиума не может быть больше текущей даты или позже 2018 года");
-            }
-        }
     }
 
     public enum StatusTMKRow

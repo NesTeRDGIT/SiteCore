@@ -10,6 +10,13 @@ using SiteCore.Data;
 
 namespace SiteCore.Models
 {
+    public class SPRNewModel
+    {
+        public List<CODE_MO> CODE_MO { get; set; }
+        public List<SMO> CODE_SMO { get; set; }
+        public List<NMIC_VID_NHISTORY> NMIC_VID_NHISTORY { get; set; }
+        public List<NMIC_OPLATA> NMIC_OPLATA { get; set; }
+    }
 
     public class IndexModel
     {
@@ -47,7 +54,6 @@ namespace SiteCore.Models
 
         [Required(ErrorMessage = "Поле \"Вид медицинской документации\" обязательно к заполнению")]
         public int? VID_NHISTORY { get; set; }
-        public string VID_NHISTORY_NAM { get; set; }
         public DateTime DATE_INVITE { get; set; }
         public bool ISNOTSMO { get; set; }
         [MaxLength(16, ErrorMessage = "ЕНП не может быть больше 16 символов")]
@@ -79,17 +85,12 @@ namespace SiteCore.Models
         [RequiredIf(nameof(NOVOR), new object[] { true }, ErrorMessage = "Поле \"Дата рождения представителя\" обязательно к заполнению")]
         public DateTime? DR_P { get; set; }
         public string CODE_MO { get; set; }
-        public string NAM_MOK { get; set; }
         public StatusTMKRow STATUS { get; set; }
         public string STATUS_COM { get; set; }
         public string SMO { get; set; }
-        public string SMO_NAM { get; set; }
         public int OPLATA { get; set; }
-        public string OPLATA_NAM { get; set; }
         public string SMO_COM { get; set; }
-        public string PROFIL_NAM { get; set; }
-        public string NMIC_NAM { get; set; }
-        public string TMS_NAM { get; set; }
+        public List<ExpertizeModel> Expertize { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -144,6 +145,38 @@ namespace SiteCore.Models
                 yield return new ValidationResult("Дата проведения очной консультации\\консилиума не может быть больше текущей даты или позже 2018 года");
             }
         }
+
+        public void CopyTo(TMKReestr editItem)
+        {
+            editItem.DATE_B = this.DATE_B.Value;
+            editItem.DATE_PROTOKOL = this.DATE_PROTOKOL.Value;
+            editItem.DATE_QUERY = this.DATE_QUERY.Value;
+            editItem.DATE_TMK = this.DATE_TMK;
+            editItem.DR = this.DR.Value;
+            editItem.ENP = this.ENP?.ToUpper();
+            editItem.FAM = this.FAM?.ToUpper();
+            editItem.IM = this.IM?.ToUpper();
+            editItem.OT = this.OT?.ToUpper();
+            editItem.NHISTORY = this.NHISTORY?.ToUpper();
+            editItem.NMIC = this.NMIC.Value;
+            editItem.PROFIL = this.PROFIL.Value;
+            editItem.TMIS = this.TMIS.Value;
+          
+            editItem.NOVOR = this.NOVOR;
+            if (!editItem.NOVOR)
+            {
+                editItem.FAM_P = editItem.IM_P = editItem.OT_P = "";
+                editItem.DR_P = null;
+            }
+            else
+            {
+                editItem.FAM_P = this.FAM_P?.ToUpper();
+                editItem.IM_P = this.IM_P?.ToUpper();
+                editItem.OT_P = this.OT_P?.ToUpper();
+            }
+            editItem.VID_NHISTORY = this.VID_NHISTORY.Value;
+            editItem.ISNOTSMO = this.ISNOTSMO;
+        }
     }
     public class ExpertizeModel
     {
@@ -169,7 +202,9 @@ namespace SiteCore.Models
             {
                 if (x == exp.OSN.Count)
                 {
-                    exp.OSN.Add(osn);
+                    var newOsn = new EXPERTIZE_OSN();
+                    osn.CopyTo(newOsn);
+                    exp.OSN.Add(newOsn);
                 }
                 else
                 {
@@ -244,7 +279,7 @@ namespace SiteCore.Models
         /// </summary>
         ///
         [RequiredIf(nameof(S_TIP), new object[] { ExpertTip.EKMP }, ErrorMessage = "Поле \"Код врача эксперта\" обязательно к заполнению")]
-        public string N_EXP { get; set; }
+        public string N_EXP { get; set; }   
         public IEnumerable<string> Validate(DateTime DATE_PROTOKOL)
         {
             if (!(DATEACT >= DATE_PROTOKOL && DATEACT <= DateTime.Now) && S_TIP != ExpertTip.MEK)
@@ -253,7 +288,28 @@ namespace SiteCore.Models
             if (OSN.GroupBy(x => x.S_OSN).Count(x => x.Count() > 1) != 0)
                 yield return "Присутствуют не уникальные дефекты";
         }
-        public  List<EXPERTIZE_OSN> OSN { get; set; } = new();
+        public  List<EXPERTIZE_OSNModel> OSN { get; set; } = new();
+    }
+
+
+    public class EXPERTIZE_OSNModel
+    {
+        public void CopyTo(EXPERTIZE_OSN item)
+        {
+            item.S_OSN = this.S_OSN;
+            item.S_SUM = this.S_SUM;
+            item.S_COM = this.S_COM;
+            item.S_FINE = this.S_FINE;
+        }
+        [Required(ErrorMessage = "Поле \"Причина санкции\" обязательна к заполнению")]
+        public int? S_OSN { get; set; }
+        /// <summary>
+        /// Комментарий
+        /// </summary>
+        public string S_COM { get; set; }
+        [Required(ErrorMessage = "Поле \"Сумма санкции\" обязательно к заполнению")]
+        public decimal S_SUM { get; set; }
+        public decimal? S_FINE { get; set; }
     }
 
     public class OPLATAandVID_NHISTORYModel
@@ -633,31 +689,56 @@ namespace SiteCore.Models
 
     public class TMKListModel
     {
-        
         public string ENP { get; set; }
-        public string NAM_MOK { get; set; }
         public string CODE_MO { get; set; }
         public string FIO { get; set; }
-        public DateTime? DATE_B { get; set; }
-        public DateTime? DATE_QUERY { get; set; }
-        public DateTime? DATE_PROTOKOL { get; set; }
+        public DateTime DATE_B { get; set; }
+        public DateTime DATE_QUERY { get; set; }
+        public DateTime DATE_PROTOKOL { get; set; }
         public DateTime? DATE_TMK { get; set; }
         public string SMO { get; set; }
-        public string VID_NHISTORY { get; set; }
-        public string OPLATA { get; set; }
-        public string CONTACT_INFO { get; set; }
-        public string DATE_MEK { get; set; }
-        public string DEF_MEK { get; set; }
-        public string DATE_MEE { get; set; }
-        public string DEF_MEE { get; set; }
-        public string DATE_EKMP { get; set; }
-        public string DEF_EKMP { get; set; }
-        public string STATUS { get; set; }
+        public int VID_NHISTORY { get; set; }
+        public int OPLATA { get; set; }
+        public List<TMKListExpModel> MEK { get; set; }
+        public List<TMKListExpModel> MEE { get; set; }
+        public List<TMKListExpModel> EKMP { get; set; }
+        public StatusTMKRow STATUS { get; set; }
         public string STATUS_COM { get; set; }
         public bool isEXP { get; set; }
         public int TMK_ID { get; set; }
-        public string TMIS_NAME { get; set; }
-        public string NMIC_NAME { get; set; }
+        public int TMIS { get; set; }
+        public int NMIC { get; set; }
     }
 
+    public class TMKListExpModel
+    {
+        public DateTime DATEACT { get; set; }
+        public List<int> OSN { get; set; }
+    }
+
+
+
+    public class SPRContactModel
+    {
+        public int? ID_CONTACT_INFO { get; set; }
+        [MaxLength(40, ErrorMessage = "Фамилия не может быть больше 40 символов")]
+        public string FAM { get; set; }
+        [MaxLength(40, ErrorMessage = "Имя не может быть больше 40 символов")]
+        public string IM { get; set; }
+        [MaxLength(40, ErrorMessage = "Отчество не может быть больше 40 символов")]
+        public string OT { get; set; }
+        [MaxLength(40, ErrorMessage = "Телефон не может быть больше 40 символов")]
+        public string TEL { get; set; }
+        [Required(ErrorMessage = "Поле \"Код МО\" обязательно к заполнению")]
+        public string CODE_MO { get; set; }
+
+        public void CopyTo(CONTACT_INFO item)
+        {
+            item.CODE_MO = this.CODE_MO;
+            item.FAM = this.FAM;
+            item.IM = this.IM;
+            item.OT = this.OT;
+            item.TEL = this.TEL;
+        }
+    }
 }

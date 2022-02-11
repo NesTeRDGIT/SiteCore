@@ -1,0 +1,25 @@
+::ng-deep {
+
+    .bold-menuitem .p-menuitem-text {
+      font-weight: bold;
+    }
+    .red-menuitem .p-menuitem-icon {
+      font-weight: bold;
+   }
+
+    .red-menuitem .p-menuitem-text {
+       color:  rgb(252, 82, 82) !important;
+      
+    }
+    .red-menuitem .p-menuitem-icon {
+      color:  rgb(252, 82, 82) !important;
+   }
+   .inline
+   {
+      display: inline-block;
+   }
+
+   .absolute-left{
+      position: absolute; left: 0;
+   }
+}

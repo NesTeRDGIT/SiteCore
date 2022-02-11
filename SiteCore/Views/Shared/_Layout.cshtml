@@ -105,11 +105,11 @@
                                     <li><a asp-action="TMKReestr" asp-controller="TMKReestr">Реестр</a></li>
                                     @if (isTMKAdmin || isTMKSMO)
                                     {
-                                        <li><a asp-action="Report" asp-controller="TMKReestr">Отчет</a></li>
+                                        <li><a asp-action="TMKReestr" asp-controller="TMKReestr" asp-route-selectIndex="1">Отчет</a></li>
                                     }
                                     @if (isTMKUser || isTMKAdmin)
                                     {
-                                        <li><a asp-action="ContactInfo" asp-controller="TMKReestr">Справочник МО</a></li>
+                                        <li><a asp-action="TMKReestr" asp-controller="TMKReestr" asp-route-selectIndex="2">Справочник МО</a></li>
                                     }
                                 </ul>
                             </li>

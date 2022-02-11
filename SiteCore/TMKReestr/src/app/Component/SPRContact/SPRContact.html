@@ -1,0 +1,46 @@
+<div>
+    <div>
+        <a class="ActionButton" (click)="New()">Новый</a>
+    </div>
+    <div style="margin-top: 10px;">
+        <p-contextMenu #context [model]="contextMenuItems"></p-contextMenu>
+
+        <p-table [value]="model" [(contextMenuSelection)]="contextMenuSelect"
+            (onContextMenuSelect)="onContextMenuSelect($event, context)" [contextMenu]="context"
+            selectionMode="multiple" [metaKeySelection]="true" dataKey="ID_CONTACT_INFO" selectionMode="multiple"
+            [(selection)]="selectedTMKItems" styleClass="p-datatable-gridlines" [loading]="loading" [scrollable]="true"
+            scrollHeight="40vh" scrollDirection="both">
+            <ng-template pTemplate="colgroup">
+                <colgroup>
+                    <col style="width:150px">
+                    <col style="width:190px">
+                    <col style="width:200px">
+                    <col style="width:130px">
+                    <col style="width:130px">
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pResizableColumn>Медицинская организация</th>
+                    <th pResizableColumn>Фамилия</th>
+                    <th pResizableColumn>Имя</th>
+                    <th pResizableColumn>Отчество</th>
+                    <th pResizableColumn>Телефон</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+                <tr [pSelectableRow]="item" [pSelectableRowIndex]="rowIndex" [pSelectableRow]="item"
+                    [pSelectableRowIndex]="rowIndex" [pContextMenuRow]="item" >
+
+                    <td>{{item.CODE_MO|SPRTimeMark:SPR.CODE_MO:'NAM_MOK'}}</td>
+                    <td>{{item.FAM}}</td>
+                    <td>{{item.IM}}</td>
+                    <td>{{item.OT}}</td>
+                    <td>{{item.TEL}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<SPRContactEdit #SPRContactEditWin [userInfo]="userInfo" [SPR]="SPR" (onChange)="GetData()"></SPRContactEdit>

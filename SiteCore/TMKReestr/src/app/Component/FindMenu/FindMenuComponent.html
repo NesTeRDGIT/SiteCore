@@ -1,0 +1,89 @@
+<p-accordion (onOpen)="onTabOpen($event)">
+    <p-accordionTab header="Поиск..." >
+        <ContentLoad [isLoad]="onLoading">
+            <div style="font-family: 'Times New Roman', Times, serif;">
+                <div style="display: flex; justify-content: space-between;">
+                    <div>
+                        <label class="label-sup">Полис <input type="text" pInputText [(ngModel)]="Filter.ENP">  </label>
+                        <label class="label-sup">Фамилия <input type="text" pInputText [(ngModel)]="Filter.FAM"></label>
+                        <label class="label-sup">Имя <input type="text" pInputText [(ngModel)]="Filter.IM"></label>
+                        <label class="label-sup">Отчество <input type="text" pInputText [(ngModel)]="Filter.OT"></label>
+                        <label class="label-sup">Дата рождения <input type="date" pInputText  [ngModel]="Filter.DR| date:'yyyy-MM-dd'" (ngModelChange)="Filter.DR = ConvertToDate($event)"> </label>
+                    </div>
+                    <div>
+                        <input type="button" class="delButton" value="Очистить" (click)="ClearFilter()" />
+                    </div>
+                </div>
+                <hr />
+                <div>
+                    <table style="width: 100%; text-align: left;">
+                        <tr>
+                            <th style="width: 30%;">Дата начала лечения</th>
+                            <td>
+                                <label class="label-sup">от <input type="date" pInputText  [ngModel]="Filter.DATE_B_BEGIN| date:'yyyy-MM-dd'" (ngModelChange)="Filter.DATE_B_BEGIN = ConvertToDate($event)"></label> <label class="label-sup">до <input type="date" pInputText  [ngModel]="Filter.DATE_B_END| date:'yyyy-MM-dd'" (ngModelChange)="Filter.DATE_B_END = ConvertToDate($event)"></label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Дата оформления запроса на ТМК</th>
+                            <td>
+                                <label class="label-sup">от <input type="date" pInputText  [ngModel]="Filter.DATE_QUERY_BEGIN| date:'yyyy-MM-dd'" (ngModelChange)="Filter.DATE_QUERY_BEGIN = ConvertToDate($event)"></label> <label class="label-sup">до <input type="date" pInputText  [ngModel]="Filter.DATE_QUERY_END| date:'yyyy-MM-dd'" (ngModelChange)="Filter.DATE_QUERY_END = ConvertToDate($event)"></label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Дата получения протокола</th>
+                            <td>
+                                <label class="label-sup">от <input type="date" pInputText  [ngModel]="Filter.DATE_PROTOKOL_BEGIN| date:'yyyy-MM-dd'" (ngModelChange)="Filter.DATE_PROTOKOL_BEGIN = ConvertToDate($event)"></label> <label class="label-sup">до <input type="date" pInputText  [ngModel]="Filter.DATE_PROTOKOL_END| date:'yyyy-MM-dd'" (ngModelChange)="Filter.DATE_PROTOKOL_END = ConvertToDate($event)"></label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> Дата проведения очной консультации \ консилиума</th>
+                            <td>
+                                <label class="label-sup">от <input type="date" pInputText  [ngModel]="Filter.DATE_TMK_BEGIN| date:'yyyy-MM-dd'" (ngModelChange)="Filter.DATE_TMK_BEGIN = ConvertToDate($event)"></label> <label class="label-sup">до <input type="date" pInputText  [ngModel]="Filter.DATE_TMK_END| date:'yyyy-MM-dd'" (ngModelChange)="Filter.DATE_TMK_END = ConvertToDate($event)"></label>
+                            </td>
+                        </tr>
+        
+                    </table>
+                </div>
+                <hr />
+                <div>
+                    <table style="width: 100%; text-align: left;">
+                        <tr>
+                            <th style="width: 30%;">Медицинская организация</th>
+                            <td style="width: 70%;">
+                                <span class="p-fluid">
+                                    <p-autoComplete [(ngModel)]="CODE_MOSelect" [suggestions]="CODE_MOFiltered" (completeMethod)="searchMO($event)" [multiple]="true" field="FULL_NAME" [dropdown]="true"></p-autoComplete>                    
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Страховая компания</th>
+                            <td>
+                                <span class="p-fluid">
+                                    <p-autoComplete [(ngModel)]="SMOSelect" [suggestions]="SMOFiltered" (completeMethod)="searchSMO($event)" [multiple]="true" field="FULL_NAME" [dropdown]="true"></p-autoComplete>  
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Вид медицинской документации</th>
+                            <td>
+                                <span class="p-fluid">
+                                    <p-autoComplete [(ngModel)]="NMIC_VID_NHISTORYSelect" [suggestions]="NMIC_VID_NHISTORYFiltered" (completeMethod)="searchNMIC_VID_NHISTORY($event)" [multiple]="true" field="FULL_NAME" [dropdown]="true"></p-autoComplete>  
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Тип оплаты</th>
+                            <td>
+                                <span class="p-fluid">
+                                    <p-autoComplete [(ngModel)]="NMIC_OPLATASelect" [suggestions]="NMIC_OPLATAFiltered" (completeMethod)="searchNMIC_OPLATA($event)" [multiple]="true" field="FULL_NAME" [dropdown]="true"></p-autoComplete>  
+                                </span>                        
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <hr />
+                <input type="button" class="ActionButton" value="Найти" style="display: table; margin: 0 auto;" (click)="Find()" />
+            </div>
+        </ContentLoad>
+    </p-accordionTab>
+</p-accordion>

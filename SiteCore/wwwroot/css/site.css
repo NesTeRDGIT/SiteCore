@@ -27,6 +27,7 @@
     font-weight: 800;
     color: white;
     padding: 5px 16px;
+    margin: 4px 2px;
     text-decoration: none;
     cursor: pointer;
     font-size: 14px;
@@ -928,8 +929,16 @@ input[type=checkbox] {
     font-weight: bold !important;
 }
 
+.p-dropdown-label {
+    white-space: normal !important;
+}
 
-
+.p-dropdown-item {
+    white-space: normal !important;
+}
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+    background: #449d48 !important;
+}
 
 
 
@@ -987,4 +996,35 @@ input[type=checkbox] {
 .img-ridge {
     border: ridge;
     margin: 10px;
+}
+
+
+
+
+
+.ImgGreenIndicator {
+    background-image: url(../Image/GreenIndicator.png);
+    background-size: 32px;
+    width: 32px;
+    height: 32px;
+}
+
+.ImgYellowIndicator {
+    background-image: url(../Image/YelowIndicator.png);
+    background-size: 32px;
+    width: 32px;
+    height: 32px;
+}
+
+.ImgRedIndicator {
+    background-image: url(../Image/RedIndicator.png);
+    width: 32px;
+    height: 32px;
+}
+
+.ImgInExpertIcon {
+    background-image: url(../Image/InExpertIcon.png) ;
+    background-repeat:no-repeat;    
+    width: 32px;
+    height: 32px;
 }

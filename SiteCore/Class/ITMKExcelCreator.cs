@@ -45,8 +45,8 @@ namespace SiteCore.Class
                 index++;
                 rowIndex++;
 
-                xls.PrintCell(r, 1, index, styleright);
-                xls.PrintCell(r, 2, rep.STATUS, stylecenter);
+                /*xls.PrintCell(r, 1, index, styleright);
+                xls.PrintCell(r, 2, rep.STATUS.ToString(), stylecenter);
                 xls.PrintCell(r, 3, rep.ENP, stylecenter);
                 xls.PrintCell(r, 4, rep.CODE_MO, stylecenter);
                 xls.PrintCell(r, 5, rep.NAM_MOK, styleright);
@@ -65,7 +65,7 @@ namespace SiteCore.Class
                 xls.PrintCell(r, 18, rep.DEF_MEE, stylecenter);
                 xls.PrintCell(r, 19, rep.DATE_EKMP, stylecenter);
                 xls.PrintCell(r, 20, rep.DEF_EKMP, stylecenter);
-                xls.PrintCell(r, 21, rep.TMK_ID, stylecenter);
+                xls.PrintCell(r, 21, rep.TMK_ID, stylecenter);*/
 
             }
             xls.Save();

@@ -1,0 +1,39 @@
+<div>
+    <h4>Данные СМО</h4>
+    <table style="width: 100%">
+        <tr>
+            <th>Тип оплаты</th>
+            <th>Вид медицинской документации</th>
+            <th>Комментарий СМО</th>
+        </tr>
+        <tr *ngIf="IsReadOnly">
+            <td>
+                <input style="width:100%;" type="text" pInputText readonly [value]="CurrentTMK.OPLATA|SPRTimeMark:SPR.NMIC_OPLATA:'OPLATA'" />
+            </td>
+            <td>
+                <input style="width:100%;" type="text" pInputText readonly [value]="CurrentTMK.VID_NHISTORY|SPRTimeMark:SPR.NMIC_VID_NHISTORY:'VID_NHISTORY'" />
+            </td>
+            <td>
+                <input style="width:100%;" type="text" pInputText readonly [value]="CurrentTMK.SMO_COM" />
+            </td>
+        </tr>
+        <tr *ngIf="!IsReadOnly">
+            <td>
+                <p-dropdown [options]="SPR.NMIC_OPLATA.SPR.values()" [(ngModel)]="CurrentTMK.OPLATA" optionLabel="OPLATA" optionValue="ID_OPLATA"  appendTo="body" [style]="{'minWidth':'100%'}" ></p-dropdown>
+            </td>
+            <td>
+                <p-dropdown [options]="SPR.NMIC_VID_NHISTORY.SPR.values()" [(ngModel)]="CurrentTMK.VID_NHISTORY" optionLabel="VID_NHISTORY" optionValue="ID_VID_NHISTORY"  appendTo="body" [style]="{'minWidth':'100%'}" ></p-dropdown>
+            </td>
+            <td>
+                <input style="width:100%;" type="text" pInputText [value]="CurrentTMK.SMO_COM" />
+            </td>
+        </tr>
+    </table>
+    <div *ngIf="!IsReadOnly" style="position: relative;">
+        <div [class.OnSuccessDIV]="onSaveStatus" [class.OnFailureDIV]="!onSaveStatus" *ngIf="onSaveStatus!==null">{{onSaveComment}}</div>
+        <div style="display: flex; align-items: center;">
+            <input type="button" class="ActionButton" value="Сохранить данные СМО" [disabled]="onSaveProgress" (click)="Save()" />
+            <i *ngIf="onSaveProgress" class="pi pi-spin pi-spinner" style="font-size: 1.5rem;"></i>
+        </div>
+    </div>
+</div>

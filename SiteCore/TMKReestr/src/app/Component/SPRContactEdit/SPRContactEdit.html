@@ -1,0 +1,45 @@
+<p-dialog [style]="{width: '80vw', fontFamily:'Times New Roman'}" [modal]="true" [position]="'top'" [header]="'Редактор'" [(visible)]="Display" (onHide)="Close()">
+    <div>
+        <ul>
+            <li *ngFor="let err of ErrMessage" class="ErrorLi">{{err}}</li>
+        </ul>  
+
+        <table style="width: 100%;">
+            <tr *ngIf="userInfo.IsTMKAdmin">
+                <td class="BoldText">Медицинская организация</td>
+                <td>
+                    <p-dropdown  [options]="SPR.CODE_MO.SPR.values()" [(ngModel)]="model.CODE_MO" optionLabel="FULL_NAME" optionValue="MCOD" [filter]="true" filterBy="FULL_NAME" appendTo="body"  [style]="{'minWidth':'100%'}"></p-dropdown>
+                </td>
+            </tr>
+            <tr>
+                <td class="BoldText">Фамилия</td>
+                <td>
+                    <input type="text" pInputText   [(ngModel)]="model.FAM" style="width: 100%;">
+                </td>
+            </tr>
+            <tr>
+                <td class="BoldText">Имя</td>
+                <td>
+                    <input type="text" pInputText   [(ngModel)]="model.IM" style="width: 100%;">
+                </td>
+            </tr>
+            <tr>
+                <td class="BoldText">Отчество</td>
+                <td>
+                    <input type="text" pInputText   [(ngModel)]="model.OT" style="width: 100%;">
+                </td>
+            </tr>
+            <tr>
+                <td class="BoldText">Телефон</td>
+                <td>
+                    <input type="text" pInputText   [(ngModel)]="model.TEL" style="width: 100%;">
+                </td>
+            </tr>
+        </table>   
+        <div style="display: flex; align-items: center;">
+            <input type="button" value="Сохранить" class="ActionButton" (click)="Save()" />
+            <i *ngIf="onSaveProgress" class="pi pi-spin pi-spinner" style="font-size: 1.5rem;"></i>
+        </div>
+    </div>
+</p-dialog>
+

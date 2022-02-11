@@ -1,0 +1,4 @@
+﻿<div [ngSwitch]="CurrentTMKViewType">
+    <ReestrTMK *ngSwitchCase="TMKViewType.TMKReestr"  [userInfo]="userInfo"></ReestrTMK>
+    <SPRContact *ngSwitchCase="TMKViewType.SPRContact" [userInfo] = "userInfo"></SPRContact>
+</div>
