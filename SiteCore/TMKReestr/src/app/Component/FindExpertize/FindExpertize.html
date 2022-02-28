@@ -1,0 +1,28 @@
+<ContentLoad [isLoad]="onLoading" [Hide]="!ShowElement">
+    <div *ngIf="isResult!==null">
+        <hr/>
+        <div *ngIf="isResult">
+            <table class="table_report">
+                <tr>
+                    <th>Тип экспертизы</th>
+                    <th>Номер акта</th>
+                    <th>Дата акта</th>
+                    <th>Дефекты</th>
+                    <th></th>
+                </tr>
+                <tr *ngFor="let exp of Expertizes" >
+                    <td>{{exp.S_TIP|S_TIP_NAME}}</td>
+                    <td>{{exp.N_ACT}}</td>
+                    <td>{{exp.D_ACT|date:'dd.MM.yyyy'}}</td>
+                    <td>{{exp.OSN.length==0? 'Без дефектов' : 'С дефектами'}}</td>
+                    <td>
+                        <input *ngIf="exp.S_TIP!=null" type="button" class="ActionButton" value="Добавить" (click)="RaiseAddExpertize(exp)"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div *ngIf="!isResult">
+            Поиск не дал результатов
+        </div>
+    </div>
+    </ContentLoad>

@@ -6,7 +6,9 @@ import { SPRNotUniTimeMark, INotUniSPR } from "./SPRNotUniTimeMark";
 export class SPRModel {
     CODE_MO_Reestr: SPRTimeMark<CODE_MO> = new SPRTimeMark(15, "MCOD");
     CODE_MO: SPRTimeMark<CODE_MO> = new SPRTimeMark(15, "MCOD");
+    CODE_SMO_Reestr: SPRTimeMark<SMO> = new SPRTimeMark(15, "SMOCOD");
     CODE_SMO: SPRTimeMark<SMO> = new SPRTimeMark(15, "SMOCOD");
+    
     NMIC_VID_NHISTORY: SPRTimeMark<NMIC_VID_NHISTORY> = new SPRTimeMark(15, "ID_VID_NHISTORY");
     NMIC_OPLATA: SPRTimeMark<NMIC_OPLATA> = new SPRTimeMark(15, "ID_OPLATA");
     TMIS: SPRTimeMark<TMIS> = new SPRTimeMark(15, "TMIS_ID");
@@ -16,10 +18,7 @@ export class SPRModel {
     NMIC_CELL: SPRTimeMark<NMIC_CELL> = new SPRTimeMark(15, "CELL");
     NMIC_FULL: SPRTimeMark<NMIC_FULL> = new SPRTimeMark(15, "FULL");
     EXPERTS: SPRTimeMark<EXPERTS> = new SPRTimeMark(15, "N_EXPERT");
-    
-    
-
-
+    CONTACT_SPR: SPRTimeMark<CONTACT_SPRModel> = new SPRTimeMark(15, "CODE_MO");
 
     constructor(public repo: IRepository) {
 
@@ -28,7 +27,8 @@ export class SPRModel {
 
     refreshVariableSPR = async (force: boolean = false) => {
         await this.refreshCODE_MO_ReestrAsync(force);
-        await this.refreshCODE_SMOAsync(force);
+        await this.refreshCODE_SMO_ReestrAsync(force);
+
     }
 
     refreshStaticSPR = async (force: boolean = false) => {
@@ -42,6 +42,24 @@ export class SPRModel {
         await this.refreshNMIC_CELLAsync(force);
         await this.refreshEXPERTSAsync(force);
         await this.refreshNMIC_FULLAsync(force);
+        await this.refreshCONTACT_SPRAsync(force);
+        await this.refreshCODE_SMOAsync(force);
+    }
+
+
+    refreshCODE_SMOAsync = async (force: boolean = false) => {
+        if (this.CODE_SMO.isNeedUpdate || force) {
+            let spr = await this.repo.GetCODE_SMOAsync();
+            this.CODE_SMO.UpdateSPR(spr);
+        }
+    }
+
+
+    refreshCONTACT_SPRAsync = async (force: boolean = false) => {
+        if (this.CONTACT_SPR.isNeedUpdate || force) {
+            let spr = await this.repo.GetCONTACT_SPRAsync();
+            this.CONTACT_SPR.UpdateSPR(spr);
+        }
     }
 
     refreshCODE_MO_ReestrAsync = async (force: boolean = false) => {
@@ -58,12 +76,12 @@ export class SPRModel {
         }
     }
 
-    refreshCODE_SMOAsync = async (force: boolean = false) => {
-        if (this.CODE_SMO.isNeedUpdate || force) {
-            let spr = await this.repo.GetCODE_SMOAsync();
+    refreshCODE_SMO_ReestrAsync = async (force: boolean = false) => {
+        if (this.CODE_SMO_Reestr.isNeedUpdate || force) {
+            let spr = await this.repo.GetCODE_SMO_ReestrAsync();
             let empty = new SMO(null);
-            empty.SMOCOD = "",empty.NAM_SMOK = "Нет данных";
-            this.CODE_SMO.UpdateSPR(spr,empty);
+            empty.SMOCOD = "NULL",empty.NAM_SMOK = "Нет данных";
+            this.CODE_SMO_Reestr.UpdateSPR(spr,empty);
         }
     }
 
@@ -176,7 +194,7 @@ export class SMO {
     OGRN: string = "";
     TF_OKATO: Date = null;
     get FULL_NAME(): string {
-        return `${this.NAM_SMOK}${this.SMOCOD!="" && this.SMOCOD !=null? `(${this.SMOCOD})`:''}`;
+        return `${this.NAM_SMOK}${this.SMOCOD!="NULL" && this.SMOCOD !=null? `(${this.SMOCOD})`:''}`;
     }
     constructor(obj: any) {
         if (obj != null) {
@@ -315,7 +333,7 @@ export class F014 implements INotUniSPR {
     KOD: number = null;
     OSN: string = null;
     KOMMENT: string = null;
-    ;
+   
     get FullName(): string {
         return `${this.OSN}${this.KOMMENT != null ? `-${this.KOMMENT}` : ''}`;
     }
@@ -328,6 +346,23 @@ export class F014 implements INotUniSPR {
             this.DATE_B = new Date(obj.DATEBEG);
             if (obj.DATEEND)
                 this.DATE_E = new Date(obj.DATEEND);
+        }
+    }
+}
+
+
+export class CONTACT_SPRModel  {
+
+    CODE_MO: string = null;
+    TelAndFio: string[] = [];
+    get AllContacts(): string {
+
+        return this.TelAndFio.join(';\r\n');
+    }
+    constructor(obj: any) {
+        if (obj != null) {
+            this.CODE_MO = obj.CODE_MO;
+            this.TelAndFio = obj.TelAndFio;
         }
     }
 }

@@ -27,17 +27,7 @@ namespace SiteCore.Controllers
         private ITMKExcelCreator tmkExcelCreator { get; }
         private UserInfoHelper userInfoHelper;
         private UserInfo _userInfo;
-        private UserInfo userInfo
-        {
-            get
-            {
-                if (_userInfo == null)
-                {
-                    _userInfo = userInfoHelper.GetInfo(User.Identity.Name);
-                }
-                return _userInfo;
-            }
-        }
+        private UserInfo userInfo => _userInfo ?? (_userInfo = userInfoHelper.GetInfo(User.Identity.Name));
 
         public TMKReestrController(ILogger logger, TMKOracleSet dbo, ITMKExcelCreator tmkExcelCreator, UserInfoHelper userInfoHelper)
         {
@@ -60,8 +50,8 @@ namespace SiteCore.Controllers
         {
             try
             {
-                var NMIC_OPLATA = await dbo.OPLATA.ToListAsync();
-                return CustomJsonResult.Create(NMIC_OPLATA);
+                var nmicOplata = await dbo.OPLATA.ToListAsync();
+                return CustomJsonResult.Create(nmicOplata);
             }
             catch (Exception ex)
             {
@@ -75,8 +65,8 @@ namespace SiteCore.Controllers
         {
             try
             {
-                var NMIC_VID_NHISTORY = dbo.VID_NHISTORY.OrderBy(x => x.ORD).ToList();
-                return CustomJsonResult.Create(NMIC_VID_NHISTORY);
+                var nmicVidNhistory = dbo.VID_NHISTORY.OrderBy(x => x.ORD).ToList();
+                return CustomJsonResult.Create(nmicVidNhistory);
             }
             catch (Exception ex)
             {
@@ -85,14 +75,33 @@ namespace SiteCore.Controllers
             }
         }
 
+
         [HttpGet]
         public async Task<CustomJsonResult> GetCODE_SMO()
         {
             try
             {
-                var CODE_SMO = dbo.TMKReestr.Select(x => x.SMO_NAME).Distinct().Where(x => x != null).ToList();
-                CODE_SMO.Insert(0,  new SMO { NAM_SMOK = "ТФОМС ЗК", SMOCOD = "75" } );
-                return CustomJsonResult.Create(CODE_SMO);
+                var codeSmo = await dbo.F002.Where(x=>x.SMOCOD.StartsWith("75")).ToListAsync();
+                codeSmo.Insert(0, new SMO { NAM_SMOK = "ТФОМС ЗК", SMOCOD = "75" });
+                return CustomJsonResult.Create(codeSmo);
+            }
+            catch (Exception ex)
+            {
+                logger?.AddLog($"Ошибка в CODE_SMO:{ex.Message}:{ex.StackTrace}", LogType.Error);
+                return await CreateInternalError(false);
+            }
+        }
+
+
+        [HttpGet]
+        public async Task<CustomJsonResult> GetCODE_SMO_Reestr()
+        {
+            try
+            {
+                var codeSmo = await dbo.TMKReestr.Select(x => x.SMO_NAME).Distinct().Where(x => x != null).ToListAsync();
+               
+                codeSmo.Insert(0,  new SMO { NAM_SMOK = "ТФОМС ЗК", SMOCOD = "75" } );
+                return CustomJsonResult.Create(codeSmo);
             }
             catch (Exception ex)
             {
@@ -107,8 +116,8 @@ namespace SiteCore.Controllers
         {
             try
             {
-                var CODE_MO = dbo.TMKReestr.Select(x => x.CODE_MO_NAME).Distinct().ToList();
-                return CustomJsonResult.Create(CODE_MO);
+                var codeMo = dbo.TMKReestr.Select(x => x.CODE_MO_NAME).Distinct().ToList();
+                return CustomJsonResult.Create(codeMo);
             }
             catch (Exception ex)
             {
@@ -118,17 +127,47 @@ namespace SiteCore.Controllers
         }
 
 
+        
+
+
         [HttpGet]
         public async Task<CustomJsonResult> GetCODE_MO()
         {
             try
             {
-                var CODE_MO = await dbo.CODE_MO.Where(x=>x.MCOD.StartsWith("75")).Distinct().ToListAsync();
-                return CustomJsonResult.Create(CODE_MO);
+                var codeMo = await dbo.CODE_MO.Where(x=>x.MCOD.StartsWith("75")).Distinct().ToListAsync();
+                return CustomJsonResult.Create(codeMo);
             }
             catch (Exception ex)
             {
                 logger?.AddLog($"Ошибка в GetNMIC_OPLATA:{ex.Message}:{ex.StackTrace}", LogType.Error);
+                return await CreateInternalError(false);
+            }
+        }
+
+      
+
+        [HttpGet]
+        public async Task<CustomJsonResult> GetCONTACT_SPR()
+        {
+            try
+            {
+                var contact =await dbo.CONTACT_INFO.ToListAsync();
+                var dic = new Dictionary<string,List<string>>();
+                foreach(var item in contact)
+                {
+                    if(!dic.ContainsKey(item.CODE_MO))
+                    {
+                        dic.Add(item.CODE_MO, new List<string>());
+                    }
+                    dic[item.CODE_MO].Add(item.TelAndFio);
+                }
+                var model = dic.Select(x => new CONTACT_SPRModel { TelAndFio = x.Value, CODE_MO = x.Key }).ToArray();
+                return CustomJsonResult.Create(model);
+            }
+            catch (Exception ex)
+            {
+                logger?.AddLog($"Ошибка в GetCONTACT_SPR:{ex.Message}:{ex.StackTrace}", LogType.Error);
                 return await CreateInternalError(false);
             }
         }
@@ -138,8 +177,8 @@ namespace SiteCore.Controllers
         {
             try
             {
-                var NMIC = await dbo.NMIC.ToListAsync();
-                return CustomJsonResult.Create(NMIC);
+                var nmic = await dbo.NMIC.ToListAsync();
+                return CustomJsonResult.Create(nmic);
             }
             catch (Exception ex)
             {
@@ -154,8 +193,8 @@ namespace SiteCore.Controllers
         {
             try
             {
-                var TMIS = await dbo.TMIS.ToListAsync();
-                return CustomJsonResult.Create(TMIS);
+                var tmis = await dbo.TMIS.ToListAsync();
+                return CustomJsonResult.Create(tmis);
             }
             catch (Exception ex)
             {
@@ -169,8 +208,8 @@ namespace SiteCore.Controllers
         {
             try
             {
-                var V002 = await dbo.V002.ToListAsync();
-                return CustomJsonResult.Create(V002);
+                var v002 = await dbo.V002.ToListAsync();
+                return CustomJsonResult.Create(v002);
             }
             catch (Exception ex)
             {
@@ -246,39 +285,9 @@ namespace SiteCore.Controllers
 
 
 
-        [HttpGet]
-        public async Task<CustomJsonResult> GetSPRNew()
-        {
-            try
-            {
-                var model = new SPRNewModel
-                {
-                    NMIC_OPLATA = await dbo.OPLATA.ToListAsync(),
-                    NMIC_VID_NHISTORY = await dbo.VID_NHISTORY.OrderBy(x => x.ORD).ToListAsync(),
-                    CODE_MO = await dbo.TMKReestr.Select(x => x.CODE_MO_NAME).Distinct().ToListAsync(),
-                    CODE_SMO = await dbo.TMKReestr.Select(x => x.SMO_NAME).Distinct().Where(x => x != null).ToListAsync()
-                };
-                model.CODE_SMO.InsertRange(0, new List<SMO> { new() { NAM_SMOK = "Без СМО", SMOCOD = "null" }, new() { NAM_SMOK = "ТФОМС ЗК", SMOCOD = "75" } });
-                return CustomJsonResult.Create(model);
-            }
-            catch (Exception ex)
-            {
-                logger?.AddLog($"Ошибка в GetSPRNew:{ex.Message}:{ex.StackTrace}", LogType.Error);
-                return await CreateInternalError(false);
-            }
-        }
+     
 
-        private string FindF014(IEnumerable<F014> F014, DateTime? DATEACT, int? S_OSN)
-        {
-            var dateB = DATEACT ?? DateTime.Now.Date;
-            var v2 = F014.FirstOrDefault(x => x.KOD == S_OSN && dateB >= x.DATEBEG && dateB <= (x.DATEEND ?? DateTime.Now));
-            return v2 != null ? v2.FullName : $"Нет значения из справочника F014, код = {S_OSN}";
-        }
-        private IQueryable<TMKReestr> GetNodesPage(IQueryable<TMKReestr> Nodes, int Page, int CountOnPage)
-        {
-            return Nodes.Skip((Page - 1) * CountOnPage).Take(CountOnPage);
-        }
-        private IQueryable<TMKReestr> GetNodesPageNew(IQueryable<TMKReestr> Nodes, int first, int rows)
+        private IQueryable<TMKReestr> GetNodesPage(IQueryable<TMKReestr> Nodes, int first, int rows)
         {
             return Nodes.Skip(first).Take(rows);
         }
@@ -326,36 +335,15 @@ namespace SiteCore.Controllers
                 });
         }
         [HttpGet]
-        public async Task<CustomJsonResult> GetTMKListNew(int first, int rows, TMKFillter filter = null)
+        public async Task<CustomJsonResult> GetTMKList(int first, int rows, TMKFillter filter = null)
         {
             try
             {
                 var Nodes = GetNodes(filter);
-                var listq = GetNodesPageNew(GetNodes(filter), first, rows);
+                var listq = GetNodesPage(GetNodes(filter), first, rows);
                 var Count = Nodes.Count();
                 var list = await GetTMKListModel(listq);
                 return CustomJsonResult.Create(new { Count, Items = list });
-            }
-            catch (Exception ex)
-            {
-                logger?.AddLog($"Ошибка в GetTMKList:{ex.Message}:{ex.StackTrace}", LogType.Error);
-                return await CreateInternalError(false);
-            }
-
-        }
-
-
-
-        [HttpGet]
-        public async Task<CustomJsonResult> GetTMKList(int Page, int CountOnPage, TMKFillter filter = null)
-        {
-            try
-            {
-                var Nodes = GetNodes(filter);
-                var listq = GetNodesPage(GetNodes(filter), Page, CountOnPage);
-                var count = Nodes.Count();
-                var list = await GetTMKListModel(listq);
-                return CustomJsonResult.Create(new { count, items = list });
             }
             catch (Exception ex)
             {
@@ -426,7 +414,8 @@ namespace SiteCore.Controllers
 
                 if (filter.SMO != null)
                 {
-                    nodes = nodes.Where(x => filter.SMO.Contains(x.SMO ?? ""));
+                    
+                    nodes = nodes.Where(x => filter.SMO.Contains(x.SMO ?? "NULL"));
                 }
 
 
@@ -446,14 +435,48 @@ namespace SiteCore.Controllers
         }
 
 
-        public async Task<IActionResult> GetTMKReestrFile(int Page, int CountOnPage, TMKFillter filter = null)
+        public async Task<CustomJsonResult> GetTMKReestrFile(int first, int rows, TMKFillter filter = null)
         {
-            var nodes = GetNodesPage(GetNodes(filter), Page, CountOnPage);
-            var items = await GetTMKListModel(nodes);
-            var stream =  tmkExcelCreator.GetTMKReestrXLSX(items);
-            var file = File(stream, System.Net.Mime.MediaTypeNames.Application.Octet, $"Реестр ТМК от {DateTime.Now:dd.MM.yyyy}.xlsx");
-            return file;
+
+            try
+            {
+                var nodes = GetNodesPage(GetNodes(filter), first, rows);
+                var items = await GetTMKListModel(nodes);
+                var CODE_MO = await dbo.CODE_MO.Where(x => x.MCOD.StartsWith("75")).Distinct().ToListAsync();
+                var NMIC = await dbo.NMIC.ToListAsync();
+                var TMIS = await dbo.TMIS.ToListAsync();
+                var F014 = await dbo.F014.ToListAsync();
+
+                var SPRCode_MO = CODE_MO.ToDictionary(x => x.MCOD);
+                var SPRNMIC = NMIC.ToDictionary(x => x.NMIC_ID);
+                var SPRTMIS = TMIS.ToDictionary(x => x.TMIS_ID);
+                var dicF014 = new Dictionary<int, List<F014>>();
+                foreach (var item in F014)
+                {
+                    if (dicF014.ContainsKey(item.KOD))
+                    {
+                        dicF014[item.KOD].Add(item);
+                    }
+                    else
+                    {
+                        dicF014.Add(item.KOD, new List<F014> { item });
+                    }
+                }
+
+
+
+                var stream = tmkExcelCreator.GetTMKReestrXLSX(items, SPRCode_MO, SPRTMIS, SPRNMIC, dicF014);
+                var file = File(stream, System.Net.Mime.MediaTypeNames.Application.Octet, $"Реестр ТМК от {DateTime.Now:dd.MM.yyyy}.xlsx");
+                return CustomJsonResult.Create(file);
+            }
+            catch (Exception ex)
+            {
+                logger?.AddLog($"Ошибка в GetTMKReestrFile:{ex.Message}:{ex.StackTrace}", LogType.Error);
+                return await CreateInternalError(false);
+            }
         }
+
+        
    
 
         private void CheckRightTMKReestr(string smo, string code_mo, StatusTMKRow status)
@@ -480,26 +503,7 @@ namespace SiteCore.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult View(int TMK_ID)
-        {
-            ViewModelTMK model = null;
-            try
-            {
-                model = new ViewModelTMK
-                {
-                    OPLATA = dbo.OPLATA.ToList(),
-                    VID_NHISTORY = dbo.VID_NHISTORY.OrderBy(x => x.ORD).ToList()
-                };
-                return PartialView("_View", model);
-            }
-            catch (Exception ex)
-            {
-                logger?.AddLog($"Ошибка в View:{ex.Message}:{ex.StackTrace}", LogType.Error);
-                ModelState.AddModelError("", "Внутренняя ошибка сервиса");
-                return PartialView("_View", model);
-            }
-        }
+   
         /// <summary>
         /// Удалить позицию в реестре
         /// </summary>
@@ -564,7 +568,7 @@ namespace SiteCore.Controllers
         ///
         [Authorize(Roles = "TMKAdmin")]
         [HttpPost]
-        public async Task<CustomJsonResult> ChangeTmkReestrStatus([FromBody]int[] TMK_ID)
+        public async Task<CustomJsonResult> ChangeTmkReestrStatus(int[] TMK_ID)
         {
             try
             {
@@ -697,20 +701,7 @@ namespace SiteCore.Controllers
 
         }
 
-        /// <summary>
-        /// Редактировать реестр или создать новый GET
-        /// </summary>
-        /// <param name="TMK_ID"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Authorize(Roles = "TMKUser")]
-        public async Task<IActionResult> EditTmkReestr(int? TMK_ID = null)
-        {
-            DateTime? dt = null;
-            if (TMK_ID != null)
-                dt = (await dbo.TMKReestr.FirstOrDefaultAsync(x => x.TMK_ID == TMK_ID.Value)).DATE_B;
-            return PartialView(GetEditTmkReestrModel(dt));
-        }
+     
 
         /// <summary>
         /// Редактировать реестр или создать новый POST
@@ -789,125 +780,7 @@ namespace SiteCore.Controllers
                 return await CreateInternalError(false);
             }
         }
-        [Authorize(Roles = "TMKAdmin, TMKSMO")]
-        [HttpGet]
-        public async Task<IActionResult> EditExpertize()
-        {
-            var model = new AddMEE_EKMPModel();
-            try
-            {
-                model.NMIC_CELL =await dbo.NMIC_CELL.ToListAsync();
-                model.NMIC_FULL = await dbo.NMIC_FULL.ToListAsync();
-                model.EXPERTS = await dbo.EXPERTS.OrderBy(x => x.N_EXPERT).ToListAsync();
-                model.F014 = await dbo.F014.OrderBy(x => x.OSN).ToListAsync();
-                return PartialView(model);
-            }
-            catch (Exception ex)
-            {
-                logger?.AddLog($"Ошибка в {nameof(EditExpertize)}:{ex.Message}:{ex.StackTrace}", LogType.Error);
-                ModelState.AddModelError("", "Внутренняя ошибка сервиса");
-                return PartialView(model);
-            }
-        }
-        [HttpGet]
-        public async Task<CustomJsonResult> GetSPR()
-        {
-            try
-            {
-                var F014 = await dbo.F014.OrderBy(x => x.OSN).ToListAsync();
-                return CustomJsonResult.Create(new { F014 });
-            }
-            catch (Exception ex)
-            {
-                logger?.AddLog($"Ошибка в {nameof(GetSPR)}: {ex.Message}", LogType.Error);
-                return await CreateInternalError(false);
-            }
-        }
-
-        private async Task<CustomJsonResult> GetExpertizeJSON(int? TMK_ID, int? EXPERTIZE_ID)
-        {
-            var list = new List<object>();
-            var exps = new List<TMKReestRExpertize>();
-
-            if (EXPERTIZE_ID.HasValue)
-            {
-                var exp =await dbo.Expertizes.FirstOrDefaultAsync(x=>x.EXPERTIZE_ID == EXPERTIZE_ID);
-                if (exp != null)
-                    exps.Add(exp);
-                else
-                {
-                    throw new ModelException("",$"Не удалось найти экспертизу EXPERTIZE_ID={EXPERTIZE_ID}");
-                }
-            }
-            
-            if (TMK_ID.HasValue)
-            {
-                exps = await dbo.Expertizes.Where(x => x.TMK_ID == TMK_ID).OrderByDescending(x => x.EXPERTIZE_ID).ToListAsync();
-            }
-
-            var query = from  e in dbo.Expertizes
-                join osn in dbo.OSN on e.EXPERTIZE_ID equals osn.EXPERTIZE_ID
-                join f14 in dbo.F014 on osn.S_OSN equals f14.KOD
-                where (e.TMK_ID == TMK_ID || !TMK_ID.HasValue) && (e.EXPERTIZE_ID == EXPERTIZE_ID || !EXPERTIZE_ID.HasValue) && 
-                    (e.DATEACT) >= f14.DATEBEG && (e.DATEACT) <= (f14.DATEEND ?? DateTime.Now)
-                      select new
-                      {
-                          osn.EXPERTIZE_ID,
-                          osn.S_COM,
-                          osn.S_OSN,
-                          osn.S_FINE,
-                          osn.S_SUM,
-                          S_OSN_NAME = f14.FullName ?? $"Нет значения из справочника F014, код = {osn.S_OSN}"
-                      };
-
-            var OSN = await query.ToListAsync();
-
-            foreach (var exp in exps)
-            {
-                list.Add(
-                     new
-                     {
-                         exp.NUMACT,
-                         exp.DATEACT,
-                         exp.FIO,
-                         exp.FULL,
-                         exp.ISCOROLLARY,
-                         exp.ISNOTRECOMMEND,
-                         exp.CELL,
-                         exp.ISOSN,
-                         exp.CELL_NAME?.CELL_NAME,
-                         exp.FULL_NAME?.FULL_NAME,
-                         exp.ISRECOMMENDMEDDOC,
-                         exp.NOTPERFORM,
-                         exp.N_EXP,
-                         exp.S_TIP,
-                         exp.EXPERTIZE_ID,
-                         exp.TMK_ID,
-                         OSN = OSN.Where(x=>x.EXPERTIZE_ID == exp.EXPERTIZE_ID)
-                     }
-                     );
-            }
-            return CustomJsonResult.Create(list);
-        }
-
-        [HttpGet]
-        public async Task<CustomJsonResult> GetExpertize(int? TMK_ID, int? EXPERTIZE_ID)
-        {
-            try
-            {
-                return await GetExpertizeJSON(TMK_ID, EXPERTIZE_ID);
-            }
-            catch (ModelException ex)
-            {
-                return CustomJsonResult.Create(ex.Message, false);
-            }
-            catch (Exception ex)
-            {
-                logger?.AddLog($"Ошибка в {nameof(EditExpertize)}:{ex.Message}:{ex.StackTrace}", LogType.Error);
-                return await CreateInternalError(false);
-            }
-           
-        }
+      
         [Authorize(Roles = "TMKAdmin, TMKSMO")]
         [HttpPost]
         public async Task<CustomJsonResult> EditExpertize(ExpertizeModel item)
@@ -1033,17 +906,46 @@ namespace SiteCore.Controllers
         }
 
 
-
-        #region Отчет
-        [Authorize(Roles = "TMKAdmin, TMKSMO")]
+        [Authorize(Roles = "TMKAdmin, TMKUser")]
         [HttpGet]
-        public ActionResult Report()
+        public async Task<CustomJsonResult> FindPacient(string ENP)
         {
-            return View(new TMKReportModel { NMIC_VID_NHISTORY = dbo.VID_NHISTORY.OrderBy(x => x.ORD).ToList() });
+            try
+            {
+                var result = await dbo.FindPacientAsync(ENP);
+                return CustomJsonResult.Create(result);
+            }
+            catch (Exception ex)
+            {
+                logger?.AddLog($"Ошибка в {nameof(FindPacient)}:{ex.Message}:{ex.StackTrace}", LogType.Error);
+                return await CreateInternalError(false);
+            }
         }
+
+
         [Authorize(Roles = "TMKAdmin, TMKSMO")]
         [HttpGet]
-        public IActionResult GetReport(DateTime Date1, DateTime Date2, bool IsSMO, bool isMO, bool isNMIC, int[] VID_NHISTORY)
+        public async Task<CustomJsonResult> FindExpertize(int TMK_ID)
+        {
+            try
+            {
+                var result = await dbo.FindExpertizeAsync(TMK_ID);
+                return CustomJsonResult.Create(result);
+            }
+            catch (Exception ex)
+            {
+                logger?.AddLog($"Ошибка в {nameof(FindExpertize)}:{ex.Message}:{ex.StackTrace}", LogType.Error);
+                return await CreateInternalError(false);
+            }
+        }
+
+
+
+
+        #region Отчет       
+        [Authorize(Roles = "TMKAdmin, TMKSMO")]
+        [HttpGet]
+        public async Task<CustomJsonResult> GetReport(ReportParamModel param)
         {
             var model = new TMKReportTableModel();
             try
@@ -1058,22 +960,21 @@ namespace SiteCore.Controllers
                 {
                     smo = "%";
                 }
-                model.Report.AddRange(dbo.GetReport(Date1, Date2, isMO, IsSMO, isNMIC, smo, VID_NHISTORY));
-                model.Report2.AddRange(dbo.GetReport2(Date1, Date2, isMO, IsSMO, isNMIC, smo, VID_NHISTORY));
+                model.Report.AddRange(await dbo.GetReportAsync(param.Date1, param.Date2, param.isMO, param.IsSMO, param.isNMIC, smo, param.VID_NHISTORY));
+                model.Report2.AddRange(await dbo.GetReport2Async(param.Date1, param.Date2, param.isMO, param.IsSMO, param.isNMIC, smo, param.VID_NHISTORY));
                 HttpContext.Session.Set("GetReportResult", model);
-                HttpContext.Session.Set("Date1TMK", Date1);
-                HttpContext.Session.Set("Date2TMK", Date2);
-                return PartialView("_ReportTable", model);
+                HttpContext.Session.Set("Date1TMK", param.Date1);
+                HttpContext.Session.Set("Date2TMK", param.Date2);
+                return CustomJsonResult.Create(model);
             }
             catch (Exception ex)
             {
                 logger?.AddLog($"Ошибка в {nameof(GetReport)}:{ex.Message}:{ex.StackTrace}", LogType.Error);
-                ModelState.AddModelError("", "Внутренняя ошибка сервиса");
-                return PartialView("_ReportTable", model);
+                return await CreateInternalError(false);
             }
         }
         [HttpGet]
-        public IActionResult GetReportXLSXFile()
+        public async Task<CustomJsonResult> GetReportXLSXFile()
         {
             try
             {
@@ -1081,12 +982,12 @@ namespace SiteCore.Controllers
                 var Date1TMK = HttpContext.Session.Get<DateTime>("Date1TMK");
                 var Date2TMK = HttpContext.Session.Get<DateTime>("Date2TMK");
                 var file = File(tmkExcelCreator.GetReportXLS(Items.Report, Items.Report2), System.Net.Mime.MediaTypeNames.Application.Octet, $"Отчет НМИЦ c {Date1TMK.Date:dd.MM.yyyy} по {Date2TMK.Date:dd.MM.yyyy}.xlsx");
-                return file;
+                return CustomJsonResult.Create(file);
             }
             catch (Exception ex)
             {
-                logger?.AddLog($"Ошибка в {nameof(GetReportXLSXFile)}:{ex.Message}:{ex.StackTrace}", LogType.Error);
-                return new StatusCodeResult(500);
+                logger?.AddLog($"Ошибка в {nameof(GetReport)}:{ex.Message}:{ex.StackTrace}", LogType.Error);
+                return await CreateInternalError(false);
             }
         }
 

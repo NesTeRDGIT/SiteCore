@@ -8,11 +8,15 @@ import { Component, Input } from "@angular/core";
 let ContentLoad = class ContentLoad {
     constructor() {
         this.isLoad = false;
+        this.Hide = false;
     }
 };
 __decorate([
     Input()
 ], ContentLoad.prototype, "isLoad", void 0);
+__decorate([
+    Input()
+], ContentLoad.prototype, "Hide", void 0);
 ContentLoad = __decorate([
     Component({ selector: "ContentLoad", templateUrl: "ContentLoad.html", styleUrls: ['./ContentLoad.css'] })
 ], ContentLoad);

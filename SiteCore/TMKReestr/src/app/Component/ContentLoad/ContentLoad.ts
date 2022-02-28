@@ -5,5 +5,6 @@ import { Component, Output,Input, EventEmitter, OnChanges, SimpleChanges, ViewCh
 @Component({ selector: "ContentLoad", templateUrl: "ContentLoad.html", styleUrls: ['./ContentLoad.css'] })
 export class ContentLoad  {
    @Input() isLoad = false;
+   @Input() Hide = false;
 
 }

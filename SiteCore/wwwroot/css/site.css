@@ -941,6 +941,21 @@ input[type=checkbox] {
 }
 
 
+.p-button {
+    background: #449d48 !important;
+}
+
+    .p-button:enabled:hover {
+        background: #57b55b !important;
+    }
+
+.p-autocomplete .p-autocomplete-multiple-container .p-autocomplete-token {
+    background: #cdfacf !important;
+}
+
+
+
+
 
 .ImgDocEdit {
     background-image: url(../Image/documentedit.png);

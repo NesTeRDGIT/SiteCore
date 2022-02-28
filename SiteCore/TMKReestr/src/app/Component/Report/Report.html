@@ -1,0 +1,624 @@
+<div>
+    <div style="display: flex; flex-direction: row; align-items: center;">
+        <label class="label-sup">c <input type="date" pInputText required [ngModel]="param.Date1| date:'yyyy-MM-dd'"
+                (ngModelChange)="param.Date1 =ConvertToDate($event)" [style]="{'width':'200px'}"></label>
+        <label class="label-sup">по <input type="date" pInputText required [ngModel]="param.Date2| date:'yyyy-MM-dd'"
+                (ngModelChange)="param.Date2 =ConvertToDate($event)" [style]="{'width':'200px'}"></label>
+
+
+        <div class="field-checkbox" style="margin-top: 10px; margin-bottom: 10px; margin-left: 10px;">
+            <p-checkbox [(ngModel)]="param.IsSMO" [binary]="true" inputId="inputIsSMO"></p-checkbox>
+            <label for="inputIsSMO"> Группировать по СМО</label>
+        </div>
+        <div class="field-checkbox" style="margin-top: 10px; margin-bottom: 10px;; margin-left: 10px;">
+            <p-checkbox [(ngModel)]="param.IsMO" [binary]="true" inputId="inputIsMO"></p-checkbox>
+            <label for="inputIsMO"> Группировать по МО</label>
+        </div>
+        <div class="field-checkbox" style="margin-top: 10px; margin-bottom: 10px;; margin-left: 10px;">
+            <p-checkbox [(ngModel)]="param.IsNMIC" [binary]="true" inputId="inputIsNMIC"></p-checkbox>
+            <label for="inputIsNMIC"> Группировать по НМИЦ</label>
+        </div>
+    </div>
+    <hr />
+    <label class="BoldText">Вид медицинской документации</label>
+    <br />
+    <p-autoComplete [(ngModel)]="NMIC_VID_NHISTORYSelect" [suggestions]="NMIC_VID_NHISTORYFiltered"
+        (completeMethod)="searchNMIC_VID_NHISTORY($event)" [multiple]="true" field="FULL_NAME" [dropdown]="true"
+        [forceSelection]="true"></p-autoComplete>
+        <br/>
+        <input type="button" class="ActionButton" value="Запрос" (click)="GetData()" />
+    <hr />
+
+    <p-tabView>
+        <p-tabPanel header="Отчет №1">
+            <div style="width: 100%; overflow-y: scroll;">
+                <table class="table_report">
+                    <tr>
+                        <th rowspan="4">Субъект Российской федерации</th>
+                        <ng-container *ngIf="model.IsSMO1">
+                            <th rowspan="5">Код СМО</th>
+                            <th rowspan=5>Наименование СМО</th>
+                        </ng-container>
+                        <ng-container *ngIf="model.IsMO1">
+                            <th rowspan=5>Код МО</th>
+                            <th rowspan=5>Наименование МО</th>
+                        </ng-container>
+                        <ng-container *ngIf="model.IsNMIC1">
+                            <th rowspan=5>Наименование НМИЦ</th>
+                        </ng-container>
+                        <th colspan="3">Количество страховых случаев с применением рекомендаций медицинских работников НМИЦ</th>
+                        <th colspan="6">Количество страховых случаев, в отношении которых проведены контрольно-экспертные
+                            мероприятия за отчетный период</th>
+                        <th colspan="6">Количество проверенных страховых случаев, в которых выявлены дефекты</th>
+                        <th colspan="6">Количество выявленных дефектов в проверенных страховых случаях</th>
+                        <th colspan="4">Размер примененных финансовых санкций</th>
+                        <th colspan="27" rowspan="2">
+                            Количество выявленных оснований для неоплаты (уменьшения оплаты) медицинской помощи за счет средств
+                            ОМС,
+                            штрафов за отчетный период 2019 года по коду:
+                        </th>
+                    </tr>
+                    <tr>
+                        <th rowspan="2">Представленных медицинскими организациями субъекта РФ</th>
+                        <th rowspan="2">Поданных на оплату за счет ОМС</th>
+                        <th rowspan="2">Принятых к оплате за счет средств ОМС</th>
+                        <th colspan="3">ТФОМС</th>
+                        <th colspan="3">СМО</th>
+                        <th colspan="3">ТФОМС</th>
+                        <th colspan="3">СМО</th>
+                        <th colspan="3">ТФОМС</th>
+                        <th colspan="3">СМО</th>
+                        <th colspan="2">ТФОМС</th>
+                        <th colspan="2">СМО</th>
+                    </tr>
+                    <tr>
+                        <th>МЭК</th>
+                        <th>МЭЭ</th>
+                        <th>ЭКМП</th>
+                        <th>МЭК</th>
+                        <th>МЭЭ</th>
+                        <th>ЭКМП</th>
+                        <th>МЭК</th>
+                        <th>МЭЭ</th>
+                        <th>ЭКМП</th>
+                        <th>МЭК</th>
+                        <th>МЭЭ</th>
+                        <th>ЭКМП</th>
+                        <th>МЭК</th>
+                        <th>МЭЭ</th>
+                        <th>ЭКМП</th>
+                        <th>МЭК</th>
+                        <th>МЭЭ</th>
+                        <th>ЭКМП</th>
+                        <th>Неоплата</th>
+                        <th>Штраф</th>
+                        <th>Неоплата</th>
+                        <th>Штраф</th>
+                        <th>Всего</th>
+                        <th>1.1.3.</th>
+                        <th>1.2.2.</th>
+                        <th>1.3.2.</th>
+                        <th>1.4.</th>
+                        <th>3.1.</th>
+                        <th>3.2.2.</th>
+                        <th>3.2.3.</th>
+                        <th>3.2.4.</th>
+                        <th>3.2.5.</th>
+                        <th>3.2.6..</th>
+                        <th>3.3.1.</th>
+                        <th>3.4.</th>
+                        <th>3.5.</th>
+                        <th>3.6.</th>
+                        <th>3.7.</th>
+                        <th>3.8.</th>
+                        <th>3.10.</th>
+                        <th>4.2.</th>
+                        <th>5.1.3.</th>
+                        <th>5.3.1.</th>
+                        <th>5.4.</th>
+                        <th>5.5.</th>
+                        <th>5.6.</th>
+                        <th>5.7.</th>
+                        <th>5.8.</th>
+                    </tr>
+                    <tr>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>руб.</th>
+                        <th>руб.</th>
+                        <th>руб.</th>
+                        <th>руб.</th>
+        
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                    </tr>
+                    <tr>
+                        <th>A</th>
+                        <th>1</th>
+                        <th>2</th>
+                        <th>3</th>
+                        <th>4</th>
+                        <th>5</th>
+                        <th>6</th>
+                        <th>7</th>
+                        <th>8</th>
+                        <th>9</th>
+                        <th>10</th>
+                        <th>11</th>
+                        <th>12</th>
+                        <th>13</th>
+                        <th>14</th>
+                        <th>15</th>
+                        <th>16</th>
+                        <th>17</th>
+                        <th>18</th>
+                        <th>19</th>
+                        <th>20</th>
+                        <th>21</th>
+                        <th>22</th>
+                        <th>23</th>
+                        <th>24</th>
+                        <th>25</th>
+                        <th>26</th>
+                        <th>27</th>
+                        <th>28</th>
+                        <th>29</th>
+                        <th>30</th>
+                        <th>31</th>
+                        <th>32</th>
+                        <th>33</th>
+                        <th>34</th>
+                        <th>35</th>
+                        <th>36</th>
+                        <th>37</th>
+                        <th>38</th>
+                        <th>39</th>
+                        <th>40</th>
+                        <th>41</th>
+                        <th>42</th>
+                        <th>43</th>
+                        <th>44</th>
+                        <th>45</th>
+                        <th>46</th>
+                        <th>47</th>
+                        <th>48</th>
+                        <th>49</th>
+                        <th>50</th>
+                        <th>51</th>
+                    </tr>
+                    <tr *ngFor="let rep of model.Report">
+                        <td>{{rep.SUB}}</td>
+                        <ng-container *ngIf="model.IsSMO1">
+                            <td>{{rep.SMO}}</td>
+                            <td>{{rep.NAM_SMOK}}</td>
+                        </ng-container>
+                        <ng-container *ngIf="model.IsMO1">
+                            <td>{{rep.MO}}</td>
+                            <td>{{rep.NAM_MOK}}</td>
+                        </ng-container>
+                        <ng-container *ngIf="model.IsNMIC1">
+                            <td>{{rep.NMIC}}</td>
+                        </ng-container>
+                        <td>{{rep.C}}</td>
+                        <td>{{rep.C_V}}</td>
+                        <td>{{rep.C_P}}</td>
+                        <td>{{rep.C_MEK_TFOMS}}</td>
+                        <td>{{rep.C_MEE_TFOMS}}</td>
+                        <td>{{rep.C_EKMP_TFOMS}}</td>
+                        <td>{{rep.C_MEK_SMO}}</td>
+                        <td>{{rep.C_MEE_SMO}}</td>
+                        <td>{{rep.C_EKMP_SMO}}</td>
+                        <td>{{rep.C_MEK_D_TFOMS}}</td>
+                        <td>{{rep.C_MEE_D_TFOMS}}</td>
+                        <td>{{rep.C_EKMP_D_TFOMS}}</td>
+                        <td>{{rep.C_MEK_D_SMO}}</td>
+                        <td>{{rep.C_MEE_D_SMO}}</td>
+                        <td>{{rep.C_EKMP_D_SMO}}</td>
+                        <td>{{rep.S_MEK_D_TFOMS}}</td>
+                        <td>{{rep.S_MEE_D_TFOMS}}</td>
+                        <td>{{rep.S_EKMP_D_TFOMS}}</td>
+                        <td>{{rep.S_MEK_D_SMO}}</td>
+                        <td>{{rep.S_MEE_D_SMO}}</td>
+                        <td>{{rep.S_EKMP_D_SMO}}</td>
+                        <td>{{rep.S_SUM_TFOMS}}</td>
+                        <td>{{rep.S_FINE_TFOMS}}</td>
+                        <td>{{rep.S_SUM_SMO}}</td>
+                        <td>{{rep.S_FINE_SMO}}</td>
+                        <td>{{rep.S_ALL}}</td>
+                        <td>{{rep.S_1_1_3}}</td>
+                        <td>{{rep.S_1_2_2}}</td>
+                        <td>{{rep.S_1_3_2}}</td>
+                        <td>{{rep.S_1_4}}</td>
+                        <td>{{rep.S_3_1}}</td>
+                        <td>{{rep.S_3_2_2}}</td>
+                        <td>{{rep.S_3_2_3}}</td>
+                        <td>{{rep.S_3_2_4}}</td>
+                        <td>{{rep.S_3_2_5}}</td>
+                        <td>{{rep.S_3_2_6}}</td>
+                        <td>{{rep.S_3_3_1}}</td>
+                        <td>{{rep.S_3_4}}</td>
+                        <td>{{rep.S_3_5}}</td>
+                        <td>{{rep.S_3_6}}</td>
+                        <td>{{rep.S_3_7}}</td>
+                        <td>{{rep.S_3_8}}</td>
+                        <td>{{rep.S_3_10}}</td>
+                        <td>{{rep.S_4_2}}</td>
+                        <td>{{rep.S_5_1_3}}</td>
+                        <td>{{rep.S_5_3_1}}</td>
+                        <td>{{rep.S_5_4}}</td>
+                        <td>{{rep.S_5_5}}</td>
+                        <td>{{rep.S_5_6}}</td>
+                        <td>{{rep.S_5_7}}</td>
+                        <td>{{rep.S_5_8}}</td>
+                    </tr>
+                    <tr *ngIf="model.Report.length>1" class="BoldText">
+                        <td>{{model.ReportItog.SUB}}</td>
+                        <ng-container *ngIf="model.IsSMO1">
+                            <td>{{model.ReportItog.SMO}}</td>
+                            <td>{{model.ReportItog.NAM_SMOK}}</td>
+                        </ng-container>
+                        <ng-container *ngIf="model.IsMO1">
+                            <td>{{model.ReportItog.MO}}</td>
+                            <td>{{model.ReportItog.NAM_MOK}}</td>
+                        </ng-container>
+                        <ng-container *ngIf="model.IsNMIC1">
+                            <td>{{model.ReportItog.NMIC}}</td>
+                        </ng-container>
+                        <td>{{model.ReportItog.C}}</td>
+                        <td>{{model.ReportItog.C_V}}</td>
+                        <td>{{model.ReportItog.C_P}}</td>
+                        <td>{{model.ReportItog.C_MEK_TFOMS}}</td>
+                        <td>{{model.ReportItog.C_MEE_TFOMS}}</td>
+                        <td>{{model.ReportItog.C_EKMP_TFOMS}}</td>
+                        <td>{{model.ReportItog.C_MEK_SMO}}</td>
+                        <td>{{model.ReportItog.C_MEE_SMO}}</td>
+                        <td>{{model.ReportItog.C_EKMP_SMO}}</td>
+                        <td>{{model.ReportItog.C_MEK_D_TFOMS}}</td>
+                        <td>{{model.ReportItog.C_MEE_D_TFOMS}}</td>
+                        <td>{{model.ReportItog.C_EKMP_D_TFOMS}}</td>
+                        <td>{{model.ReportItog.C_MEK_D_SMO}}</td>
+                        <td>{{model.ReportItog.C_MEE_D_SMO}}</td>
+                        <td>{{model.ReportItog.C_EKMP_D_SMO}}</td>
+                        <td>{{model.ReportItog.S_MEK_D_TFOMS}}</td>
+                        <td>{{model.ReportItog.S_MEE_D_TFOMS}}</td>
+                        <td>{{model.ReportItog.S_EKMP_D_TFOMS}}</td>
+                        <td>{{model.ReportItog.S_MEK_D_SMO}}</td>
+                        <td>{{model.ReportItog.S_MEE_D_SMO}}</td>
+                        <td>{{model.ReportItog.S_EKMP_D_SMO}}</td>
+                        <td>{{model.ReportItog.S_SUM_TFOMS}}</td>
+                        <td>{{model.ReportItog.S_FINE_TFOMS}}</td>
+                        <td>{{model.ReportItog.S_SUM_SMO}}</td>
+                        <td>{{model.ReportItog.S_FINE_SMO}}</td>
+                        <td>{{model.ReportItog.S_ALL}}</td>
+                        <td>{{model.ReportItog.S_1_1_3}}</td>
+                        <td>{{model.ReportItog.S_1_2_2}}</td>
+                        <td>{{model.ReportItog.S_1_3_2}}</td>
+                        <td>{{model.ReportItog.S_1_4}}</td>
+                        <td>{{model.ReportItog.S_3_1}}</td>
+                        <td>{{model.ReportItog.S_3_2_2}}</td>
+                        <td>{{model.ReportItog.S_3_2_3}}</td>
+                        <td>{{model.ReportItog.S_3_2_4}}</td>
+                        <td>{{model.ReportItog.S_3_2_5}}</td>
+                        <td>{{model.ReportItog.S_3_2_6}}</td>
+                        <td>{{model.ReportItog.S_3_3_1}}</td>
+                        <td>{{model.ReportItog.S_3_4}}</td>
+                        <td>{{model.ReportItog.S_3_5}}</td>
+                        <td>{{model.ReportItog.S_3_6}}</td>
+                        <td>{{model.ReportItog.S_3_7}}</td>
+                        <td>{{model.ReportItog.S_3_8}}</td>
+                        <td>{{model.ReportItog.S_3_10}}</td>
+                        <td>{{model.ReportItog.S_4_2}}</td>
+                        <td>{{model.ReportItog.S_5_1_3}}</td>
+                        <td>{{model.ReportItog.S_5_3_1}}</td>
+                        <td>{{model.ReportItog.S_5_4}}</td>
+                        <td>{{model.ReportItog.S_5_5}}</td>
+                        <td>{{model.ReportItog.S_5_6}}</td>
+                        <td>{{model.ReportItog.S_5_7}}</td>
+                        <td>{{model.ReportItog.S_5_8}}</td>
+                    </tr>
+                </table>
+            </div>
+        </p-tabPanel>
+        <p-tabPanel header="Отчет №2" [selected]="true">
+            <div style="width: 100%; overflow-y: scroll;">
+                <table class="table_report">
+                    <tr>
+                        <th rowspan="3">Субъект Российской федерации</th>
+                        <ng-container *ngIf="model.IsSMO2">
+                            <th rowspan="4">Код СМО</th>
+                            <th rowspan=4>Наименование СМО</th>
+                        </ng-container>
+                        <ng-container *ngIf="model.IsMO2">
+                            <th rowspan=4>Код МО</th>
+                            <th rowspan=4>Наименование МО</th>
+                        </ng-container>
+                        <ng-container *ngIf="model.IsNMIC2">
+                            <th rowspan=4>Наименование НМИЦ</th>
+                        </ng-container>
+        
+                        <th colspan="3">Количество страховых случаев с применением рекомендаций медицинских работников НМИЦ</th>
+                        <th colspan="3">Количество страховых случаев, в отношении которых проведены контрольно-экспертные
+                            мероприятия за отчетный период</th>
+                        <th colspan="2">Количество проверенных страховых случаев, в которых выявлены дефекты</th>
+                        <th colspan="2">Количество выявленных дефектов в проверенных страховых случаях</th>
+                        <th colspan="2">Размер примененных финансовых санкций</th>
+                        <th colspan="24" rowspan="1">Количество выявленных оснований для неоплаты (уменьшения оплаты)
+                            медицинской помощи за счет средств ОМС, штрафов за отчетный период 2019 года по коду:</th>
+                    </tr>
+                    <tr>
+                        <th rowspan="1">Представленных медицинскими организациями субъекта РФ</th>
+                        <th rowspan="1">Поданных на оплату за счет ОМС</th>
+                        <th rowspan="1">Принятых к оплате за счет средств ОМС</th>
+                        <th colspan="1">МЭЭ</th>
+                        <th colspan="2">ЭКМП</th>
+                        <th colspan="1">МЭЭ</th>
+                        <th colspan="1">ЭКМП</th>
+                        <th colspan="1">МЭЭ</th>
+                        <th colspan="1">ЭКМП</th>
+                        <th colspan="1">неоплата(уменьшение оплаты)</th>
+                        <th colspan="1">Штраф</th>
+                        <th>Всего</th>
+                        <th>1.4.3</th>
+                        <th>1.6.1.</th>
+                        <th>1.9.</th>
+                        <th>1.10.</th>
+                        <th>2.1.</th>
+                        <th>2.17.</th>
+                        <th>3.1.2.</th>
+                        <th>3.1.3.</th>
+                        <th>3.1.4.</th>
+                        <th>3.1.5.</th>
+                        <th>3.2.2.</th>
+                        <th>3.2.3.</th>
+                        <th>3.2.4.</th>
+                        <th>3.2.5.</th>
+                        <th>3.3.</th>
+                        <th>3.4.</th>
+                        <th>3.5.</th>
+                        <th>3.6.</th>
+                        <th>3.8.</th>
+                        <th>3.7.</th>
+                        <th>3.10.</th>
+                        <th>3.11.</th>
+                        <th>3.13.</th>
+                    </tr>
+                    <tr>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>%</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>руб.</th>
+                        <th>руб.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                        <th>ед.</th>
+                    </tr>
+                    <tr>
+                        <th>A</th>
+                        <th>1</th>
+                        <th>2</th>
+                        <th>3</th>
+                        <th>4</th>
+                        <th>5</th>
+                        <th>6</th>
+                        <th>7</th>
+                        <th>8</th>
+                        <th>9</th>
+                        <th>10</th>
+                        <th>11</th>
+                        <th>12</th>
+                        <th>13</th>
+                        <th>14</th>
+                        <th>15</th>
+                        <th>16</th>
+                        <th>17</th>
+                        <th>18</th>
+                        <th>19</th>
+                        <th>20</th>
+                        <th>21</th>
+                        <th>22</th>
+                        <th>23</th>
+                        <th>24</th>
+                        <th>25</th>
+                        <th>26</th>
+                        <th>27</th>
+                        <th>28</th>
+                        <th>29</th>
+                        <th>30</th>
+                        <th>31</th>
+                        <th>32</th>
+                        <th>33</th>
+                        <th>34</th>
+                        <th>35</th>
+                        <th>36</th>
+                    </tr>
+                    <tr *ngFor="let rep of model.Report2">
+                        <td>{{rep.SUB}}</td>
+        
+                        <ng-container *ngIf="model.IsSMO2">
+                            <td>{{rep.SMO}}</td>
+                            <td>{{rep.NAM_SMOK}}</td>
+                        </ng-container>
+                        <ng-container *ngIf="model.IsMO2">
+                            <td>{{rep.MO}}</td>
+                            <td>{{rep.NAM_MOK}}</td>
+                        </ng-container>
+                        <ng-container *ngIf="model.IsNMIC2">
+                            <td>{{rep.NMIC}}</td>
+                        </ng-container>
+        
+                        <td>{{rep.C}}</td>
+                        <td>{{rep.C_V}}</td>
+                        <td>{{rep.C_P}}</td>
+        
+                        <td>{{rep.C_MEE_SMO}}</td>
+                        <td>{{rep.C_EKMP_SMO}}</td>
+                        <td>{{rep.C_EKMP_SMO_PROC}}</td>
+        
+                        <td>{{rep.C_MEE_D_SMO}}</td>
+                        <td>{{rep.C_EKMP_D_SMO}}</td>
+        
+                        <td>{{rep.S_MEE_D_SMO}}</td>
+                        <td>{{rep.S_EKMP_D_SMO}}</td>
+        
+                        <td>{{rep.S_SUM_SMO}}</td>
+                        <td>{{rep.S_FINE_SMO}}</td>
+        
+                        <td>{{rep.S_ALL}}</td>
+                        <td>{{rep.S_1_4_3}}</td>
+                        <td>{{rep.S_1_6_1}}</td>
+                        <td>{{rep.S_1_9}}</td>
+                        <td>{{rep.S_1_10}}</td>
+                        <td>{{rep.S_2_1}}</td>
+                        <td>{{rep.S_2_17}}</td>
+                        <td>{{rep.S_3_1_2}}</td>
+                        <td>{{rep.S_3_1_3}}</td>
+                        <td>{{rep.S_3_1_4}}</td>
+                        <td>{{rep.S_3_1_5}}</td>
+                        <td>{{rep.S_3_2_2}}</td>
+                        <td>{{rep.S_3_2_3}}</td>
+                        <td>{{rep.S_3_2_4}}</td>
+                        <td>{{rep.S_3_2_5}}</td>
+                        <td>{{rep.S_3_3}}</td>
+                        <td>{{rep.S_3_4}}</td>
+                        <td>{{rep.S_3_5}}</td>
+                        <td>{{rep.S_3_6}}</td>
+                        <td>{{rep.S_3_8}}</td>
+                        <td>{{rep.S_3_7}}</td>
+                        <td>{{rep.S_3_10}}</td>
+                        <td>{{rep.S_3_11}}</td>
+                        <td>{{rep.S_3_13}}</td>
+                    </tr>
+                    <tr class="BoldText" *ngIf="model.Report2.length > 1">
+                        <td>Всего</td>
+                        <ng-container *ngIf="model.IsSMO2">
+                            <td></td>
+                            <td></td>
+                        </ng-container>
+                        <ng-container *ngIf="model.IsMO2">
+                            <td></td>
+                            <td></td>
+                        </ng-container>
+                        <ng-container *ngIf="model.IsNMIC2">
+                            <td></td>
+                        </ng-container>
+        
+                        <td>{{model.Report2Itog.C}}</td>
+                        <td>{{model.Report2Itog.C_V}}</td>
+                        <td>{{model.Report2Itog.C_P}}</td>
+                        <td>{{model.Report2Itog.C_MEE_SMO}}</td>
+                        <td>{{model.Report2Itog.C_EKMP_SMO}}</td>
+                        <td></td>
+                        <td>{{model.Report2Itog.C_MEE_D_SMO}}</td>
+                        <td>{{model.Report2Itog.C_EKMP_D_SMO}}</td>
+                        <td>{{model.Report2Itog.S_MEE_D_SMO}}</td>
+                        <td>{{model.Report2Itog.S_EKMP_D_SMO}}</td>
+                        <td>{{model.Report2Itog.S_SUM_SMO}}</td>
+                        <td>{{model.Report2Itog.S_FINE_SMO}}</td>
+                        <td>{{model.Report2Itog.S_ALL}}</td>
+                        <td>{{model.Report2Itog.S_1_4_3}}</td>
+                        <td>{{model.Report2Itog.S_1_6_1}}</td>
+                        <td>{{model.Report2Itog.S_1_9}}</td>
+                        <td>{{model.Report2Itog.S_1_10}}</td>
+                        <td>{{model.Report2Itog.S_2_1}}</td>
+                        <td>{{model.Report2Itog.S_2_17}}</td>
+                        <td>{{model.Report2Itog.S_3_1_2}}</td>
+                        <td>{{model.Report2Itog.S_3_1_3}}</td>
+                        <td>{{model.Report2Itog.S_3_1_4}}</td>
+                        <td>{{model.Report2Itog.S_3_1_5}}</td>
+                        <td>{{model.Report2Itog.S_3_2_2}}</td>
+                        <td>{{model.Report2Itog.S_3_2_3}}</td>
+                        <td>{{model.Report2Itog.S_3_2_4}}</td>
+                        <td>{{model.Report2Itog.S_3_2_5}}</td>
+                        <td>{{model.Report2Itog.S_3_3}}</td>
+                        <td>{{model.Report2Itog.S_3_4}}</td>
+                        <td>{{model.Report2Itog.S_3_5}}</td>
+                        <td>{{model.Report2Itog.S_3_6}}</td>
+                        <td>{{model.Report2Itog.S_3_8}}</td>
+                        <td>{{model.Report2Itog.S_3_7}}</td>
+                        <td>{{model.Report2Itog.S_3_10}}</td>
+                        <td>{{model.Report2Itog.S_3_11}}</td>
+                        <td>{{model.Report2Itog.S_3_13}}</td>
+                    </tr>
+                </table>
+            </div>
+        </p-tabPanel>
+    </p-tabView>
+    <hr />
+
+    <div style="display: flex; justify-content: space-between;">
+        <input type="button" class="ActionButton" value="Скачать Excel" (click)="DownloadXLS()" />  
+    </div>
+    <hr />
+    
+</div>

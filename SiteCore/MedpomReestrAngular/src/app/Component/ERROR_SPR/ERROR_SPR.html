@@ -46,7 +46,7 @@
             <tr>
                 <th style="width: 10%">Дата редактирования</th>
                 <th style="width: 10%">Код</th>
-                <th style="width: 60%">Текст ошибки</th>
+                <th style="width: 60%">Текст ошибки</th>R
                 <th style="width: 20%">Действия</th>
             </tr>
             <tr *ngFor="let err of model.Top30" (click)="selectItem(err)" [class.selected]="err.SELECTED" [class.grayTr]="err.D_END!==null" (dblclick)="ShowError(err)">

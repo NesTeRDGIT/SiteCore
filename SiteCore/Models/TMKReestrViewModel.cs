@@ -392,10 +392,10 @@ namespace SiteCore.Models
                 {
                     SUB = row["SUB"].ToString(),
                     SMO = row["SMO"].ToString(),
-                    nam_smok = row["nam_smok"].ToString(),
+                    NAM_SMOK = row["nam_smok"].ToString(),
                     NMIC = row["NMIC"].ToString(),
                     MO = row["MO"].ToString(),
-                    nam_mok = row["nam_mok"].ToString(),
+                    NAM_MOK = row["nam_mok"].ToString(),
                     C = Convert.ToInt32(row["C"]),
                     C_V = Convert.ToInt32(row["C_V"]),
                     C_P = Convert.ToInt32(row["C_P"]),
@@ -466,9 +466,9 @@ namespace SiteCore.Models
         public string SUB { get; set; }
         public string SMO { get; set; }
         public string NMIC { get; set; }
-        public string nam_smok { get; set; }
+        public string NAM_SMOK { get; set; }
         public string MO { get; set; }
-        public string nam_mok { get; set; }
+        public string NAM_MOK { get; set; }
         public int C { get; set; }
         public int C_V { get; set; }
         public int C_P { get; set; }
@@ -521,6 +521,73 @@ namespace SiteCore.Models
         public int S_5_6 { get; set; }
         public int S_5_7 { get; set; }
         public int S_5_8 { get; set; }
+
+
+        public static ReportTMKRow operator +(ReportTMKRow a, ReportTMKRow b)
+        {
+            return new ReportTMKRow()
+            {
+                MO = "",
+                NAM_MOK = "",
+                NAM_SMOK = "",
+                SMO = "",
+                NMIC = "",
+                SUB = "",
+                C = a.C + b.C,
+                C_EKMP_D_SMO = a.C_EKMP_D_SMO + b.C_EKMP_D_SMO,
+                C_EKMP_D_TFOMS = a.C_EKMP_D_TFOMS + b.C_EKMP_D_TFOMS,
+                C_EKMP_SMO = a.C_EKMP_SMO + b.C_EKMP_SMO,
+                C_EKMP_TFOMS = a.C_EKMP_TFOMS + b.C_EKMP_TFOMS,
+                C_MEE_D_SMO = a.C_MEE_D_SMO + b.C_MEE_D_SMO,
+                C_MEE_D_TFOMS = a.C_MEE_D_TFOMS + b.C_MEE_D_TFOMS,
+                C_MEE_SMO = a.C_MEE_SMO + b.C_MEE_SMO,
+                C_MEE_TFOMS = a.C_MEE_TFOMS + b.C_MEE_TFOMS,
+                C_MEK_D_SMO = a.C_MEK_D_SMO + b.C_MEK_D_SMO,
+                C_MEK_D_TFOMS = a.C_MEK_D_TFOMS + b.C_MEK_D_TFOMS,
+                C_MEK_SMO = a.C_MEK_SMO + b.C_MEK_SMO,
+                C_MEK_TFOMS = a.C_MEK_TFOMS + b.C_MEK_TFOMS,
+                C_P = a.C_P + b.C_P,
+                C_V = a.C_V + b.C_V,
+                S_1_2_2 = a.S_1_2_2 + b.S_1_2_2,
+                S_1_3_2 = a.S_1_3_2 + b.S_1_3_2,
+                S_1_4 = a.S_1_4 + b.S_1_4,
+                S_1_1_3 = a.S_1_1_3 + b.S_1_1_3,
+                S_3_1 = a.S_3_1 + b.S_3_1,
+                S_3_10 = a.S_3_10 + b.S_3_10,
+                S_3_2_2 = a.S_3_2_2 + b.S_3_2_2,
+                S_3_2_3 = a.S_3_2_3 + b.S_3_2_3,
+                S_3_2_4 = a.S_3_2_4 + b.S_3_2_4,
+                S_3_2_5 = a.S_3_2_5 + b.S_3_2_5,
+                S_3_2_6 = a.S_3_2_6 + b.S_3_2_6,
+                S_3_3_1 = a.S_3_3_1 + b.S_3_3_1,
+                S_3_4 = a.S_3_4 + b.S_3_4,
+                S_3_5 = a.S_3_5 + b.S_3_5,
+                S_3_6 = a.S_3_6 + b.S_3_6,
+                S_3_7 = a.S_3_7 + b.S_3_7,
+                S_3_8 = a.S_3_8 + b.S_3_8,
+                S_4_2 = a.S_4_2 + b.S_4_2,
+                S_5_1_3 = a.S_5_1_3 + b.S_5_1_3,
+                S_5_4 = a.S_5_4 + b.S_5_4,
+                S_5_3_1 = a.S_5_3_1 + b.S_5_3_1,
+                S_5_5 = a.S_5_5 + b.S_5_5,
+                S_5_6 = a.S_5_6 + b.S_5_6,
+                S_5_7 = a.S_5_7 + b.S_5_7,
+                S_5_8 = a.S_5_8 + b.S_5_8,
+                S_ALL = a.S_ALL + b.S_ALL,
+                S_EKMP_D_SMO = a.S_EKMP_D_SMO + b.S_EKMP_D_SMO,
+                S_EKMP_D_TFOMS = a.S_EKMP_D_TFOMS + b.S_EKMP_D_TFOMS,
+                S_FINE_SMO = a.S_FINE_SMO + b.S_FINE_SMO,
+                S_FINE_TFOMS = a.S_FINE_TFOMS + b.S_FINE_TFOMS,
+                S_MEE_D_SMO = a.S_MEE_D_SMO + b.S_MEE_D_SMO,
+                S_MEE_D_TFOMS = a.S_MEE_D_TFOMS + b.S_MEE_D_TFOMS,
+                S_MEK_D_SMO = a.S_MEK_D_SMO + b.S_MEK_D_SMO,
+                S_MEK_D_TFOMS = a.S_MEK_D_TFOMS + b.S_MEK_D_TFOMS,
+                S_SUM_SMO = a.S_SUM_SMO + b.S_SUM_SMO,
+                S_SUM_TFOMS = a.S_SUM_TFOMS + b.S_SUM_TFOMS
+            };
+        }
+
+
     }
     public class Report2TMKRow
     {
@@ -537,10 +604,10 @@ namespace SiteCore.Models
                 {
                     SUB = row[nameof(SUB)].ToString(),
                     SMO = row[nameof(SMO)].ToString(),
-                    nam_smok = row[nameof(nam_smok)].ToString(),
+                    NAM_SMOK = row[nameof(NAM_SMOK)].ToString(),
                     NMIC = row[nameof(NMIC)].ToString(),
                     MO = row[nameof(MO)].ToString(),
-                    nam_mok = row[nameof(nam_mok)].ToString(),
+                    NAM_MOK = row[nameof(NAM_MOK)].ToString(),
                     C = Convert.ToInt32(row[nameof(C)]),
                     C_V = Convert.ToInt32(row[nameof(C_V)]),
                     C_P = Convert.ToInt32(row[nameof(C_P)]),
@@ -589,9 +656,9 @@ namespace SiteCore.Models
         public string SUB { get; set; }
         public string SMO { get; set; }
         public string NMIC { get; set; }
-        public string nam_smok { get; set; }
+        public string NAM_SMOK { get; set; }
         public string MO { get; set; }
-        public string nam_mok { get; set; }
+        public string NAM_MOK { get; set; }
         public int C { get; set; }
         public int C_V { get; set; }
         public int C_P { get; set; }
@@ -629,7 +696,65 @@ namespace SiteCore.Models
         public int S_3_10 { get; set; }
         public int S_3_11 { get; set; }
         public int S_3_13 { get; set; }
+
+
+        public static Report2TMKRow operator +(Report2TMKRow a, Report2TMKRow b)
+        {
+            return new Report2TMKRow()
+            {
+                MO = "",
+                NAM_MOK = "",
+                NAM_SMOK = "",
+                SMO = "",
+                NMIC = "",
+                SUB = "",
+                C = a.C + b.C,
+                C_EKMP_D_SMO = a.C_EKMP_D_SMO + b.C_EKMP_D_SMO,              
+                C_EKMP_SMO = a.C_EKMP_SMO + b.C_EKMP_SMO,                
+                C_MEE_D_SMO = a.C_MEE_D_SMO + b.C_MEE_D_SMO,               
+                C_MEE_SMO = a.C_MEE_SMO + b.C_MEE_SMO,              
+                C_P = a.C_P + b.C_P,
+                C_V = a.C_V + b.C_V,               
+                S_3_10 = a.S_3_10 + b.S_3_10,
+                S_3_2_2 = a.S_3_2_2 + b.S_3_2_2,
+                S_3_2_3 = a.S_3_2_3 + b.S_3_2_3,
+                S_3_2_4 = a.S_3_2_4 + b.S_3_2_4,
+                S_3_2_5 = a.S_3_2_5 + b.S_3_2_5,           
+                S_3_4 = a.S_3_4 + b.S_3_4,
+                S_3_5 = a.S_3_5 + b.S_3_5,
+                S_3_6 = a.S_3_6 + b.S_3_6,
+                S_3_7 = a.S_3_7 + b.S_3_7,
+                S_3_8 = a.S_3_8 + b.S_3_8,              
+                S_ALL = a.S_ALL + b.S_ALL,
+                S_EKMP_D_SMO = a.S_EKMP_D_SMO + b.S_EKMP_D_SMO,              
+                S_FINE_SMO = a.S_FINE_SMO + b.S_FINE_SMO,              
+                S_MEE_D_SMO = a.S_MEE_D_SMO + b.S_MEE_D_SMO, 
+                S_SUM_SMO = a.S_SUM_SMO + b.S_SUM_SMO,
+                C_EKMP_SMO_PROC = a.S_SUM_SMO + b.S_SUM_SMO,
+                S_1_10 = a.S_1_10 + b.S_1_10,
+                S_1_4_3 = a.S_1_4_3 + b.S_1_4_3,
+                S_1_6_1 = a.S_1_6_1 + b.S_1_6_1,
+                S_1_9 = a.S_1_9 + b.S_1_9,
+                S_2_1 = a.S_2_1 + b.S_2_1,
+                S_2_17 = a.S_2_17 + b.S_2_17,
+                S_3_11 = a.S_3_11 + b.S_3_11,
+                S_3_13 = a.S_3_13 + b.S_3_13,
+                S_3_1_2 = a.S_3_1_2 + b.S_3_1_2,
+                S_3_1_3 = a.S_3_1_3 + b.S_3_1_3,
+                S_3_1_4 = a.S_3_1_4 + b.S_3_1_4,
+                S_3_1_5 = a.S_3_1_5 + b.S_3_1_5,
+                S_3_3 = a.S_3_3 + b.S_3_3,
+
+            };
+        }
     }
+
+    public class CONTACT_SPRModel
+    {
+        public string CODE_MO { get; set; }
+        public List<string> TelAndFio { get; set; }
+    }
+
 
 
     public class CONTACT_INFOModel
@@ -685,6 +810,18 @@ namespace SiteCore.Models
     {
         public List<ReportTMKRow> Report { get; set; } = new List<ReportTMKRow>();
         public List<Report2TMKRow> Report2 { get; set; } = new List<Report2TMKRow>();
+
+        public ReportTMKRow ReportItog => this.Report.Aggregate((x, y) => {
+            var res = x + y;
+            res.SUB = "Итого";
+            return res;
+        });
+        public Report2TMKRow Report2Itog => this.Report2.Aggregate((x, y) => {
+            var res = x + y;
+            res.SUB = "Итого";
+            return res;
+        });
+
     }
 
     public class TMKListModel
@@ -715,9 +852,6 @@ namespace SiteCore.Models
         public DateTime DATEACT { get; set; }
         public List<int> OSN { get; set; }
     }
-
-
-
     public class SPRContactModel
     {
         public int? ID_CONTACT_INFO { get; set; }
@@ -741,4 +875,14 @@ namespace SiteCore.Models
             item.TEL = this.TEL;
         }
     }
+    public class ReportParamModel
+    {
+        public DateTime Date1 { get; set; }
+        public DateTime Date2 { get; set; }
+        public bool IsSMO { get; set; }
+        public bool isMO { get; set; }
+        public bool isNMIC { get; set; }
+        public int[] VID_NHISTORY { get; set; }
+    }
+
 }

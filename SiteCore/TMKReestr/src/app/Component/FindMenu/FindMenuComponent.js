@@ -73,7 +73,7 @@ let FindMenuComponent = class FindMenuComponent {
         this._SMOSelect = val;
     }
     searchSMO(event) {
-        this.SMOFiltered = this.SPR.CODE_SMO.SPR.values().filter(x => x.SMOCOD.indexOf(event.query) != -1 || x.NAM_SMOK.indexOf(event.query) != -1);
+        this.SMOFiltered = this.SPR.CODE_SMO_Reestr.SPR.values().filter(x => x.SMOCOD.indexOf(event.query) != -1 || x.NAM_SMOK.indexOf(event.query) != -1);
     }
     get NMIC_VID_NHISTORYSelect() {
         return this._NMIC_VID_NHISTORYSelect;

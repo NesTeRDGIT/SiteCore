@@ -2,9 +2,7 @@ import { Pipe, PipeTransform } from "@angular/core";
 import { SPRNotUniTimeMark, INotUniSPR } from "./API/SPRNotUniTimeMark";
 import { SPRTimeMark } from "./API/SPRTimeMark";
 
-@Pipe({
-    name: "ActualSPR"
-})
+@Pipe({name: "ActualSPR"})
 export class ActualSPRPipe<T extends INotUniSPR> implements PipeTransform {
     transform(SprTM: SPRNotUniTimeMark<T>, dt: Date, ...args: any[]): SPRTimeMark<T> {       
         let items = SprTM.values();

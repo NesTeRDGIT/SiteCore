@@ -5,6 +5,7 @@ export class SPRModel {
         this.repo = repo;
         this.CODE_MO_Reestr = new SPRTimeMark(15, "MCOD");
         this.CODE_MO = new SPRTimeMark(15, "MCOD");
+        this.CODE_SMO_Reestr = new SPRTimeMark(15, "SMOCOD");
         this.CODE_SMO = new SPRTimeMark(15, "SMOCOD");
         this.NMIC_VID_NHISTORY = new SPRTimeMark(15, "ID_VID_NHISTORY");
         this.NMIC_OPLATA = new SPRTimeMark(15, "ID_OPLATA");
@@ -15,9 +16,10 @@ export class SPRModel {
         this.NMIC_CELL = new SPRTimeMark(15, "CELL");
         this.NMIC_FULL = new SPRTimeMark(15, "FULL");
         this.EXPERTS = new SPRTimeMark(15, "N_EXPERT");
+        this.CONTACT_SPR = new SPRTimeMark(15, "CODE_MO");
         this.refreshVariableSPR = async (force = false) => {
             await this.refreshCODE_MO_ReestrAsync(force);
-            await this.refreshCODE_SMOAsync(force);
+            await this.refreshCODE_SMO_ReestrAsync(force);
         };
         this.refreshStaticSPR = async (force = false) => {
             await this.refreshTMISAsync(force);
@@ -30,6 +32,20 @@ export class SPRModel {
             await this.refreshNMIC_CELLAsync(force);
             await this.refreshEXPERTSAsync(force);
             await this.refreshNMIC_FULLAsync(force);
+            await this.refreshCONTACT_SPRAsync(force);
+            await this.refreshCODE_SMOAsync(force);
+        };
+        this.refreshCODE_SMOAsync = async (force = false) => {
+            if (this.CODE_SMO.isNeedUpdate || force) {
+                let spr = await this.repo.GetCODE_SMOAsync();
+                this.CODE_SMO.UpdateSPR(spr);
+            }
+        };
+        this.refreshCONTACT_SPRAsync = async (force = false) => {
+            if (this.CONTACT_SPR.isNeedUpdate || force) {
+                let spr = await this.repo.GetCONTACT_SPRAsync();
+                this.CONTACT_SPR.UpdateSPR(spr);
+            }
         };
         this.refreshCODE_MO_ReestrAsync = async (force = false) => {
             if (this.CODE_MO_Reestr.isNeedUpdate || force) {
@@ -43,12 +59,12 @@ export class SPRModel {
                 this.CODE_MO.UpdateSPR(spr);
             }
         };
-        this.refreshCODE_SMOAsync = async (force = false) => {
-            if (this.CODE_SMO.isNeedUpdate || force) {
-                let spr = await this.repo.GetCODE_SMOAsync();
+        this.refreshCODE_SMO_ReestrAsync = async (force = false) => {
+            if (this.CODE_SMO_Reestr.isNeedUpdate || force) {
+                let spr = await this.repo.GetCODE_SMO_ReestrAsync();
                 let empty = new SMO(null);
-                empty.SMOCOD = "", empty.NAM_SMOK = "Нет данных";
-                this.CODE_SMO.UpdateSPR(spr, empty);
+                empty.SMOCOD = "NULL", empty.NAM_SMOK = "Нет данных";
+                this.CODE_SMO_Reestr.UpdateSPR(spr, empty);
             }
         };
         this.refreshNMIC_VID_NHISTORYAsync = async (force = false) => {
@@ -153,7 +169,7 @@ export class SMO {
         }
     }
     get FULL_NAME() {
-        return `${this.NAM_SMOK}${this.SMOCOD != "" && this.SMOCOD != null ? `(${this.SMOCOD})` : ''}`;
+        return `${this.NAM_SMOK}${this.SMOCOD != "NULL" && this.SMOCOD != null ? `(${this.SMOCOD})` : ''}`;
     }
 }
 export class NMIC_VID_NHISTORY {
@@ -272,9 +288,21 @@ export class F014 {
                 this.DATE_E = new Date(obj.DATEEND);
         }
     }
-    ;
     get FullName() {
         return `${this.OSN}${this.KOMMENT != null ? `-${this.KOMMENT}` : ''}`;
+    }
+}
+export class CONTACT_SPRModel {
+    constructor(obj) {
+        this.CODE_MO = null;
+        this.TelAndFio = [];
+        if (obj != null) {
+            this.CODE_MO = obj.CODE_MO;
+            this.TelAndFio = obj.TelAndFio;
+        }
+    }
+    get AllContacts() {
+        return this.TelAndFio.join(';\r\n');
     }
 }
 //# sourceMappingURL=SPRModel.js.map

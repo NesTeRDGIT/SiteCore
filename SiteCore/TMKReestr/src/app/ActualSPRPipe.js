@@ -22,9 +22,7 @@ let ActualSPRPipe = class ActualSPRPipe {
     }
 };
 ActualSPRPipe = __decorate([
-    Pipe({
-        name: "ActualSPR"
-    })
+    Pipe({ name: "ActualSPR" })
 ], ActualSPRPipe);
 export { ActualSPRPipe };
 //# sourceMappingURL=ActualSPRPipe.js.map

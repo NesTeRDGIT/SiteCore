@@ -19,7 +19,7 @@ export class MainComponent implements OnInit {
     }
     
     ngOnInit(): void {
-        let selectIndex = this.urlHelper.getParameter('selectIndex');
+        let selectIndex = this.urlHelper.getParameter('selectIndex');       
         switch(selectIndex)
         {
             case "1":this.CurrentTMKViewType = TMKViewType.TMKReport; break;

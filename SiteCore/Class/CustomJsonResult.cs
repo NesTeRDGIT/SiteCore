@@ -13,7 +13,7 @@ namespace SiteCore.Class
 {
     public class CustomJsonResult : JsonResult
     {
-        private const string _dateFormat = "yyyy-MM-ddThh:mm:ss";
+        private const string _dateFormat = "yyyy-MM-ddTHH:mm:ss";
 
         public bool Result { get; set; } = false;
         public override void ExecuteResult(ActionContext context)

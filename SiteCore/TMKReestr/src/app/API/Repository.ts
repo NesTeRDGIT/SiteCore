@@ -3,22 +3,30 @@ import { Injectable } from '@angular/core';
 import { FileASP } from "./FileASP";
 import {SPRContactModel} from "./SPRContactModel"
 import { TMKList } from "./TMKList";
-import { NMIC_OPLATA,NMIC_VID_NHISTORY,SMO,CODE_MO,TMIS,NMIC,V002,EXPERTS,F014,NMIC_CELL,NMIC_FULL } from "./SPRModel";
+import { NMIC_OPLATA,NMIC_VID_NHISTORY,SMO,CODE_MO,TMIS,NMIC,V002,EXPERTS,F014,NMIC_CELL,NMIC_FULL,CONTACT_SPRModel } from "./SPRModel";
 import { TMKFilter } from "./TMKFilter";
 import { TMKItem,Expertize } from "./TMKItem";
-import { stringify } from 'querystring';
-
-
+import { ReportParamModel, TMKReportTableModel } from "./ReportModel";
+import { URLHelper } from './URLHelper';
+import { FindPacientModel } from './FindPacientModel';
+import { FindExpertizeModel } from './FindExpertizeModel';
 
 
 @Injectable()
 export abstract class IRepository {
 
+
+    abstract FindPacientAsync(ENP:string): Promise<FindPacientModel[]>;
+    abstract FindExpertizeAsync(TMK_ID:number): Promise<FindExpertizeModel[]>;
+
+
     abstract getTMKListAsync(first:number, rows:number,filter:TMKFilter): Promise<TMKList>;
+    abstract getTMKListFileAsync(first:number, rows:number,filter:TMKFilter): Promise<FileASP>;
 
     abstract GetNMIC_OPLATAAsync(): Promise<NMIC_OPLATA[]>;
     abstract GetNMIC_VID_NHISTORYAsync(): Promise<NMIC_VID_NHISTORY[]>;
-    abstract GetCODE_SMOAsync(): Promise<SMO[]>;
+    abstract GetCODE_SMOAsync(): Promise<SMO[]>
+    abstract GetCODE_SMO_ReestrAsync(): Promise<SMO[]>;
     abstract GetCODE_MOAsync(): Promise<CODE_MO[]>;
     abstract GetCODE_MO_ReestrAsync(): Promise<CODE_MO[]>;
     abstract GetTMISAsync(): Promise<TMIS[]>;
@@ -28,6 +36,9 @@ export abstract class IRepository {
     abstract GetNMIC_CELLAsync(): Promise<NMIC_CELL[]>;
     abstract GetEXPERTSAsync(): Promise<EXPERTS[]>;
     abstract GetNMIC_FULLAsync(): Promise<NMIC_FULL[]>;
+    abstract GetCONTACT_SPRAsync(): Promise<CONTACT_SPRModel[]>;
+
+    
 
     abstract getTMKItemAsync(TMK_ID:number): Promise<TMKItem>;
 
@@ -43,6 +54,11 @@ export abstract class IRepository {
     abstract GetSPRContactAsync(): Promise<SPRContactModel[]>;
     abstract EditSPRContactAsync(item:SPRContactModel): Promise<CustomResult>;
     abstract DeleteSPRContactAsync(items:SPRContactModel[]): Promise<CustomResult>;
+
+    abstract GetReportAsync(param:ReportParamModel): Promise<TMKReportTableModel>;
+    abstract GetReportXLSAsync(): Promise<FileASP>;
+
+    abstract ChangeTmkReestrStatusAsync(items: TMKItem[]): Promise<boolean>;
     
     
 }
@@ -51,6 +67,107 @@ export abstract class IRepository {
 
 @Injectable()
 export class Repository implements IRepository {
+    async FindExpertizeAsync(TMK_ID: number): Promise<FindExpertizeModel[]> {
+        const response = await Helper.createFetch(`FindExpertize?TMK_ID=${TMK_ID}`);
+        if (response.ok) {
+            const data = await response.json();
+            if (data.Result) {
+                return data.Value.map((x: any) => new FindExpertizeModel(x));
+            }
+            throw new Error(data.Value);
+        }
+        this.ErrorResponse(response);
+    }
+
+    async FindPacientAsync(ENP: string): Promise<FindPacientModel[]> {
+       const response = await Helper.createFetch(`FindPacient?ENP=${ENP}`);
+        if (response.ok) {
+            const data = await response.json();
+            if (data.Result) {
+                return data.Value.map((x: any) => new FindPacientModel(x));
+            }
+            throw new Error(data.Value);
+        }
+        this.ErrorResponse(response);
+    }
+   async GetCONTACT_SPRAsync(): Promise<CONTACT_SPRModel[]> {
+        const response = await Helper.createFetch(`GetCONTACT_SPR`);
+        if (response.ok) {
+            const data = await response.json();
+            if (data.Result) {
+                return data.Value.map((x: any) => new CONTACT_SPRModel(x));
+            }
+            throw new Error(data.Value);
+        }
+        this.ErrorResponse(response);
+    }
+    
+    async ChangeTmkReestrStatusAsync(items: TMKItem[]): Promise<boolean> {
+        let formData: FormData = new FormData();
+        items.forEach(item => {
+            formData.append("TMK_ID", item.TMK_ID.toString());
+        });
+        const response = await Helper.createFetch(`ChangeTmkReestrStatus`, "POST", formData);
+        if (response.ok) {
+            const data = await response.json();
+            if (data.Result) {
+                return true;
+            } else {
+                throw new Error(data.Value);
+            }
+        }
+        this.ErrorResponse(response);
+    }
+
+    async getTMKListFileAsync(first: number, rows: number, filter: TMKFilter): Promise<FileASP> {
+        let str = Helper.serializeToUrlParam(filter, null);
+        const response = await Helper.createFetch(`GetTMKReestrFile?first=${first}&rows=${rows}${str!=""?`&${str}`: ''}`);
+        if (response.ok) {
+            const data = await response.json();
+            if (data.Result) {
+                return new FileASP(data.Value);
+            } else {
+                throw new Error(data.Value);
+            }
+        }
+        this.ErrorResponse(response);
+    }
+
+
+    private ErrorResponse(response: Response) {
+        throw new Error(`Ошибка запроса: ${response.statusText}(${response.status})`);
+    }
+
+
+
+
+    async GetReportXLSAsync(): Promise<FileASP> {
+        const response = await Helper.createFetch(`GetReportXLSXFile`);
+   
+        if (response.ok) {
+            const data = await response.json();
+            if (data.Result) {
+                return new FileASP(data.Value);
+            } else {
+                throw new Error(data.Value);
+            }
+        }
+        this.ErrorResponse(response);
+    }
+
+    async GetReportAsync(param: ReportParamModel): Promise<TMKReportTableModel> {
+        const response = await Helper.createFetch(`GetReport?${Helper.serializeToUrlParam(param, null)}`);
+     
+        if (response.ok) {
+            const data = await response.json();
+            if (data.Result) {
+                return new TMKReportTableModel(data.Value);
+            } else {
+                throw new Error(data.Value);
+            }
+        }
+        this.ErrorResponse(response);
+    }
     async DeleteSPRContactAsync(items: SPRContactModel[]): Promise<CustomResult> {
         let formData: FormData = new FormData();
         items.forEach(item => {
@@ -71,6 +188,7 @@ export class Repository implements IRepository {
                 }
             }
         }
+        this.ErrorResponse(response);
     }
     async EditSPRContactAsync(item: SPRContactModel): Promise<CustomResult> {
         const response = await Helper.createFetch(`EditSPRContact`, "POST", Helper.SPRContactModelToFormData(item));
@@ -86,6 +204,7 @@ export class Repository implements IRepository {
                 }
             }
         }
+        this.ErrorResponse(response);
     }
     async GetSPRContactAsync(): Promise<SPRContactModel[]> {
         const response = await Helper.createFetch(`GetSPRContact`);
@@ -96,7 +215,7 @@ export class Repository implements IRepository {
             }
             throw new Error(data.Value);
         }
-        throw new Error(`${response.status}: ${response.statusText}`);
+        this.ErrorResponse(response);
     }
     async DeleteExpertizeAsync(items: Expertize[]): Promise<CustomResult> {
         let formData: FormData = new FormData();
@@ -118,8 +237,10 @@ export class Repository implements IRepository {
                 }
             }
         }
+        this.ErrorResponse(response);
     }
     async EditExpertizeAsync(exp: Expertize): Promise<CustomResult> {
+      
         const response = await Helper.createFetch(`EditExpertize`, "POST", Helper.ExpertizeToFormData(exp));
         if (response.ok) {
             const data = await response.json();
@@ -133,6 +254,7 @@ export class Repository implements IRepository {
                 }
             }
         }
+        this.ErrorResponse(response);
     }
     async GetF014Async(): Promise<F014[]> {
         const response = await Helper.createFetch(`GetF014`);
@@ -143,7 +265,7 @@ export class Repository implements IRepository {
             }
             throw new Error(data.Value);
         }
-        throw new Error(`${response.status}: ${response.statusText}`);
+        this.ErrorResponse(response);
     }
     async GetNMIC_CELLAsync(): Promise<NMIC_CELL[]> {
         const response = await Helper.createFetch(`GetNMIC_CELL`);
@@ -154,7 +276,7 @@ export class Repository implements IRepository {
             }
             throw new Error(data.Value);
         }
-        throw new Error(`${response.status}: ${response.statusText}`);
+        this.ErrorResponse(response);
     }
     async GetEXPERTSAsync(): Promise<EXPERTS[]> {
         const response = await Helper.createFetch(`GetEXPERTS`);
@@ -165,7 +287,7 @@ export class Repository implements IRepository {
             }
             throw new Error(data.Value);
         }
-        throw new Error(`${response.status}: ${response.statusText}`);
+        this.ErrorResponse(response);
     }
     async GetNMIC_FULLAsync(): Promise<NMIC_FULL[]> {
         const response = await Helper.createFetch(`GetNMIC_FULL`);
@@ -176,14 +298,14 @@ export class Repository implements IRepository {
             }
             throw new Error(data.Value);
         }
-        throw new Error(`${response.status}: ${response.statusText}`);
+        this.ErrorResponse(response);
     }
 
    
 
     
     async AddTMKItemAsync(item: TMKItem): Promise<CustomResult> {
-        const response = await Helper.createFetch(`EditTmkReestr`, "POST", Helper.convertModelToFormData(item));
+        const response = await Helper.createFetch(`EditTmkReestr`, "POST", Helper.TMKItemToFormData(item));
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -196,6 +318,7 @@ export class Repository implements IRepository {
                 }
             }
         }
+        this.ErrorResponse(response);
     }
     async EditTMKItemAsync(item: TMKItem): Promise<CustomResult> {
         const response = await Helper.createFetch(`EditTmkReestr`, "POST", Helper.TMKItemToFormData(item));
@@ -211,6 +334,7 @@ export class Repository implements IRepository {
                 }
             }
         }
+        this.ErrorResponse(response);
     }
     async DeleteTMKItemAsync(items: TMKItem[]): Promise<CustomResult> {
         let formData: FormData = new FormData();
@@ -232,6 +356,7 @@ export class Repository implements IRepository {
                 }
             }
         }
+        this.ErrorResponse(response);
     }
     async SetAsMtrTMKItemAsync(item: TMKItem): Promise<CustomResult> {
         let formData: FormData = new FormData();
@@ -249,6 +374,7 @@ export class Repository implements IRepository {
                 }
             }
         }
+        this.ErrorResponse(response);
     }
     async SaveSmoDataTMKItemAsync(item: TMKItem): Promise<CustomResult> {
         
@@ -271,11 +397,12 @@ export class Repository implements IRepository {
                 }
             }
         }
+        this.ErrorResponse(response);
     }
-    async getTMKListAsync(first:number, rows:number,filter:TMKFilter): Promise<TMKList>
-    {
+    async getTMKListAsync(first: number, rows: number, filter: TMKFilter): Promise<TMKList> {
+       
         let str = Helper.serializeToUrlParam(filter, null);
-        const response = await Helper.createFetch(`GetTMKListNew?first=${first}&rows=${rows}${str!=""?`&${str}`: ''}`);
+        const response = await Helper.createFetch(`GetTMKList?first=${first}&rows=${rows}${str != "" ? `&${str}` : ''}`);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {
@@ -283,7 +410,7 @@ export class Repository implements IRepository {
             }
             throw new Error(data.Value);
         }
-        throw new Error(`${response.status}: ${response.statusText}`);
+        this.ErrorResponse(response);
     }
     
 
@@ -297,7 +424,7 @@ export class Repository implements IRepository {
             }
             throw new Error(data.Value);
         }
-        throw new Error(`${response.status}: ${response.statusText}`);
+        this.ErrorResponse(response);
     }
     async GetNMIC_VID_NHISTORYAsync(): Promise<NMIC_VID_NHISTORY[]> {
         const response = await Helper.createFetch(`GetNMIC_VID_NHISTORY`);
@@ -308,7 +435,7 @@ export class Repository implements IRepository {
             }
             throw new Error(data.Value);
         }
-        throw new Error(`${response.status}: ${response.statusText}`);
+        this.ErrorResponse(response);
     }
     async GetCODE_SMOAsync(): Promise<SMO[]> {
         const response = await Helper.createFetch(`GetCODE_SMO`);
@@ -319,7 +446,19 @@ export class Repository implements IRepository {
             }
             throw new Error(data.Value);
         }
-        throw new Error(`${response.status}: ${response.statusText}`);
+        this.ErrorResponse(response);
+    }
+   
+    async GetCODE_SMO_ReestrAsync(): Promise<SMO[]> {
+        const response = await Helper.createFetch(`GetCODE_SMO_Reestr`);
+        if (response.ok) {
+            const data = await response.json();
+            if (data.Result) {
+                return data.Value.map((x: any) => new SMO(x));
+            }
+            throw new Error(data.Value);
+        }
+        this.ErrorResponse(response);
     }
     async GetCODE_MOAsync(): Promise<CODE_MO[]> {
         const response = await Helper.createFetch(`GetCODE_MO`);
@@ -330,7 +469,7 @@ export class Repository implements IRepository {
             }
             throw new Error(data.Value);
         }
-        throw new Error(`${response.status}: ${response.statusText}`);
+        this.ErrorResponse(response);
     }
 
     async GetCODE_MO_ReestrAsync(): Promise<CODE_MO[]> {
@@ -342,7 +481,7 @@ export class Repository implements IRepository {
             }
             throw new Error(data.Value);
         }
-        throw new Error(`${response.status}: ${response.statusText}`);
+        this.ErrorResponse(response);
     }
 
     async GetTMISAsync(): Promise<TMIS[]> {
@@ -354,7 +493,7 @@ export class Repository implements IRepository {
             }
             throw new Error(data.Value);
         }
-        throw new Error(`${response.status}: ${response.statusText}`);
+        this.ErrorResponse(response);
     }
 
     async GetNMICAsync(): Promise<NMIC[]> {
@@ -366,7 +505,7 @@ export class Repository implements IRepository {
             }
             throw new Error(data.Value);
         }
-        throw new Error(`${response.status}: ${response.statusText}`);
+        this.ErrorResponse(response);
     }
 
     async GetV002Async(): Promise<V002[]> {
@@ -378,7 +517,7 @@ export class Repository implements IRepository {
             }
             throw new Error(data.Value);
         }
-        throw new Error(`${response.status}: ${response.statusText}`);
+        this.ErrorResponse(response);
     }
 
     async getTMKItemAsync(TMK_ID: number): Promise<TMKItem> {
@@ -390,7 +529,7 @@ export class Repository implements IRepository {
             }
             throw new Error(data.Value);
         }
-        throw new Error(`${response.status}: ${response.statusText}`);
+        this.ErrorResponse(response);
     }
 
     
@@ -428,7 +567,11 @@ export class Helper
           } else if (val instanceof File) {
             formData.append(namespace, val);
           } else {
-            formData.append(namespace, val.toString());
+              let txt = val.toString();
+              if (typeof val === 'number') {
+                  txt = txt.replace(".", ',');
+              }
+              formData.append(namespace, txt);
           }
         }
         return formData;
@@ -458,6 +601,7 @@ export class Helper
             data.append("VID_NHISTORY", item.VID_NHISTORY.toString());
         if (item.ISNOTSMO)
             data.append("ISNOTSMO", item.ISNOTSMO.toString());
+           
         if (item.ENP)
             data.append("ENP", item.ENP);
         if (item.FAM)

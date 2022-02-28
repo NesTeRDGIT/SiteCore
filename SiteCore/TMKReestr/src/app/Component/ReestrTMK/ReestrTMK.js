@@ -8,13 +8,15 @@ import { Component, ViewChild, Input } from "@angular/core";
 import { TMKListModelStatusEnum } from "../../API/TMKList";
 import { SPRModel } from "../../API/SPRModel";
 import { EditTMKComponent } from "../../Component/EditTMK/EditTMKComponent";
+import { FileAPI } from "../../API/FileAPI";
+import { TMKItem } from "src/app/API/TMKItem";
 let ReestrTMKComponent = class ReestrTMKComponent {
     constructor(repo) {
         this.repo = repo;
         this.StatusENUM = TMKListModelStatusEnum;
         this.TMKList = [];
         this.first = 0;
-        this.countOnPage = 25;
+        this.rows = 100;
         this.loading = false;
         this.selectedTMKItems = [];
         this.contextMenuSelect = null;
@@ -64,14 +66,14 @@ let ReestrTMKComponent = class ReestrTMKComponent {
                 this.contextMenuItems.push({ label: 'Новая запись', icon: 'pi pi-fw pi-file', command: () => { this.NewTMK(); } });
                 this.contextMenuItems.push({ separator: true });
                 this.contextMenuItems.push({ label: 'Редактировать', disabled: !EditEnabled, icon: 'pi pi-fw pi-user-edit', command: () => { this.EditTMK(firstItem); } });
-                this.contextMenuItems.push({ label: 'Удалить', disabled: !DeleteEnabled, icon: 'pi pi-fw pi-times', styleClass: 'red-menuitem', command: () => { } });
+                this.contextMenuItems.push({ label: 'Удалить', disabled: !DeleteEnabled, icon: 'pi pi-fw pi-times', styleClass: 'red-menuitem', command: () => { this.RemoveItems(this.selectedTMKItems); } });
             }
             if (this.userInfo.IsTMKAdmin) {
                 this.contextMenuItems.push({ separator: true });
-                this.contextMenuItems.push({ label: 'Изменить статус', icon: 'pi pi-fw pi-send', command: () => { } });
+                this.contextMenuItems.push({ label: 'Изменить статус', icon: 'pi pi-fw pi-send', command: () => { this.ChangeStatus(this.selectedTMKItems); } });
             }
             this.contextMenuItems.push({ separator: true });
-            this.contextMenuItems.push({ label: 'Обновить', icon: 'pi pi-fw pi-refresh', command: () => { this.LoadData(this.first, this.countOnPage); } });
+            this.contextMenuItems.push({ label: 'Обновить', icon: 'pi pi-fw pi-refresh', command: () => { this.LoadData(this.first, this.rows); } });
         }
     }
     async onLazyLoad(event) {
@@ -94,8 +96,52 @@ let ReestrTMKComponent = class ReestrTMKComponent {
             this.loading = false;
         }
     }
+    async RemoveItems(items) {
+        try {
+            var newItems = items.map(x => {
+                let newItem = new TMKItem(null);
+                newItem.TMK_ID = x.TMK_ID;
+                return newItem;
+            });
+            let result = await this.repo.DeleteTMKItemAsync(newItems);
+            if (!result.Result)
+                alert(result.Error);
+        }
+        catch (err) {
+            alert(err.toString());
+        }
+        finally {
+            this.LoadData(this.first, this.rows);
+        }
+    }
+    async ChangeStatus(items) {
+        try {
+            var newItems = items.map(x => {
+                let newItem = new TMKItem(null);
+                newItem.TMK_ID = x.TMK_ID;
+                return newItem;
+            });
+            await this.repo.ChangeTmkReestrStatusAsync(newItems);
+        }
+        catch (err) {
+            alert(err.toString());
+        }
+        finally {
+            this.LoadData(this.first, this.rows);
+        }
+    }
+    async DownloadXLS() {
+        try {
+            var file = await this.repo.getTMKListFileAsync(this.first, this.rows, this.CurrentFilter);
+            FileAPI.downloadBase64File(file.FileContents, file.ContentType, file.FileDownloadName);
+        }
+        catch (err) {
+            alert(err.toString());
+        }
+    }
     async onChangeItems(TMK_ID) {
         if (TMK_ID) {
+            debugger;
         }
         else {
             this.LoadData(this.first, this.totalRecords);

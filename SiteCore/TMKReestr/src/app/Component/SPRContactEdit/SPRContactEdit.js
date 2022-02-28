@@ -23,7 +23,6 @@ let SPRContactEditComponent = class SPRContactEditComponent {
         this.Save = async () => {
             try {
                 this.onSaveProgress = true;
-                debugger;
                 let result = await this.repo.EditSPRContactAsync(this.model);
                 if (result.Result) {
                     this.onChange.emit(null);
@@ -76,10 +75,4 @@ SPRContactEditComponent = __decorate([
     Component({ selector: "SPRContactEdit", templateUrl: "SPRContactEdit.html" })
 ], SPRContactEditComponent);
 export { SPRContactEditComponent };
-var EditTMKType;
-(function (EditTMKType) {
-    EditTMKType[EditTMKType["New"] = 0] = "New";
-    EditTMKType[EditTMKType["Edit"] = 1] = "Edit";
-    EditTMKType[EditTMKType["Read"] = 2] = "Read";
-})(EditTMKType || (EditTMKType = {}));
 //# sourceMappingURL=SPRContactEdit.js.map
