@@ -6,7 +6,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { Pipe } from "@angular/core";
 let SPRTimeMarkPipe = class SPRTimeMarkPipe {
-    transform(value, SprTM, NameField, NotVisibleNull = false, ...args) {
+    transform(value, SprTM, NameField, NotVisibleNull = false, EmptyNotResult = false, ...args) {
         var key = value;
         if (value == null || value == undefined) {
             key = "";
@@ -14,7 +14,7 @@ let SPRTimeMarkPipe = class SPRTimeMarkPipe {
         if (SprTM.SPR.containsKey(key)) {
             return SprTM.SPR.getItem(key)[NameField];
         }
-        if (NotVisibleNull && (value == null || value == "" || value == undefined)) {
+        if (NotVisibleNull && (value == null || value == "" || value == undefined) || EmptyNotResult) {
             return "";
         }
         return `Не удалось найти значение ${value}`;

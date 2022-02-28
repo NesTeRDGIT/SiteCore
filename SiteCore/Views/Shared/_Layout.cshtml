@@ -78,13 +78,15 @@
                     <ul class="topmenu">
                         <li>@Html.ActionLink("Главная", "Index", "Home")</li>
                      
-                        @if (isMO)
-                        {
+                       
                             <li>
                                 <a class="submenu-link">Прием реестров</a>
                                 <ul class="submenu">
-                                    <li><a asp-action="ReestrMed" asp-route-selectIndex="0" asp-controller="MedpomReestr">Загрузка файлов</a></li>
-                                    <li><a asp-action="ReestrMed" asp-route-selectIndex="1" asp-controller="MedpomReestr">Статус загрузки</a></li>
+                                    @if (isMO)
+                                    {
+                                        <li><a asp-action="ReestrMed" asp-route-selectIndex="0" asp-controller="MedpomReestr">Загрузка файлов</a></li>
+                                        <li><a asp-action="ReestrMed" asp-route-selectIndex="1" asp-controller="MedpomReestr">Статус загрузки</a></li>
+                                    }
                                     <li><a asp-action="ReestrMed" asp-route-selectIndex="2" asp-controller="MedpomReestr">Справочник ошибок</a></li>
                                     @if (isSignAdmin || isSignMO)
                                     {
@@ -94,9 +96,9 @@
                                     {
                                         <li><a asp-action="ReestrMed" asp-route-selectIndex="3" asp-controller="MedpomReestr">Поиск в ЦС</a></li>
                                     }
-                                    </ul>
+                                </ul>
                             </li>
-                        }
+                      
                         @if (isTMKAdmin || isTMKSMO || isTMKReader || isTMKUser)
                         {
                             <li>

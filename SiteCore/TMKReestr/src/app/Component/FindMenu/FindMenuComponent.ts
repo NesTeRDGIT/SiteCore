@@ -84,7 +84,7 @@ export class FindMenuComponent implements OnInit {
 
     SMOFiltered:SMO[] = [];
     searchSMO(event) {
-        this.SMOFiltered = this.SPR.CODE_SMO.SPR.values().filter(x=> x.SMOCOD.indexOf(event.query)!=-1 || x.NAM_SMOK.indexOf(event.query)!=-1)      
+        this.SMOFiltered = this.SPR.CODE_SMO_Reestr.SPR.values().filter(x=> x.SMOCOD.indexOf(event.query)!=-1 || x.NAM_SMOK.indexOf(event.query)!=-1)      
     }
 
     _NMIC_VID_NHISTORYSelect: NMIC_VID_NHISTORY[] = [];

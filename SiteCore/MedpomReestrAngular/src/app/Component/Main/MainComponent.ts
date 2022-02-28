@@ -49,8 +49,8 @@ export class MainComponent {
         if (this.isMO || this.isAdmin) {
             this.reportList.push(new ReportCaption("Загрузка реестров", ReportType.LoadMedpom));
             this.reportList.push(new ReportCaption("Статус проверки", ReportType.ViewMedpom));
-            this.reportList.push(new ReportCaption("Справочник ошибок", ReportType.ErrorSPR));
         }
+        this.reportList.push(new ReportCaption("Справочник ошибок", ReportType.ErrorSPR));
         if (this.isCS || this.isAdmin)
             this.reportList.push(new ReportCaption("Поиск в ЦС", ReportType.FIND_CS));
 

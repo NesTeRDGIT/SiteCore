@@ -44,6 +44,17 @@ let SPRContactComponent = class SPRContactComponent {
                 alert(err.toString());
             }
         };
+        this.Delete = async (items) => {
+            try {
+                if (confirm("Вы уверены, что хотите удалить записи?")) {
+                    await this.repo.DeleteSPRContactAsync(items);
+                    this.GetData();
+                }
+            }
+            catch (err) {
+                alert(err.toString());
+            }
+        };
         this.SPR = new SPRModel(this.repo);
     }
     ngOnInit() {
@@ -62,9 +73,9 @@ let SPRContactComponent = class SPRContactComponent {
         this.contextMenuItems.push({ label: 'Новая запись', icon: 'pi pi-fw pi-file', command: () => { this.New(); } });
         this.contextMenuItems.push({ separator: true });
         this.contextMenuItems.push({ label: 'Редактировать', icon: 'pi pi-fw pi-user-edit', command: () => { this.Edit(this.selectedTMKItems[0]); } });
-        this.contextMenuItems.push({ label: 'Удалить', icon: 'pi pi-fw pi-times', styleClass: 'red-menuitem', command: () => { } });
+        this.contextMenuItems.push({ label: 'Удалить', icon: 'pi pi-fw pi-times', styleClass: 'red-menuitem', command: () => { this.Delete(this.selectedTMKItems); } });
         this.contextMenuItems.push({ separator: true });
-        this.contextMenuItems.push({ label: 'Обновить', icon: 'pi pi-fw pi-times', command: () => { this.GetData(); } });
+        this.contextMenuItems.push({ label: 'Обновить', icon: 'pi pi-fw pi-refresh', command: () => { this.GetData(); } });
     }
 };
 __decorate([
@@ -74,7 +85,7 @@ __decorate([
     ViewChild(SPRContactEditComponent)
 ], SPRContactComponent.prototype, "SPRContactEditWin", void 0);
 SPRContactComponent = __decorate([
-    Component({ selector: "SPRContact", templateUrl: "SPRContact.html" })
+    Component({ selector: "SPRContact", templateUrl: "SPRContact.html", styleUrls: ["SPRContact.scss"] })
 ], SPRContactComponent);
 export { SPRContactComponent };
 //# sourceMappingURL=SPRContact.js.map

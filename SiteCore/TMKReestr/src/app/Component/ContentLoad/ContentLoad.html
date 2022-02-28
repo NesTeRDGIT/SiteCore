@@ -1,4 +1,4 @@
-<div class="Loader">
+<div class="Loader"  [class.LoaderHide]="Hide" [class.LoaderLoad]="isLoad">
     <div class="Fon" *ngIf="isLoad"></div>
     <div class="lds-hourglass" *ngIf="isLoad"></div>
     <div>

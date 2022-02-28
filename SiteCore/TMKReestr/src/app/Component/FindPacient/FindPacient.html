@@ -1,0 +1,41 @@
+<ContentLoad [isLoad]="onLoading" [Hide]="!ShowElement">
+<div *ngIf="isResult!==null">
+    <hr/>
+    <div *ngIf="isResult">
+       
+
+        <div class="inputSwitchLabel tooltip">
+            <p-inputSwitch [(ngModel)]="isActive"></p-inputSwitch>
+            <span class="SwitchLabel">Использовать данные поиска</span>
+            <i class="pi pi-question-circle" pTooltip="Выбор пациента осуществляется на дату начала лечения" style="font-size: 1rem"></i>
+        </div>
+        <div class="inputSwitchLabel">
+            <td><p-inputSwitch [(ngModel)]="isPred"></p-inputSwitch></td>
+            <span class="SwitchLabel">Использовать как представителя</span>
+        </div>
+        <div class="infoBlock">
+            <div *ngIf="!isActive" class="fonBlock"></div>
+            <table class="table_report">
+                <tr>
+                    <th>ФИО</th>
+                    <th>Дата рождения</th>
+                    <th>СМО</th>
+                    <th>Дата начала</th>
+                    <th>Дата окончания</th>
+                </tr>
+                <tr *ngFor="let pac of Pacients" [class.BoldText]="pac == CurrPacient">
+                    <td>{{pac.FIO}}</td>
+                    <td>{{pac.DR|date:'dd.MM.yyyy'}}</td>
+                    <td>{{pac.SMO| SPRTimeMark:SPR.CODE_SMO:'NAM_SMOK'}}</td>
+                    <td>{{pac.DBEG|date:'dd.MM.yyyy'}}</td>
+                    <td>{{pac.DSTOP|date:'dd.MM.yyyy'}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div *ngIf="!isResult">
+        Поиск не дал результатов
+    </div>
+    <hr/>
+</div>
+</ContentLoad>

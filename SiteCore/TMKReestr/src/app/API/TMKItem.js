@@ -1,5 +1,7 @@
 export class TMKItem {
     constructor(obj) {
+        this.PacAuto = null;
+        this.PredAuto = null;
         this.TMK_ID = null;
         this.NMIC = null;
         this.TMIS = null;
@@ -11,17 +13,17 @@ export class TMKItem {
         this.NHISTORY = null;
         this.VID_NHISTORY = null;
         this.DATE_INVITE = null;
-        this.ISNOTSMO = null;
-        this.ENP = null;
-        this.FAM = null;
-        this.IM = null;
-        this.OT = null;
-        this.DR = null;
-        this.NOVOR = false;
-        this.FAM_P = null;
-        this.IM_P = null;
-        this.OT_P = null;
-        this.DR_P = null;
+        this._ISNOTSMO = false;
+        this._ENP = null;
+        this._FAM = null;
+        this._IM = null;
+        this._OT = null;
+        this._DR = null;
+        this._NOVOR = false;
+        this._FAM_P = null;
+        this._IM_P = null;
+        this._OT_P = null;
+        this._DR_P = null;
         this.CODE_MO = null;
         this.STATUS = null;
         this.STATUS_COM = null;
@@ -68,6 +70,131 @@ export class TMKItem {
             this.SMO_COM = obj.SMO_COM;
             this.Expertize = obj.Expertize.map((x) => new Expertize(x));
         }
+    }
+    get IsAuto() {
+        return this.PacAuto != null || this.PredAuto != null;
+    }
+    SetAuto(val, isPred) {
+        this.PacAuto = null;
+        this.PredAuto = null;
+        if (isPred) {
+            this.PredAuto = val;
+        }
+        else {
+            this.PacAuto = val;
+        }
+    }
+    get ISNOTSMO() {
+        if (!this.IsAuto)
+            return this._ISNOTSMO;
+        return false;
+    }
+    set ISNOTSMO(val) {
+        this._ISNOTSMO = val;
+    }
+    get ENP() {
+        var _a, _b;
+        if (!this.IsAuto) {
+            return this._ENP;
+        }
+        if (this.PacAuto != null) {
+            return (_a = this.PacAuto) === null || _a === void 0 ? void 0 : _a.POLIS;
+        }
+        else {
+            return (_b = this.PredAuto) === null || _b === void 0 ? void 0 : _b.POLIS;
+        }
+    }
+    set ENP(val) {
+        this._ENP = val;
+    }
+    get FAM() {
+        var _a;
+        if (!this.IsAuto) {
+            return this._FAM;
+        }
+        return (_a = this.PacAuto) === null || _a === void 0 ? void 0 : _a.FAM;
+    }
+    set FAM(val) {
+        this._FAM = val;
+    }
+    get IM() {
+        var _a;
+        if (!this.IsAuto) {
+            return this._IM;
+        }
+        return (_a = this.PacAuto) === null || _a === void 0 ? void 0 : _a.IM;
+    }
+    set IM(val) {
+        this._IM = val;
+    }
+    get OT() {
+        var _a;
+        if (!this.IsAuto) {
+            return this._OT;
+        }
+        return (_a = this.PacAuto) === null || _a === void 0 ? void 0 : _a.OT;
+    }
+    set OT(val) {
+        this._OT = val;
+    }
+    get DR() {
+        var _a;
+        if (!this.IsAuto) {
+            return this._DR;
+        }
+        return (_a = this.PacAuto) === null || _a === void 0 ? void 0 : _a.DR;
+    }
+    set DR(val) {
+        this._DR = val;
+    }
+    get NOVOR() {
+        if (this.PredAuto != null) {
+            return true;
+        }
+        return this._NOVOR;
+    }
+    set NOVOR(val) {
+        this._NOVOR = val;
+    }
+    get FAM_P() {
+        var _a;
+        if (!this.IsAuto) {
+            return this._FAM_P;
+        }
+        return (_a = this.PredAuto) === null || _a === void 0 ? void 0 : _a.FAM;
+    }
+    set FAM_P(val) {
+        this._FAM_P = val;
+    }
+    get IM_P() {
+        var _a;
+        if (!this.IsAuto) {
+            return this._IM_P;
+        }
+        return (_a = this.PredAuto) === null || _a === void 0 ? void 0 : _a.IM;
+    }
+    set IM_P(val) {
+        this._IM_P = val;
+    }
+    get OT_P() {
+        var _a;
+        if (!this.IsAuto) {
+            return this._OT_P;
+        }
+        return (_a = this.PredAuto) === null || _a === void 0 ? void 0 : _a.OT;
+    }
+    set OT_P(val) {
+        this._OT_P = val;
+    }
+    get DR_P() {
+        var _a;
+        if (!this.IsAuto) {
+            return this._DR_P;
+        }
+        return (_a = this.PredAuto) === null || _a === void 0 ? void 0 : _a.DR;
+    }
+    set DR_P(val) {
+        this._DR_P = val;
     }
 }
 export var StatusTMKRow;

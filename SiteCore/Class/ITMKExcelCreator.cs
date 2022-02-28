@@ -11,7 +11,7 @@ namespace SiteCore.Class
 {
     public interface ITMKExcelCreator
     {
-         byte[] GetTMKReestrXLSX(IEnumerable<TMKListModel> items);
+         byte[] GetTMKReestrXLSX(IEnumerable<TMKListModel> items, Dictionary<string, CODE_MO> moSPR, Dictionary<int, TMIS> tmisSPR, Dictionary<int, NMIC> nmisSPR, Dictionary<int, List<F014>> f014SPR);
          byte[] GetReportXLS(List<ReportTMKRow> items, List<Report2TMKRow> items2);
     }
     public class TMKExcelCreator: ITMKExcelCreator
@@ -25,7 +25,7 @@ namespace SiteCore.Class
             this.TemplateReport = TemplateReport;
         }
 
-        public byte[] GetTMKReestrXLSX(IEnumerable<TMKListModel> items)
+        public byte[] GetTMKReestrXLSX(IEnumerable<TMKListModel> items, Dictionary<string,CODE_MO> moSPR, Dictionary<int, TMIS> tmisSPR, Dictionary<int, NMIC> nmisSPR, Dictionary<int,List<F014>> f014SPR)
         {
             using var xls = new ExcelOpenXML();
             var template = File.ReadAllBytes(TemplateReestr);
@@ -45,31 +45,60 @@ namespace SiteCore.Class
                 index++;
                 rowIndex++;
 
-                /*xls.PrintCell(r, 1, index, styleright);
+                xls.PrintCell(r, 1, index, styleright);
                 xls.PrintCell(r, 2, rep.STATUS.ToString(), stylecenter);
                 xls.PrintCell(r, 3, rep.ENP, stylecenter);
                 xls.PrintCell(r, 4, rep.CODE_MO, stylecenter);
-                xls.PrintCell(r, 5, rep.NAM_MOK, styleright);
+                var NAM_MOK = moSPR.ContainsKey(rep.CODE_MO) ? moSPR[rep.CODE_MO].NAM_MOK : "";
+                xls.PrintCell(r, 5, NAM_MOK, styleright);
+                
                 xls.PrintCell(r, 6, rep.FIO, styleright);
                 xls.PrintCell(r, 7, rep.DATE_B, stylecenterDT);
                 xls.PrintCell(r, 8, rep.DATE_QUERY, stylecenterDT);
                 xls.PrintCell(r, 9, rep.DATE_PROTOKOL, stylecenterDT);
-                xls.PrintCell(r, 10, rep.TMIS_NAME, stylecenter);
-                xls.PrintCell(r, 11, rep.NMIC_NAME, styleright);
+                var TMIS_NAME = tmisSPR.ContainsKey(rep.TMIS) ? tmisSPR[rep.TMIS].TMS_NAME : "";
+                var NMIC_NAME = nmisSPR.ContainsKey(rep.NMIC) ? nmisSPR[rep.NMIC].NMIC_NAME : "";
+
+                xls.PrintCell(r, 10, TMIS_NAME, stylecenter);
+                xls.PrintCell(r, 11, NMIC_NAME, styleright);
                 xls.PrintCell(r, 12, rep.SMO, stylecenter);
                 xls.PrintCell(r, 13, rep.VID_NHISTORY, stylecenter);
                 xls.PrintCell(r, 14, rep.OPLATA, stylecenter);
-                xls.PrintCell(r, 15, rep.DATE_MEK, stylecenter);
-                xls.PrintCell(r, 16, rep.DEF_MEK, stylecenter);
-                xls.PrintCell(r, 17, rep.DATE_MEE, stylecenter);
-                xls.PrintCell(r, 18, rep.DEF_MEE, stylecenter);
-                xls.PrintCell(r, 19, rep.DATE_EKMP, stylecenter);
-                xls.PrintCell(r, 20, rep.DEF_EKMP, stylecenter);
-                xls.PrintCell(r, 21, rep.TMK_ID, stylecenter);*/
 
+                xls.PrintCell(r, 15, string.Join(",", rep.MEK.Select(x=>x.DATEACT.ToString("dd.MM.yyyy"))), stylecenter);
+
+
+                xls.PrintCell(r, 16, string.Join(";", rep.MEK.Select(x=> FindF014(x, f014SPR))), stylecenter);
+                xls.PrintCell(r, 17, string.Join(",", rep.MEE.Select(x => x.DATEACT.ToString("dd.MM.yyyy"))), stylecenter);
+                xls.PrintCell(r, 18, string.Join(";", rep.MEE.Select(x => FindF014(x, f014SPR))), stylecenter);
+                xls.PrintCell(r, 19, string.Join(",", rep.EKMP.Select(x => x.DATEACT.ToString("dd.MM.yyyy"))), stylecenter);
+                xls.PrintCell(r, 20, string.Join(";", rep.EKMP.Select(x => FindF014(x, f014SPR))), stylecenter);
+                xls.PrintCell(r, 21, rep.TMK_ID, stylecenter);
             }
             xls.Save();
             return stream.ToArray();
+        }
+
+        private string FindF014(TMKListExpModel exp, Dictionary<int, List<F014>> f014SPR)
+        {
+            var values = new List<string>();
+            foreach(var osn in exp.OSN)
+            {
+                if(f014SPR.ContainsKey(osn))
+                {
+                    var list = f014SPR[osn];
+                    var item = list.FirstOrDefault(x => x.DATEBEG <= exp.DATEACT && (x.DATEEND >= exp.DATEACT || !x.DATEEND.HasValue));
+                    if(item!=null)
+                        values.Add(item.FullName);
+                    else
+                        values.Add("");
+                }
+                else
+                {
+                    values.Add("");
+                }
+            }
+            return string.Join(";", values);
         }
 
         public byte[] GetReportXLS(List<ReportTMKRow> items, List<Report2TMKRow> items2)
@@ -94,9 +123,9 @@ namespace SiteCore.Class
                 rowIndex++;
                 xls.PrintCell(r, 1, rep.SUB, styleright);
                 xls.PrintCell(r, 2, rep.SMO, stylecenter);
-                xls.PrintCell(r, 3, rep.nam_smok, styleright);
+                xls.PrintCell(r, 3, rep.NAM_SMOK, styleright);
                 xls.PrintCell(r, 4, rep.MO, stylecenter);
-                xls.PrintCell(r, 5, rep.nam_mok, styleright);
+                xls.PrintCell(r, 5, rep.NAM_MOK, styleright);
                 xls.PrintCell(r, 6, rep.NMIC, stylecenter);
                 xls.PrintCell(r, 7, rep.C, stylecenter);
                 xls.PrintCell(r, 8, rep.C_V, stylecenter);
@@ -241,9 +270,9 @@ namespace SiteCore.Class
                 rowIndex++;
                 xls.PrintCell(r, 1, rep.SUB, styleright);
                 xls.PrintCell(r, 2, rep.SMO, stylecenter);
-                xls.PrintCell(r, 3, rep.nam_smok, styleright);
+                xls.PrintCell(r, 3, rep.NAM_SMOK, styleright);
                 xls.PrintCell(r, 4, rep.MO, stylecenter);
-                xls.PrintCell(r, 5, rep.nam_mok, styleright);
+                xls.PrintCell(r, 5, rep.NAM_MOK, styleright);
                 xls.PrintCell(r, 6, rep.NMIC, stylecenter);
                 xls.PrintCell(r, 7, rep.C, stylecenter);
                 xls.PrintCell(r, 8, rep.C_V, stylecenter);

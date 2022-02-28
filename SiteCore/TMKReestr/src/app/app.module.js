@@ -19,6 +19,7 @@ import { ActualSPRPipe } from "./ActualSPRPipe";
 import { S_TIP_NAMEPipe } from "./S_TIP_NAMEPipe";
 import { S_OSN_NAMEPipe } from "./S_OSN_NAMEPipe";
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputNumberModule } from 'primeng/inputnumber';
 import { MainComponent } from "./Component/Main/MainComponent";
 import { Repository, IRepository } from "./API/Repository";
 import { ListboxModule } from 'primeng/listbox';
@@ -48,14 +49,18 @@ import { ContentLoad } from './Component/ContentLoad/ContentLoad';
 import { ReestrTMKComponent } from './Component/ReestrTMK/ReestrTMK';
 import { SPRContactComponent } from './Component/SPRContact/SPRContact';
 import { SPRContactEditComponent } from './Component/SPRContactEdit/SPRContactEdit';
+import { ReportComponent } from './Component/Report/Report';
+import { FindPacientComponent } from './Component/FindPacient/FindPacient';
+import { FindExpertizeComponent } from './Component/FindExpertize/FindExpertize';
 registerLocaleData(localeRu);
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     NgModule({
         imports: [BrowserModule, FormsModule, BrowserAnimationsModule, TableModule, TabViewModule, HttpClientModule, SplitterModule, ListboxModule, DividerModule, CalendarModule, ProgressSpinnerModule, DialogModule, InputTextModule, AutoCompleteModule,
-            ContextMenuModule, InputMaskModule, DropdownModule, SplitButtonModule, PanelModule, SelectButtonModule, CheckboxModule, AccordionModule, TooltipModule, InputSwitchModule, InputTextareaModule],
-        declarations: [MainComponent, YesNoPipe, S_TIP_NAMEPipe, S_OSN_NAMEPipe, ActualSPRPipe, SPRTimeMarkPipe, FindMenuComponent, EditTMKComponent, TmkSmoDataComponent, ExpertizeEditComponent, ContentLoad, ReestrTMKComponent, SPRContactComponent, SPRContactEditComponent],
+            ContextMenuModule, InputMaskModule, DropdownModule, SplitButtonModule, PanelModule, SelectButtonModule, CheckboxModule, AccordionModule, TooltipModule, InputSwitchModule, InputTextareaModule, InputNumberModule],
+        declarations: [MainComponent, YesNoPipe, S_TIP_NAMEPipe, S_OSN_NAMEPipe, ActualSPRPipe, SPRTimeMarkPipe, FindMenuComponent, EditTMKComponent, TmkSmoDataComponent, ExpertizeEditComponent, ContentLoad, ReestrTMKComponent, SPRContactComponent, SPRContactEditComponent,
+            ReportComponent, FindPacientComponent, FindExpertizeComponent],
         providers: [{ provide: IRepository, useClass: Repository },
             { provide: LOCALE_ID, useValue: 'ru' },
             { provide: URLHelper, useClass: URLHelper },

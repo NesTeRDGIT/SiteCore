@@ -52,6 +52,7 @@ namespace SiteCore.Data
     }
         public virtual DbSet<TMKReestr> TMKReestr { get; set; }
         public virtual DbSet<V002> V002 { get; set; }
+        public virtual DbSet<SMO> F002 { get; set; }
         public virtual DbSet<CODE_MO> CODE_MO { get; set; }
         public virtual DbSet<TMIS> TMIS { get; set; }
         public virtual DbSet<NMIC> NMIC { get; set; }
@@ -63,6 +64,7 @@ namespace SiteCore.Data
         public virtual DbSet<NMIC_OPLATA> OPLATA { get; set; }
         public virtual DbSet<NMIC_VID_NHISTORY> VID_NHISTORY { get; set; }
         public virtual DbSet<F014> F014 { get; set; }
+        public virtual DbSet<CONTACT_INFO> CONTACT_INFO { get; set; }
 
         public List<ReportTMKRow> GetReport(DateTime date1, DateTime date2, bool isMO, bool isSMO, bool isNMIC, string SMO, int[] VID_HISTORY)
         {
@@ -76,6 +78,11 @@ namespace SiteCore.Data
             var tbl = new DataTable();
             oda.Fill(tbl);
             return ReportTMKRow.Get(tbl.Select());
+        }
+
+        public Task<List<ReportTMKRow>> GetReportAsync(DateTime date1, DateTime date2, bool isMO, bool isSMO, bool isNMIC, string SMO, int[] VID_HISTORY)
+        {
+            return Task.Run( ()=> { return GetReport(date1, date2, isMO, isSMO, isNMIC, SMO, VID_HISTORY); });
         }
 
         public List<Report2TMKRow> GetReport2(DateTime date1, DateTime date2, bool isMO, bool isSMO, bool isNMIC, string SMO, int[] VID_HISTORY)
@@ -92,7 +99,80 @@ namespace SiteCore.Data
             return Report2TMKRow.Get(tbl.Select());
         }
 
-        public virtual DbSet<CONTACT_INFO> CONTACT_INFO { get; set; }
+        public Task<List<Report2TMKRow>> GetReport2Async(DateTime date1, DateTime date2, bool isMO, bool isSMO, bool isNMIC, string SMO, int[] VID_HISTORY)
+        {
+            return Task.Run(() => { return GetReport2(date1, date2, isMO, isSMO, isNMIC, SMO, VID_HISTORY); });
+        }
+
+
+
+
+
+        public List<FindPacientModel> FindPacient(string ENP)
+        {
+            using(var con = new Oracle.ManagedDataAccess.Client.OracleConnection(this.Database.GetConnectionString()))
+            {
+                using (var cmd = new Oracle.ManagedDataAccess.Client.OracleCommand($"select * from table(FIND_DATA.FIND_PACIENT(:ENP))", con))
+                {
+                    cmd.Parameters.Add("ENP", ENP);
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+                    var items = FindPacientModel.GetCollection(reader).ToList();
+                    con.Close();
+                    return items;
+                }
+            }
+        }
+
+        public Task<List<FindPacientModel>> FindPacientAsync(string ENP)
+        {
+            return Task.Run(() => FindPacient(ENP));
+        }
+
+
+        public List<FindExpertize> FindExpertize(int TMK_ID)
+        {
+            using (var con = new Oracle.ManagedDataAccess.Client.OracleConnection(this.Database.GetConnectionString()))
+            {
+                using (var cmd = new Oracle.ManagedDataAccess.Client.OracleCommand($"select * from table(FIND_DATA.FIND_EXPERIZE(:TMK_ID))", con))
+                {
+                    cmd.Parameters.Add("TMK_ID", TMK_ID);
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+                    var items = FindExpertizeModel.GetCollection(reader).ToList();
+                    con.Close();
+                    return ConvertToExpertizeModel(items);
+                }
+            }
+        }
+
+        public Task<List<FindExpertize>> FindExpertizeAsync(int TMK_ID)
+        {
+            return Task.Run(() => FindExpertize(TMK_ID));
+        }
+
+
+        private List<FindExpertize> ConvertToExpertizeModel(List<FindExpertizeModel> items)
+        {
+            var dic = new Dictionary<string, FindExpertize>();
+            foreach (var item in items)
+            {
+                var key = $"{item.N_ACT}{item.D_ACT}{item.S_TIP}";
+                if (!dic.ContainsKey(key))
+                {
+                    dic.Add(key, new FindExpertize { S_TIP = item.S_TIP, D_ACT = item.D_ACT, N_ACT = item.N_ACT, N_EXP = item.N_EXP  });
+                }
+                if (item.S_OSN != 0)
+                {
+                    dic[key].OSN.Add(new FindExpertizeOSN { S_OSN = item.S_OSN, S_FINE = item.S_FINE, S_SUM = item.S_SUM });
+                }
+               
+            }
+            return dic.Values.OrderBy(x=>x.S_TIP).ThenBy(x=>x.D_ACT).ThenBy(x=>x.N_ACT).ToList();
+        }
+            
+
+       
 
 
     }
@@ -472,6 +552,106 @@ namespace SiteCore.Data
         public string TelAndFio => ($"{FAM} {IM} {OT} - {TEL}").Replace("  ", " ");
     }
 
+
+    public class FindPacientModel
+    {
+        public static IEnumerable<FindPacientModel> GetCollection(IDataReader reader)
+        {
+            while (reader.Read())
+            {
+                yield return Get(reader);
+            }
+        }
+
+        public static FindPacientModel Get(IDataReader reader)
+        {
+            try
+            {
+                var item = new FindPacientModel();
+                if (reader[nameof(DBEG)] != DBNull.Value)
+                    item.DBEG = Convert.ToDateTime(reader[nameof(DBEG)]);
+                if (reader[nameof(DSTOP)] != DBNull.Value)
+                    item.DSTOP = Convert.ToDateTime(reader[nameof(DSTOP)]);
+                if (reader[nameof(DR)] != DBNull.Value)
+                    item.DR = Convert.ToDateTime(reader[nameof(DR)]);
+                item.POLIS = Convert.ToString(reader[nameof(POLIS)]);
+                item.FAM = Convert.ToString(reader[nameof(FAM)]);
+                item.IM = Convert.ToString(reader[nameof(IM)]);
+                item.OT = Convert.ToString(reader[nameof(OT)]);
+                item.SMO = Convert.ToString(reader[nameof(SMO)]);
+                return item;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ошибка получения FindPacientModel: {ex.Message}", ex);
+            }
+        }
+        public string POLIS { get; set; }
+        public string FAM { get; set; }
+        public string IM { get; set; }
+        public string OT { get; set; }
+        public string SMO { get; set; }
+        public DateTime? DR { get; set; }
+        public DateTime? DBEG { get; set; }
+        public DateTime? DSTOP { get; set; }
+       
+
+    }
+    public class FindExpertizeModel
+    {
+        public static IEnumerable<FindExpertizeModel> GetCollection(IDataReader reader)
+        {
+            while (reader.Read())
+            {
+                yield return Get(reader);
+            }
+        }
+
+        public static FindExpertizeModel Get(IDataReader reader)
+        {
+            try
+            {
+                var item = new FindExpertizeModel();
+                if(reader[nameof(S_TIP)]!=DBNull.Value)
+                    item.S_TIP = Convert.ToInt32(reader[nameof(S_TIP)]);
+                item.N_ACT = Convert.ToString(reader[nameof(N_ACT)]);
+                item.D_ACT = Convert.ToDateTime(reader[nameof(D_ACT)]);
+                item.S_OSN = Convert.ToInt32(reader[nameof(S_OSN)]);
+                item.S_SUM = Convert.ToDecimal(reader[nameof(S_SUM)]);
+                item.S_FINE = Convert.ToDecimal(reader[nameof(S_FINE)]);
+                item.N_EXP = Convert.ToString(reader[nameof(N_EXP)]);
+                return item;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ошибка получения FindExpertizeModel: {ex.Message}", ex);
+            }
+        }
+
+        public int? S_TIP { get; set; }
+        public string N_ACT { get; set; }
+        public DateTime D_ACT { get; set; }
+        public int S_OSN { get; set; }
+        public decimal S_SUM { get; set; }
+        public decimal S_FINE { get; set; }
+        public string N_EXP { get; set; }
+    }
+
+    public class FindExpertize
+    {
+        public int? S_TIP { get; set; }
+        public string N_ACT { get; set; }
+        public DateTime D_ACT { get; set; }
+        public string N_EXP { get; set; }
+        public List<FindExpertizeOSN> OSN { get; set; } = new();
+    }
+
+    public class FindExpertizeOSN
+    {
+        public int S_OSN { get; set; }
+        public decimal S_SUM { get; set; }
+        public decimal S_FINE { get; set; }
+    }
 
 
     public static  class TMKOracleSetExt

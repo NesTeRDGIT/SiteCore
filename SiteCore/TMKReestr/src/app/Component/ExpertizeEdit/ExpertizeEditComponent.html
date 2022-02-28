@@ -63,7 +63,7 @@
                 <hr />
             </div>
         </div>
-
+      
         <div>
             <label class="BoldText">Список дефектов</label>
             <p-table [value]="CurrentExpertize.OSN" responsiveLayout="scroll">
@@ -101,7 +101,7 @@
                         <td pEditableColumn>
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
-                                    <input pInputText [(ngModel)]="osn.S_SUM" required style="width: 100%;">
+                                    <p-inputNumber [(ngModel)]="osn.S_SUM" [minFractionDigits]="2" [maxFractionDigits]="2" (onFocus)="$event.target.select();"></p-inputNumber>
                                 </ng-template>
                                 <ng-template pTemplate="output">
                                     {{osn.S_SUM| currency: 'RUB'}}
@@ -111,7 +111,7 @@
                         <td pEditableColumn>
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
-                                    <input pInputText type="text" [(ngModel)]="osn.S_FINE"  style="width: 100%;">
+                                    <p-inputNumber [(ngModel)]="osn.S_FINE" [minFractionDigits]="2" [maxFractionDigits]="2" (onFocus)="$event.target.select();"></p-inputNumber>
                                 </ng-template>
                                 <ng-template pTemplate="output">
                                     {{osn.S_FINE | currency: 'RUB'}}

@@ -6,6 +6,8 @@ import { TMKFilter } from "../../API/TMKFilter";
 import { SPRModel } from "../../API/SPRModel";
 import { EditTMKComponent } from "../../Component/EditTMK/EditTMKComponent";
 import { UserINFO } from "../../API/UserINFO";
+import { FileAPI } from "../../API/FileAPI";
+import { TMKItem } from "src/app/API/TMKItem";
 
 @Component({ selector: "ReestrTMK", templateUrl: "ReestrTMK.html", styleUrls:['ReestrTMK.scss'] })
 export class ReestrTMKComponent implements OnInit {
@@ -15,7 +17,7 @@ export class ReestrTMKComponent implements OnInit {
     TMKList: TMKListModel[] = [];
     totalRecords: number;
     first: number = 0;
-    countOnPage: number = 25;
+    rows: number = 100;
     loading: boolean = false;
 
     selectedTMKItems: TMKListModel[] = [];
@@ -62,14 +64,14 @@ export class ReestrTMKComponent implements OnInit {
                 this.contextMenuItems.push({ label: 'Новая запись', icon: 'pi pi-fw pi-file', command: () => { this.NewTMK() } });
                 this.contextMenuItems.push({ separator: true });
                 this.contextMenuItems.push({ label: 'Редактировать', disabled: !EditEnabled, icon: 'pi pi-fw pi-user-edit', command: () => { this.EditTMK(firstItem); } });
-                this.contextMenuItems.push({ label: 'Удалить', disabled: !DeleteEnabled, icon: 'pi pi-fw pi-times', styleClass: 'red-menuitem', command: () => {/* this.RemoveItems() */ } });
+                this.contextMenuItems.push({ label: 'Удалить', disabled: !DeleteEnabled, icon: 'pi pi-fw pi-times', styleClass: 'red-menuitem', command: () => { this.RemoveItems(this.selectedTMKItems); } });
             }
             if (this.userInfo.IsTMKAdmin) {
                 this.contextMenuItems.push({ separator: true });
-                this.contextMenuItems.push({ label: 'Изменить статус', icon: 'pi pi-fw pi-send', command: () => { /*this.SendItems() } */ } });
+                this.contextMenuItems.push({ label: 'Изменить статус', icon: 'pi pi-fw pi-send', command: () => { this.ChangeStatus(this.selectedTMKItems); } });
             }
             this.contextMenuItems.push({ separator: true });
-            this.contextMenuItems.push({ label: 'Обновить', icon: 'pi pi-fw pi-refresh', command: () => { this.LoadData(this.first, this.countOnPage)  } });
+            this.contextMenuItems.push({ label: 'Обновить', icon: 'pi pi-fw pi-refresh', command: () => { this.LoadData(this.first, this.rows)  } });
         }
     }
 
@@ -97,8 +99,59 @@ export class ReestrTMKComponent implements OnInit {
         }
     }
 
+    async RemoveItems(items: TMKListModel[]) {
+        try {
+            var newItems = items.map(x => {
+                let newItem = new TMKItem(null);
+                newItem.TMK_ID = x.TMK_ID;
+                return newItem;
+            });
+            let result = await this.repo.DeleteTMKItemAsync(newItems);
+            if (!result.Result)
+                alert(result.Error);
+        }
+        catch (err) {
+            alert(err.toString());
+        }
+        finally {
+            this.LoadData(this.first, this.rows);
+        }
+    }
+
+
+    async ChangeStatus(items: TMKListModel[]) {
+        try {
+            var newItems = items.map(x => {
+                let newItem = new TMKItem(null);
+                newItem.TMK_ID = x.TMK_ID;
+                return newItem;
+            });
+            await this.repo.ChangeTmkReestrStatusAsync(newItems);
+        }
+        catch (err) {
+            alert(err.toString());
+        }
+        finally {
+            this.LoadData(this.first, this.rows);
+        }
+    }
+
+
+    async DownloadXLS() {
+        try {
+            var file = await this.repo.getTMKListFileAsync(this.first, this.rows, this.CurrentFilter);          
+            FileAPI.downloadBase64File(file.FileContents, file.ContentType, file.FileDownloadName);
+        }
+        catch (err) {
+            alert(err.toString());
+        }
+    }
+
+    
+
     async onChangeItems(TMK_ID: null) {
         if (TMK_ID) {
+            debugger;
         }
         else {
             this.LoadData(this.first, this.totalRecords);
@@ -155,5 +208,8 @@ export class ReestrTMKComponent implements OnInit {
     NewTMK = () => {
         this.EditTMKWin.New();
     }
+
+
+    
 
 }

@@ -1,8 +1,8 @@
 <FindMenu (onSearch)="onCurrentFilterChange($event)"></FindMenu>
 <br/>
 <div style="display: flex; justify-content: space-between;">
-    <input type="button"  class="ActionButton" value="Новая запись" (click)="NewTMK()"/>
-    <input type="button"  class="ActionButton" value="Скачать Excel"/>
+    <input type="button"  class="ActionButton" value="Новая запись" (click)="NewTMK()" *ngIf="userInfo.IsTMKUser"/>
+    <input type="button"  class="ActionButton" value="Скачать Excel"  (click)="DownloadXLS()"/>
 </div>
 <p style="font-weight: bold; font-style: italic;">*Управление таблицей происходит с помощью выделения и правой кнопки мыши</p>
 <p style="font-weight: bold; font-style: italic;">*Двойной щелчок левой кнопки мыши открывает запись</p>
@@ -12,9 +12,9 @@
 <p-table [value]="TMKList" [(contextMenuSelection)]="contextMenuSelect"  (onContextMenuSelect)="onContextMenuSelect($event, context)" [contextMenu]="context"
 selectionMode="multiple" [metaKeySelection]="true" dataKey="TMK_ID" selectionMode="multiple" [(selection)]="selectedTMKItems"
 responsiveLayout="scroll" styleClass="p-datatable-gridlines"
-[paginator]="true" [rowsPerPageOptions]="[20,50,100,300]" [(rows)]="countOnPage" [(first)]="first"
+[paginator]="true" [rowsPerPageOptions]="[100,200,300]" [(rows)]="rows" [(first)]="first"
 [lazy]="true" (onLazyLoad)="onLazyLoad($event)" [totalRecords]="totalRecords" [loading]="loading" 
-[scrollable]="true" scrollHeight="40vh" scrollDirection="both">
+[scrollable]="true" scrollHeight="50vh" scrollDirection="both">
    <ng-template pTemplate="colgroup">
         <colgroup>
             <col style="width:60px">
@@ -76,7 +76,13 @@ responsiveLayout="scroll" styleClass="p-datatable-gridlines"
             </td>
             <td>{{item.TMK_ID}}</td>
             <td>{{item.ENP}}</td>
-            <td>{{item.CODE_MO|SPRTimeMark:SPR.CODE_MO:'NAM_MOK'}}</td>
+            <td>
+                <div class="tooltip">
+                    <span  [pTooltip]="item.CODE_MO|SPRTimeMark:SPR.CONTACT_SPR:'AllContacts':true:true">{{item.CODE_MO|SPRTimeMark:SPR.CODE_MO:'NAM_MOK'}}</span>
+                </div>
+                
+            
+            </td>
             <td>{{item.FIO}}</td>
             <td>{{item.DATE_B | date: 'dd.MM.yyyy'}}</td>
             <td>{{item.DATE_QUERY | date: 'dd.MM.yyyy'}}</td>

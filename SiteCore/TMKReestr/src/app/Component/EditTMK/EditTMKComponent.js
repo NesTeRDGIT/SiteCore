@@ -8,6 +8,8 @@ import { Component, ViewChild, Input, Output, EventEmitter } from "@angular/core
 import { SPRModel } from "../../API/SPRModel";
 import { TMKItem, StatusTMKRow, ExpType } from "../../API/TMKItem";
 import { ExpertizeEditComponent } from "../../Component/ExpertizeEdit/ExpertizeEditComponent";
+import { FindPacientComponent } from "../FindPacient/FindPacient";
+import { FindExpertizeComponent } from "../FindExpertize/FindExpertize";
 let EditTMKComponent = class EditTMKComponent {
     constructor(repo) {
         this.repo = repo;
@@ -93,9 +95,9 @@ let EditTMKComponent = class EditTMKComponent {
                 this.onOperationProgress = this.onSetAsMTRProgress = false;
             }
         };
-        this.AddExpertize = async (type) => {
+        this.AddExpertize = async (type, exp = null) => {
             try {
-                this.ExpertizeEditWin.ShowCreateNewExpertize(type, this.CurrentTMK.TMK_ID);
+                this.ExpertizeEditWin.ShowCreateNewExpertize(type, this.CurrentTMK.TMK_ID, exp);
                 this.onChange.emit(this.CurrentTMK.TMK_ID);
             }
             catch (err) {
@@ -134,13 +136,17 @@ let EditTMKComponent = class EditTMKComponent {
         this.refreshModel = async () => {
             this.CurrentTMK = await this.repo.getTMKItemAsync(this.CurrentTMK.TMK_ID);
         };
+        this.FindPacient = async () => {
+            this.FindPacientPanel.FindPacient(this.CurrentTMK.ENP);
+        };
+        this.FindExpertize = async () => {
+            this.FindExpertizePanel.FindExpertize(this.CurrentTMK.TMK_ID);
+        };
     }
     async FILL_SPR() {
         try {
-            this.onLoading = true;
             await this.SPR.refreshStaticSPR(false);
             await this.SPR.refreshVariableSPR(false);
-            this.onLoading = false;
         }
         catch (err) {
             alert(`Ошибка получение справочников: ${err.toString()}`);
@@ -152,32 +158,80 @@ let EditTMKComponent = class EditTMKComponent {
         return null;
     }
     async Show(TMK_ID) {
-        this.TypeOpen = EditTMKType.Read;
-        this.IsReadOnly = true;
-        this.Display = true;
-        await this.FILL_SPR();
-        this.CurrentTMK = await this.repo.getTMKItemAsync(TMK_ID);
+        try {
+            this.onLoading = true;
+            this.TypeOpen = EditTMKType.Read;
+            this.IsReadOnly = true;
+            this.Display = true;
+            await this.FILL_SPR();
+            this.CurrentTMK = await this.repo.getTMKItemAsync(TMK_ID);
+        }
+        catch (err) {
+            alert(err.toString());
+            this.Close();
+        }
+        finally {
+            this.onLoading = false;
+        }
     }
     async Edit(TMK_ID) {
-        this.TypeOpen = EditTMKType.Edit;
-        this.IsReadOnly = false;
-        this.Display = true;
-        await this.FILL_SPR();
-        this.CurrentTMK = await this.repo.getTMKItemAsync(TMK_ID);
+        try {
+            this.onLoading = true;
+            this.TypeOpen = EditTMKType.Edit;
+            this.IsReadOnly = false;
+            this.Display = true;
+            await this.FILL_SPR();
+            this.CurrentTMK = await this.repo.getTMKItemAsync(TMK_ID);
+        }
+        catch (err) {
+            alert(err.toString());
+            this.Close();
+        }
+        finally {
+            this.onLoading = false;
+        }
     }
     async New() {
-        this.TypeOpen = EditTMKType.New;
-        this.IsReadOnly = false;
-        this.Display = true;
-        await this.FILL_SPR();
-        this.CurrentTMK = new TMKItem(null);
-        this.CurrentTMK.DATE_EDIT = this.CurrentTMK.DATE_INVITE = new Date();
-        this.CurrentTMK.STATUS = StatusTMKRow.Open;
+        try {
+            this.onLoading = true;
+            this.TypeOpen = EditTMKType.New;
+            this.IsReadOnly = false;
+            this.Display = true;
+            await this.FILL_SPR();
+            this.CurrentTMK = new TMKItem(null);
+            this.CurrentTMK.CODE_MO = this.userInfo.CodeMO;
+            this.CurrentTMK.DATE_EDIT = this.CurrentTMK.DATE_INVITE = new Date();
+            this.CurrentTMK.STATUS = StatusTMKRow.Open;
+        }
+        catch (err) {
+            alert(err.toString());
+            this.Close();
+        }
+        finally {
+            this.onLoading = false;
+        }
     }
     Close() {
+        var _a, _b;
         this.Display = false;
         this.CurrentTMK = new TMKItem(null);
         this.ErrMessage = [];
+        (_a = this.FindPacientPanel) === null || _a === void 0 ? void 0 : _a.Clear(true);
+        (_b = this.FindExpertizePanel) === null || _b === void 0 ? void 0 : _b.Clear(true);
+    }
+    FindPacient_onChangeSelected(item) {
+        setTimeout(() => { this.CurrentTMK.SetAuto(item.Pacient, item.isPred); });
+    }
+    ENP_KeyDown(event) {
+        if (event.key === "Enter" && !this.IsReadOnly) {
+            event.preventDefault();
+            this.FindPacient();
+        }
+    }
+    AddFindExpertize(exp) {
+        if (exp != null) {
+            this.AddExpertize(exp.S_TIP, exp);
+        }
     }
 };
 __decorate([
@@ -189,6 +243,12 @@ __decorate([
 __decorate([
     ViewChild(ExpertizeEditComponent)
 ], EditTMKComponent.prototype, "ExpertizeEditWin", void 0);
+__decorate([
+    ViewChild(FindPacientComponent)
+], EditTMKComponent.prototype, "FindPacientPanel", void 0);
+__decorate([
+    ViewChild(FindExpertizeComponent)
+], EditTMKComponent.prototype, "FindExpertizePanel", void 0);
 EditTMKComponent = __decorate([
     Component({ selector: "EditTMK", templateUrl: "EditTMKComponent.html", styleUrls: ["EditTMKComponent.scss"] })
 ], EditTMKComponent);

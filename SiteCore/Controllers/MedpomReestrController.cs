@@ -18,7 +18,6 @@ using FileItem = ServiceLoaderMedpomData.FileItem;
 
 namespace SiteCore.Controllers
 {
-    [Authorize(Roles = "MO, Admin")]
     public class MedpomReestrController : Controller
     {
         private WCFConnect WcfConnect { get; }
@@ -65,12 +64,10 @@ namespace SiteCore.Controllers
             }
             return CustomJsonResult.Create(err, false);
         }
-        private CustomJsonResult UserError(Exception e)
-        {
-            return CustomJsonResult.Create(e.Message, false);
-        }
+
 
         #region Просмотр реестров
+        [Authorize(Roles = "MO, Admin")]
         [HttpGet]
         public async Task<CustomJsonResult>  GetViewReestrModel()
         {
@@ -114,8 +111,8 @@ namespace SiteCore.Controllers
             {
                 return InternalError(e);
             }
-           
         }
+        [Authorize(Roles = "MO, Admin")]
         [HttpGet]
         public async Task<CustomJsonResult> DownloadProtocol()
         {
@@ -133,7 +130,6 @@ namespace SiteCore.Controllers
                 return InternalError(e);
             }
         }
-
         #endregion
         #region Загрузка реестров
         private async Task<FILEPACK> MyPACK()
@@ -153,7 +149,8 @@ namespace SiteCore.Controllers
                 throw new Exception($"Ошибка в MyPACK:{ex.Message}", ex);
             }
         }
-
+        [Authorize(Roles = "MO, Admin")]
+        [HttpGet]
         public async Task<CustomJsonResult> GetLoadReestrModel()
         {
             try
@@ -170,7 +167,7 @@ namespace SiteCore.Controllers
         /// </summary>
         /// <param name="Error"></param>
         /// <returns></returns>
-        async Task<LoadReestViewModel> getLoadReestViewModel()
+        private async Task<LoadReestViewModel> getLoadReestViewModel()
         {
             try
             {
@@ -214,7 +211,6 @@ namespace SiteCore.Controllers
                 return lvm;
             }
         }
-
         private async Task<FILEPACK> GetFile()
         {
             var currentPack = await MyPACK();
@@ -228,13 +224,11 @@ namespace SiteCore.Controllers
             await MyOracleSet.SaveChangesAsync();
             return currentPack;
         }
-       
-
-
         /// <summary>
         /// Загрузка файлов на сервер
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "MO, Admin")]
         [HttpPost]
         public async Task<CustomJsonResult> Upload()
         {
@@ -302,9 +296,7 @@ namespace SiteCore.Controllers
             fs.HASH = hasher.GetHash(FilePath);
             return fs;
         }
-
-
-        void CheckCatalog(FILEPACK PAC)
+        private void CheckCatalog(FILEPACK PAC)
         {
             try
             {
@@ -324,8 +316,7 @@ namespace SiteCore.Controllers
                 throw new Exception($"Ошибка в CheckCatalog:{ex.Message}");
             }
         }
-
-        void FindL(FILEPACK FP)
+        private void FindL(FILEPACK FP)
         {
             try
             {
@@ -374,7 +365,7 @@ namespace SiteCore.Controllers
             }
 
         }
-        void checkPack(FILEPACK FP)
+        private void checkPack(FILEPACK FP)
         {
             try
             {
@@ -393,7 +384,7 @@ namespace SiteCore.Controllers
                 throw new Exception($"Ошибка в checkPack:{ex.Message}");
             }
         }
-
+        [Authorize(Roles = "MO, Admin")]
         [HttpPost]
         public async Task<CustomJsonResult> DeleteFile(int id)
         {
@@ -422,6 +413,7 @@ namespace SiteCore.Controllers
                 return InternalError(e);
             }
         }
+        [Authorize(Roles = "MO, Admin")]
         [HttpPost]
         public async Task<CustomJsonResult> Clear()
         {
@@ -441,6 +433,7 @@ namespace SiteCore.Controllers
                 return InternalError(e);
             }
         }
+        [Authorize(Roles = "MO, Admin")]
         [HttpPost]
         public async Task<CustomJsonResult> Send()
         {
@@ -549,7 +542,7 @@ namespace SiteCore.Controllers
         #endregion
       
         #region Справочник ошибок
-  
+        [HttpGet]
         public async Task<CustomJsonResult> ErrorList(bool isShowClose = false)
         {
             try
@@ -578,7 +571,7 @@ namespace SiteCore.Controllers
                 return InternalError(e);
             }
         }
-
+        [HttpGet]
         public async Task<CustomJsonResult> GetError(int ID_ERR)
         {
             try
@@ -604,7 +597,7 @@ namespace SiteCore.Controllers
                 return InternalError(e);
             }
         }
-
+        [HttpGet]
         public async Task<CustomJsonResult> GetSections()
         {
             try
@@ -651,7 +644,6 @@ namespace SiteCore.Controllers
                 return InternalError(e,true);
             }
         }
-
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<CustomJsonResult> EditErrorSPR(ErrorSprModel model)
@@ -681,7 +673,6 @@ namespace SiteCore.Controllers
                 return CustomJsonResult.Create(new List<string> { e.Message }, false);
             }
         }
-
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<CustomJsonResult> RemoveErrorSPR(int ID_ERR)

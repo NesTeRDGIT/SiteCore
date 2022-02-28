@@ -17,10 +17,13 @@
     <script src="~/js/AngularApp/TMKReestr/main.js" asp-append-version="true"></script>
     <script src="~/js/AngularApp/TMKReestr/polyfills.js" asp-append-version="true"></script>
     <script src="~/js/AngularApp/TMKReestr/runtime.js" asp-append-version="true"></script>
+
 }
 @section Style
 {
     <link href="~/js/AngularApp/TMKReestr/styles.css" rel="stylesheet" asp-append-version="true" />
 }
-
-<app [IsTMKAdmin]="@(IsTMKAdmin? "true": "false")" [IsTMKUser]="@(IsTMKUser? "true": "false")" [IsTMKReader]="@(IsTMKReader? "true": "false")" [IsTMKSMO]="@(IsTMKSMO? "true": "false")"  [CODE_MO]="@(CODE_MO)"></app>
+<span class="BoldText TextCursiv">*Данный раздел перешел на новую платформу, если страница не отображается обновите Web-браузер</span>
+<br />
+<br />
+<app [IsTMKAdmin]="@(IsTMKAdmin? "true": "false")" [IsTMKUser]="@(IsTMKUser? "true": "false")" [IsTMKReader]="@(IsTMKReader? "true": "false")" [IsTMKSMO]="@(IsTMKSMO? "true": "false")" [CODE_MO]="@(CODE_MO)"></app>

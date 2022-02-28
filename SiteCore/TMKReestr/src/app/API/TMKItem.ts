@@ -1,4 +1,24 @@
+import {FindPacientModel} from '../API/FindPacientModel'
+
 export class TMKItem {
+    get IsAuto(): boolean {
+        return this.PacAuto != null || this.PredAuto != null;
+    }
+    private PacAuto: FindPacientModel = null;
+    private PredAuto: FindPacientModel = null;
+    public SetAuto(val: FindPacientModel, isPred: boolean) {
+       
+        this.PacAuto = null;
+        this.PredAuto = null;
+        if (isPred) {
+            this.PredAuto = val;
+        }
+        else {
+            this.PacAuto = val;
+        }
+    }
+  
+
     TMK_ID: number = null;
     NMIC: number = null;
     TMIS: number = null;
@@ -10,17 +30,120 @@ export class TMKItem {
     NHISTORY: string = null;
     VID_NHISTORY: number = null;   
     DATE_INVITE: Date = null;
-    ISNOTSMO: boolean = null;
-    ENP: string = null;
-    FAM: string = null;
-    IM: string = null;
-    OT: string = null;
-    DR: Date = null;
-    NOVOR: boolean = false;
-    FAM_P: string = null;
-    IM_P: string = null;
-    OT_P: string = null;
-    DR_P: Date = null;
+    _ISNOTSMO: boolean = false;
+    get ISNOTSMO(): boolean { 
+        if (!this.IsAuto)
+            return this._ISNOTSMO;
+        return false;
+    }
+    set ISNOTSMO(val: boolean) {
+        this._ISNOTSMO = val;
+    }
+    _ENP: string = null;
+    get ENP(): string {
+        if (!this.IsAuto) {
+            return this._ENP;
+        }
+        if (this.PacAuto != null) {
+            return this.PacAuto?.POLIS;
+        }
+        else {
+            return this.PredAuto?.POLIS;
+        }
+    }
+    set ENP(val: string) {
+        this._ENP = val;
+    }
+    _FAM: string = null;
+    get FAM(): string {
+        if (!this.IsAuto) {
+            return this._FAM;
+        }
+        return this.PacAuto?.FAM;
+    }
+    set FAM(val: string) {
+        this._FAM = val;
+    }
+    _IM: string = null;
+    get IM(): string {
+        if (!this.IsAuto) {
+            return this._IM;
+        }
+        return this.PacAuto?.IM;
+    }
+    set IM(val: string) {
+        this._IM = val;
+    }
+    _OT: string = null;
+    get OT(): string {
+        if (!this.IsAuto) {
+            return this._OT;
+        }
+        return this.PacAuto?.OT;
+    }
+    set OT(val: string) {
+        this._OT = val;
+    }
+    _DR: Date = null;
+    get DR(): Date {
+        if (!this.IsAuto) {
+            return this._DR;
+        }
+        return this.PacAuto?.DR;
+    }
+    set DR(val: Date) {
+        this._DR = val;
+    }
+    _NOVOR: boolean = false;
+    get NOVOR(): boolean {
+        if (this.PredAuto!=null) {
+            return true;
+        }
+        return this._NOVOR;
+    }
+    set NOVOR(val: boolean) {
+        this._NOVOR = val;
+    }
+    _FAM_P: string = null;
+    get FAM_P(): string {
+        if (!this.IsAuto) {
+            return this._FAM_P;
+        }
+        return this.PredAuto?.FAM;
+    }
+    set FAM_P(val: string) {
+        this._FAM_P = val;
+    }
+    _IM_P: string = null;
+    get IM_P(): string {
+        if (!this.IsAuto) {
+            return this._IM_P;
+        }
+        return this.PredAuto?.IM;
+    }
+    set IM_P(val: string) {
+        this._IM_P = val;
+    }
+    _OT_P: string = null;
+    get OT_P(): string {
+        if (!this.IsAuto) {
+            return this._OT_P;
+        }
+        return this.PredAuto?.OT;
+    }
+    set OT_P(val: string) {
+        this._OT_P = val;
+    }
+    _DR_P: Date = null;
+    get DR_P(): Date {
+        if (!this.IsAuto) {
+            return this._DR_P;
+        }
+        return this.PredAuto?.DR;
+    }
+    set DR_P(val: Date) {
+        this._DR_P = val;
+    }
     CODE_MO: string = null;
     STATUS: StatusTMKRow = null;
     STATUS_COM: string = null;
