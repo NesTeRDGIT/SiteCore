@@ -3,9 +3,9 @@
     border-collapse: collapse
 }
 
-.FakeTable tr:hover {
-    background-color: #e6e6fa;
-}
+    .FakeTable tr:hover {
+        background-color: #e6e6fa;
+    }
 
 .snos {
     vertical-align: super; /* поместить на линию верхнего индекса */
@@ -84,7 +84,6 @@
     .delButton:active:enabled {
         box-shadow: inset 0 -1px 1px #000000, inset 0 1px 2px #000000, inset 0 0 0 60px #ff0000, 0 0 0 60px #000000 inset, .1em .1em .2em #000000, inset -1px 1px 5px 0px #000000;
         box-shadow: inset 0 -1px 1px rgba(0, 0, 0, .1), inset 0 1px 2px rgba(0, 0, 0, .3), inset 0 0 0 60px rgba(255, 0, 0, 0.25), 0 0 0 60px rgba(0, 0, 0, 0) inset, .1em .1em .2em #000000, inset -1px 1px 5px 0px rgba(0,0,0,0.75);
-        
     }
 
     .delButton:disabled {
@@ -110,7 +109,9 @@
     outline: none;
 }
 
-    .delButtonICO:active { background-size: 90%; }
+    .delButtonICO:active {
+        background-size: 90%;
+    }
 
 .editButtonICO {
     background: url(../Image/iconedit.PNG) no-repeat;
@@ -134,9 +135,9 @@
     outline: none;
 }
 
-    .editButtonICO:active {
-        background-size: 90%;
-    }
+.editButtonICO:active {
+    background-size: 90%;
+}
 
 
 
@@ -375,7 +376,7 @@ body {
 
     .table_report tr.selected {
         border-color: cornflowerblue;
-        border:2px cornflowerblue solid;
+        border: 2px cornflowerblue solid;
     }
 
     .table_report th {
@@ -541,10 +542,6 @@ body {
         height: 100%;
     }
 
-/*.marquee *:hover {
--webkit-animation-play-state: paused;
-animation-play-state: paused;
-}*/
 
 
 .Notify_element {
@@ -622,11 +619,12 @@ animation-play-state: paused;
     float: left;
 }
 
-.SignButtonArea div {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
+    .SignButtonArea div {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
 a.ShowHREF {
     cursor: pointer;
 }
@@ -657,34 +655,6 @@ a.ShowHREF {
     color: gray;
 }
 
-.table_sign .SignCancelButton {
-    background-image: url(../Image/edit_undo.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    content: '';
-    height: 30px;
-    width: 30px;
-    background-size: cover;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    outline: none;
-}
-
-.table_sign .SignConfirmButton {
-    background-image: url(../Image/Confirm.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    content: '';
-    height: 30px;
-    width: 30px;
-    background-size: cover;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    outline: none;
-}
-
 .table_sign .SignEditButton {
     background-image: url(../Image/documentedit.png);
     background-repeat: no-repeat;
@@ -699,33 +669,7 @@ a.ShowHREF {
     outline: none;
 }
 
-.table_sign .SignDelButton {
-    background-image: url(../Image/DeleteData.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    content: '';
-    height: 30px;
-    width: 30px;
-    background-size: cover;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    outline: none;
-}
 
-.table_sign .SignDownButton {
-    background-image: url(../Image/upload_icon.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    content: '';
-    height: 30px;
-    width: 30px;
-    background-size: cover;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    outline: none;
-}
 
 .BlockForm {
     display: inline-block;
@@ -835,53 +779,16 @@ input[type=checkbox] {
     font-size: 14px;
 }
 
-.ButtonLock {
-    background-image: url(../Image/LOCK128.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    content: '';
-    height: 30px;
-    width: 30px;
-    background-size: cover;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    outline: none;
-}
-
-    .ButtonLock:active {
-        background-size: 90%;
-    }
-
-.ButtonUnLock {
-    background-image: url(../Image/UnLOCK128.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    content: '';
-    height: 30px;
-    width: 30px;
-    background-size: cover;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    outline: none;
-}
-
-    .ButtonUnLock:active {
-        background-size: 90%;
-    }
-
-
 
 .p-datatable {
     font-family: Times New Roman !important;
 }
 
-.p-datatable .p-datatable-tfoot > tr > td, .p-datatable .p-datatable-thead > tr > th {
-    border: 1px solid #c8c8c8;
-    color: white !important;
-    background: #449d48 !important;
-}
+    .p-datatable .p-datatable-tfoot > tr > td, .p-datatable .p-datatable-thead > tr > th {
+        border: 1px solid #c8c8c8;
+        color: white !important;
+        background: #449d48 !important;
+    }
 
     .p-datatable .p-datatable-tbody > tr.p-highlight {
         background: #C9DDE1 !important;
@@ -918,9 +825,9 @@ input[type=checkbox] {
     color: white !important;
 }
 
-.p-datatable .p-sortable-column.p-highlight .p-sortable-column-icon:hover {
-    color: white !important;
-}
+    .p-datatable .p-sortable-column.p-highlight .p-sortable-column-icon:hover {
+        color: white !important;
+    }
 
 
 .p-listbox .p-listbox-list .p-listbox-item.p-highlight {
@@ -936,6 +843,7 @@ input[type=checkbox] {
 .p-dropdown-item {
     white-space: normal !important;
 }
+
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
     background: #449d48 !important;
 }
@@ -1039,8 +947,8 @@ input[type=checkbox] {
 }
 
 .ImgInExpertIcon {
-    background-image: url(../Image/InExpertIcon.png) ;
-    background-repeat:no-repeat;    
+    background-image: url(../Image/InExpertIcon.png);
+    background-repeat: no-repeat;
     width: 32px;
     height: 32px;
 }
