@@ -1,6 +1,6 @@
 
 import { Component, ViewChild, ElementRef, AfterViewInit, Input, OnInit, Output,EventEmitter } from "@angular/core";
-import { FindExpertizeModel } from "src/app/API/FindExpertizeModel";
+import { FindExpertizeModel } from "../../API/FindExpertizeModel";
 
 
 import { IRepository } from "../../API/Repository";

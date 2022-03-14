@@ -1,37 +1,37 @@
 ::ng-deep {
      .red-p-splitbutton  .p-button {
-        background: lightcoral;
-        border-color: lightcoral;
+        background: lightcoral !important;
+        border-color: lightcoral !important;
         font-weight: bold;
         font-family: 'Times New Roman', Times, serif;
       }
       .red-p-splitbutton  .p-button:hover {
-        background: rgb(245, 83, 83);
-        border-color: rgb(245, 83, 83);
+        background: rgb(245, 83, 83) !important;
+        border-color: rgb(245, 83, 83) !important;
       }
 
 
       .green-p-splitbutton  .p-button {
-        background:  #4CAF50;
-        border-color: #4CAF50;
+        background:  #4CAF50  !important;
+        border-color: #4CAF50 !important;
         font-weight: bold;
         font-family: 'Times New Roman', Times, serif;
       }
       .green-p-splitbutton  .p-button:hover {
-        background:  #0ea813;
-        border-color: #0ea813;
+        background:  #0ea813 !important;
+        border-color: #0ea813 !important;
       }
 
 
       .gray-p-splitbutton  .p-button {
-        background: #c4c4c4;
-        border-color: #c4c4c4;
+        background: #c4c4c4 !important;
+        border-color: #c4c4c4 !important;
         font-weight: bold;
         font-family: 'Times New Roman', Times, serif;
       }
       .gray-p-splitbutton  .p-button:hover {
-        background: #a3a3a3;
-        border-color: #a3a3a3;;
+        background: #a3a3a3 !important;
+        border-color: #a3a3a3 !important;
       }
      
   }

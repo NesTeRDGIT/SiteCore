@@ -98,7 +98,6 @@ let EditTMKComponent = class EditTMKComponent {
         this.AddExpertize = async (type, exp = null) => {
             try {
                 this.ExpertizeEditWin.ShowCreateNewExpertize(type, this.CurrentTMK.TMK_ID, exp);
-                this.onChange.emit(this.CurrentTMK.TMK_ID);
             }
             catch (err) {
                 alert(err.toString());
@@ -107,7 +106,6 @@ let EditTMKComponent = class EditTMKComponent {
         this.EditExpertize = async (item) => {
             try {
                 this.ExpertizeEditWin.EditCreateNewExpertize(item);
-                this.onChange.emit(this.CurrentTMK.TMK_ID);
             }
             catch (err) {
                 alert(err.toString());
@@ -134,7 +132,9 @@ let EditTMKComponent = class EditTMKComponent {
             return this.CurrentTMK.SMO == "75";
         };
         this.refreshModel = async () => {
+            var _a;
             this.CurrentTMK = await this.repo.getTMKItemAsync(this.CurrentTMK.TMK_ID);
+            (_a = this.onChange) === null || _a === void 0 ? void 0 : _a.emit(this.CurrentTMK.TMK_ID);
         };
         this.FindPacient = async () => {
             this.FindPacientPanel.FindPacient(this.CurrentTMK.ENP);

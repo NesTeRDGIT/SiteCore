@@ -118,7 +118,6 @@ export class EditTMKComponent  {
     AddExpertize = async (type:ExpType, exp:FindExpertizeModel = null) => {
         try {
             this.ExpertizeEditWin.ShowCreateNewExpertize(type, this.CurrentTMK.TMK_ID,exp);
-            this.onChange.emit(this.CurrentTMK.TMK_ID);
         }
         catch (err) {
             alert(err.toString());
@@ -128,7 +127,6 @@ export class EditTMKComponent  {
     EditExpertize = async (item: Expertize) => {
         try {
             this.ExpertizeEditWin.EditCreateNewExpertize(item);
-            this.onChange.emit(this.CurrentTMK.TMK_ID);
         }
         catch (err) {
             alert(err.toString());
@@ -230,6 +228,7 @@ export class EditTMKComponent  {
 
     refreshModel = async () => {
         this.CurrentTMK = await this.repo.getTMKItemAsync(this.CurrentTMK.TMK_ID);
+        this.onChange?.emit(this.CurrentTMK.TMK_ID);
     }
 
     @ViewChild(FindPacientComponent) FindPacientPanel: FindPacientComponent;

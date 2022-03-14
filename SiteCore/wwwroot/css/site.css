@@ -1033,6 +1033,7 @@ input[type=checkbox] {
 
 .ImgRedIndicator {
     background-image: url(../Image/RedIndicator.png);
+    background-size: 32px;
     width: 32px;
     height: 32px;
 }
