@@ -45,9 +45,7 @@ namespace SiteCore.Data
 
 
             modelBuilder.Entity<F014>().HasKey(x=>new {x.KOD,x.DATEBEG});
-
-
-
+            modelBuilder.Entity<V002>().HasKey(x=>new {x.IDPR, x.DATEBEG});
 
     }
         public virtual DbSet<TMKReestr> TMKReestr { get; set; }

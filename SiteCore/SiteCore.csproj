@@ -110,7 +110,6 @@
     <PackageReference Include="Microsoft.jQuery.Unobtrusive.Ajax" Version="3.2.6" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Oracle.EntityFrameworkCore" Version="5.21.1" />
-    <PackageReference Include="runtime.win-x64.Microsoft.Private.CoreFx.NETCoreApp" Version="4.7.0-dev.21104.1" />
     <PackageReference Include="System.IO.Compression.ZipFile" Version="4.3.0" />
     <PackageReference Include="System.Security.Cryptography.Pkcs" Version="5.0.1" />
     <PackageReference Include="System.ServiceModel.Duplex" Version="4.8.1" />
@@ -139,10 +138,13 @@
 
   <ItemGroup>
     <Reference Include="CRZ_IDENTITIFI">
-      <HintPath>..\..\..\Site\MedpomSite\IndentiModel\bin\Debug\CRZ_IDENTITIFI.dll</HintPath>
+      <HintPath>..\..\..\MTR2016\CRZ_IDENTITIFI\bin\Debug\CRZ_IDENTITIFI.dll</HintPath>
     </Reference>
     <Reference Include="DocumentFormat.OpenXml">
       <HintPath>..\..\..\ServiceVersion\ExcelManager\bin\Debug\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelManager">
+      <HintPath>..\ExcelManager\bin\Debug\netstandard2.1\ExcelManager.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore">
       <HintPath>..\..\..\ServiceVersion\ExcelManager\bin\Debug\PresentationCore.dll</HintPath>

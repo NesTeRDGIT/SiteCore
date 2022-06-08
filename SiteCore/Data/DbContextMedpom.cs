@@ -126,6 +126,21 @@ namespace SiteCore.Data
             return new ECO_RECORD { ECO_MTR = await taskECO_MTR, ECO_MP = await taskECO_MP };
         }
 
+        public List<KSG_Row> GetReportKSGRow(DateTime d1, DateTime d2)
+        {
+            var oda = new OracleDataAdapter($"select * from table(OOMS_REPORT.GetKSGReport(:d1, :d2))", Database.GetDbConnection().ConnectionString);
+            oda.SelectCommand.Parameters.Add("d1", d1.ToShortDateString());
+            oda.SelectCommand.Parameters.Add("d1", d2.ToShortDateString());
+            var tbl = new DataTable();
+            oda.Fill(tbl);
+            return KSG_Row.Get(tbl.Select());
+        }
+
+        public Task<List<KSG_Row>> GetReportKSGRowAsync(DateTime d1, DateTime d2)
+        {
+            return Task.Run(() => GetReportKSGRow(d1, d2));
+        }
+
         public List<KOHL_Row> GetKOHL(DateTime dt1, DateTime dt2)
         {
             using var con = new OracleConnection(ConnectionString);
@@ -351,7 +366,7 @@ namespace SiteCore.Data
             var reader = cmd.ExecuteReader();
             return VMP_OOMS.GetList(reader);
         }
-
+         
         public Task<List<VMP_OOMS>> GetVMP_PERIODAsync(DateTime dt1, DateTime dt2)
         {
             return Task.Run(() => GetVMP_PERIOD(dt1,dt2));
@@ -667,6 +682,60 @@ namespace SiteCore.Data
         public int C { get; set; }
         public decimal SUMV { get; set; }
     }
+
+    [Serializable]
+    public class KSG_Row
+    {
+        public static List<KSG_Row> Get(IEnumerable<DataRow> row)
+        {
+            return row.Select(Get).ToList();
+        }
+
+        public static KSG_Row Get(DataRow row)
+        {
+            try
+            {
+                var item = new KSG_Row();
+
+                item.Year = Convert.ToInt32(row["Year"]);
+                item.Month = Convert.ToInt32(row["Month"]);
+                item.Code_MO = Convert.ToString(row["Code_MO"]);
+                item.Nam_MOK = Convert.ToString(row["Nam_MOK"]);
+                item.Usl_OK = Convert.ToInt32(row["Usl_OK"]);
+                item.N_KSG = Convert.ToString(row["N_KSG"]);
+                item.Name_KSG = Convert.ToString(row["Name_KSG"]);
+                item.Id_Profil = Convert.ToString(row["Id_Profil"]);
+                item.Name = Convert.ToString(row["Name"]);
+                item.C = Convert.ToInt32(row["C"]);
+                item.S = Convert.ToDecimal(row["S"]);
+                item.C_P = Convert.ToInt32(row["C_P"]);
+                item.S_P = Convert.ToDecimal(row["S_P"]);
+
+                return item;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ошибка получения KSG_Row: {ex.Message}", ex);
+            }
+
+        }
+
+        public int Year { get; set; }
+        public int Month { get; set; }
+        public string Code_MO { get; set; }
+        public string Nam_MOK { get; set; }
+        public int Usl_OK { get; set; }
+        public string N_KSG { get; set; }
+        public string Name_KSG { get; set; }
+        public string Id_Profil { get; set; }
+        public string Name { get; set; }
+        public int C { get; set; }
+        public decimal S { get; set; }
+        public int C_P { get;  set; }
+        public decimal S_P { get; set; }
+
+    }
+
     public class ECO_MP_Row
     {
         public static List<ECO_MP_Row> Get(IEnumerable<DataRow> row)

@@ -50,6 +50,8 @@ let MainComponent = class MainComponent {
             this.reportList.push(new ReportCaption("КВ2(МТР)", ReportType.KV2_MTR));
         if (this.isAdmin || this.isOms)
             this.reportList.push(new ReportCaption("ДЛИ", ReportType.DLI));
+        if (this.isAdmin || this.isOms)
+            this.reportList.push(new ReportCaption("КСГ", ReportType.KSG));
         if (this.isAdmin || this.isZpz)
             this.reportList.push(new ReportCaption("Результативность", ReportType.RESULT));
         if (this.isAdmin || this.isZpz)
@@ -78,6 +80,7 @@ var ReportType;
     ReportType[ReportType["DISP"] = 11] = "DISP";
     ReportType[ReportType["KV2_MTR"] = 12] = "KV2_MTR";
     ReportType[ReportType["DLI"] = 13] = "DLI";
+    ReportType[ReportType["KSG"] = 14] = "KSG";
 })(ReportType || (ReportType = {}));
 class ReportCaption {
     constructor(name, type) {

@@ -112,7 +112,7 @@ namespace SiteCore.Controllers
                 {
                     if (isNEW)
                     {
-                        user = new ApplicationUser { UserName = model.UserName, CODE_MO = model.CODE_MO, WithSing = model.WithSing, CODE_SMO = model.CODE_SMO, UserRoles = new List<ApplicationUserRole>() };
+                        user = new ApplicationUser { UserName = model.UserName, CODE_MO = model.CODE_MO, WithSing = model.WithSing, CODE_SMO = model.CODE_SMO, HashVersion = PasswordHashVersion.Core,  UserRoles = new List<ApplicationUserRole>() };
                         var result = await userManager.CreateAsync(user, model.Password);
                         if (!result.Succeeded)
                         {
@@ -130,6 +130,7 @@ namespace SiteCore.Controllers
                             user.CODE_MO = model.CODE_MO;
                             user.WithSing = model.WithSing;
                             user.CODE_SMO = model.CODE_SMO;
+                            user.HashVersion = PasswordHashVersion.Core;
                             var result = await userManager.UpdateAsync(user);
                             if (!result.Succeeded)
                             {

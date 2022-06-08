@@ -4,67 +4,64 @@
             <ng-template let-item pTemplate="item">
                 <div style="display: flex; align-items: center; justify-content: space-between;width: 100%">
                     <span class="ng-star-inserted">{{item.Name}}</span>
-                      <p-progressSpinner *ngIf="item.IsLoad" [style]="{width: '20px', height: '20px', marginLeft:'5px'}"></p-progressSpinner>
+                    <p-progressSpinner *ngIf="item.IsLoad" [style]="{width: '20px', height: '20px', marginLeft:'5px'}">
+                    </p-progressSpinner>
                 </div>
             </ng-template>
         </p-listbox>
     </div>
     <hr style="margin: 10px" />
 
-  
 
 
-    <div *ngIf="selectedReport!=null"  style="width: 80%;">
+
+    <div *ngIf="selectedReport!=null" style="width: 80%;">
 
         <div [hidden]="selectedReport.Type!==ReportType.DB_State" style="width: 100%">
             <DB-State (onLoading)="onLoading($event,ReportType.DB_State)"></DB-State>
         </div>
-        <div  [hidden]="selectedReport.Type!==ReportType.HMP" style="width: 100%">
+        <div [hidden]="selectedReport.Type!==ReportType.HMP" style="width: 100%">
             <hmp-report (onLoading)="onLoading($event,ReportType.HMP)"></hmp-report>
         </div>
-        <div  [hidden]="selectedReport.Type!==ReportType.HMP_PERIOD" style="width: 100%">
+        <div [hidden]="selectedReport.Type!==ReportType.HMP_PERIOD" style="width: 100%">
             <hmp-period-report (onLoading)="onLoading($event,ReportType.HMP_PERIOD)"></hmp-period-report>
         </div>
-        <div  [hidden]="selectedReport.Type!==ReportType.ABORT" style="width: 100%">
+        <div [hidden]="selectedReport.Type!==ReportType.ABORT" style="width: 100%">
             <abort-report (onLoading)="onLoading($event,ReportType.ABORT)"></abort-report>
         </div>
-        <div  [hidden] ="selectedReport.Type!==ReportType.ECO" style="width: 100%">
+        <div [hidden]="selectedReport.Type!==ReportType.ECO" style="width: 100%">
             <eco-report (onLoading)="onLoading($event,ReportType.ECO)"></eco-report>
         </div>
-        <div  [hidden]="selectedReport.Type!==ReportType.KOHL" style="width: 100%">
+        <div [hidden]="selectedReport.Type!==ReportType.KOHL" style="width: 100%">
             <kohl-report (onLoading)="onLoading($event,ReportType.KOHL)"></kohl-report>
         </div>
-        <div  [hidden]="selectedReport.Type!==ReportType.OKS_ONMK" style="width: 100%">
+        <div [hidden]="selectedReport.Type!==ReportType.OKS_ONMK" style="width: 100%">
             <oksonmk-report (onLoading)="onLoading($event,ReportType.OKS_ONMK)"></oksonmk-report>
         </div>
-        <div  [hidden]="selectedReport.Type!==ReportType.RESULT" style="width: 100%">
+        <div [hidden]="selectedReport.Type!==ReportType.RESULT" style="width: 100%">
             <result-pok-report (onLoading)="onLoading($event,ReportType.RESULT)"></result-pok-report>
         </div>
-        <div  [hidden]="selectedReport.Type!==ReportType.RESULT_CONTROL" style="width: 100%">
+        <div [hidden]="selectedReport.Type!==ReportType.RESULT_CONTROL" style="width: 100%">
             <result-control-report (onLoading)="onLoading($event,ReportType.RESULT_CONTROL)"></result-control-report>
         </div>
-        <div  [hidden]="selectedReport.Type!==ReportType.SMP" style="width: 100%">
+        <div [hidden]="selectedReport.Type!==ReportType.SMP" style="width: 100%">
             <smp-report (onLoading)="onLoading($event,ReportType.SMP)"></smp-report>
         </div>
-        <div  [hidden]="selectedReport.Type!==ReportType.PENS" style="width: 100%">
+        <div [hidden]="selectedReport.Type!==ReportType.PENS" style="width: 100%">
             <pens-report (onLoading)="onLoading($event,ReportType.PENS)"></pens-report>
         </div>
-        <div  [hidden]="selectedReport.Type!==ReportType.DISP" style="width: 100%">
+        <div [hidden]="selectedReport.Type!==ReportType.DISP" style="width: 100%">
             <disp-report (onLoading)="onLoading($event,ReportType.DISP)"></disp-report>
         </div>
-        <div  [hidden]="selectedReport.Type!==ReportType.KV2_MTR" style="width: 100%">
+        <div [hidden]="selectedReport.Type!==ReportType.KV2_MTR" style="width: 100%">
             <kv2-mtr-report (onLoading)="onLoading($event,ReportType.KV2_MTR)"></kv2-mtr-report>
         </div>
-        <div  [hidden]="selectedReport.Type!==ReportType.DLI" style="width: 100%">
+        <div [hidden]="selectedReport.Type!==ReportType.DLI" style="width: 100%">
             <dli-report (onLoading)="onLoading($event,ReportType.DLI)"></dli-report>
+        </div>
+        <div [hidden]="selectedReport.Type!==ReportType.KSG" style="width: 100%">
+            <ksg-report (onLoading)="onLoading($event,ReportType.KSG)"></ksg-report>
         </div>
     </div>
 
 </div>
-
-
-
-
-
-
-

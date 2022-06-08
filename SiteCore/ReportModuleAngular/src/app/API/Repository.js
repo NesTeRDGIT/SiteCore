@@ -19,6 +19,7 @@ import { PensRow } from "./PensRow";
 import { DispRecord } from "./DispEntity";
 import { Kv2MtrRow } from "./Kv2MtrRow";
 import { DliRecord } from "./DliRow";
+import { KSGRow } from "./KSGRow";
 let IRepository = class IRepository {
 };
 IRepository = __decorate([
@@ -327,6 +328,28 @@ let Repository = class Repository {
     }
     async GetEffectivenessXls() {
         const response = await fetch("GetEffectivenessXls", this.defaultFetchParam);
+        if (response.ok) {
+            const data = await response.json();
+            if (data.Result) {
+                return new FileASP(data.Value);
+            }
+            throw new Error(data.Value);
+        }
+        throw new Error(`${response.status}: ${response.statusText}`);
+    }
+    async getKSGReportAsync(dt1, dt2) {
+        const response = await fetch(`GetKSGReport?dt1=${this.convertToString(dt1)}&dt2=${this.convertToString(dt2)}`, this.defaultFetchParam);
+        if (response.ok) {
+            const data = await response.json();
+            if (data.Result) {
+                return data.Value.map((obj) => new KSGRow(obj));
+            }
+            throw new Error(data.Value);
+        }
+        throw new Error(`${response.status}: ${response.statusText}`);
+    }
+    async getKSGXlsAsync() {
+        const response = await fetch("GetKSGXls", this.defaultFetchParam);
         if (response.ok) {
             const data = await response.json();
             if (data.Result) {

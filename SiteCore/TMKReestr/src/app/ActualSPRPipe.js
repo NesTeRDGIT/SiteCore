@@ -12,7 +12,7 @@ let ActualSPRPipe = class ActualSPRPipe {
         let result = [];
         items.forEach(x => {
             var _a;
-            if (x.DATE_B <= dt && ((_a = x.DATE_E) !== null && _a !== void 0 ? _a : dt >= dt) || x.DATE_B == null) {
+            if (x.DATE_B <= dt && (((_a = x.DATE_E) !== null && _a !== void 0 ? _a : dt) >= dt) || x.DATE_B == null) {
                 result.push(x);
             }
         });

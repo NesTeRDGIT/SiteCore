@@ -7,7 +7,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { TableModule } from "primeng/table";
 import { TabViewModule } from 'primeng/tabview';
 import { SplitterModule } from 'primeng/splitter';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from "@angular/common/http";
 import { YesNoPipe } from "./YesNoPIPE";
 import { MainComponent } from "./Component/Main/MainComponent";
@@ -26,6 +26,7 @@ import { ResultPokReportComponent } from "./Component/RESULT_POK_REPORT/RESULT_P
 import { ResultControlComponent } from "./Component/ResultContrReport/ResultControlReport";
 import { SmpReportComponent } from "./Component/SMP_REPORT/SMP_REPORT";
 
+
 import { DBStateComponent } from "./Component/DBState/DBState";
 import { PensReportComponent } from "./Component/PENS_REPORT/PENS_REPORT";
 import { HmpReportPeriodComponent } from "./Component/HMP_PERIOD_REPORT/HMP_PERIOD_REPORT";
@@ -33,20 +34,21 @@ import { HmpReportPeriodComponent } from "./Component/HMP_PERIOD_REPORT/HMP_PERI
 import { DispReportComponent } from "./Component/DISP_REPORT/DISP_REPORT";
 import { Kv2MtrReportComponent } from "./Component/KV2_MTR_REPORT/KV2_MTR_REPORT";
 import { DliReportComponent } from "./Component/DLI_REPORT/DLI_REPORT";
-
+import { KSGReportComponent } from "./Component/KSG_REPORT/KSG_REPORT";
 
 
 registerLocaleData(localeRu);
 
 @NgModule({
     imports: [BrowserModule, FormsModule, BrowserAnimationsModule, TableModule, TabViewModule, HttpClientModule, SplitterModule, ListboxModule, DividerModule, CalendarModule, ProgressSpinnerModule],
-    declarations: [MainComponent, YesNoPipe, HmpReportComponent, AbortReportComponent, EcoReportComponent, KohlReportComponent, OksOnmkReportComponent, ResultPokReportComponent, ResultControlComponent, SmpReportComponent, DBStateComponent, PensReportComponent, HmpReportPeriodComponent, DispReportComponent, Kv2MtrReportComponent, DliReportComponent],
+    declarations: [MainComponent, YesNoPipe, HmpReportComponent, AbortReportComponent, EcoReportComponent, KohlReportComponent, OksOnmkReportComponent, ResultPokReportComponent, ResultControlComponent,
+        SmpReportComponent, DBStateComponent, PensReportComponent, HmpReportPeriodComponent, DispReportComponent, Kv2MtrReportComponent, DliReportComponent, KSGReportComponent],
     providers: [{ provide: IRepository, useClass: Repository },
-                { provide: LOCALE_ID, useValue: 'ru' }],
+    { provide: LOCALE_ID, useValue: 'ru' }],
     bootstrap: [MainComponent]
 })
 export class AppModule {
-  
+
 }
 
 

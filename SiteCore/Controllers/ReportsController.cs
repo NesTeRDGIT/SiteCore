@@ -62,8 +62,6 @@ namespace SiteCore.Controllers
             {
                 return CustomJsonResult.Create(e.Message, false);
             }
-
-
         }
         [Authorize(Roles = "OOMS, Admin")]
         [HttpGet]
@@ -86,6 +84,7 @@ namespace SiteCore.Controllers
         }
    
         #endregion
+        
         #region  Отчет по ВМП-период
         public class HMPContainer
         {
@@ -142,6 +141,7 @@ namespace SiteCore.Controllers
         }
         
         #endregion
+        
         #region отчет по Абортам
         [Authorize(Roles = "OOMS, Admin")]
         [HttpGet]
@@ -182,6 +182,7 @@ namespace SiteCore.Controllers
 
 
         #endregion
+        
         #region Отчет по ЭКО
       
         [Authorize(Roles = "OOMS, Admin")]
@@ -222,6 +223,7 @@ namespace SiteCore.Controllers
         }
        
         #endregion
+        
         #region Отчет по Кохлеарке
         [Authorize(Roles = "OOMS, Admin")]
         [HttpGet]
@@ -255,9 +257,9 @@ namespace SiteCore.Controllers
             {
                 return CustomJsonResult.Create(e.Message, false);
             }
-            
         }
         #endregion
+        
         #region Отчет ОКС ОНМК
         [Authorize(Roles = "OOMS, Admin")]
         [HttpGet]
@@ -296,6 +298,7 @@ namespace SiteCore.Controllers
 
    
         #endregion
+        
         #region  Отчет Результативность
 
         public class EffectivenessContainer
@@ -354,6 +357,7 @@ namespace SiteCore.Controllers
         }
 
         #endregion
+        
         #region  Отчет резульатаы контрольно-экспертных мироприятий
         [Authorize(Roles = "OZPZ, Admin")]
         [HttpGet]
@@ -399,6 +403,7 @@ namespace SiteCore.Controllers
         }
 
         #endregion
+        
         #region Отчет СМП
 
 
@@ -458,6 +463,7 @@ namespace SiteCore.Controllers
 
     
         #endregion
+        
         #region Соятояние БД
 
         [HttpGet]
@@ -476,6 +482,7 @@ namespace SiteCore.Controllers
         }
 
         #endregion
+        
         #region Отчет Пожилые
 
 
@@ -535,6 +542,7 @@ namespace SiteCore.Controllers
 
     
         #endregion
+        
         #region Отчет по диспансеризации
 
 
@@ -593,6 +601,45 @@ namespace SiteCore.Controllers
         }
 
 
+
+        #endregion
+
+        #region Отчет КСГ
+
+        [Authorize(Roles = "OOMS, Admin")]
+        [HttpGet]
+        public async Task<CustomJsonResult> GetKSGReport([FromQuery] DateTime dt1, [FromQuery] DateTime dt2)
+        {
+            try
+            {
+                var t = (await myOracleSet.GetReportKSGRowAsync(dt1, dt2)).ToList();
+                AddTempData("GET_KSG_VIEW", t);
+                return CustomJsonResult.Create(t);
+            }
+            catch (Exception e)
+            {
+                return CustomJsonResult.Create(e.Message, false);
+            }
+        }
+        [Authorize(Roles = "OOMS, Admin")]
+        [HttpGet]
+        public CustomJsonResult GetKSGXls()
+        {
+            try
+            {
+                var list = GetTempData<List<KSG_Row>>("GET_KSG_VIEW");
+                if (list == null)
+                {
+                    throw new Exception("Не удалось найти отчет");
+                }
+                return CustomJsonResult.Create(File(omsxlsCreator.CreateKSGXLS(list), IOMSXLSCreator.ContentType, $"КСГ от {DateTime.Now:dd-MM-yyyy HH_mm}.xlsx"));
+
+            }
+            catch (Exception e)
+            {
+                return CustomJsonResult.Create(e.Message, false);
+            }
+        }
 
         #endregion
 

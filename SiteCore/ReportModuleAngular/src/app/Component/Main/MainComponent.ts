@@ -24,8 +24,7 @@ export class MainComponent {
     onLoading = (value, type: ReportType) => {
         var val = this.reportList.find(x => x.Type === type);
         if (val != null) {
-            val.IsLoad = value;
-           
+            val.IsLoad = value;           
         }
     }
 
@@ -58,7 +57,8 @@ export class MainComponent {
             this.reportList.push(new ReportCaption("КВ2(МТР)", ReportType.KV2_MTR));
         if (this.isAdmin || this.isOms)
             this.reportList.push(new ReportCaption("ДЛИ", ReportType.DLI));
-
+        if (this.isAdmin || this.isOms)
+            this.reportList.push(new ReportCaption("КСГ", ReportType.KSG));
 
 
         if (this.isAdmin || this.isZpz)
@@ -88,7 +88,8 @@ enum ReportType {
     PENS,
     DISP,
     KV2_MTR,
-    DLI
+    DLI,
+    KSG
 }
 
 class ReportCaption {

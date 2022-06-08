@@ -24,6 +24,7 @@ namespace SiteCore.Class
         public byte[] CreateDispXLS(DispRecord data);
         public byte[] CreateKv2MtrXLS(IEnumerable<Kv2MtrRow> data);
         public byte[] CreateDLIXLS(DliRecord data);
+        public byte[] CreateKSGXLS(IEnumerable<KSG_Row> item);
 
     }
     public class OMSXLSCreator: IOMSXLSCreator
@@ -869,6 +870,74 @@ namespace SiteCore.Class
                 rowIndex++;
             }
             
+            ex.Save();
+            return ms.ToArray();
+        }
+
+        public byte[] CreateKSGXLS(IEnumerable<KSG_Row> item)
+        {
+            using var ms = new MemoryStream();
+            using var ex = new ExcelOpenXML(ms, "Лист1");
+            uint rowindex = 1;
+
+            var boldHead = ex.CreateType(new FontOpenXML { Bold = true, wordwrap = true, HorizontalAlignment = HorizontalAlignmentV.Center, color = Color.DarkBlue }, new BorderOpenXML(), null);
+            var TextLeft = ex.CreateType(new FontOpenXML() { HorizontalAlignment = HorizontalAlignmentV.Left, color = Color.DarkBlue }, new BorderOpenXML(), null);
+            var TextCenter = ex.CreateType(new FontOpenXML() { HorizontalAlignment = HorizontalAlignmentV.Center, color = Color.DarkBlue }, new BorderOpenXML(), null);
+            var Number = ex.CreateType(new FontOpenXML { Format = NumFormat.FloatAndSpace, HorizontalAlignment = HorizontalAlignmentV.Right, color = Color.DarkBlue }, new BorderOpenXML(), null);
+
+            var r = ex.GetRow(rowindex, true);
+            ex.PrintCell(r, 1, "Год", boldHead);
+            ex.AddMergedRegion(new CellRangeAddress(rowindex, 1, rowindex + 1, 1));
+            ex.PrintCell(r, 2, "Месяц", boldHead);
+            ex.AddMergedRegion(new CellRangeAddress(rowindex, 2, rowindex + 1, 2));
+            ex.PrintCell(r, 3, "Код МО", boldHead);
+            ex.AddMergedRegion(new CellRangeAddress(rowindex, 3, rowindex + 1, 3));
+            ex.PrintCell(r, 4, "Наименование МО", boldHead);
+            ex.AddMergedRegion(new CellRangeAddress(rowindex, 4, rowindex + 1, 4));
+            ex.PrintCell(r, 5, "Условия оказания", boldHead);
+            ex.AddMergedRegion(new CellRangeAddress(rowindex, 5, rowindex + 1, 5));
+            ex.PrintCell(r, 6, "КСГ", boldHead);
+            ex.AddMergedRegion(new CellRangeAddress(rowindex, 6, rowindex + 1, 6));
+            ex.PrintCell(r, 7, "Наименование", boldHead);
+            ex.AddMergedRegion(new CellRangeAddress(rowindex, 7, rowindex + 1, 7));
+            ex.PrintCell(r, 8, "Профиль", boldHead);
+            ex.AddMergedRegion(new CellRangeAddress(rowindex, 8, rowindex + 1, 8));
+            ex.PrintCell(r, 9, "Наименование", boldHead);
+            ex.AddMergedRegion(new CellRangeAddress(rowindex, 9, rowindex + 1, 9));
+            ex.PrintCell(r, 10, "Профиль", boldHead);
+            ex.AddMergedRegion(new CellRangeAddress(rowindex, 10, rowindex, 11));
+            ex.PrintCell(r, 12, "Принято", boldHead);
+            ex.AddMergedRegion(new CellRangeAddress(rowindex, 12, rowindex, 13));
+            r = ex.GetRow(++rowindex, true);
+            ex.PrintCell(r, 10, "Кол-во", boldHead);
+            ex.PrintCell(r, 11, "Сумма", boldHead);
+            ex.PrintCell(r, 12, "Кол-во", boldHead);
+            ex.PrintCell(r, 13, "Сумма", boldHead);
+
+            rowindex++;
+            foreach (var row in item)
+            {
+                r = ex.GetRow(rowindex, true);
+                var tl = TextLeft;
+                
+                ex.PrintCell(r, 1, row.Year, TextCenter);
+                ex.PrintCell(r, 2, row.Month, TextCenter);
+                ex.PrintCell(r, 3, row.Code_MO, TextCenter);
+                ex.PrintCell(r, 4, row.Nam_MOK, TextCenter);
+                ex.PrintCell(r, 5, row.Usl_OK, TextCenter);
+                ex.PrintCell(r, 6, row.N_KSG, TextCenter);
+                ex.PrintCell(r, 7, row.Name_KSG, TextLeft);
+                ex.PrintCell(r, 8, row.Id_Profil, TextCenter);
+                ex.PrintCell(r, 9, row.Name, TextLeft);
+                ex.PrintCell(r, 10, row.C, Number);
+                ex.PrintCell(r, 11, row.S, Number);
+                ex.PrintCell(r, 12, row.C_P, Number);
+                ex.PrintCell(r, 13, row.S_P, Number);
+
+                rowindex++;
+            }
+
+            ex.AutoSizeColumns(1, 6);
             ex.Save();
             return ms.ToArray();
         }

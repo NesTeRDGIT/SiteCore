@@ -35,13 +35,15 @@ import { HmpReportPeriodComponent } from "./Component/HMP_PERIOD_REPORT/HMP_PERI
 import { DispReportComponent } from "./Component/DISP_REPORT/DISP_REPORT";
 import { Kv2MtrReportComponent } from "./Component/KV2_MTR_REPORT/KV2_MTR_REPORT";
 import { DliReportComponent } from "./Component/DLI_REPORT/DLI_REPORT";
+import { KSGReportComponent } from "./Component/KSG_REPORT/KSG_REPORT";
 registerLocaleData(localeRu);
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     NgModule({
         imports: [BrowserModule, FormsModule, BrowserAnimationsModule, TableModule, TabViewModule, HttpClientModule, SplitterModule, ListboxModule, DividerModule, CalendarModule, ProgressSpinnerModule],
-        declarations: [MainComponent, YesNoPipe, HmpReportComponent, AbortReportComponent, EcoReportComponent, KohlReportComponent, OksOnmkReportComponent, ResultPokReportComponent, ResultControlComponent, SmpReportComponent, DBStateComponent, PensReportComponent, HmpReportPeriodComponent, DispReportComponent, Kv2MtrReportComponent, DliReportComponent],
+        declarations: [MainComponent, YesNoPipe, HmpReportComponent, AbortReportComponent, EcoReportComponent, KohlReportComponent, OksOnmkReportComponent, ResultPokReportComponent, ResultControlComponent,
+            SmpReportComponent, DBStateComponent, PensReportComponent, HmpReportPeriodComponent, DispReportComponent, Kv2MtrReportComponent, DliReportComponent, KSGReportComponent],
         providers: [{ provide: IRepository, useClass: Repository },
             { provide: LOCALE_ID, useValue: 'ru' }],
         bootstrap: [MainComponent]

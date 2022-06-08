@@ -19,8 +19,8 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation"
       },
-      "ancmHostingModel": "OutOfProcess",
-      "jsWebView2Debugging": true
+      "jsWebView2Debugging": true,
+      "ancmHostingModel": "OutOfProcess"
     },
     "SiteCore": {
       "commandName": "IISExpress",
@@ -30,6 +30,12 @@
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation"
       },
       "applicationUrl": "https://localhost:5001;http://localhost:5000"
+    },
+    "Профиль 1": {
+      "commandName": "IIS Express",
+      "workingDirectory": "D:\\Project\\SiteCore\\SiteCore\\SiteCore\\bin\\Debug\\net5.0",
+      "launchBrowser": true,
+      "launchUrl": "http://localhost:16896/Medpom"
     }
   }
 }
