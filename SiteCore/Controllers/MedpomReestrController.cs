@@ -50,6 +50,12 @@ namespace SiteCore.Controllers
             return View();
         }
 
+        public IActionResult InstructionView()
+        {
+            return View();
+        }
+
+
         private CustomJsonResult InternalError(Exception e,bool toList=false)
         {
             object err;
@@ -64,7 +70,6 @@ namespace SiteCore.Controllers
             }
             return CustomJsonResult.Create(err, false);
         }
-
 
         #region Просмотр реестров
         [Authorize(Roles = "MO, Admin")]

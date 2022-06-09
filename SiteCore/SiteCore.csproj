@@ -108,6 +108,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.7" />
     <PackageReference Include="Microsoft.jQuery.Unobtrusive.Ajax" Version="3.2.6" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Oracle.EntityFrameworkCore" Version="5.21.1" />
     <PackageReference Include="System.IO.Compression.ZipFile" Version="4.3.0" />
@@ -132,19 +133,23 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CryptoWCFContract\CryptoWCFContract.csproj" />
-    <ProjectReference Include="..\ExcelManager\ExcelManager.csproj" />
-    <ProjectReference Include="..\IndentiModel\IdentiModel.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="CRZ_IDENTITIFI">
-      <HintPath>..\..\..\MTR2016\CRZ_IDENTITIFI\bin\Debug\CRZ_IDENTITIFI.dll</HintPath>
+      <HintPath>..\..\..\CRZ_IDENTITIFI .Net5\bin\Debug\CRZ_IDENTITIFI.dll</HintPath>
     </Reference>
     <Reference Include="DocumentFormat.OpenXml">
       <HintPath>..\..\..\ServiceVersion\ExcelManager\bin\Debug\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
     <Reference Include="ExcelManager">
       <HintPath>..\ExcelManager\bin\Debug\netstandard2.1\ExcelManager.dll</HintPath>
+    </Reference>
+    <Reference Include="IdentiModel">
+      <HintPath>..\IdentiScaner\bin\Release\IdentiModel.dll</HintPath>
+    </Reference>
+    <Reference Include="IdentiScaner">
+      <HintPath>..\IdentiScaner\bin\Release\IdentiScaner.exe</HintPath>
     </Reference>
     <Reference Include="PresentationCore">
       <HintPath>..\..\..\ServiceVersion\ExcelManager\bin\Debug\PresentationCore.dll</HintPath>
