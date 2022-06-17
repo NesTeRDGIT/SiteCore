@@ -96,6 +96,8 @@ export class DispVzrRow {
         this.ST34 = obj.ST34;
         this.ST35 = obj.ST35;
         this.ST36 = obj.ST36;
+        this.ST37 = obj.ST37;
+        this.ST38 = obj.ST38;
     }
 
     SMO: string;
@@ -134,6 +136,8 @@ export class DispVzrRow {
     ST34: number;
     ST35: number;
     ST36: number;
+    ST37: number;
+    ST38: number;
 }
 export class ProfVzrRow {
     constructor(obj: any) {

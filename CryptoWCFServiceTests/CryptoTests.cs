@@ -1,13 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CryptoWCFService;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.Cryptography.Pkcs;
 
 namespace CryptoWCFService.Tests
 {

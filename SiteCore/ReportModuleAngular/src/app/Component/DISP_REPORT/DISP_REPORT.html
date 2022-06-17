@@ -47,6 +47,8 @@
                     <col style="width: 150px">
                     <col style="width: 150px">
                     <col style="width: 150px">
+                    <col style="width: 150px">
+                    <col style="width: 150px">
                 </colgroup>
             </ng-template>
             <ng-template pTemplate="header">
@@ -56,7 +58,7 @@
                     <th pResizableColumn rowspan="4">Всего предъявлено к оплате в рамках диспансеризации за отчетный период, тыс. рублей</th>
                     <th pResizableColumn colspan="8">в том числе:</th>
                     <th pResizableColumn rowspan="4">Всего оплачено в рамках диспансеризации за отчетный период, тыс. рублей</th>
-                    <th pResizableColumn colspan="10">в том числе:</th>
+                    <th pResizableColumn colspan="12">в том числе:</th>
                     <th pResizableColumn rowspan="2" colspan="2">Количество граждан, направленных на II этап диспансеризации по результатам I этапа, человек</th>
                     <th pResizableColumn rowspan="2" colspan="4">Группы состояния здоровья застрахованных лиц, прошедших диспансеризацию</th>
                     <th pResizableColumn rowspan="2" colspan="8">Количество граждан, направленных  по результатам  I и II этапа, в том числе на:</th>
@@ -66,7 +68,7 @@
                     <th pResizableColumn colspan="3">в рамках II этапа</th>
                     <th pResizableColumn rowspan="3">в том числе из гр. 9: количество законченных случаев в рамках I этапа диспансеризации, проводимой мобильными медицинскими бригадами</th>
                     <th pResizableColumn rowspan="3">в том числе: тыс. рублей</th>
-                    <th pResizableColumn colspan="4">в рамках I этапа</th>
+                    <th pResizableColumn colspan="6">в рамках I этапа</th>
                     <th pResizableColumn colspan="4">в рамках II этапа</th>
                     <th pResizableColumn rowspan="3">в том числе из гр. 18: количество законченных  случаев  в рамках I этапа диспансеризации, проводимой мобильными медицинскими бригадами</th>
                     <th pResizableColumn rowspan="3">в том числе: тыс. рублей</th>
@@ -82,6 +84,10 @@
                     <th pResizableColumn rowspan="2">кол-во случаев согласно утвержденному плану-графику</th>
                     <th pResizableColumn rowspan="2">из них: прошедшие I этап диспансеризации из числа проинформированных о возможности прохождения I этапа</th>
                     <th pResizableColumn rowspan="2">тыс. рублей</th>
+                    
+                    <th pResizableColumn rowspan="2">кол-во случаев углубленной диспансеризации</th>
+                    <th pResizableColumn rowspan="2">оплачено в рамках углубленной диспансеризации за отчетный период, тыс. рублей</th>
+
                     <th pResizableColumn rowspan="2">людей</th>
                     <th pResizableColumn rowspan="2">кол-во случаев</th>
                     <th pResizableColumn rowspan="2">из них: прошедшие II этап диспансеризации из числа проинформированных о возможности прохождения II этапа</th>
@@ -142,6 +148,8 @@
                     <th pResizableColumn>34</th>
                     <th pResizableColumn>35</th>
                     <th pResizableColumn>36</th>
+                    <th pResizableColumn>37</th>
+                    <th pResizableColumn>38</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-item>
@@ -162,18 +170,20 @@
                     <td style="text-align: right">{{item.ST14| number:'.0':'ru-RU'}}</td>
                     <td style="text-align: right">{{item.ST15| number:'.0':'ru-RU'}}</td>
                     <td style="text-align: right">{{item.ST16| number:'.2':'ru-RU'}}</td>
+
                     <td style="text-align: right">{{item.ST17| number:'.0':'ru-RU'}}</td>
-                    <td style="text-align: right">{{item.ST18| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: right">{{item.ST18| number:'.2':'ru-RU'}}</td>
+
                     <td style="text-align: right">{{item.ST19| number:'.0':'ru-RU'}}</td>
-                    <td style="text-align: right">{{item.ST20| number:'.2':'ru-RU'}}</td>
+                    <td style="text-align: right">{{item.ST20| number:'.0':'ru-RU'}}</td>
                     <td style="text-align: right">{{item.ST21| number:'.0':'ru-RU'}}</td>
                     <td style="text-align: right">{{item.ST22| number:'.2':'ru-RU'}}</td>
                     <td style="text-align: right">{{item.ST23| number:'.0':'ru-RU'}}</td>
-                    <td style="text-align: right">{{item.ST24| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: right">{{item.ST24| number:'.2':'ru-RU'}}</td>
                     <td style="text-align: right">{{item.ST25| number:'.0':'ru-RU'}}</td>
-                    <td style="text-align: right ">{{item.ST26| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: right">{{item.ST26| number:'.0':'ru-RU'}}</td>
                     <td style="text-align: right">{{item.ST27| number:'.0':'ru-RU'}}</td>
-                    <td style="text-align: right">{{item.ST28| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: right ">{{item.ST28| number:'.0':'ru-RU'}}</td>
                     <td style="text-align: right">{{item.ST29| number:'.0':'ru-RU'}}</td>
                     <td style="text-align: right">{{item.ST30| number:'.0':'ru-RU'}}</td>
                     <td style="text-align: right">{{item.ST31| number:'.0':'ru-RU'}}</td>
@@ -182,7 +192,8 @@
                     <td style="text-align: right">{{item.ST34| number:'.0':'ru-RU'}}</td>
                     <td style="text-align: right">{{item.ST35| number:'.0':'ru-RU'}}</td>
                     <td style="text-align: right">{{item.ST36| number:'.0':'ru-RU'}}</td>
-
+                    <td style="text-align: right">{{item.ST37| number:'.0':'ru-RU'}}</td>
+                    <td style="text-align: right">{{item.ST38| number:'.0':'ru-RU'}}</td>
                 </tr>
             </ng-template>
         </p-table>

@@ -5,10 +5,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
-using CRZ_IDENTITIFI;
 
 namespace IdentiModel
 {

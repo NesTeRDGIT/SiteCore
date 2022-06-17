@@ -25,7 +25,8 @@ namespace SiteCore.Data
         /// Set column's name to Uppercase 
         /// </summary>
         /// <param name="modelBuilder"></param>
-       
+
+        [Obsolete]
         public static void ToUpperCaseColumns(this ModelBuilder modelBuilder)
         {
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
@@ -59,6 +60,7 @@ namespace SiteCore.Data
         /// Set index's name to Uppercase
         /// </summary>
         /// <param name="modelBuilder"></param>
+        [Obsolete]
         public static void ToUpperCaseIndexes(this ModelBuilder modelBuilder)
         {
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())

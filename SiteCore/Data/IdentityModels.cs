@@ -25,7 +25,11 @@ namespace SiteCore.Data
         {
             
         }
+
+        [Obsolete]
+#pragma warning disable CS0809 // Устаревший член переопределяет неустаревший член
         protected override void OnModelCreating(ModelBuilder modelBuilder)
+#pragma warning restore CS0809 // Устаревший член переопределяет неустаревший член
         {
             
             base.OnModelCreating(modelBuilder);

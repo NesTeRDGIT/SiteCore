@@ -9,8 +9,15 @@
                 <tr><td>Дата начала</td><td>@Model.DATE_1.ToString("dd.MM.yyyy")</td></tr>
                 <tr><td>Дата окончания</td><td>@Model.DATE_2.ToString("dd.MM.yyyy")</td></tr>
                 <tr><td>Диагноз предварительный</td><td>@Model.DS0str</td></tr>
-                <tr><td>Диагноз основной</td><td>@Model.DS1str @if (Model.DS1_PR)
-                {<span>Диагноз установлен впервые</span>}</td></tr>
+                <tr>
+                    <td>Диагноз основной</td>
+                    <td>
+                        @Model.DS1str @if (Model.DS1_PR)
+                        {
+                            <span>Диагноз установлен впервые</span>
+                        }
+                    </td>
+                </tr>
                 <tr><td>Диагноз сопутствующий</td><td>@Model.DS2str</td></tr>
                 <tr><td>Диагноз осложнения</td><td>@Model.DS3str</td></tr>
                 <tr><td>Характер заболевания</td><td>@Model.N_C_ZAB (@Model.C_ZAB)</td></tr>
@@ -131,7 +138,9 @@
 
     <h4>Услуги</h4>
     <div>
-        @{Html.RenderPartial("_Patrical/_USL_View", Model.USL);}
+        @{
+            await Html.RenderPartialAsync("_Patrical/_USL_View", Model.USL);
+        }
     </div>
 
     <hr />
@@ -219,7 +228,9 @@
                             var cl = i == 0 ? "tab selected" : "tab";
                             var key = $"Tab{i}";
                             <div key="@key" class="@cl">
-                                @{Html.RenderPartial("_Patrical/_ONK_USL_View", ONK_SL.ONK_USL[i]);}
+                                @{
+                                    await Html.RenderPartialAsync("_Patrical/_ONK_USL_View", ONK_SL.ONK_USL[i]);
+                                }
                             </div>
                         }
                     </div>

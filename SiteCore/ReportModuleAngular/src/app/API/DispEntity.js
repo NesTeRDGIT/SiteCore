@@ -78,6 +78,8 @@ export class DispVzrRow {
         this.ST34 = obj.ST34;
         this.ST35 = obj.ST35;
         this.ST36 = obj.ST36;
+        this.ST37 = obj.ST37;
+        this.ST38 = obj.ST38;
     }
 }
 export class ProfVzrRow {

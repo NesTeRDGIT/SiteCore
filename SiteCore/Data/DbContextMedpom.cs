@@ -1240,43 +1240,48 @@ namespace SiteCore.Data
         {
             try
             {
-                var item = new DispVzrRow();
-                item.SMO = Convert.ToString(reader[nameof(SMO)]);
-                item.POK = Convert.ToString(reader[nameof(POK)]);
-                item.ST3 = Convert.ToDecimal(reader[nameof(ST3)]);
-                item.ST4 = Convert.ToDecimal(reader[nameof(ST4)]);
-                item.ST5 = Convert.ToDecimal(reader[nameof(ST5)]);
-                item.ST6 = Convert.ToDecimal(reader[nameof(ST6)]);
-                item.ST7 = Convert.ToDecimal(reader[nameof(ST7)]);
-                item.ST8 = Convert.ToDecimal(reader[nameof(ST8)]);
-                item.ST9 = Convert.ToDecimal(reader[nameof(ST9)]);
-                item.ST10 = Convert.ToDecimal(reader[nameof(ST10)]);
-                item.ST11 = Convert.ToDecimal(reader[nameof(ST11)]);
-                item.ST12 = Convert.ToDecimal(reader[nameof(ST12)]);
-                item.ST13 = Convert.ToDecimal(reader[nameof(ST13)]);
-                item.ST14 = Convert.ToDecimal(reader[nameof(ST14)]);
-                item.ST15 = Convert.ToDecimal(reader[nameof(ST15)]);
-                item.ST16 = Convert.ToDecimal(reader[nameof(ST16)]);
-                item.ST17 = Convert.ToDecimal(reader[nameof(ST17)]);
-                item.ST18 = Convert.ToDecimal(reader[nameof(ST18)]);
-                item.ST19 = Convert.ToDecimal(reader[nameof(ST19)]);
-                item.ST20 = Convert.ToDecimal(reader[nameof(ST20)]);
-                item.ST21 = Convert.ToDecimal(reader[nameof(ST21)]);
-                item.ST22 = Convert.ToDecimal(reader[nameof(ST22)]);
-                item.ST23 = Convert.ToDecimal(reader[nameof(ST23)]);
-                item.ST24 = Convert.ToDecimal(reader[nameof(ST24)]);
-                item.ST25 = Convert.ToDecimal(reader[nameof(ST25)]);
-                item.ST26 = Convert.ToDecimal(reader[nameof(ST26)]);
-                item.ST27 = Convert.ToDecimal(reader[nameof(ST27)]);
-                item.ST28 = Convert.ToDecimal(reader[nameof(ST28)]);
-                item.ST29 = Convert.ToDecimal(reader[nameof(ST29)]);
-                item.ST30 = Convert.ToDecimal(reader[nameof(ST30)]);
-                item.ST31 = Convert.ToDecimal(reader[nameof(ST31)]);
-                item.ST32 = Convert.ToDecimal(reader[nameof(ST32)]);
-                item.ST33 = Convert.ToDecimal(reader[nameof(ST33)]);
-                item.ST34 = Convert.ToDecimal(reader[nameof(ST34)]);
-                item.ST35 = Convert.ToDecimal(reader[nameof(ST35)]);
-                item.ST36 = Convert.ToDecimal(reader[nameof(ST36)]);
+                var item = new DispVzrRow
+                {
+                    SMO = Convert.ToString(reader[nameof(SMO)]),
+                    POK = Convert.ToString(reader[nameof(POK)]),
+                    ST3 = Convert.ToDecimal(reader[nameof(ST3)]),
+                    ST4 = Convert.ToDecimal(reader[nameof(ST4)]),
+                    ST5 = Convert.ToDecimal(reader[nameof(ST5)]),
+                    ST6 = Convert.ToDecimal(reader[nameof(ST6)]),
+                    ST7 = Convert.ToDecimal(reader[nameof(ST7)]),
+                    ST8 = Convert.ToDecimal(reader[nameof(ST8)]),
+                    ST9 = Convert.ToDecimal(reader[nameof(ST9)]),
+                    ST10 = Convert.ToDecimal(reader[nameof(ST10)]),
+                    ST11 = Convert.ToDecimal(reader[nameof(ST11)]),
+                    ST12 = Convert.ToDecimal(reader[nameof(ST12)]),
+                    ST13 = Convert.ToDecimal(reader[nameof(ST13)]),
+                    ST14 = Convert.ToDecimal(reader[nameof(ST14)]),
+                    ST15 = Convert.ToDecimal(reader[nameof(ST15)]),
+                    ST16 = Convert.ToDecimal(reader[nameof(ST16)]),
+                    ST17 = Convert.ToDecimal(reader[nameof(ST17)]),
+                    ST18 = Convert.ToDecimal(reader[nameof(ST18)]),
+                    ST19 = Convert.ToDecimal(reader[nameof(ST19)]),
+                    ST20 = Convert.ToDecimal(reader[nameof(ST20)]),
+                    ST21 = Convert.ToDecimal(reader[nameof(ST21)]),
+                    ST22 = Convert.ToDecimal(reader[nameof(ST22)]),
+                    ST23 = Convert.ToDecimal(reader[nameof(ST23)]),
+                    ST24 = Convert.ToDecimal(reader[nameof(ST24)]),
+                    ST25 = Convert.ToDecimal(reader[nameof(ST25)]),
+                    ST26 = Convert.ToDecimal(reader[nameof(ST26)]),
+                    ST27 = Convert.ToDecimal(reader[nameof(ST27)]),
+                    ST28 = Convert.ToDecimal(reader[nameof(ST28)]),
+                    ST29 = Convert.ToDecimal(reader[nameof(ST29)]),
+                    ST30 = Convert.ToDecimal(reader[nameof(ST30)]),
+                    ST31 = Convert.ToDecimal(reader[nameof(ST31)]),
+                    ST32 = Convert.ToDecimal(reader[nameof(ST32)]),
+                    ST33 = Convert.ToDecimal(reader[nameof(ST33)]),
+                    ST34 = Convert.ToDecimal(reader[nameof(ST34)]),
+                    ST35 = Convert.ToDecimal(reader[nameof(ST35)]),
+                    ST36 = Convert.ToDecimal(reader[nameof(ST36)]),
+                    ST37 = Convert.ToDecimal(reader[nameof(ST37)]),
+                    ST38 = Convert.ToDecimal(reader[nameof(ST38)])
+
+                };
 
                 return item;
             }
@@ -1323,6 +1328,8 @@ namespace SiteCore.Data
         public decimal ST34 { get; set; }
         public decimal ST35 { get; set; }
         public decimal ST36 { get; set; }
+        public decimal ST37 { get; set; }
+        public decimal ST38 { get; set; }
 
     }
 

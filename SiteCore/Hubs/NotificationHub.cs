@@ -13,7 +13,7 @@ namespace SiteCore.Hubs
     {
 
         UserInfoHelper userInfoHelper;
-        private UserInfo _userInfo;
+       // private UserInfo _userInfo;
         private UserInfo userInfo => userInfoHelper.GetInfo(Context.User?.Identity.Name);
        
         public NotificationHub(UserInfoHelper userInfoHelper)

@@ -700,6 +700,8 @@ namespace SiteCore.Class
                 ex.PrintCell(rowIndex, 34, row.ST34, intStyle);
                 ex.PrintCell(rowIndex, 35, row.ST35, intStyle);
                 ex.PrintCell(rowIndex, 36, row.ST36, intStyle);
+                ex.PrintCell(rowIndex, 37, row.ST37, intStyle);
+                ex.PrintCell(rowIndex, 38, row.ST38, intStyle);
                 rowIndex++;
             }
             ex.SetCurrentSchet(1);
